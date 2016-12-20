@@ -1,0 +1,6 @@
+<ul class='dropdown-menu' role='menu'>
+    <!-- TODO: We could group this by category. -->
+    <li ng-repeat='project in projectList'>
+       <a ng-href='/projects/{{:: project.slug }}/board'>{{:: project.name | shorttext:true:30}}</a> 
+    </li>
+</ul>

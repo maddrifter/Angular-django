@@ -1,0 +1,38 @@
+@page {size: landscape}
+
+div {
+  overflow: hidden;
+}
+
+header, .scrumdo-sidebar, .reports-navigation, .scrumdo-reports-header {
+  display: none;
+}
+
+.scrumdo-reports-container, .scrumdo-reports-content {
+  border: none;
+}
+
+
+.reports-area {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 9999999;
+  width: 100%;
+  background-color: #ffffff;
+  svg {
+    width: 100%; height: 100%;
+  }
+}
+.blocker-report-cards{
+  display: none;
+}
+.blocker-pager{
+  display: none;
+}
+.d3-tip{
+  display: none;    
+}
+

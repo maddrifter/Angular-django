@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col-md-3">
+        <form id="deleteForm" method="POST" action="{{deleteOrgUrl}}">
+            <sd-csrf></sd-csrf>
+            <button ng-click="ctrl.deleteProject()"
+                    type="button"
+                    class="scrumdo-btn tertiary">Delete Organization</button>
+        </form>
+    </div>
+</div>

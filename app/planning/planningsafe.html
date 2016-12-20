@@ -1,0 +1,129 @@
+<div class="scrumdo-panel primary scrumdo-panel-safe"
+        data-container-type="safe-container"
+        data-parent-id="{{parent.id}}"
+        style="border: 1px solid {{parent.color|decimalToHexColor}}">
+    <div class="scrumdo-panel-heading" role="tab" id="headingOne">
+        <h4 class="scrumdo-panel-title pull-left">
+            <a ng-click="ctrl.toggleExpanded()"
+                ng-class="{collapsed:!ctrl.isExpanded}"
+                aria-expanded="true" aria-controls="collapseOne">
+                <i uib-tooltip="Archived" ng-if="epic.archived" class="glyphicon glyphicon-folder-close"></i>
+                Parent: <span class="project-icon">
+                    <i style="color: {{parent.color|decimalToHexColor}}" class="fa" ng-class="parent.icon"></i> {{parent.name}}</span>
+            </a>
+        </h4>
+        <div class="dropdown pull-right" uib-dropdown>
+            <button ng-if="ctrl.isExpanded" tooltip-append-to-body='true'
+                    uib-tooltip="Show Archive"
+                    uib-btn-checkbox
+                    ng-model="ctrl.showArchived" type="button" class="scrumdo-btn active-no-border primary">
+                    <i class="glyphicon glyphicon-compressed"></i>
+            </button>
+            <button ng-if="canWrite && ctrl.isExpanded" uib-dropdown-toggle class="scrumdo-btn primary medium" type="button" 
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class=" glyphicon glyphicon glyphicon-chevron-down"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                <li><a ng-click="ctrl.selectAll(null)">Select All Cards</a></li>
+                <li><a ng-click="ctrl.selectNone(null)">Select None</a></li>
+                <li><a ng-click="ctrl.closeAll(null)">Close All</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div uib-collapse="!ctrl.isExpanded"
+            class="scrumdo-panel-collapse collapse"
+            role="tabpanel"
+            aria-labelledby="headingOne">
+        <div class="scrumdo-panel-body">
+            <div class="scrumdo-panel primary program-panel"
+                style="border: 1px solid {{parent.color|decimalToHexColor}}"
+                ng-repeat="program in ctrl.programIncreaments | filter:ctrl.filterPrograms"
+                data-container-type="safe-program-container"
+                data-iteration-id="{{program.id}}">
+                <div class="scrumdo-panel-heading" role="tab" id="headingOne">
+                    <h4 class="scrumdo-panel-title pull-left">
+                        <a ng-click="ctrl.toggleExpandedItr(program)"
+                            ng-class="{collapsed:!program.isExpanded}"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            <i uib-tooltip="Archived" ng-if="program.hidden" class="glyphicon glyphicon-folder-close"></i>
+                            {{program.name}}
+                        </a>
+                    </h4>
+                </div>
+
+                <div uib-collapse="!program.isExpanded"
+                    class="scrumdo-panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="headingOne">
+                    <div class="scrumdo-panel-body">
+                        <div class="column-summary" ng-if="ctrl.features[program.id].length > 0 ">
+                            <div class="column-summary-stat">
+                                <span class="stat-num">{{ctrl.programStats(program).totalCards}}</span> 
+                                {{::$root['safeTerms'].parent.work_item_name}}</div>
+                            <div class="column-summary-stat" ng-if="ctrl.programStats(program).totalPoints">
+                                <span class="stat-num">{{ctrl.programStats(program).totalPoints|setDecimal:2}}</span> Points</div>
+                            <div class="column-summary-stat" ng-if="ctrl.programStats(program).totalMinutes">
+                                <span class="stat-num">{{ctrl.programStats(program).totalMinutes|formatMinutes}}</span> Estimated Time</div>
+                            <div class="column-summary-stat" ng-if="ctrl.programStats(program).businessValue">
+                                <span class="stat-num">{{ctrl.programStats(program).businessValue|number:2}}</span> Business Value</div>
+                        </div>
+                        <div class="scrumdo-panel primary feature-panel"
+                            style="border: 1px solid {{parent.color|decimalToHexColor}}"
+                            ng-repeat="feature in ctrl.features[program.id]"
+                            data-container-type="safe-feature-container"
+                            data-feature-id="{{feature.id}}">
+                            <div class="scrumdo-panel-heading" role="tab" id="headingOne">
+                                <h4 class="scrumdo-panel-title pull-left col-md-11 col">
+                                    <a ng-click="ctrl.toggleExpandedFeature(feature)"
+                                        ng-class="{collapsed:!feature.isExpanded}"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        {{::feature.prefix}}-{{::feature.number}} {{feature.summary|htmlToPlaintext|decodeHtmlEntities|words:25}}
+                                    </a>
+                                </h4>
+                                <div class="dropdown pull-right col-md-1 col" uib-dropdown ng-if="canWrite">
+                                    <button uib-dropdown-toggle class="scrumdo-btn primary medium" type="button" 
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class=" glyphicon glyphicon glyphicon-chevron-down"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                                        <li><a ng-click="ctrl.addCard(feature)">Add card</a></li>
+                                        <li><a ng-if="feature.isExpanded" ng-click="ctrl.selectAll(feature)">Select All Cards</a></li>
+                                        <li><a ng-if="feature.isExpanded" ng-click="ctrl.selectNone(feature)">Select None</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div uib-collapse="!feature.isExpanded" class="scrumdo-panel-collapse" 
+                                role="tabpanel" aria-labelledby="headingOne">
+                                <div class="scrumdo-panel-body">
+                                    <div class="column-summary" ng-if="ctrl.stories[feature.id].length > 0 ">
+                                        <div class="column-summary-stat">
+                                            <span class="stat-num">{{ctrl.featureStats(feature).totalCards}}</span> Cards</div>
+                                        <div class="column-summary-stat" ng-if="ctrl.featureStats(feature).totalPoints">
+                                            <span class="stat-num">{{ctrl.featureStats(feature).totalPoints|setDecimal:2}}</span> Points</div>
+                                        <div class="column-summary-stat" ng-if="ctrl.featureStats(feature).totalMinutes">
+                                            <span class="stat-num">{{ctrl.featureStats(feature).totalMinutes|formatMinutes}}</span> Estimated Time</div>
+                                        <div class="column-summary-stat" ng-if="ctrl.featureStats(feature).businessValue">
+                                            <span class="stat-num">{{ctrl.featureStats(feature).businessValue|number:2}}</span> Business Value</div>
+                                    </div>
+                                    <ul class="kanban-story-list"
+                                        data-release-id="{{feature.id}}"
+                                        data-container-type="release-story-list">
+                                        <sd-story story-context-menu planning-mode="'epic'"
+                                            story="story"
+                                            project="project"
+                                            epics="epics"
+                                            iterations="iterations"
+                                            layout="cardSize"
+                                            ng-repeat="story in ctrl.stories[feature.id]|orderBy:ctrl.sortOrder">
+                                        </sd-story>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

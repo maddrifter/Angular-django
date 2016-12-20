@@ -1,0 +1,25 @@
+<div class="scrumdo-account-details" ng-controller="ProjectSettingsController">
+    <h2 class="scrumdo-account-details-title">Workspace Teams</h2>
+    <div class="scrumdo-account-details-content" ng-init="ctrl.loadTeams()">
+        <div class="row" ng-if="ctrl.loadingTeams">
+            <div class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+        </div>
+        <div class="row">
+            <sd-project-team ng-repeat="team in ctrl.projectTeams.self_teams" 
+                team=team 
+                access-label= ctrl.getTeamAccessLabel(team)
+                accessby="'self'">
+            </sd-project-team>
+            <sd-project-team ng-repeat="team in ctrl.projectTeams.parent_teams" 
+                team=team 
+                access-label= ctrl.getTeamAccessLabel(team)
+                accessby="'parent'">
+            </sd-project-team>
+            <sd-project-team ng-repeat="team in ctrl.projectTeams.child_teams" 
+                team=team 
+                access-label= ctrl.getTeamAccessLabel(team)
+                accessby="'child'">
+            </sd-project-team>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+//------------------------------
+// *****************************
+// Text
+// *****************************
+//------------------------------
+
+.scrumdo-text {
+  display: inline-block;
+  font-size: 14px;
+  font-family: $font-family-roboto;
+
+  &.primary {
+    color: #888888;
+  }
+
+  &.bold {
+    font-family: $font-family-roboto-bold;
+  }
+  &.italic {
+    font-family: $font-family-roboto-italic;
+  }
+  &.bold-italic {
+    font-family: $font-family-roboto-bold-italic;
+  }
+  &.vertical-center {
+    vertical-align: middle;
+  }
+  &.vertical-center-margin {
+    margin: 5px 0;
+  }
+  &.strike {
+    text-decoration: line-through;
+  }
+  &.small {
+    font-size: 12px;
+  }
+  &.block {
+    display: block;
+  }
+}

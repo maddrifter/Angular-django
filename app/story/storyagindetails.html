@@ -1,0 +1,13 @@
+<div ng-if="ctrl.agingInfo.length > 0" class="commits-box card-aging-box">
+    <label class="scrumdo-control-label card-popup">Aging Details:</label>
+    <div class="card-aging-info">
+        <div ng-repeat="group in ::ctrl.agingInfo">
+            <span class="card-aging-project" ng-if="ctrl.agingInfo.length > 1">{{group[0][2].name}}:</span>
+            <div class="card-aging-group">
+                <p ng-repeat="entry in group">
+                    {{::entry[0].full_label}}: {{::entry[1] | hoursToTimeString}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

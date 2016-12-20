@@ -1,0 +1,43 @@
+<div class="modal-header card-modal epic-modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <button type="button" class="scrumdo-btn btn-success pull-right" ng-click="ctrl.save()" >Save</button>
+    <h4>Reorder Collections</h4>
+</div>
+
+
+
+<div class="modal-body card-modal epic-modal-body">
+    <div ng-if="ctrl.busyMode" class="busy-mode">
+        <uib-progressbar max="ctrl.saveCount" value="ctrl.saveCount - ctrl.epicsToSave.length - 1"></uib-progressbar>
+    </div>
+
+    <div ng-if="!ctrl.busyMode">
+        <script type="text/ng-template" id="nodes_renderer.html">
+            <div ng-scope>
+                <div class="tree-node tree-node-content" >
+                    <a class="btn btn-xs"
+                       ng-if="node.children && node.children.length > 0"
+                       nodrag
+                       ng-click="node.collapsed=!node.collapsed">
+                        <span class="glyphicon" ng-class="{'glyphicon-chevron-right': node.collapsed, 'glyphicon-chevron-down': !node.collapsed}"></span>
+                    </a>
+                    <span class="epic-details" ui-tree-handle>#{{node.number}} - {{node.summary}}</span>
+                </div>
+
+                <ol ui-tree-nodes="" ng-model="node.children" uib-collapse="node.collapsed">
+                    <li ng-show="!node.archived" ng-repeat="node in node.children" ui-tree-node ng-include="'nodes_renderer.html'">
+                    </li>
+                </ol>
+            </div>
+        </script>
+        <div ui-tree id="tree-root">
+            <ol ui-tree-nodes ng-model="ctrl.nestedEpics">
+                <li ng-show="!node.archived" ng-repeat="node in ctrl.nestedEpics" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+
+
+

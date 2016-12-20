@@ -1,0 +1,33 @@
+<div>
+    <label class="scrumdo-control-label card-popup">Attachments</label>
+    <div ng-if="!readonly">
+        <input ng-class="{'disabled':story.summary.length==0 || note.title.length==0}" class="scrumdo-btn primary extended" 
+            type="button" name="attachfile" value="Attach File" 
+            ng-click="ctrl.showAttachmentServices(story, project, attachments, note)" />
+    </div>
+    
+    <div class="cards-modal-files" ng-repeat="attachment in attachments">
+        <sd-attachment-preview attachment="attachment"></sd-attachment-preview>
+        <h2 class="cards-modal-filename">
+            <a ng-if="attachment.attachment_type == 'local'" target="_blank" href="{{attachment.url}}">{{::attachment.filename}}</a>
+            <a ng-if="attachment.attachment_type != 'local'" target="_blank" href="{{attachment.attachment_url}}">{{::attachment.attachment_name}}</a>
+        </h2>
+        <time class="cards-modal-uploadtime">Uploaded by <b>{{::attachment.creator|shortuser}}</b> on {{::attachment.created|localtime}}</time>
+        <div class="attachment-actions">
+            <a ng-if="attachment.attachment_type == 'local'" target="_blank" href="{{attachment.url}}" 
+                class="scrumdo-text"><i class="fa fa-download"></i> Download</a>
+
+            <a ng-if="attachment.attachment_type != 'local'" target="_blank" href="{{attachment.attachment_url}}" 
+                class="scrumdo-text"><i class="fa fa-download"></i> Download</a> 
+            <a ng-if="!readonly" class="scrumdo-text" href="" ng-click="ctrl.deleteAttachment(attachment)"><i class="fa fa-trash"></i> Delete</a>
+
+            <a ng-if="attachment.attachment_type == 'local' && story && story.id>0 && ctrl.isImage(attachment)" 
+                href="" ng-click="ctrl.toggleCover(attachment)" class="scrumdo-text cover-action">
+                <i class="fa fa-desktop" aria-hidden="true"></i> 
+                <span ng-if="!attachment.cover_image">Make Cover</span>
+                <span ng-if="attachment.cover_image">Remove Cover</span>
+            </a>
+        </div>
+        
+    </div>
+</div>

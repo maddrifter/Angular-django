@@ -1,0 +1,359 @@
+//------------------------------
+// *****************************
+// Overview
+// *****************************
+//------------------------------
+
+.scrumdo-overview-wrapper {
+  background: #f6f6f6;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+}
+
+.overview-project-link {
+  color: $greyBackground;
+}
+
+.scrumdo-favorite-icon {
+  float: left;
+  position: relative;
+  left: -9px;
+  top: 3px;
+}
+
+.scrumdo-overview-container {
+  border: 1px solid #e2e2e2;
+  border-radius: 2px;
+  background: #fafafa;
+  margin-top: 20px;
+  @include clearfix();
+
+  .story-checkbox {
+    display: none;
+  }
+
+}
+
+.scrumdo-overview-content {
+  background: #ffffff;
+  border-left: 1px solid #eeeeee;
+  padding: 0 30px;
+}
+
+.scrumdo-overview-h2 {
+  font-size: 20px;
+  color: #3b3b3b;
+  font-family: $font-family-roboto-bold;
+}
+
+.scrumdo-overview-cardlist {
+  margin-bottom: 30px;
+
+
+  > h3 {
+    font-size: 14px;
+    font-family: $font-family-roboto-bold;
+    color: #aaaaaa;
+  }
+  a {
+    color: #666666;
+    font-family: $font-family-roboto-medium;
+  }
+
+  > ul {
+    margin: 0;
+    padding-left: 15px;
+    li {
+      list-style: none;
+      margin-bottom: 5px;
+      .cards-edit{
+        margin-right: 5px;
+      }
+
+    }
+  }
+  .safe-projects-list{
+    padding: 0;
+    .project-category{
+      cursor: default;
+      &:hover{
+        text-decoration: none;
+      }
+      &:focus{
+        text-decoration: none;
+      }
+    }
+    ul{
+      padding: 0px;
+      li{
+        &.portfolio-project{
+          a{
+            padding-left: 0px;
+          }
+        }
+      }
+      a{
+        padding-left: 15px;
+      }
+    }
+  }
+}
+
+.scrumdo-overview-timeline-wrapper {
+  padding-top: 40px;
+}
+
+.scrumdo-overview-timeline {
+  position: relative;
+  padding: 35px;
+  border-left: 2px solid #eeeeee;
+}
+
+.scrumdo-overview-timeline-tag {
+  position: absolute;
+  left: -40px;
+  top: 0;
+  display: inline-block;
+  background: #ffffff;
+  border-radius: 3px;
+  border: 1px solid #d8d8d8;
+  padding: 5px 20px;
+  margin: 0;
+  font-size: 13px;
+  font-family: $font-family-roboto-medium;
+  color: #888888;
+}
+
+.scrumdo-overview-items {
+  position: relative;
+  background: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  &:before {
+    position: absolute;
+    left: -41px;
+    top: 30px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    background: #f6764e;
+    width: 10px;
+    height: 10px;
+    content: " ";
+    @include box-shadow(0 0 0 2px #f6764e);
+  }
+
+}
+
+.scrumdo-overview-logs {
+  @include clearfix();
+  overflow-x: hidden;
+  border-bottom: 1px solid #eeeeee;
+  margin-bottom: 10px;
+  padding: 5px 0;
+}
+
+.scrumdo-overview-col-1 {
+  min-height: 10px;
+  width: 10%;
+  float: left;
+  padding-right: 15px;
+}
+
+.scrumdo-overview-col-11 {
+  width: 90%;
+  float: left;
+}
+
+.scrumdo-overview-log-h4 {
+  font-size: 13px;
+  font-family: $font-family-roboto;
+  color: #888888;
+  margin-top: 0;
+
+  strong {
+    font-family: $font-family-roboto-bold;
+    color: #3b3b3b;
+  }
+
+  .news-text {
+    max-height: 200px;
+    overflow: hidden;
+    h1 {
+      font-size: 16px;
+    }
+    h2 {
+      font-size: 14px;
+    }
+    h3, h4, h5 {
+      font-size: 12px;
+    }
+  }
+}
+
+.scrumdo-overview-comment {
+  padding: 10px;
+  border-radius: 3px;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  font-size: 13px;
+  font-family: $font-family-roboto;
+  color: #888888;
+  margin-bottom: 10px;
+  @include box-shadow(0 0 3px 0 #eeeeee)
+}
+
+.scrumdo-overview-time {
+  font-size: 10px;
+  font-family: $font-family-roboto;
+  color: #aaaaaa;
+}
+
+.scrumdo-overview-link {
+  display: inline-block;
+  margin: 10px 0;
+  color: #888888;
+  font-family: $font-family-roboto;
+  font-size: 13px;
+}
+
+
+
+.upgrade-option {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+
+.safe-training {
+  @extend .scrumdo-alert;
+  @extend .scrumdo-alert.notify;
+  @extend .scrumdo-alert.white;
+  padding-top: 17px;
+  font-size: 14px;
+  text-align: center;
+  min-height: 55px;
+  max-width: 790px;
+  margin-left: auto;
+  margin-right: auto;
+  b {
+    display: block;
+    margin: 5px 0px;
+  }
+  a {
+    margin-bottom: 5px;
+  }
+  .circle {
+    background-color: $orangeHighlight;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    color: #ffffff;
+    vertical-align: middle;
+    padding: 15px;
+    margin-top: -5px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.project-page{
+  .subscription-message {
+    .close-link {
+      &.project-app-link{
+        display: inline-block;
+      }
+    }
+    .scrumdo-btn{
+      margin-right: 50px;
+    }
+  }
+}
+.subscription-message {
+  text-align: center;
+  min-height: 55px;
+  position: relative;
+
+  .close-link {
+    color: #444;
+    font-size: 10px;
+    position: absolute;
+    top: 3px;
+    right: 6px;
+    &.project-app-link{
+      display: none;
+    }
+  }
+
+  .welcome-help-1, .welcome-help-2, .welcome-help-3, .welcome-help-4 {
+    display: block;
+    width: 115px;
+    height: 100px;
+    color: #ffffff;
+    border-radius: 4px;
+    margin: 0px 10px;
+    background-color: #fafafa;
+    text-align: center;
+    vertical-align: top;
+    padding: 15px 10px 0px 10px;
+    display: inline-block;
+    font-family: $font-family-roboto;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    i {
+      font-size: 36px;
+      margin-bottom: 5px;
+    }
+  }
+
+
+  .welcome-help-1 {
+    background-color: #F5764E;
+  }
+
+  .welcome-help-2 {
+    background-color: #9B59B6;
+  }
+
+  .welcome-help-3 {
+    background-color: #3898DB;
+  }
+
+  .welcome-help-4 {
+    background-color: #BF392B;
+  }
+
+
+
+
+
+  &.over-limit, &.billing-soon, &.welcome {
+    @extend .scrumdo-alert;
+    @extend .scrumdo-alert.notify;
+    @extend .scrumdo-alert.white;
+    padding-top: 17px;
+    font-size: 14px;
+  }
+  &.expired, &.subscribe-now {
+    @extend .scrumdo-alert;
+    @extend .scrumdo-alert.notify;
+    @extend .scrumdo-alert.white;
+    a {
+      float: right;
+    }
+  }
+  &.expiring {
+
+  }
+
+  .sub-message {
+    position: relative;
+    top: 7px;
+    font-size: 14px;
+  }
+}

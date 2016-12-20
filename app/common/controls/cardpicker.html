@@ -1,0 +1,68 @@
+﻿<div class="modal-header card-modal">
+    <button type="button" class="close" ng-click="ctrl.cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">{{ctrl.winTitle}}</h3>
+</div>
+
+<div class="modal-body card-picker-min">
+    <div class="row">
+        <div class="form-group iterations-dropdown col-md-5">
+            <label for="#" class="scrumdo-control-label card-popup">Workspace</label>
+            <sd-project-select ng-model="ctrl.currentProject" projects="projects"></sd-project-select>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div ng-class="{'col-sm-5' : ctrl.currentIteration}">
+            <div>
+                <sd-filter filter="ctrl.search(filter)"
+                           ng-if="ctrl.currentIteration"
+                           project="ctrl.currentProject"
+                           placeholder="Search">
+                </sd-filter>
+            </div>
+
+            <input type="text"
+                   class="scrumdo-form search"
+                   ng-if="ctrl.currentProject.slug == ''"
+                   ng-model="searchText"
+                   sd-enter="ctrl.search(searchText)"
+                   placeholder="Search Organization"/>
+
+        </div>
+        <div class="form-group iterations-dropdown col-md-5">
+            <label class="scrumdo-control-label card-popup" ng-hide="ctrl.currentIteration">Iteration</label>
+            <sd-iteration-select ng-model="ctrl.currentIteration" iterations="iterations"></sd-iteration-select>
+        </div>
+    </div>
+
+    <div ng-hide="ctrl.currentIteration">
+        <i> Select an iteration to view stories...</i>
+    </div>
+    <div ng-if="ctrl.currentIteration">
+        <a ng-show="ctrl.storyCount > 0" ng-click="ctrl.selectAll($event)" class="backlog-container-selectall">
+                        <span ng-if="!ctrl.allSelectMode">Select All</span>
+                        <span ng-if="ctrl.allSelectMode">Deselect All</span>
+                    </a>
+        <div class="row">
+        <ul class="col-md-12 story-list" data-iteration-id="{{ ctrl.currentIteration.iterationId }}">
+            <sd-selectable-story sd-access
+                                 story="story"
+                                 project="ctrl.currentProject"
+                                 epics="epics"
+                                 layout="ctrl.cardLayout"
+                                 ng-if="story.id != ctrl.currentStoryId"
+                                 ng-repeat="story in ctrl.stories"></sd-selectable-story>
+
+        </ul>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="display-inline-block">
+        <button class="scrumdo-btn primary card-picker-select" ng-click="ctrl.select()">Select</button>
+    </div>
+    <uib-pagination ng-if="ctrl.maxPage>1"
+                    items-per-page="ctrl.perPage"
+                    total-items="ctrl.storyCount"
+                    ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></uib-pagination>
+</div>

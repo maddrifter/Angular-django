@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Set Card Type</h3>
+</div>
+
+<div class="modal-body">
+    <h4>Select card type</h4>
+    <span ng-if="status.length > 0" ng-repeat="status in project.statuses track by $index">
+        <input type="radio"
+               ng-model="$parent.$parent.selectedStatus"
+               ng-value="$index + 1"> {{ status }}
+    </span>
+
+
+</div>
+<div class="modal-footer">
+    <button ng-disabled="! selectedStatus>0" class="scrumdo-btn secondary" ng-click="ctrl.ok()">Ok</button>
+    <button class="scrumdo-btn primary" ng-click="$dismiss('canceled')">Cancel</button>
+</div>

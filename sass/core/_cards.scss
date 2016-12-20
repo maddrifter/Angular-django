@@ -1,0 +1,593 @@
+//------------------------------
+// *****************************
+// Cards
+// *****************************
+//------------------------------
+
+.cards {
+  border: 1px solid #eeeeee;
+  width: 100%;
+  background: #ffffff;
+  margin-bottom: 10px;
+
+  @include box-shadow(0 0 5px 1px #eeeeee);
+    
+  &.card-urgent{
+    border-color: #FFFF00;
+  }
+  
+  &.card-blocked{
+    border-color: #FF0000;
+  }
+  
+  &.selected {
+    border-color: #3498db;
+  }
+
+  .milestones-display {
+    margin-top: 10px;
+    .milestone-status-indicator {
+      width: 8px;
+      height: 8px;
+      float: right;
+      position: relative;
+      top: 3px;
+    }
+    .milestone-display {
+      margin: 2px -10px 0px -10px;
+      background-color: #f5f5f5;
+      padding: 5px;
+
+      .progress {
+        border-radius: 0px;
+        height: 2px;
+        margin-bottom: 1px;
+        .progress-bar {
+          height: 2px;
+          box-shadow: none;
+          &.progress-bar-warning {
+            background-color: #DDDDDD;
+          }
+        }
+      }
+    }
+  }
+
+  .value-displays {
+    color: #888888;
+    text-align: center;
+
+    .value-block {
+      display: inline-block;
+      width: 70px;
+      height: 47px;
+      margin: 2px;
+      vertical-align: top;
+
+      .labels {
+        padding: 1px 5px;
+        min-width: 45px;
+        text-align: center;
+        display: inline-block;
+      }
+
+      .value {
+        padding: 1px 5px 5px 5px;
+        text-align: center;
+        font-size: 12px;
+        line-height: 12px;
+      }
+    }
+
+
+  }
+
+
+
+
+
+  &.story-list-style {
+    .value-displays {
+      .value {
+        font-size: 12px;
+      }
+    }
+
+  }
+
+
+
+  .task-grid {
+    .new-task-button {
+      margin: 0px 0px 5px 5px;
+    }
+    border-bottom: 1px solid #eeeeee;
+    margin: 5px 0px;
+  }
+
+  .story-mini-display {
+    width: 100%;
+    min-height: 16px;
+    background-color: #F5F5F5;
+    color: rgb(136, 136, 136);
+    font-size: 10px;
+    font-family: $font-family-roboto;
+    padding: 1px 0px 1px 5px;
+  }
+  .mini-cell-label {
+    padding: 0px 3px;
+    border-radius: 2px;
+    color: #ffffff;
+    margin-left: 10px;
+  }
+}
+
+.cards-cover{
+  height: 150px;
+  background-size: cover;
+  background-color: #f6764e;
+  background-position: center;
+  user-select: none;
+  background-repeat: no-repeat;
+  border-radius: 3px 3px 0 0;
+  margin-bottom: 5px;
+}
+
+.cards-tag {
+  margin: 0;
+  padding: 0 10px;
+  overflow: hidden;
+  @include clearfix();
+
+
+  li {
+    float: left;
+    width: 45px;
+    height: 3px;
+    margin-bottom: 3px;
+    margin-left: 2px;
+    margin-right: 2px;
+    text-indent: -9999px;
+  }
+
+
+
+  .cards-tag-blue {
+    background: #3498db;
+  }
+  .cards-tag-green {
+    background: #2ecc71;
+  }
+}
+
+.cards-header {
+  @include clearfix();
+  padding: 10px 10px 1px 10px;
+}
+
+.cards-number {
+  color: #f6764e;
+  font-family: $font-family-roboto-bold;
+  font-size: 14px;
+  text-decoration: none;
+  float: left;
+  margin-right: 10px;
+
+  &:hover {
+    text-decoration: none;
+    color: #f6764e;
+  }
+}
+
+.cards-hashtags {
+  margin: 1px 10px;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    list-style: none;
+    font-family: $font-family-roboto-medium;
+    color: #3498db;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+}
+
+.cards-edit {
+  background: #eeeeee;
+  color: #989898;
+  cursor: pointer;
+  vertical-align: text-top;
+  padding: 3px;
+  border-radius: 2px;
+}
+
+.cards-checked {
+  vertical-align: middle !important;
+  margin-top: 3px;
+}
+
+.tasks-pointer {
+  cursor: pointer;
+}
+
+.cards-team-content {
+  @include clearfix();
+  padding: 2px 10px 0px 10px;
+  overflow-x: hidden;
+
+}
+
+.cards-content {
+  @include clearfix();
+  padding: 2px 10px;
+  overflow-x: hidden;
+}
+
+.cards-details {
+  @include clearfix();
+
+  padding: 4px 10px 0px 10px;
+}
+
+.cards-information {
+  @include clearfix();
+
+  padding: 0;
+  margin: 0;
+
+
+
+  li {
+    float: left;
+    list-style: none;
+    padding: 0 10px;
+    border-right: 1px solid #f1f1f1;
+
+    .due-date {
+      padding-top: 2px;
+    }
+
+      &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      //border-left: 1px solid #f1f1f1;
+      border-right: none;
+    }
+
+  }
+}
+
+
+
+.cards-comments-info {
+  padding-left: 20px;
+  background: image-url("icons/chat-icon.png") no-repeat left center;
+  color: #aaaaaa;
+  font-family: $font-family-roboto-bold;
+  font-size: 12px;
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+
+.cards-external {
+  a {
+    color: #aaaaaa;
+  }
+
+}
+
+
+a.pr-open {
+  color: #000080;
+}
+
+a.pr-closed {
+  color: #117700;
+}
+
+.cards-users {
+  position: relative;
+  float: right;
+}
+
+.cards-users-number {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: -15px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: $greyBackground;
+  font-family: $font-family-roboto-medium;
+  font-size: 12px;
+  z-index: 100;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cards-users-images {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+
+  li {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    z-index: 0;
+
+    img {
+      max-width: 100%;
+      border: 1px solid #ffffff;
+      border-radius: 2px;
+    }
+
+    &:nth-child(1) {
+      top: -3px;
+      left: -3px;
+      z-index: 1;
+    }
+    &:nth-child(2) {
+      top: -5px;
+      left: -5px;
+      z-index: 2;
+    }
+    &:nth-child(3) {
+      top: -7px;
+      left: -7px;
+      z-index: 3;
+    }
+  }
+}
+
+.cards-badges-wrapper {
+  position: relative;
+  background: #f5f5f5;
+  padding: 5px 30px 5px 10px;
+
+  .cards-badges-number {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    display: inline-block;
+    font-size: 10px;
+    font-family: $font-family-roboto-bold;
+    color: #888888;
+  }
+  .badges {
+    color: #555;
+    letter-spacing: 0.4px;
+  }
+}
+
+.cards-badges-wrapper-team {
+  @extend .cards-badges-wrapper;
+  background-color: #ffffff;
+  min-height: 0px;
+}
+
+.cards-close {
+  display: inline-block;
+  border-radius: 50%;
+  background: #dddddd;
+  color: #ffffff;
+  font-size: 10px;
+  padding: 3px;
+  cursor: pointer;
+  margin-top: 2px;
+  margin-left: 5px;
+}
+
+.story-list {
+    list-style: none;
+}
+.story-list-style {
+  margin: 0px 1px 3px 1px;
+
+
+  @include box-shadow(0 0 2px 1px #fafafa);
+
+  .cards-header {
+    padding: 2px 1px 2px 5px;
+    overflow-x: hidden;
+  }
+  .cards-number, .cards-text {
+    font-size: 12px;
+  }
+  .cards-edit {
+    position: relative;
+    top: -4px;
+  }
+}
+
+
+.read-only .story-checkbox {
+  display: none;
+}
+
+.business-value {
+  color: #888888;
+}
+
+.due-date {
+  color: #888888;
+  .past-due {
+    color: #BE392A;
+  }
+  .due-soon {
+    color: #FEC54C;
+  }
+}
+
+
+.card-minimize-position{
+    position:fixed;
+    bottom: 0;
+    right: 10px;
+    width: 200px;
+}
+
+.scrumdo-view-detail-sidebar {
+  label {
+    display: block;
+    margin: 10px -15px !important;
+    color: #ffffff !important;
+    background-color: #747E89;
+    padding: 3px 10px;
+
+  }
+}
+
+
+.story-edit-window {
+  .card-save-button {
+    margin-right: 5px;
+  }
+  .minimized-controls {
+    position: relative;
+    top: -6px;
+    left: 4px;
+  }
+
+
+  .add-dependency-button {
+    height: 29px;
+    padding-top: 4px;
+    position: relative;
+    top: -3px;
+    left: 3px;
+  }
+
+  .add-dependency-form {
+    background-color: #ffffff;
+    padding: 8px 8px 20px 8px;
+
+
+    .add-dependency-results {
+      max-height: 200px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      margin: 10px 0px;
+      border: 1px solid #e1e1e1;
+    }
+
+    input[type='text'] {
+      height: 32px;
+    }
+
+    .input-group {
+      height: 32px;
+      margin-right: 10px;
+    }
+    ul {
+      padding-left: 10px;
+      li {
+        list-style: none;
+      }
+    }
+  }
+
+  .story-dependencies-box{
+    font-family: "robotoregular", sans-serif;
+    margin-top: 15px;
+    strong{
+      font-family: "robotobold", sans-serif;
+      font-size: 12px;
+    }
+    .story-dependency{
+      position: relative;
+      background: #fff;
+      padding: 5px 5px;
+      border: 1px solid #efefef;
+      font-size: 12px;
+      margin-bottom: 5px;
+      float: left;
+      width: 100%;
+      .scrumdo-modal-card-nr{
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .action-btn{
+        position: absolute;
+        right: 5px;
+        color: #adadad;
+        top: 3px;
+      }
+    }
+  }
+
+}
+
+.portfolio-cards{
+  .cards-number{
+    margin: 0;
+  }
+  .cards-header{
+    padding: 5px 10px 1px 10px;
+    .folder-icon{
+      margin: 3px 8px 0 0;
+      color: #989898;
+      cursor: pointer;
+    }
+    .project-icon{
+      font-size: 12px;
+      .fa{
+        font-size: 14px;
+      }
+    }
+  }
+  .cards-content{
+    min-height: 42px;
+  }
+  .story-mini-display{
+    background: #fff;
+    border-top: 1px solid #f2f2f2;
+    padding: 5px 5px;
+  }
+}
+
+.features-list{
+  .cards-details{
+    padding: 4px 10px 10px 10px;
+    font-size: 13px;
+    .total-team{
+      margin-right: 20px;
+    }
+    .fa, .scrumdo-icons{
+      color: #aaaaaa;
+      font-size: 14px;
+      width: 12px;
+    }
+  }
+  .card-footer{
+    position: relative;
+    .feature-progress{
+      position: absolute;
+      left: -1px;
+      top: -2px;
+      right: -1px;
+      height: 2px;
+      .progress {
+        border-radius: 0px;
+        height: 2px;
+        .progress-bar {
+          height: 2px;
+          box-shadow: none;
+          &.progress-bar-warning {
+            background-color: #DDDDDD;
+          }
+        }
+      }
+    }
+  }
+}

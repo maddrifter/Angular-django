@@ -1,0 +1,337 @@
+//------------------------------
+// *****************************
+// Notes
+// *****************************
+//------------------------------
+
+.scrumdo-notes {
+  background: #f9f9f9;
+  position: fixed;
+  top: 115px;
+  bottom: 0px;
+  left: 0px;
+  right: 40px;
+  padding: 25px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-transition: right 0.3s ease-out;
+  -moz-transition: right 0.3s ease-out;
+  -o-transition: right 0.3s ease-out;
+  transition: right 0.3s ease-out;
+
+  &.navbar-open{
+    right: 325px;
+  }
+
+  .scrumdo-notes-wrapper{
+    position: relative;
+    border-radius: 3px;
+    border: 1px solid #e2e2e2;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    background: #ffffff;
+  }
+
+  .scrumdo-notes-content{
+    width: 100%;
+    height: 100%;
+  }
+  .scrumdo-notes-left{
+    height: 100%;
+    border-right: 1px solid #eeeeee;
+    padding: 10px 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .notes-list{
+      height: 92%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      .note-iteration{
+        padding: 0 5px;
+        margin-bottom: 10px;
+        .iteration-dropdown{
+          left: 0;
+          right:auto;
+          width: 100%;
+          a{
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+          }
+        }
+      }
+      .scrumdo-account-menu{
+        margin: 0px 5px;
+        li{
+          border: 1px solid #eeeeee;
+          margin-bottom: 5px;
+          &:hover{
+            background: #ddd;
+            a{
+              text-decoration: none;
+            }
+          }
+          &.selected{
+            background: #f6f6f6;
+            border-color: #3498db;
+          }
+          a{
+            padding: 10px 10px;
+            width: 100%;
+            span, i{
+              margin-top: 5px;
+              display: inline-block;
+              font-size: 75%;
+            }
+            i{
+              margin-left:10px;
+            }
+          }
+        }
+      }
+    }
+    .new-note{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 0;
+      border-top: 1px solid #eeeeee;
+      a{
+        width:80%;
+      }
+    }
+  }
+  .scrumdo-notes-right{
+    height: 100%;
+    background: #ffffff;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 1px;
+    .note-details{
+      padding: 5px 0px;
+    }
+    .note-action{
+      padding: 0 15px 5px 15px;
+      border-bottom: 1px solid #eee;
+      .col-md-8{
+        button{
+          margin-left: 15px;
+        }
+      }
+    }
+    .note-content{
+      overflow-y: auto;
+      overflow-x: hidden;
+      position: absolute;
+      top: 45px;
+      bottom: 0px;
+      padding: 0 15px;
+      background: #f9f9f9;
+      width: 100%;
+      padding-top: 20px;
+      .note-iteration{
+        width: 250px;
+      }
+      .scrumdo-mce-editor{
+        min-height: 100px;
+      }
+      .note-body{
+        position: relative;
+      }
+      .add-placeholder{
+        position: absolute;
+        bottom: 15px;
+        left: 10px;
+        color: #9e9e9e;
+        pointer-events: none;
+      }
+      .note-extras{
+        background: #F9F9F9;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 0px 0px;
+        .note-attachments{
+          border-right: 1px solid #ddd;
+          padding: 20px 10px 20px 0;
+          sd-attachments > div{
+            max-width: 245px;
+            margin: 0 auto;
+          }
+        }
+        .note-comments{
+          padding: 20px 0px 20px 10px;
+          border-left: 1px solid #ddd;
+          margin: 0px 1px 0 -1px;
+          .cards-comments{
+            padding: 0 10px;
+          }
+        }
+      }
+    }
+  }
+}
+.inbox-group{
+  .note-content{
+    padding: 10px 10px;
+    background: #f9f9f9;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    .row{
+      margin: 0;
+    }
+    .note-extras{
+      background: #F9F9F9;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      padding: 0px 0px;
+      .note-attachments{
+        border-right: 1px solid #ddd;
+        padding: 20px 10px 20px 0;
+        sd-attachments > div{
+          max-width: 245px;
+          margin: 0 auto;
+        }
+      }
+      .note-comments{
+        padding: 20px 0px 20px 10px;
+        border-left: 1px solid #ddd;
+        margin: 0px 1px 0 -1px;
+        .cards-comments{
+          padding: 0 10px;
+        }
+      }
+    }
+  }
+}
+
+.increment-notes{
+  position: relative;
+  font-family: "robotoregular", sans-serif;
+  .add-note-btn{
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    position: absolute;
+    right: -15px;
+    top: -35px;
+    border-radius: 0;
+    color: #7a7a7a;
+  }
+  .noteslist{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 500px;
+    overflow: auto;
+    li{
+      border-top: 1px solid #e8e8e8;
+      margin:0px;
+      padding: 5px 0 0 0px;
+      .timeinfo{
+        display: table-cell;
+        font-size: 13px;
+        font-weight: bold;
+        color: #9c9c9c;
+      }
+      .noteinfo{
+        display: table-cell;
+        padding-left: 30px;
+        h5{
+          font-weight: 700;
+          margin-bottom: 5px;
+        }
+        .notecontent{
+          p{
+            line-height: 20px;
+            margin: 0;
+          } 
+          ul{
+            list-style: disc;
+          }
+          li{
+            border: none;
+          }
+        }
+      }
+      .metainfo{
+        margin-top: 10px;
+        .counts{
+          color: #9c9c9c;
+          background: #f1f1f1;
+          padding: 3px 0px 3px 5px;
+          margin: 0;
+          .fa{
+            margin-right: 10px;
+            cursor: pointer;
+          }
+          .edit-note{
+            padding: 3px 3px;
+            cursor: pointer;
+            border: 1px solid #e8e8e8;
+          }
+        }
+        .author{
+          color: #9c9c9c;
+          font-size: 12px;
+          margin-top: 5px;
+        }
+        .viewnote{
+          margin-left: 15px;
+          margin-top: 0;
+          width: 13px;
+          cursor: pointer;
+        }
+      }
+      .showmore{
+        padding-top: 20px;
+        font-size: 13px;
+        color: #9c9c9c;
+        span{
+          font-weight: 700;
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+      &:first-child{
+        border-top: 1px solid #e8e8e8;
+      }
+      &:last-child{
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.scrumdo-modal{
+  &.scrumdo-note{
+    .note-action{
+      button {
+        margin-left: 15px;
+      }
+    }
+    .note-content{
+      .note-body{
+        padding: 10px 0;
+        background: #fff;
+        position: relative;
+        min-height: 100px;
+      }
+      &.editing{
+        .note-body{
+          background: transparent;
+        }
+      }
+      .scrumdo-mce-editor{
+        min-height: 100px;
+      }
+      .add-placeholder{
+        position: absolute;
+        bottom: 20px;
+        left: 10px;
+        color: #9e9e9e;
+        pointer-events: none;
+      }
+    }
+  }
+}

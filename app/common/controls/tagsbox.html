@@ -1,0 +1,32 @@
+<div class="scrumdo-boxes scrumdo-tags-box">
+    <div class="scrumdo-box-header">
+        <span class="pull-left"><strong>#Tags</strong> ({{ctrl.listValues.length}})</span>
+    </div>
+    <div class="scrumdo-box-content">
+        <div class="tags-list">
+            <span ng-repeat="tag in ctrl.listValues track by $index" class="scrumdo-tags">
+                #{{tag}}
+                <span ng-click="ctrl.removeTag(tag)" class="scrumdo-tags-close glyphicon glyphicon-remove"></span>
+            </span>
+        </div>
+
+
+        <div class="input-group">
+            <input type="text"
+                   ng-change="ctrl.setCurrentValue()"
+                   ng-model="currentTypedValue"
+                   typeahead-template-url="{{template}}"
+                   typeahead-editable="true"
+                   typeahead-append-to-body="true"
+                   typeahead-on-select="ctrl.updateCurrentValue($item)"
+                   uib-typeahead="tag as tag.name for tag in tags | filter:$viewValue | limitTo:8"
+                   sd-enter="ctrl.addTag()"
+                   class="scrumdo-form primary tags-input"
+                   placeholder="Add a tag...">
+            <span class="input-group-btn" ng-click="ctrl.addTag()">
+                <button class="scrumdo-btn primary" type="button"><span class="glyphicon glyphicon-plus-sign"></span></button>
+            </span>
+        </div>
+    </div>
+</div>
+

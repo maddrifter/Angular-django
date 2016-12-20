@@ -1,0 +1,74 @@
+﻿<ul class="cards-tag">
+    <li ng-repeat="label in story.labels"
+        ng-style="{'background-color': (label.color|decimalToHexColor) }"
+        uib-tooltip="{{label.name}}"
+        tooltip-placement="bottom"
+        tooltip-trigger="mouseenter"></li>
+</ul>
+
+<div class="cards-content">
+    <span class="cards-number">{{::project.prefix}}-{{::story.number}}&nbsp;</span>
+    <div class="cards-text" sd-link-catcher ng-bind-html="story.summary|to_trusted"></div>
+    <div ng-if="ctrl.detailVisible" class="cards-text detail-text" sd-link-catcher ng-bind-html="story.detail|to_trusted"></div>
+</div>
+
+<div class="cards-users pull-right"
+     tooltip-placement="bottom"
+     tooltip-html-unsafe="{{ ctrl.assigneeTooltip }}"
+     tooltip-trigger="mouseenter">
+    <span ng-if="story.assignee.length > 1" class="cards-users-number">{{story.assignee.length}}</span>
+    <ul class="cards-users-images">
+        <li ng-repeat="user in story.assignee">
+            <sd-user-portrait avatar-tooltip size="20" user="user"></sd-user-portrait>
+        </li>
+    </ul>
+</div>
+
+<div class="cards-badges-wrapper">
+
+
+    <ul class="cards-information pull-left">
+
+        <li ng-if="story.points_value > 0">
+            <span class="labels label-tag-orange">{{story.points}}</span>
+        </li>
+
+        <li ng-if="story.points_value == 0 && story.estimated_minutes>0">
+            <span class="labels label-tag-dullpurple">{{story.estimated_minutes|formatMinutes}}</span>
+        </li>
+
+        <li>
+            <span class="cards-comments-info"><span ng-if="story.comment_count > 0">{{story.comment_count}}</span> </span>
+        </li>
+
+        <li class="cards-external" ng-if="story.has_external_links">
+            <a ng-click="ctrl.openExternalLink()"><i class="fa fa-github"></i> </a>
+        </li>
+
+        <li class="cards-external">
+            <a href="{{::story.commits[0].link}}" tooltip-append-to-body="true" ng-if="story.commits.length>0" uib-tooltip="Commit {{::story.commits[0].name}}"><i class="fa fa-github"></i> </a>
+            <a ng-class="{'pr-open':pr.state==0, 'pr-closed':pr.state==1}"
+               href="{{::pr.link}}" ng-repeat="pr in story.pull_requests"
+               target="_blank"
+               tooltip-append-to-body="true"
+               uib-tooltip="PR {{::pr.name}}"><i class="fa fa-github"></i></a>
+        </li>
+
+        <li sd-due-date ng-if="story.due_date" class="due-date" story="story"></li>
+    </ul>
+
+
+    <span class="cards-cell" ng-if="story.cell">
+        {{story.cell.full_label}}
+    </span>
+
+
+    <span ng-class="ctrl.tagClass(tag)" ng-repeat="tag in story.tags_list track by $index" class="badges primary">#{{tag}}</span>
+
+    <span class="epic-label" ng-if="story.epic && epics">
+        Collection: {{story.epic|epicToName:epics}} {{story.epic|parentEpicToName:epics}}
+    </span>
+
+
+
+</div>

@@ -1,0 +1,78 @@
+<button ng-class="{disabled:!settingsCtrl.showForceSync}" class="pull-right scrumdo-btn small primary" ng-click="settingsCtrl.forceSync()"><i class="fa fa-refresh"></i> Force Sync</button>
+<h2>Extras</h2>
+
+<hr/>
+
+<div class="row row-same-height">
+
+    <div class="col-sm-6">
+        <div class="well extras-well">
+            <h3><i class="fa fa-github"></i> GitHub</h3>
+            <p>Sync your Github Issues with ScrumDo cards.  Reference ScrumDo cards in your commit messages.</p>
+            <button class="scrumdo-btn primary" ui-sref="app.settings.githubextra"><i class="fa fa-wrench"></i> Configure</button>
+            <br/><br/>
+
+            <b><i class="fa fa-lightbulb-o"></i> Tip:</b>
+            <i>If you are using Github with multiple workspace, you can configure Github for your <a ng-href="/organization/{{boardProject.organizationSlug}}/extras#/github">entire organization</a>.</i>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="well extras-well">
+            <h3><i class="fa fa-slack"></i> Slack</h3>
+            <p>Send status updates to a Slack channel.</p>
+            <button class="scrumdo-btn primary" ui-sref="app.settings.slackextra"><i class="fa fa-wrench"></i> Configure</button>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="well extras-well">
+            <h3>HipChat</h3>
+            <p>Send status updates to a HipChat room.</p>
+            <button class="scrumdo-btn primary" ui-sref="app.settings.hipchatextra"><i class="fa fa-wrench"></i> Configure</button>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="well extras-well">
+            <h3>FlowDock</h3>
+            <p>Send status updates to your FlowDock Team Inbox.</p>
+            <button class="scrumdo-btn primary" ui-sref="app.settings.flowdockextra"><i class="fa fa-wrench"></i> Configure</button>
+        </div>
+    </div>
+
+    <div class="col-sm-6" ng-controller="ProjectSettingsController">
+        <div class="well extras-well">
+            <h3>Harvest</h3>
+            <p>Track your time with Harvest.</p>
+            <label class="action-3 scrumdo-checkbox default hidden-xs">
+                <label ng-if="!ctrl.harvestEnabled" for="HarvestTracking">Enable harvest:</label>
+                <label ng-if="ctrl.harvestEnabled" for="HarvestTracking">Disable harvest:</label>
+                <input type="checkbox" id="HarvestTracking" ng-change="ctrl.setTimeTrackingMode()" ng-model="ctrl.harvestEnabled">
+            </label>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="well extras-well">
+            <h3><i class="fa fa-envelope-o"></i> Email a Card</h3>
+            <p>Send an email to a special address to create a new card</p>
+            <button class="scrumdo-btn primary" ui-sref="app.settings.emailcardextra"><i class="fa fa-wrench"></i> Configure</button>
+        </div>
+    </div>
+
+
+</div>
+
+
+<hr/>
+<h3>Others</h3>
+<div class="scrumdo-alerts notify">
+<p>
+    The old <b>Jira and Basecamp</b> extras are not available.  If you require this functionality, please consider using <a href="https://www.scrumdo.com/orgs">Classic ScrumDo</a>.
+</p>
+<p>Our apologies for any trouble this may cause.</p>
+</div>

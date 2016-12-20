@@ -1,0 +1,42 @@
+<div class="risks-tab" sd-access>
+    <table class="table risks-table">
+        <tr>
+            <th>Risk</th>
+            <th colspan="{{ctrl.portfolio().risk_types.length}}">Severity</th>
+            <th>Probability</th>
+            <th>Artifacts</th>
+        </tr>
+
+        <tr ng-repeat="risk in ctrl.risks | orderBy:ctrl.score"
+            ng-click="ctrl.editRisk(risk)"
+            ng-mouseout="ctrl.hover(null)"
+            ng-mouseover="ctrl.hover(risk)">
+            <td class="risk-name-column">
+                <span class="risk-color-blob" ng-style="{'background-color': ctrl.riskColor(risk)}"></span>
+                <b>{{risk.description}}</b>
+            </td>
+
+            <td ng-repeat="risk_type in ctrl.portfolio().risk_types"
+                class="risk-box {{'severity-' + risk['severity_' + (1+$index)]}}">
+                {{risk_type}}
+                <span class="risk-value">{{ctrl.riskNames[risk['severity_' + ($index+1)]]}}</span>
+            </td>
+
+            <td class="probability-column">
+                <uib-progressbar value="risk.probability" max="100"></uib-progressbar>
+                {{risk.probability}}%
+            </td>
+            <td>
+                <sd-risk-artifacts-label artifacts="ctrl.riskArtifacts(risk)"></sd-risk-artifacts-label>
+            </td>
+        </tr>
+        <tr ng-if="ctrl.risks.length == 0">
+            <td colspan="8" class="text-center">
+                No Risks associated with this {{::$root.safeTerms['current'].work_item_name}}.
+            </td>
+        </tr>
+    </table>
+
+    <button ng-if="canWrite" class="scrumdo-btn primary new-risk-button" ng-click="ctrl.addRisk()">New Risk</button>
+
+</div>

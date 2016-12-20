@@ -1,0 +1,96 @@
+<div class="inbox-group">
+
+    <div>
+        <div class="pull-right">
+            <button ng-click="gctrl.previous()" class="scrumdo-btn primary">&lt;</button>
+            <button ng-click="gctrl.next()" class="scrumdo-btn primary">&gt;</button>
+        </div>
+
+        <button ng-click="gctrl.back()" class="scrumdo-btn primary"><i class="fa fa-long-arrow-left"></i> Back</button>
+
+        <span class="pull-right group-counts">
+            {{groupCounts[0]}} / {{groupCounts[1]}}
+        </span>
+
+        <button ng-click="gctrl.archive()" tootip="Delete Message" class="scrumdo-btn primary"><i class="fa fa-trash"></i></button>
+
+    </div>
+    <hr/>
+
+    <ul class="kanban-story-list" ng-if="gctrl.group.story">
+        <sd-story story="gctrl.group.story" project="gctrl.project"></sd-story>
+    </ul>
+
+    <div ng-if="gctrl.group.epic" class="epic-summary">
+        <a href="/projects/epic_permalink/{{gctrl.group.epic.id}}">
+            {{gctrl.group.epic.short_name}}
+        </a>
+        <span ng-bind-html="gctrl.group.epic.summary"></span>
+
+        <ul>
+            <li ng-if="gctrl.group.epic.stats.points_total>0">Total Points: {{gctrl.group.epic.stats.points_total}}</li>
+            <li ng-if="gctrl.group.epic.stats.points_in_progress>0">Points in Progress: {{gctrl.group.epic.stats.points_in_progress}}</li>
+            <li ng-if="gctrl.group.epic.stats.points_completed>0">Points Completed: {{gctrl.group.epic.stats.points_completed}}</li>
+            <li ng-if="gctrl.group.epic.stats.cards_total>0">Total Cards: {{gctrl.group.epic.stats.cards_total}}</li>
+            <li ng-if="gctrl.group.epic.stats.cards_in_progress>0">Cards in Progress: {{gctrl.group.epic.stats.cards_in_progress}}</li>
+            <li ng-if="gctrl.group.epic.stats.cards_completed>0">Cards Completed: {{gctrl.group.epic.stats.cards_completed}}</li>
+            <li ng-if="gctrl.group.epic.stats.cards_total>0">
+                <a target="_blank" href="/projects/project/{{gctrl.project.slug}}/search?q=epic:{{gctrl.group.epic.number}}"><i class="fa fa-search"></i> Find Cards</a>
+            </li>
+        </ul>
+
+
+    </div>
+
+    <iteration-summary iteration-id="gctrl.group.entries[0].body.message.iteration_id"
+                       project="gctrl.project"
+                       ng-if="gctrl.group.entries[0].body.event_type.indexOf('iteration')==0"></iteration-summary>
+
+    <project-summary ng-if="::gctrl.group.projectSummary"></project-summary>
+
+    <sd-note ng-if="gctrl.group.entries[0].body.event_type.indexOf('note')==0" 
+            project="gctrl.project"
+            note-id="gctrl.group.entries[0].body.message.note_id"></sd-note>
+
+    <table class="inbox-detail-table">
+        <tr ng-repeat="entry in gctrl.group.entries">
+            <td class="inbox-detail-portrait">
+                <sd-user-portrait user="entry.body.user" size="48"></sd-user-portrait>
+            </td>
+            <td class="inbox-detail-subject">
+                {{entry.subject}} <br/>
+                {{entry.created}}
+            </td>
+            <td class="inbox-detail-body">
+                <div ng-if="entry.body.event_type == 'comment_posted'"
+                     ng-bind-html="entry.body.message.text"></div>
+                
+                <span ng-if="entry.body.event_type == 'attachment_added'">
+                    <a href="{{entry.body.message.file_url}}" target="_blank">{{entry.body.message.file_name}}</a> Attachment Added
+                </span>
+
+                <span ng-if="entry.body.event_type.indexOf('task')==0">
+                    {{entry.assignee}}
+                    {{entry.body.message.summary}}<br/>
+                    <span class="labels status-bg-{{entry.body.message.status}}">{{entry.body.message.status_name}}</span>
+                </span>
+
+                <ul ng-if="(entry.body.event_type == 'card_edited') || (entry.body.event_type == 'epic_edited')">
+                    <li ng-repeat="(k,v) in entry.body.message" ng-if="gctrl.showDiff(k)">
+                        <b>{{gctrl.translateDiffKey(k)}}:</b>
+                        <span ng-bind-html="gctrl.getDiffValues(k,v[1])"></span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="card-comments" ng-if="gctrl.group.story">
+        <sd-comments-box user="user"
+                     project="gctrl.project"
+                     ng-model="gctrl.newComment"
+                     story="gctrl.group.story"></sd-comments-box>
+    </div>
+
+</div>

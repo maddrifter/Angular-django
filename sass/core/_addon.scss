@@ -1,0 +1,28 @@
+//------------------------------
+// *****************************
+// Addon
+// *****************************
+//------------------------------
+
+.scrumdo-addon {
+  @extend .input-group-addon;
+
+  &.primary {
+    color: #888888;
+    border: 1px solid #d8d8d8;
+    font-size: 13px;
+    @include gradient-vertical(#fafafa, #f5f5f5, 0%, 100%);
+
+    &:first-child {
+      border-right: 0;
+    }
+    &:last-child {
+      border-left: 0;
+    }
+  }
+
+  &.smaller {
+    padding: 3px 6px;
+    font-size: 9px;
+  }
+}

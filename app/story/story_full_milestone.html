@@ -1,0 +1,78 @@
+<ul class="cards-tag">
+    <li ng-repeat="label in story.labels"
+        ng-style="::{'background-color': (label.color|decimalToHexColor) }"
+        uib-tooltip="{{::label.name}}"
+        tooltip-placement="bottom"
+        tooltip-trigger="mouseenter"></li>
+</ul>
+
+
+
+<div class="cards-content">
+    <h2 class="cards-text" ng-bind-html="story.summary|to_trusted"></h2>
+
+    <div class="cards-text" ng-bind-html="story.detail|to_trusted"></div>
+</div>
+
+<div>
+    <div class="cards-details">
+        <ul class="cards-information pull-left">
+
+            <li ng-if="story.points !='?'">
+                <span class="labels label-tag-orange">{{story.points}}</span>
+            </li>
+
+            <li ng-if="story.points_value == 0 && story.estimated_minutes>0">
+                <span class="labels label-tag-dullpurple">{{story.estimated_minutes|formatMinutes}}</span>
+            </li>
+
+            <li ng-if="story.due_date" class="due-date" story="story">
+                <span sd-due-date story="story"></span>
+                Due {{story.due_date|ymddate}}
+            </li>
+
+            <li ng-if="story.business_value" uib-tooltip="Business Value" class="business-value">
+                ${{story.business_value}}
+            </li>
+        </ul>
+
+
+
+
+
+        <div class="cards-users pull-right"
+             tooltip-placement="bottom"
+             tooltip-html-unsafe="{{ ctrl.assigneeTooltip }}"
+             tooltip-trigger="mouseenter">
+            <span ng-if="story.assignee.length > 1" class="cards-users-number">{{story.assignee.length}}</span>
+            <ul class="cards-users-images">
+                <li ng-repeat="user in story.assignee"><sd-user-portrait size="30" user="::user"></sd-user-portrait>
+                </li>
+            </ul>
+        </div>
+
+
+
+    </div>
+
+    
+    <sd-age-display story="::story" display="::project.aging_display" warning="::project.warning_threshold" critical="::project.critical_threshold"></sd-age-display>
+
+    <div class="cards-badges-wrapper" >
+        <span ng-class="ctrl.tagClass(tag)" ng-repeat="tag in story.tags_list track by $index" class="badges primary">#{{::tag}}</span>
+
+
+        <span ng-repeat="label in story.labels"
+              class="badges label"
+              ng-style="::{'background-color': (label.color|decimalToHexColor) }">
+            {{::label.name}}
+        </span>
+
+    </div>
+
+
+
+
+    <sd-attachments-ro story="story" project="project"></sd-attachments-ro>
+</div>
+

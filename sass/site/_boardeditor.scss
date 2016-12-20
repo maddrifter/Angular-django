@@ -1,0 +1,192 @@
+// ----------------------------------------------------------------------------------------------------------
+//    Editor page stuff after this...
+// ----------------------------------------------------------------------------------------------------------
+
+#kanbanboardeditorpalette {
+  position: absolute;
+  left: 10px;
+  top: 19px;
+  bottom: 10px;
+  width: 365px;
+  background-color: #ffffff;
+  padding: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .workflow-help, .board-editor-help {
+    padding: 0px 10px 10px 10px;
+    h3 {
+      margin-top: 0px;
+    }
+  }
+  .done-button {
+    position: fixed;
+    bottom: 10px;
+    left: 260px;
+  }
+
+  input.ng-invalid.ng-touched {
+    border: 1px solid #FA787E;
+  }
+
+}
+
+.workflow-steps {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+
+#kanbanboardeditor {
+  position: absolute;
+  left: 380px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  background-color: #f0f0f0;
+  box-shadow: -3px 0px 8px #e5e5e5;
+  overflow: auto;
+
+
+  -webkit-transition: right 0.3s ease-out;
+  -moz-transition: right 0.3s ease-out;
+  -o-transition: right 0.3s ease-out;
+  transition: right 0.3s ease-out;
+
+
+  &.navbar-open {
+    right: 265px;
+  }
+
+
+
+  svg {
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+  .hline, .vline {
+    stroke: #ddd;
+    shape-rendering: crispEdges;
+  }
+  .cell-highlight {
+    fill: rgba(0,255,0,0.2);
+    stroke: #44ff44;
+  }
+  .current-drawing {
+    fill: #fff;
+    stroke: #aaa;
+  }
+  .current-drawing-header {
+    fill: $orangeHighlight;
+  }
+  .header-rect, .cell-rect {
+    stroke: #aaa;
+  }
+  .resize-rect {
+    fill: $orangeHighlight;
+    opacity: 0.07;
+    stroke: #aaa;
+  }
+  .resize-handle {
+    fill: $orangeHighlight;
+    stroke: #000;
+  }
+
+}
+
+
+.copy-project-window {
+  .modal-body {
+    position: relative;
+  }
+  .tab-content {
+    position: absolute;
+    top: 65px;
+    bottom: 0px;
+    left: 15px;
+    right: 15px;
+    img {
+      width: 250px;
+      height: 200px;
+    }
+  }
+  .board-wizard-status {
+    padding: 6px;
+
+
+    input {
+      width: 65px;
+      border-radius: 2px;
+      margin: 0px;
+
+    }
+  }
+}
+
+
+
+
+
+a {
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+.cell-options-body {
+  overflow-y: auto;
+}
+
+.board-wizard {
+
+  .row-examples {
+    background-color: #ffffff;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+  }
+
+  .step-2-column {
+    text-align: center;
+    padding: 3px;
+    width: 100px;
+    display: inline-block;
+    color:#ffffff;
+  }
+
+
+  .tasks-column-preview {
+    width: 150px;
+    table-layout: fixed;
+    td, th {
+      font-size: 8px;
+      width: 33%;
+      border: solid 1px #f0f0f0;
+      overflow: hidden;
+    }
+  }
+
+  .split-column-preview {
+    width: 120px;
+    table-layout: fixed;
+    td, th {
+      font-size: 8px;
+      width: 50%;
+      border: solid 1px #f0f0f0;
+      overflow: hidden;
+    }
+    td {
+      height: 67px;
+    }
+  }
+
+  .split-col-input {
+    width: 80px;
+  }
+
+}

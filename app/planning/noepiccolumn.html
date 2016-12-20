@@ -1,0 +1,55 @@
+<div class="scrumdo-panel primary"
+     data-container-type="epic-container"
+     data-epic-id="-1"
+     data-iteration-id="{{iteration}}">
+    <div class="scrumdo-panel-heading" role="tab" id="headingOne">
+        <h4 class="scrumdo-panel-title pull-left">
+            <a ng-click="ctrl.toggleExpanded()"
+               ng-class="{collapsed:!ctrl.isExpanded}"
+               aria-expanded="true" aria-controls="collapseOne">
+                No Collections
+            </a>
+        </h4>
+
+        <div class="dropdown pull-right" uib-dropdown>
+            <button ng-if="ctrl.isExpanded && iteration == -1" tooltip-append-to-body='true'
+                    uib-tooltip="Show Archive Cards"
+                    uib-btn-checkbox
+                    ng-change="ctrl.showArchive(ctrl.scope.$root.noEpicShowArchiveFlag)"
+                    ng-model="ctrl.scope.$root.noEpicShowArchiveFlag" type="button" class="scrumdo-btn active-no-border primary"><i class="glyphicon glyphicon-compressed"></i>
+            </button>
+            
+            <button ng-if="canWrite" class="scrumdo-btn primary medium" type="button" aria-expanded="false" uib-dropdown-toggle>
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-right scrumdo-dropdown" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                <li><a ng-click="ctrl.addCard()">Add Child Card</a></li>
+                <li ng-if="ctrl.isExpanded" role="presentation" class="divider"></li>
+                <li><a ng-if="ctrl.isExpanded" ng-click="ctrl.selectAll()">Select All Cards</a></li>
+                <li><a ng-if="ctrl.isExpanded" ng-click="ctrl.selectNone()">Select None</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div uib-collapse="!ctrl.isExpanded"
+         class="scrumdo-panel-collapse collapse"
+         role="tabpanel"
+         aria-labelledby="headingOne">
+        <div class="scrumdo-panel-body">
+            <ul class="kanban-story-list"
+                data-epic-id="-1"
+                data-iteration-id="{{iteration}}"
+                data-container-type="epic-story-list" >
+                <sd-story story-context-menu planning-mode="'epic'"
+                          story="story"
+                          project="project"
+                          iterations="iterations"
+                          epics="epics"
+                          layout="cardSize"
+                          ng-repeat="story in ctrl.storyManager.storiesByEpic[-1]|orderBy:ctrl.epicSortOrder">
+                </sd-story>
+            </ul>
+        </div>
+    </div>
+</div>

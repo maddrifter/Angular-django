@@ -1,0 +1,14 @@
+<div class="scrumdo-select scrumdo-input-group-extended dropdown">
+    <div class="dropdown-toggle" ng-click="ctrl.selectRelease($event)">
+        <button type="button" class="scrumdo-btn dropdown-main-button primary extended scrumdo-select-button"> 
+            <i uib-tooltip="Release/Milestone" class="fa fa-ticket scrumdo-icons" aria-hidden="true"></i>
+            {{ctrl.getLabel(currentValue)|htmlToPlaintext|decodeHtmlEntities|words:10}}
+        </button>
+        <div class="input-group-btn dropdown-button-container">
+            <button type="button" class="scrumdo-btn primary dropdown-button" aria-expanded="false">
+                <span class="glyphicon glyphicon-screenshot"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+        </div>
+    </div>
+</div>

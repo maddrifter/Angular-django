@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">
+        Board Templates
+        <span class="modal-minititle">Select a pre-made board to get started with.</span>
+    </h4>
+</div>
+
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="board-wizard-setup">
+                <div class="board-wizard-setup-header">
+                    <ul class="board-wizard-setup-nav">
+                        <li ng-class="{active:!showProjects}">
+                            <a ng-click="showProjects=false">
+                                Board Template
+                            </a>
+                        </li>
+                        <li ng-class="{active:showProjects}">
+                            <a ng-click="showProjects=true">
+                                Copy Existing Workspace
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="board-wizard-setup-content" ng-if="!showProjects">
+                    <p class="board-wizard-description">Select a pre-made board to start with.</p>
+
+                    <span ng-if="!ctrl.templatesLoaded">Loading Templates...</span>
+                    <div ng-repeat="group in ctrl.templates">
+                        <hr ng-if="group.name != ''"/>
+                        <h2 class="board-wizard-title">{{group.name}}</h2>
+                        <hr/>
+                        <div class="row">
+                            <div class="board-wizard-preboard col-md-3" ng-repeat="template in group.templates">
+                                <a ng-click="ctrl.setTemplate(template.slug, false)">
+                                    <img ng-src="{{STATIC_URL}}images/boards/thumb{{template.id}}.png"
+                                         class="img-responsive center-block thumbnail"/>
+                                </a>
+                                <h4>{{template.name}}</h4>
+                                <p>{{template.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="board-wizard-setup-content" ng-if="showProjects">
+                    <p class="board-wizard-description">Select a workspace to copy a board from.</p>
+                        <h2 class="board-wizard-title">Workspaces</h2>
+                        <hr/>
+                        <span ng-if="!ctrl.templatesLoaded">Loading Workspaces...</span>
+                        <div ng-repeat="group in projects">
+                            <h4>{{group.name}}</h4>
+                            <ul>
+                                <li ng-repeat="project in group.templates">
+                                    <a ng-click="ctrl.setTemplate(project.slug, true)">{{project.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="button" ng-click="$close('reset')" class="scrumdo-btn primary min-width">Reset</button>
+        </div>
+    </div>
+</div>

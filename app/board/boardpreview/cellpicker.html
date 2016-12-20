@@ -1,0 +1,21 @@
+<div class="cell-picker">
+    <div class="picker-content" ng-mouseleave="ctrl.mouseLeft()">
+        <sd-board-preview cells="cells"
+                headers="headers"
+                selected-cells="selectedCells"
+                selection-mode="true"
+                single-select-mode="true"
+                draw-mode="false"
+                workflow-steps="[]"
+                grid="false"
+                gridsize="gridsize"
+                hover="ctrl.hover"
+                width="width"
+                height="height"></sd-board-preview>
+    </div>
+    <div class="picker-hover">
+        <span ng-if="ctrl.hover.cell">{{ctrl.hover.cell.full_label}}</span>
+        <span ng-if="ctrl.hover.header">{{ctrl.hover.header.label}}</span>
+    </div>
+
+</div>

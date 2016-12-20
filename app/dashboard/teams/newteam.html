@@ -1,0 +1,39 @@
+<div class="scrumdo-wrapper">
+    <div class="scrumdo-wrapper-navigation no-border">
+        <div class="row">
+            <div class="col-sm-2">
+                <a ui-sref="teams" class="scrumdo-btn primary text-left">
+                    <span class="glyphicon glyphicon-arrow-left"></span>
+                    Back
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="scrumdo-wrapper-container">
+        <div class="scrumdo-teamlist-edit pull-left">
+            <div class="scrumdo-teamlist-edit-heading">
+                <h4 class="scrumdo-heading h4 no-margin pull-left">New Team List</h4>
+            </div>
+
+            <div>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Team List Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="ctrl.teamName" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <button ng-click="ctrl.createTeam()" class="scrumdo-btn secondary">Create Team List</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+

@@ -1,0 +1,39 @@
+.age-display {
+  list-style: none;
+  min-height: 2px;
+  text-align: right;
+  padding: 0px;
+  font-size: 0px;
+  line-height: 0px;
+
+  li {
+    display: inline-block;
+    width: 2px;
+    height: 2px;
+    margin-left: 2px;
+    padding: 0px;
+    background-color: #AAAAAA;
+
+    &.age-month {
+      width: 15px;
+    }
+  }
+  &.aging-warning{
+    li{
+      background-color: #F6764E;
+    }
+  }
+  &.aging-critical{
+    li{
+      background-color: #BF392B;
+    }
+  }
+}
+
+
+.backlog-container-card {
+  .age-display {
+    background-color: #F5F5F5;
+
+  }
+}

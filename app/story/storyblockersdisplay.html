@@ -1,0 +1,28 @@
+<div class="scrumdo-boxes">
+    <div class="blockers-box scrumdo-box-content">
+        <label class="scrumdo-control-label card-popup">Blockers:</label>
+
+        <div ng-repeat="entry in ctrl.blockerEntries|orderBy:'-id'">
+            <hr />
+            <a ng-if="!entry.resolved" class="scrumdo-text pull-right resolve-btn" href ng-click="ctrl.promptBlocker(entry)">Resolve</a>
+            <div class="scrumdo-text block" ng-class="{strike:entry.resolved}">
+                {{entry.reason}}
+            </div>
+            <div class="scrumdo-text block small" ng-class="{strike:entry.resolved}">
+                Blocked by {{entry.blocker|shortuser}} on {{entry.blocked_date | date : 'yyyy-MM-dd h:mm'}}
+                <b ng-if="entry.age>0">
+                    ({{entry.age}} days)
+                </b>
+                <i ng-if="entry.external" uib-tooltip="External Cause"
+                class="fa fa-external-link-square fa-2 external-icon" aria-hidden="true"></i>
+            </div>
+
+            <div class="scrumdo-text block" ng-if="entry.unblocked_date">{{entry.resolution}}</div>
+            <div class="scrumdo-text block small" ng-if="entry.unblocked_date">
+                Unblocked by {{entry.unblocker|shortuser}} on {{entry.unblocked_date | date : 'yyyy-MM-dd h:mm'}}
+            </div>
+        </div>
+        <button ng-click="ctrl.promptBlocker()"
+            class="pull-right scrumdo-btn primary add-blocker-button" uib-tooltip="Add Blocker">+</button>
+    </div>
+</div>

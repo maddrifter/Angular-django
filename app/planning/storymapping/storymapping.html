@@ -1,0 +1,28 @@
+<div sd-access="project"
+     class="scrumdo-planning-wrapper">
+     <div class="scrumdo-planning-container story-mapping-container">
+         <div class="sub-nav planning">
+            <sd-planning-subnav></sd-planning-subnav>
+         </div>
+
+         <sd-restricted-feature ng-if="::!mappingCtrl.projectData.isPremiumUser()" 
+            feature-name="'User Story Mapping'" organization-slug="mappingCtrl.projectData.organizationSlug" 
+            feature-image="'UserStoryMappingSample.png'"></sd-restricted-feature>
+            
+         <sd-story-mapping-navbar ng-if="::mappingCtrl.projectData.isPremiumUser()"></sd-story-mapping-navbar>
+         <div ng-if="::mappingCtrl.projectData.isPremiumUser()" class="col-sm-3 mapping-epics">
+             <sd-story-mapping-epics></sd-story-mapping-epics>
+         </div>
+         <div ng-if="::mappingCtrl.projectData.isPremiumUser()" class="col-sm-9 mapping-board" ng-class="mappingCtrl.zoomClass" id="mapping-board">
+            <sd-story-mapping-header></sd-story-mapping-header>
+            <sd-story-mapping-body ng-if="mappingCtrl.selectedIteration[0].id != -1"
+                ng-repeat="iteration in mappingCtrl.selectedIteration|orderBy:mappingCtrl.iterationSortOrder"></sd-story-mapping-body>
+            <sd-story-mapping-body ng-if="mappingCtrl.selectedIteration[0].id == -1"
+                iteration="mappingCtrl.selectedIteration[0]"></sd-story-mapping-body>
+         </div>
+     </div>
+     <div id="multiDragPlaceholder">
+        <span ng-if="selectedCount<=1">1 Card</span>
+        <span ng-if="selectedCount>1">{{ selectedCount }} Cards</span>
+    </div>
+</div>

@@ -1,0 +1,164 @@
+<!--<h1>Admin Option</h1>-->
+
+<div class="scrumdo-account-details">
+    <h2 class="scrumdo-account-details-title">Archive Workspace</h2>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    Archived workspaces don't count towards your quotas, but you can no longer edit them.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <form id="archiveForm" method="POST" action="{{adminUrl}}">
+                    <sd-csrf></sd-csrf>
+                    <button ng-click="settingsCtrl.archive()"
+                            id="archiveFormButton"
+                            type="button"
+                            class="scrumdo-btn secondary">Archive Now</button>
+                    <input type="hidden" name="action" value="archiveProject">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="scrumdo-account-details">
+    <h2 class="scrumdo-account-details-title">Move to Another Organization</h2>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    You can move this workspace into another organization that you are a staff member of.
+                </p>
+            </div>
+        </div>
+        <form method="POST" action="{{adminUrl}}" id="moveForm" ng-init="orgtomove=''">
+            <sd-csrf></sd-csrf>
+            <input type="hidden" name="action" value="moveToOrganization">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="scrumdo-select primary">
+
+                        <input type="hidden" name="organization_id" value="{{orgtomove}}">
+                        <select ng-model="orgtomove"
+                                id="id_organization"
+                                ng-options="o.id as o.name for o in user.staff_orgs | filter: settingsCtrl.filterUserOrgs ">
+                            <option value="">Select Organization</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button type="button"
+                            ng-click="settingsCtrl.moveProject()"
+                            ng-class="{disabled:orgtomove==''}"
+                            class="scrumdo-btn secondary">Move Workspace</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="scrumdo-account-details">
+    <h2 class="scrumdo-account-details-title">Rebuild Reports</h2>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    Rebuild the reporting data for this workspace.  Generally, you should never need to do this
+                    except in exceptional cases.  Reports will be unavailable for 5-15 minutes.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <form id="rebuildForm" method="POST" action="{{adminUrl}}">
+                    <sd-csrf></sd-csrf>
+                    <button ng-click="settingsCtrl.rebuildReports()"
+                            type="button"
+                            class="scrumdo-btn secondary">Rebuild Now</button>
+                    <input type="hidden" name="action" value="rebuildReports">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="scrumdo-account-details">
+    <h2 class="scrumdo-account-details-title">Reset Burnup Data</h2>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    You can reset the workspace wide burnup chart with this option. It will cause the burnup to start today, and the # of completed points will be reset to 0.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <form id="resetForm" method="POST" action="{{adminUrl}}">
+                    <sd-csrf></sd-csrf>
+                    <button ng-click="settingsCtrl.resetBurnup()"
+                            type="button"
+                            class="scrumdo-btn secondary">Reset Now</button>
+                    <input type="hidden" name="action" value="resetBurnup">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="scrumdo-account-details">
+    <h2 class="scrumdo-account-details-title">Search Index</h2>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    Having problems with cards not showing up in your search results? This will rebuild the search index for your workspace. Please let us know if this is frequently happening.
+                    The rebuild will happen in the background and may take several minutes to complete.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <form id="updateIndexForm" method="POST" action="{{adminUrl}}">
+                    <sd-csrf></sd-csrf>
+                    <button ng-click="settingsCtrl.updateIndexes()"
+                            type="button"
+                            class="scrumdo-btn secondary">Update Now</button>
+                    <input type="hidden" name="action" value="updateIndexes">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="scrumdo-account-details">
+    <h2 class="scrumdo-account-details-title">Delete Workspace</h2>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    Completely delete this workspace.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <form id="deleteForm" method="POST" action="{{deleteUrl}}">
+                    <sd-csrf></sd-csrf>
+                    <button ng-click="settingsCtrl.deleteProject()"
+                            type="button"
+                            class="scrumdo-btn tertiary">Delete Workspace</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

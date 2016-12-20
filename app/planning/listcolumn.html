@@ -1,0 +1,14 @@
+<div id="story-column-2" class="planning-column-content" sd-autoscroll-vertical>
+    <div class="row">
+        <div class="col-sm-12">
+            <sd-planning-iteration auto-open="ctrl.autoOpen"
+                                   project="project"
+                                   iteration="iteration"
+                                   card-size="cardSize"
+                                   epics="epics"
+                                   filter="filter"
+                                   ng-if="ctrl.autoOpen || !iteration.hidden || showArchived"
+                                   ng-repeat="iteration in ctrl.iterations|orderBy:['hidden','iteration_type','start_date','name']"></sd-planning-iteration>
+        </div>
+    </div>
+</div>

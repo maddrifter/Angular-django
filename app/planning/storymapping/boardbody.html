@@ -1,0 +1,46 @@
+<ul class="board-body">
+    <li class="epic-list regular-cell" ng-if="mappingCtrl.selectedEpic.children.length > 0" 
+        ng-repeat="epic in mappingCtrl.selectedEpic.children|filter:mappingCtrl.filterEpic">
+        <div ng-if="epic.listChild && mappingCtrl.selectedIteration[0].id!=-1" class="iteration-title" ng-bind-html="iteration.name"></div>
+        <div class="epic-box-wrapper">
+            <ul class="epic-box-second-level">
+                <li ng-if="!epic.listChild" ng-class="{'closed':!epic.listChild}">
+                    <div class="epic-box null">&nbsp;</div> 
+                </li>
+                <li class="epic-card-holder" ng-if="epic.listChild" 
+                    data-epic-id="{{childepic.id}}"
+                    data-iteration-id="{{iteration.id}}"
+                    data-container-type="iteration-story-list"
+                    ng-repeat="childepic in epic.children|filter:mappingCtrl.filterEpic">
+                    <div class="epic-box null">&nbsp;</div>
+                    <sd-epic-story epic="childepic" iteration="iteration"></sd-epic-story>
+                </li>
+                <li class="uncategorized epic-card-holder closed" 
+                    data-epic-id="{{epic.id}}"
+                    data-iteration-id="{{iteration.id}}"
+                    data-container-type="iteration-story-list" 
+                    ng-if="epic.listChild">
+                    <div class="epic-box null">&nbsp;</div> 
+                    <sd-epic-story epic="epic" iteration="iteration" parent="true"></sd-epic-story>
+                </li>
+                <li ng-if="epic.listChild && mappingCtrl.projectData.canWrite()" class="add-child-epic">
+                    <span>&nbsp;</span>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="epic-list regular-cell" ng-if="mappingCtrl.selectedEpic.id != 0">
+        <div class="iteration-title" ng-bind-html="iteration.name"></div>
+        <div class="epic-box-wrapper">
+            <ul class="epic-box-second-level">
+                <li class="uncategorized epic-card-holder"
+                    data-epic-id="{{mappingCtrl.selectedEpic.id}}"
+                    data-iteration-id="{{iteration.id}}"
+                    data-container-type="iteration-story-list">
+                    <div class="epic-box null">&nbsp;</div> 
+                    <sd-epic-story epic="mappingCtrl.selectedEpic" iteration="iteration" parent="true"></sd-epic-story>
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>

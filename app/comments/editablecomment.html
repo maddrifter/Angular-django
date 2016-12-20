@@ -1,0 +1,20 @@
+<li>
+    <div class="cards-col-1">
+        <sd-user-portrait size="32" user="comment.user" class="img-responsive" />
+    </div>
+    <div class="cards-col-11">
+        <time class="cards-modal-logtime">{{::comment.user|shortuser}} on {{comment.local_date_submitted|localtime}}</time>
+        <div ng-hide="ctrl.editing" class="cards-message-response" ng-bind-html="comment.comment|to_trusted"></div>
+        <textarea ng-if="ctrl.me.id == comment.user.id && ctrl.canWrite" ng-show="ctrl.editing" name="#" ng-model="ctrl.thisComment" 
+                  class="comments-textarea edit-comment" rows="2"></textarea>
+        <span uib-tooltip="Delete Comment" 
+              tooltip-append-to-body="true" ng-if="ctrl.me.id == comment.user.id && ctrl.canWrite && !ctrl.editing" ng-click="ctrl.deleteComment()" 
+              class="fa fa-trash comment-delete comment-edit pull-right"></span>
+        <span uib-tooltip="Cancel" ng-if="ctrl.edited || ctrl.editing" ng-click="ctrl.revertBack()" 
+              class="glyphicon glyphicon-remove comment-delete comment-edit pull-right"></span>
+        <span uib-tooltip="Edit Comment" ng-if="ctrl.me.id == comment.user.id && ctrl.canWrite && !ctrl.editing" ng-click="ctrl.makeEditable()" 
+              class="glyphicon glyphicon-pencil comment-edit pull-right"></span>
+        <span uib-tooltip="Update Comment" ng-if="ctrl.me.id == comment.user.id && ctrl.edited" ng-click="ctrl.updateComment()" 
+              tooltip-append-to-body="true" class="glyphicon glyphicon-ok comment-save comment-edit pull-right"></span>
+    </div>
+</li>

@@ -1,0 +1,18 @@
+<mentio-menu class="sdMentio" 
+             mentio-for="editor"
+             mentio-trigger-char="trigger"
+             mentio-items="ctrl.users"
+             mentio-template-url="/people-mentions.tpl"
+             mentio-search="ctrl.searchUsers(term)"
+             mentio-select="ctrl.getUserMentionText(item)"></mentio-menu>
+
+<script type="text/ng-template" id="/people-mentions.tpl">
+    <div class="user-search-wrapper">
+        <ul class="list-group user-search">
+            <li id="{{person.username}}" mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+                <img ng-src='/avatar/avatar/24/{{ person.username }}' class="user-photo">
+                <span class="text-primary" ng-bind-html="person.username | mentioHighlight:typedTerm:'menu-highlighted' | unsafe"></span>
+            </li>
+        </ul>
+    </div>
+</script>

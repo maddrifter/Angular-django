@@ -1,0 +1,412 @@
+<div class="modal-header card-modal">
+    <h4>{{ctrl.action}}</h4>
+</div>
+
+<div class="modal-body card-modal portfolio-edit-window" ng-if="ctrl.uiStage==0">
+
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+
+            <h1>Choose a template</h1>
+
+            <p>
+                Hi There!  Setting up a portfolio of workspaces can get very complex.  We have a few common
+                templates ready for you to start with.
+                For more information on our portfolio planning, visit our <a href="help.scrumdo.com/help/portfolio.html" target="_blank">help site</a>.
+            </p>
+
+
+
+            <div>
+                <hr/>
+                <h4>Two Level Portfolio <small> Portfolio -> Workspaces</small></h4>
+                A great option for small to medium companies that combines powerful planning capabilities with
+                ease of management.  Ideal for 5-50 people.
+                <br/>
+                <a ng-click="ctrl.setTemplate(0)" class="scrumdo-btn primary">Choose</a>
+            </div>
+
+            <div ng-if="ctrl.userSubscription.premium_plan">
+                <hr/>
+                <h4>Three Level SAFe <small> Portfolio -> Programs -> Teams<br/></small></h4>
+                For larger enterprises interested in running a three level Scaled Agile Framework.
+                Ideal for 50-150 people.
+                <br/>
+                <a ng-click="ctrl.setTemplate(1)" class="scrumdo-btn primary">Choose</a>
+            </div>
+
+            <div ng-if="ctrl.userSubscription.premium_plan">
+                <hr/>
+                <h4>Four Level SAFe <small> Portfolio -> Value Streams -> Programs -> Teams</small></h4>
+                For even larger enterprises interested in running a four level Scaled Agile Framework.
+                Ideal for 150+ people.
+                <br/>
+                <a ng-click="ctrl.setTemplate(2)" class="scrumdo-btn primary">Choose</a>
+            </div>
+
+            <div ng-if="ctrl.userSubscription.premium_plan">
+                <hr/>
+                <h4>Blank Template</h4>
+                Create your portfolio structure from scratch.
+                <br/>
+                <a ng-click="ctrl.blankTemplate()" class="scrumdo-btn primary">Choose</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="modal-body card-modal portfolio-edit-window" ng-if="ctrl.uiStage==1">
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-1">
+            Automatically create access control rules?
+        </div>
+        <div class="col-sm-2">
+            <label class="action-3 scrumdo-checkbox default">
+                <input type="checkbox" id="autoTeams" ng-change="ctrl.setPortfolioFilters()" 
+                    ng-model="ctrl.portfolio.auto_teams">
+            </label>
+        </div>
+    </div>
+    <div class="row" ng-repeat="templateLevel in ctrl.template">
+        <div class="col-sm-5 col-sm-offset-1">
+            How many {{templateLevel.name|pluralize}} do you have?
+        </div>
+        <div class="col-sm-2">
+            <input class="form-control" type="number" ng-model="templateLevel.value">
+        </div>
+    </div>
+    <button class="scrumdo-btn primary" ng-click="ctrl.uiStage=0">Back</button>
+    <button class="scrumdo-btn secondary" ng-click="ctrl.buildTemplate()">Next</button>
+</div>
+
+
+<div class="modal-body card-modal portfolio-edit-window" ng-if="ctrl.uiStage==2">
+    <div class="portfolio-level">
+        <h3 class="level-heading">Portfolio Name</h3>
+        <div class="row">
+            <div class="col-sm-5">
+                <input class="form-control" type="text" ng-model="ctrl.portfolio.root.name" />
+            </div>
+            <div class="col-sm-7">&nbsp;</div>
+        </div>
+    </div>
+    <div class="portfolio-level" ng-repeat="level in ctrl.portfolio.levels">
+        <h3 class="level-heading">{{level.name}}</h3>
+
+        <div ng-repeat="project in level.projects">
+            <div class="row">
+                <div class="col-sm-5">
+                    <input class="form-control" type="text" ng-model="project.name">
+
+                </div>
+                <div class="col-sm-7" ng-if="level.level_number > 1">
+                    <div class="btn-group" uib-dropdown dropdown-append-to-body="true">
+                        <a uib-dropdown-toggle>
+                            <span class="list-comma" ng-repeat="parent in project.parents">{{parent.name}}</span>
+                            <span ng-if="project.parents.length == 0">No Parent Workspaces</span>
+                        </a>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li ng-repeat="parent in ctrl.parentProjects(level)"
+                                role="menuitem">
+
+                                <a ng-click="ctrl.toggleParent($event, project, parent)">
+                                    <i class="fa fa-check" ng-if="ctrl.hasParent(project,parent)"></i>
+                                    <i uib-tooltip="Archived" class="glyphicon glyphicon-compressed" ng-if="!parent.active"></i>
+                                    {{parent.name}}
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal-body card-modal portfolio-edit-window" ng-if="ctrl.uiStage==3">
+    <uib-tabset>
+        <uib-tab index="0" heading="Portfolio">
+
+
+            <div class="portfolio-level">
+
+                <div class="row">
+                    <div class="col-sm-1 text-center">
+                        <i class="fa project-icon" ng-class="ctrl.portfolio.root.icon" uib-dropdown-toggle></i>
+                    </div>
+                    <div class="col-sm-11">
+                        <label>Portfolio Name:</label>
+                        <small>Overall name of this portfolio, you'll name pieces of it on other tabs.</small>
+                        <input class="form-control" type="text" ng-model="ctrl.portfolio.root.name" />
+
+                        <label>Work item name:</label>
+                        <small>What are the units of work at the root of your portfolio. Common options
+                            include Portfolio Epic, Release, or Milestone</small>
+                        <div class="width220px">
+                            <input class="form-control" type="text" ng-model="ctrl.portfolio.root.work_item_name" />
+                        </div>
+
+
+
+                        <label>Time period name:</label>
+                        <small>What are the periods of time that you split work into at the root of your portfolio?
+                            Common options include Portfolio Increment, Release, or Version</small>
+                        <div class="width220px">
+                            <input class="form-control" type="text" ng-model="ctrl.portfolio.time_period" />
+                        </div>
+
+                        <label ng-if="!ctrl.portfolio.id">Automatically create access control rules?</label>
+                        <div ng-if="!ctrl.portfolio.id">
+                            <div class="width220px">
+                                <label class="action-3 scrumdo-checkbox default">
+                                    <input type="checkbox" id="autoTeams" ng-change="ctrl.setPortfolioFilters()" 
+                                        ng-model="ctrl.portfolio.auto_teams">
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <label>Risk Categories</label>
+                        <small>You can identify Risks associated with your portfolio, how should we categorize them?</small>
+                        <div class="width220px">
+                            <input class="form-control" type="text"
+                                   ng-repeat="risk_type in [0,1,2,3,4,5,6]"
+                                   ng-model="ctrl.portfolio.risk_types[$index]" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </uib-tab>
+
+        <uib-tab index="1" heading="Levels">
+
+            <div class="scrumdo-alerts notify">
+                <b>Levels</b> define the structure of your portfolio.
+                Workspaces will be placed in each level to contain the work.
+            </div>
+
+            <div class="portfolio-level">
+                <div class="row">
+                    <div class="col-sm-1 text-center">
+                        <i class="fa project-icon" ng-class="ctrl.portfolio.root.icon" uib-dropdown-toggle></i>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <h4>{{ctrl.portfolio.root.name}}</h4>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="portfolio-level" ng-repeat="level in ctrl.portfolio.levels">
+                <div class="row">
+                    <div class="col-sm-1 text-center">
+                        <div uib-dropdown dropdown-append-to-body="true">
+                            <i class="fa project-icon" ng-class="level.icon" uib-dropdown-toggle></i>
+                            <ul class="dropdown-menu icon-dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-folder')"><i class="icon-menu-item fa fa-folder"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-server')"><i class="icon-menu-item fa fa-server"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-bullseye')"><i class="icon-menu-item fa fa-bullseye"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-users')"><i class="icon-menu-item fa fa-users"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-bank')"><i class="icon-menu-item fa fa-bank"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-user')"><i class="icon-menu-item fa fa-user"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-book')"><i class="icon-menu-item fa fa-book"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-bookmark')"><i class="icon-menu-item fa fa-bookmark"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-bug')"><i class="icon-menu-item fa fa-bug"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-building')"><i class="icon-menu-item fa fa-building"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-calendar')"><i class="icon-menu-item fa fa-calendar"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-cloud')"><i class="icon-menu-item fa fa-cloud"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-comment')"><i class="icon-menu-item fa fa-comment"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-cube')"><i class="icon-menu-item fa fa-cube"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-diamond')"><i class="icon-menu-item fa fa-diamond"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-exchange')"><i class="icon-menu-item fa fa-exchange"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-feed')"><i class="icon-menu-item fa fa-feed"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-industry')"><i class="icon-menu-item fa fa-industry"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-random')"><i class="icon-menu-item fa fa-random"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-ship')"><i class="icon-menu-item fa fa-ship"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-sitemap')"><i class="icon-menu-item fa fa-sitemap"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-tasks')"><i class="icon-menu-item fa fa-tasks"></i></a></li>
+                                <li role="menuitem"><a ng-click="ctrl.setIcon(level,'fa-user-secret')"><i class="icon-menu-item fa fa-user-secret"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-9">
+
+
+                        <label>Level name:</label>
+                        <small>Or what type of workspaces exist at this level?</small>
+                        <div class="width220px">
+                            <input class="form-control" type="text" ng-model="level.name" />
+                        </div>
+
+                        <label>Time period name:</label>
+                        <small>What are the periods of time that you split work into at this level of your portfolio?
+                            Common options include Program Increment or Iteration</small>
+                        <div class="width220px">
+                            <input class="form-control" type="text" ng-model="level.time_period" />
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="col-sm-1">
+                        <a ng-click="ctrl.removeLevel(level)" class="pull-right"><i uib-tooltip="Remove Level" class="fa fa-trash"></i></a>
+                    </div>
+
+                </div>
+            </div> <!-- end a level (ng-repeated) -->
+
+
+            
+            <button ng-if="ctrl.uiStage==3 && (ctrl.userSubscription.premium_plan || ctrl.portfolio.levels.length ==0)" 
+                ng-click="ctrl.addLevel()" class="scrumdo-btn primary">Add Level</button>
+        </uib-tab> <!-- end levels tab -->
+
+
+
+        <uib-tab index="2" heading="Workspaces">
+            <div class="portfolio-level" ng-repeat="level in ctrl.portfolio.levels">
+                <div class="row">
+                    <div class="col-sm-1 text-center">
+                            <i class="fa project-icon" ng-class="level.icon" uib-dropdown-toggle></i>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <h3 class="level-heading">{{level.name}}</h3>
+                    </div>
+                    <div class="col-sm-2 col-sm-offset-4">
+                        <div class="btn-group" uib-dropdown dropdown-append-to-body="true">
+                            <a uib-dropdown-toggle class="scrumdo-btn primary">Add Workspace</a>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem">
+                                    <a ng-click="ctrl.addProject(level)">New Workspace</a>
+                                </li>
+                                <li role="menuitem">
+                                    <a ng-click="ctrl.addExistingProject(level)">Existing Workspace</a>
+                                </li>
+                            </ul>
+                        </div>  
+                    </div>
+
+                </div>
+
+                <hr/>
+
+                <div ng-repeat="project in level.projects" class="project">
+                    <div class="row">
+                        <div class="col-sm-1 text-center">
+                            <i ng-class="project.icon" class="fa project-icon" style="color: {{project.color}}"></i>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <label>Name:</label>
+                            <small>Short descriptive names are best.</small>
+                            <div class="width220px">
+                                <input class="form-control" type="text" ng-model="project.name" />
+                            </div>
+
+                            <label>Work Item Type:</label>
+                            <small>What are the pieces of work for this project? Common values include Features or User Stories</small>
+                            <div class="width220px">
+                                <input class="form-control" type="text" ng-model="project.work_item_name" />
+                            </div>
+
+                            <div ng-if="level.level_number > 1">
+                                <label class="parent-projects">Parent Workspaces:</label>
+                                <small>What workspaces does this workspace contribute work towards?</small>
+                                <br/>
+                                <div class="btn-group" uib-dropdown dropdown-append-to-body="true">
+                                    <a uib-dropdown-toggle>
+                                        <span class="list-comma" ng-repeat="parent in project.parents">{{parent.name}}</span>
+                                        <span ng-if="project.parents.length == 0">No Parent Workspaces</span>
+                                    </a>
+                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                        <li ng-repeat="parent in ctrl.parentProjects(level)"
+                                            role="menuitem">
+
+                                            <a ng-click="ctrl.toggleParent($event, project, parent)">
+                                                <i class="fa fa-check" ng-if="ctrl.hasParent(project,parent)"></i>
+                                                <i uib-tooltip="Archived" class="glyphicon glyphicon-compressed" ng-if="!parent.active"></i>
+                                                {{parent.name}}
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-sm-2">
+                            <spectrum-colorpicker
+                                    ng-model="project.color"
+                                    options="{
+                                        showPalette: true,
+                                        preferredFormat: 'hex',
+                                        palette: colorPalette,
+                                        clickoutFiresChange: true,
+                                        hideAfterPaletteSelect: true,
+                                        showButtons: false
+                                      }">
+                            </spectrum-colorpicker>
+                        </div>
+                        <div class="col-sm-1">
+                            <a class="pull-right" ng-click="ctrl.removeProject(project, level)">
+                                <i class="fa fa-2 fa-trash" uib-tooltip="Remove"></i>
+                            </a>
+                            <i uib-tooltip="Archived" class="pull-right glyphicon x-2 glyphicon-compressed archived-project"
+                               ng-if="!project.active && project.id"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </uib-tab>
+
+    </uib-tabset>
+
+
+
+
+
+
+
+
+    <div class="warning-container">
+        <div class="alert alert-warning" ng-if="ctrl.error()">
+        {{ctrl.error()}}
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<div class="card-modal-footer">
+
+    <button ng-click="ctrl.cancel()" class="scrumdo-btn primary">Cancel</button>
+    <button ng-click="ctrl.onSave()"
+            ng-class="{disabled:ctrl.error() || ctrl.working}"
+            class="scrumdo-btn secondary save-button">Save</button>
+</div>

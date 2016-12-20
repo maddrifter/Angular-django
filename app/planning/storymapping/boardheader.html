@@ -1,0 +1,64 @@
+<ul class="board-header">
+    <li class="epic-list regular-cell" 
+        ng-repeat="epic in mappingCtrl.selectedEpic.children|filter:mappingCtrl.filterEpic">
+        <div class="epic-box-wrapper">
+            <div class="epic-box-first-level">
+                <sd-epic 
+                    epic="epic"
+                    epics="mappingCtrl.epics"
+                    project="mappingCtrl.scope.project">
+                </sd-epic>
+            </div>
+            <ul class="epic-box-second-level">
+                <li ng-if="epic.listChild" 
+                    ng-repeat="childepic in epic.children|filter:mappingCtrl.filterEpic"> 
+                    <sd-epic 
+                        epic="childepic"
+                        epics="mappingCtrl.epics"
+                        project="mappingCtrl.scope.project">
+                    </sd-epic>
+                </li>
+                <li class="uncategorized" ng-if="epic.listChild">
+                    <sd-epic 
+                        epic="epic"
+                        epics="mappingCtrl.epics"
+                        parent="true"
+                        project="mappingCtrl.scope.project">
+                    </sd-epic>
+                </li>
+                <li ng-if="epic.listChild && mappingCtrl.projectData.canWrite()" class="add-child-epic">
+                    <span><a class="scrumdo-btn primary epic-box placeholder" href 
+                        ng-click="mappingCtrl.addEpic(epic)">+ Add child Collection</a></span>
+                </li>
+                <li ng-if="!epic.listChild" class="child-epic-placeholder">
+                    <div class="epic-box placeholder">
+                        <p><i class="fa fa-clone" aria-hidden="true"></i></p>
+                        <p class="show-cards" ng-click="mappingCtrl.toggleEpic(epic)">{{epic.children.length}} Collections</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="epic-sep">&nbsp;</div>
+    </li>
+    <li class="epic-list regular-cell">
+        <div class="epic-box-first-level">
+            <span>
+                <a class="scrumdo-btn primary epic-box placeholder" href ng-if="mappingCtrl.projectData.canWrite()"
+                    ng-click="mappingCtrl.addEpic(mappingCtrl.selectedEpic)">+ Add child Collection</a>
+                <span class="scrumdo-btn primary epic-box empty" ng-if="!mappingCtrl.projectData.canWrite()"
+                    >&nbsp;</span>
+            </span>
+        </div>
+        <ul class="epic-box-second-level">
+            <li class="uncategorized">
+                <sd-epic 
+                    epic="mappingCtrl.selectedEpic"
+                    epics="mappingCtrl.epics"
+                    parent="true"
+                    project="mappingCtrl.scope.project">
+                </sd-epic>
+            </li>
+        </ul>
+        <div class="epic-sep">&nbsp;</div>
+    </li>
+</ul>

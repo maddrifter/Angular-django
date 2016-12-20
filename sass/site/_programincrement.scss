@@ -1,0 +1,17 @@
+.program-increment {
+  @include app-wrapper(60px);
+  background-color: #fafafa;
+
+
+
+  .increment-tabs {
+    .active {
+      font-weight: bold;;
+    }
+    li {
+      width: 120px;
+      height: 40px;
+      display: inline-block;
+    }
+  }
+}

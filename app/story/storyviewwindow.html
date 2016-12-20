@@ -1,0 +1,196 @@
+<div class="modal-header card-modal">
+    <div ng-if="!taskMode">
+        <button type="button" class="close"  ng-click="$dismiss('canceled')"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <button ng-if="!newStory" ng-click="ctrl.taskMode()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons tasks"></span> Tasks</button>
+    </div>
+
+    <div ng-if="taskMode">
+        <button type="button" class="close"  ng-click="$dismiss('canceled')"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <button ng-click="ctrl.cardMode()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons tasks"></span> Card Details</button>
+    </div>
+</div>
+
+<div class="modal-body card-modal">
+    <div class="row" ng-if="taskMode">
+        <sd-task-grid user="user" project="project" story="story"></sd-task-grid>
+    </div>
+
+    <div class="row" ng-if="!taskMode">
+        <div class="col-sm-9 scrumdo-modal-card-content">
+
+            <div class="scrumdo-modal-card-content-description" ng-if="story.number != -1">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <span class="scrumdo-modal-card-nr">{{::project.prefix}}-{{::story.number}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="story-text-view" ng-bind-html="story.summary"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="story.number == -1">
+                <label for="#" class="scrumdo-control-label card-popup">Summary</label>
+                <div class="story-text-view" ng-bind-html="story.summary"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="#" class="scrumdo-control-label card-popup">Details</label>
+                <div class="story-text-view" ng-bind-html="story.detail"></div>
+            </div>
+
+            <div class="form-group" ng-if="project.use_extra_1">
+                <label for="#" class="scrumdo-control-label card-popup">{{project.extra_1_label}}</label>
+                <div class="story-text-view" ng-bind-html="story.extra_1"></div>
+            </div>
+
+            <div class="form-group" ng-if="project.use_extra_2">
+                <label for="#" class="scrumdo-control-label card-popup">{{project.extra_2_label}}</label>
+                <div class="story-text-view" ng-bind-html="story.extra_2"></div>
+            </div>
+
+            <div class="form-group" ng-if="project.use_extra_3">
+                <label for="#" class="scrumdo-control-label card-popup">{{project.extra_3_label}}</label>
+                <div ng-bind-html="story.extra_3"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Labels:</label>
+                    <ul class="labels-list">
+                        <li ng-repeat="label in story.labels">
+                            <span class="labels"
+                                  ng-style="{'background-color': (label.color|decimalToHexColor) }">{{label.name}}</span>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <label>Tags:</label><br/>
+                    <span class="labels label-default" ng-repeat="tag in story.tags_list">#{{tag}}</span>
+
+                </div>
+            </div>
+            
+            <sd-aging-details></sd-aging-details>
+            
+            <div ng-if="ctrl.blockerEntries.length > 0" class="commits-box">
+                <label class="scrumdo-control-label card-popup">Blockers:</label>
+                <table class="table time-table">
+                    <tr ng-repeat="entry in ctrl.blockerEntries|orderBy:'-id'">
+                        <td>
+                            <p class="scrumdo-text" ng-class="{strike:entry.resolved}">{{entry.blocked_date | date : 'yyyy-MM-dd h:mm'}}</p>
+                            <p ng-if="entry.unblocked_date">{{entry.unblocked_date | date : 'yyyy-MM-dd h:mm'}}</p>
+                        </td>
+                        <td>
+                            <p class="scrumdo-text" ng-class="{strike:entry.resolved}">{{entry.blocker|shortuser}}</p>
+                            <p ng-if="entry.unblocked_date">{{entry.unblocker|shortuser}}</p>
+                        </td>
+
+                        <td>
+                            <p class="scrumdo-text" ng-class="{strike:entry.resolved}">{{entry.reason}}</p>
+                            <p ng-if="entry.unblocked_date">{{entry.resolution}}</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <sd-comments-box ng-if="!ctrl.sharedMode" readonly="true" user="user" project="project" ng-model="ctrl.newComment" story="story"></sd-comments-box>
+
+            <div ng-if="ctrl.sharedMode">
+                <label class="scrumdo-control-label card-popup">Comments:</label>
+                <sd-comments comments="ctrl.comments" ></sd-comments>
+            </div>
+
+
+
+            <label for="ticketMessage" class="scrumdo-control-label card-popup">History:</label>
+            <div class="scrumdo-overview-logs" ng-repeat="newsItem in ::ctrl.news|orderBy:'-created'">
+                <div class="scrumdo-overview-col-1">
+                    <sd-user-portrait img-class="'img-rounded img-responsive center-block'" user="::newsItem.user" size="24" />
+                </div>
+                <div class="scrumdo-overview-col-11">
+                    <time class="pull-right scrumdo-overview-time">{{::newsItem.created|localtime}}</time>
+                    <h4 class="scrumdo-overview-log-h4">
+                        <strong>{{::newsItem.user|shortuser}}</strong>
+                        <span ng-bind-html="::to_trusted(newsItem.text)"></span>
+                    </h4>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-sm-3 scrumdo-modal-card-sidebar ">
+            <div class="scrumdo-modal-card-buttons scrumdo-view-detail-sidebar">
+                <div ng-if="ctrl.currentIteration">
+                    <label>Iteration:</label>
+                    {{ctrl.currentIteration.name}}
+                </div>
+
+                <div ng-if="ctrl.cell">
+                    <label>Cell:</label>
+                    <span style="padding: 0px 6px;"
+                          ng-style="{'background-color': (ctrl.cell.headerColor|decimalToHexColor) }">&nbsp;</span>
+                    {{ctrl.cell.full_label}}
+                </div>
+
+                <div ng-if="ctrl.currentPoints[1] != '? Points'">
+                    <label>Points:</label>
+                    {{ctrl.currentPoints[1]}}
+                </div>
+
+                <div ng-if="ctrl.currentEpic">
+                    <label>Collection:</label>
+                    <b>#E{{ctrl.currentEpic.number}}</b> {{ctrl.currentEpic.summary}}
+                </div>
+
+                <div ng-if="story.business_value">
+                    <label>Business Value</label>
+                    ${{story.business_value}}
+                </div>
+
+
+                <div ng-if="story.estimated_minutes>0">
+                    <label>Estimate:</label>
+                    {{story.estimated_minutes|formatMinutes}}
+                </div>
+
+                <div ng-if="story.due_date">
+                    <label>Due:</label>
+                    {{story.due_date}}
+                </div>
+
+                <div ng-if="story.release">
+                    <label>Release:</label>
+                    {{story.release.summary|htmlToPlaintext}}
+                </div>
+
+                <div ng-if="story.assignee.length > 0">
+                    <label>Assignee:</label>
+                    <div ng-repeat="user in story.assignee">
+                        <sd-user-portrait img-class="pull-right" user="user"></sd-user-portrait>
+                        {{user|longuser}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <sd-attachments ng-if="ctrl.attachments.length > 0 && ctrl.sharedMode"
+                                    preloaded-attachments="ctrl.attachments"
+                                    readonly="true" project="project" story="story"></sd-attachments>
+
+                    <sd-attachments ng-if="!ctrl.sharedMode"
+                                    readonly="true"
+                                    project="project" story="story"></sd-attachments>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="busyMode" class="busy-mode">
+        <div class="progress progress-striped active">
+            <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+        </div>
+    </div>
+</div>

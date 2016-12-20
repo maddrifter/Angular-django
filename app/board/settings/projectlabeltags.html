@@ -1,0 +1,121 @@
+<form name="projectSettingsForm" ng-controller="ProjectSettingsController">
+
+    <div class="scrumdo-account-details">
+        <h2 class="scrumdo-account-details-title">Card Labels</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    Card labels are displayed at the top of each card and are usually used to categorize your cards.
+                </p>
+            </div>
+        </div>
+        <div class="scrumdo-account-details-content">
+            <div class="row">
+                <div class="col-md-10">
+
+                    <div class="form-group" ng-repeat="label in ctrl.project.labels">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span ng-if="!label.editMode"
+                                          ng-style="{'background-color': (label.color|decimalToHexColor) }"
+                                          class="labels bigger extended">{{label.name}}</span>
+                                    <input sd-enter="ctrl.saveLabel(label)" ng-if="label.editMode" ng-model="label.name" type="text" class="scrumdo-form primary">
+                                </div>
+                                <div class="col-md-2">
+                                    <button ng-if="!label.editMode" ng-click="ctrl.editLabel(label)" class="scrumdo-btn primary">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </button>
+                                    <button ng-if="!label.editMode" ng-click="ctrl.deleteLabel(label)" class="scrumdo-btn primary">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                    <spectrum-colorpicker
+                                            ng-if="label.editMode"
+                                            ng-model="label.hexColor"
+                                            options="{
+                                                showPalette: true,
+                                                preferredFormat: 'hex',
+                                                palette: colorPalette,
+                                                clickoutFiresChange: true,
+                                                hideAfterPaletteSelect: true,
+                                                showButtons: false
+                                              }">
+                                    </spectrum-colorpicker>
+                                </div>
+
+                                <div class="col-md-4" ng-if="label.editMode">
+                                    <button ng-class="{disabled:(label.name.length==0)}" ng-click="ctrl.saveLabel(label)" class="scrumdo-btn primary">
+                                        Save
+                                    </button>
+                                    <button ng-click="ctrl.cancelEditLabel(label)" class="scrumdo-btn primary">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+
+                    </div>
+
+                    <div>
+                        <a ng-click="ctrl.addLabel($event)">Add Label</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+      <div class="scrumdo-account-details">
+        <h2 class="scrumdo-account-details-title">Workspace Tags</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    You can add Tags to User stories and Tasks. It will be easier to search by tags.
+                </p>
+            </div>
+        </div>
+        
+        <div class="scrumdo-account-details-content">
+            <div class="row">
+                <div class="col-md-10">
+
+                    <div class="form-group" ng-repeat="tag in ctrl.project.alltags|orderBy:-id">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span ng-if="!tag.editMode"
+                                          class="labels bigger extended tag">{{::tag.name}}</span>
+                                    <input sd-enter="ctrl.saveTag(tag)" ng-if="tag.editMode" ng-model="tag.name" type="text" class="scrumdo-form primary">
+                                </div>
+                                <div class="col-md-4" ng-if="!tag.editMode">
+                                    <button ng-click="ctrl.editTag(tag)" class="scrumdo-btn primary">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </button>
+                                    <button ng-click="ctrl.deleteTag(tag)" class="scrumdo-btn primary">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                    <button ng-click="ctrl.searchByTag(tag)" class="scrumdo-btn primary">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </div>
+
+                                <div class="col-md-3" ng-if="tag.editMode">
+                                    <button ng-class="{disabled:(tag.name.length==0)}" ng-click="ctrl.saveTag(tag)" class="scrumdo-btn primary">
+                                        Save
+                                    </button>
+                                    <button ng-click="ctrl.cancelEditTag(tag)" class="scrumdo-btn primary">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+
+                    </div>
+
+                    <div>
+                        <a ng-click="ctrl.addTag($event)">Add Tag</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+      </div>
+    
+</form>

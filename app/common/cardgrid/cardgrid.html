@@ -1,0 +1,81 @@
+<div class="card-grid-container">
+    <sd-dependency-graph ng-if="dependencies"
+                         dependencies="dependencies">
+    </sd-dependency-graph>
+
+    <table class="card-grid" style="width: {{ctrl.tableWidth()}}">
+        <thead>
+            <tr class="top-row">
+                <th class="top-left-corner" ng-transclude ng-transclude-slot="topright">
+
+                    <img class="center-block" ng-src="{{STATIC_URL}}images/tablevis.png"
+                    ng-click="ctrl.toggleSidebar()">
+                </th>
+                <th ng-repeat="column in columns|filter:{visible:true}">
+                    <button class="scrumdo-btn primary pull-right show-hover column-hide-button"
+                            ng-click="ctrl.toggleColumn(column)"
+                            uib-tooltip="Hide Column" tooltip-placement="bottom">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                    <div class="column-title">{{column.title}}</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in rows|filter:{visible:true}">
+                <td class="left-column">
+                    <button ng-if="row.canWrite !== false" class="scrumdo-btn primary pull-right show-hover"
+                            ng-click="ctrl.removeRow(row)"
+                            uib-tooltip="Remove Feature" tooltip-placement="right">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    <span ng-bind-html="row.title|htmlToPlaintext|words:40|to_trusted"></span>
+                </td>
+                <td ng-repeat="column in columns|filter:{visible:true}"
+                    data-column-id="{{column.id}}"
+                    data-row-id="{{row.id}}"
+                    ng-class="{'card-sortable-cell': row.canWrite !== false && column.available[row.id] !==false, 'not-available': column.available[row.id] ===false}">
+                    <sd-card-grid-list
+                            sort-order="sortOrder"
+                            data-column-id="{{column.id}}"
+                            data-row-id="{{row.id}}"
+                            can-write="row.canWrite !== false && column.available[row.id] !==false"
+                            cell-data="ctrl.getCellData(row, column)">
+                    </sd-card-grid-list>
+                    <button ng-if="row.canWrite !== false && column.available[row.id] !==false" ng-click="ctrl.newCard(row, column)"
+                            class="scrumdo-btn primary new-story-button">+ New {{::$root['safeTerms'].children.work_item_name}}</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div ng-if="ctrl.sidebarVisible" class="card-grid-sidebar">
+        <a ng-click="ctrl.toggleSidebar()" class="close-sidebar-link pull-right">&times;</a>
+        <a ng-click="ctrl.showAll()" class="show-all-link">Show All</a>
+        <hr/>
+        <h1>Iterations</h1>
+        <ul>
+            <li ng-repeat="column in columns"
+                ng-click="ctrl.toggleColumn(column)"
+                ng-class="{'grid-hidden':!column.visible}">
+                <i class="fa fa-eye"></i>
+                {{column.title}}
+            </li>
+        </ul>
+
+        <hr/>
+        <h1>Teams</h1>
+
+        <ul>
+            <li ng-repeat="row in rows"
+                ng-click="ctrl.toggleRow(row)"
+                ng-class="{'grid-hidden':!row.visible}">
+                <i class="fa fa-eye"></i>
+                {{row.title}}
+            </li>
+        </ul>
+
+
+    </div>
+</div>

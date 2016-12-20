@@ -1,0 +1,636 @@
+﻿
+<div>
+<div class="container">
+    <h1>Auto Scroll</h1>
+    <div class="row">
+        <div class="col-sm-4">
+            <ul sd-autoscroll-vertical style="user-select: none; overflow-y: auto; height: 300px; width: 200px; border: 1px solid #000000">
+                <li>hi 1</li>
+                <li>hi 2</li>
+                <li>hi 3</li>
+                <li>hi 4</li>
+                <li>hi 5</li>
+                <li>hi 6</li>
+                <li>hi 7</li>
+                <li>hi 8</li>
+                <li>hi 9</li>
+                <li>hi 10</li>
+                <li>hi 11</li>
+                <li>hi 12</li>
+                <li>hi 13</li>
+                <li>hi 14</li>
+                <li>hi 15</li>
+                <li>hi 16</li>
+                <li>hi 17</li>
+                <li>hi 18</li>
+                <li>hi 19</li>
+                <li>hi 20</li>
+                <li>hi 21</li>
+                <li>hi 22</li>
+                <li>hi 23</li>
+                <li>hi 24</li>
+                <li>hi 25</li>
+                <li>hi 26</li>
+                <li>hi 27</li>
+                <li>hi 28</li>
+                <li>hi 29</li>
+                <li>hi 30</li>
+                <li>hi 31</li>
+                <li>hi 32</li>
+                <li>hi 33</li>
+                <li>hi 34</li>
+                <li>hi 35</li>
+                <li>hi 36</li>
+                <li>hi 37</li>
+                <li>hi 38</li>
+                <li>hi 39</li>
+                <li>hi 40</li>
+                <li>hi 41</li>
+                <li>hi 42</li>
+                <li>hi 43</li>
+                <li>hi 44</li>
+                <li>hi 45</li>
+                <li>hi 46</li>
+                <li>hi 47</li>
+                <li>hi 48</li>
+                <li>hi 49</li>
+                <li>hi 50</li>
+                <li>hi 51</li>
+                <li>hi 52</li>
+                <li>hi 53</li>
+                <li>hi 54</li>
+                <li>hi 55</li>
+                <li>hi 56</li>
+                <li>hi 57</li>
+                <li>hi 58</li>
+                <li>hi 59</li>
+                <li>hi 60</li>
+                <li>hi 61</li>
+                <li>hi 62</li>
+                <li>hi 63</li>
+                <li>hi 64</li>
+                <li>hi 65</li>
+                <li>hi 66</li>
+                <li>hi 67</li>
+                <li>hi 68</li>
+                <li>hi 69</li>
+                <li>hi 70</li>
+                <li>hi 71</li>
+                <li>hi 72</li>
+                <li>hi 73</li>
+                <li>hi 74</li>
+                <li>hi 75</li>
+                <li>hi 76</li>
+                <li>hi 77</li>
+                <li>hi 78</li>
+                <li>hi 79</li>
+                <li>hi 80</li>
+                <li>hi 81</li>
+                <li>hi 82</li>
+                <li>hi 83</li>
+                <li>hi 84</li>
+                <li>hi 85</li>
+                <li>hi 86</li>
+                <li>hi 87</li>
+                <li>hi 88</li>
+                <li>hi 89</li>
+                <li>hi 90</li>
+                <li>hi 91</li>
+                <li>hi 92</li>
+                <li>hi 93</li>
+                <li>hi 94</li>
+                <li>hi 95</li>
+                <li>hi 96</li>
+                <li>hi 97</li>
+                <li>hi 98</li>
+                <li>hi 99</li>
+                <li>hi 100</li>
+
+            </ul>
+
+
+            <div sd-autoscroll-horizontal style="user-select: none; overflow-y: hidden; overflow-x: auto; height: 300px; width: 200px; border: 1px solid #000000">
+                010203040506070809101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245246247248249250251252253254255256257258259260261262263264265266267268269270271272273274275276277278279280281282283284285286287288289290291292293294295296297298299300
+            </div>
+        </div>
+    </div>
+    {{ctrl.dateChosen}}
+</div>
+
+<div class="container">
+    <h1>Date Picker</h1>
+    <div class="row">
+        <div class="col-sm-4">
+            <sd-date-picker ng-model="ctrl.dateChosen"></sd-date-picker>
+        </div>
+    </div>
+    {{ctrl.dateChosen}}
+</div>
+
+<div class="container">
+    <h1>Select widget</h1>
+    <ui-select multiple ng-model="ctrl.selectedCells"
+               theme="bootstrap"
+               append-to-body="true"
+               close-on-select="false" title="Choose cells">
+        <ui-select-match placeholder="Select Cells...">{{$item.label}}</ui-select-match>
+        <ui-select-choices repeat="cell in ctrl.cells">
+            {{cell.label}}
+        </ui-select-choices>
+    </ui-select>
+</div>
+
+
+<div class="container">
+    <h1>Filter Button</h1>
+    <sd-filter-button></sd-filter-button>
+
+</div>
+
+<div class="container" ng-init="max=200; val=100">
+    <uib-progressbar dynamic-max="true" value="val" max="max"></uib-progressbar>
+    <input type="number" ng-model="val"/>
+    <input type="number" ng-model="max"/>
+
+</div>
+
+<div class="container">
+    <h1>Text Editor</h1>
+    <div class="form-group col-xs-6" style="background-color: #fafafa">
+
+        <h4>Clickable Editor:</h4>
+        <div clickable-editor="0" html="ctrl.richText"></div>
+
+        <h4>Clickable Editor #2:</h4>
+        <div clickable-editor="1" html="ctrl.richText"></div>
+
+        <h4>Clickable Editor #3:</h4>
+        <div clickable-editor="2" html="ctrl.richText"></div>
+
+        <hr/>
+        <h4>Normal Editor:</h4>
+        <div text-angular ng-model="ctrl.richText"></div>
+        <hr/>
+        <h4>Read only view:</h4>
+        <div ta-bind ng-model="ctrl.richText"></div>
+        <hr/>
+        <h4>Raw value:</h4>
+        {{ctrl.richText}}
+    </div>
+    <pre class="code col-xs-6">
+        <code ng-non-bindable>
+&lt;div clickable-editor html=&quot;ctrl.richText&quot;&gt;&lt;/div&gt;
+&lt;div text-angular ng-model=&quot;ctrl.richText&quot;&gt;&lt;/div&gt;
+&lt;div ta-bind ng-model=&quot;ctrl.richText&quot;&gt;&lt;/div&gt;
+        </code>
+    </pre>
+</div>
+
+<hr/>
+
+<div class="container">
+
+    <h1>Selects</h1>
+    <div class="row">
+        <div style="background-color: #ff0000" class="col-md-1">Col #1</div>
+        <div style="background-color: #ffff00" class="col-md-2">Col #2</div>
+        <div style="background-color: #ff0000" class="col-md-3">Col #3</div>
+    </div>
+    <div class="row">
+        <div style="background-color: #ff0000" class="col-md-1">
+            <sd-select button-icon="iteration"
+                       ng-model="ctrl.currentLongOption"
+                       label-property="name"
+                       buttonIcon=""
+                       archive-property="hidden"
+                       options="ctrl.longOptions"></sd-select><br/>
+        </div>
+        <div style="background-color: #ffff00" class="col-md-2">
+            <sd-select button-icon="iteration"
+                       ng-model="ctrl.currentLongOption"
+                       label-property="name"
+                       buttonIcon=""
+                       archive-property="hidden"
+                       options="ctrl.longOptions"></sd-select><br/>
+        </div>
+        <div style="background-color: #ff0000" class="col-md-3">
+            <sd-select button-icon="iteration"
+                       ng-model="ctrl.currentLongOption"
+                       label-property="name"
+                       buttonIcon=""
+                       archive-property="hidden"
+                       options="ctrl.longOptions"></sd-select><br/>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="scrumdo-input-group-extended dropdown" dropdown>
+                <div class="input-group dropdown-toggle" dropdown-toggle>
+                    <button type="button"
+                            class="scrumdo-btn primary extended scrumdo-select-button">
+                        <span class="glyphicon glyphicon glyphicon-th scrumdo-icons "></span> Custom Dropdown
+                    </button>
+                    <div class="input-group-btn">
+                        <button type="button" class="scrumdo-btn primary dropdown-button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <code class="col-md-8 code language-markup">
+            &lt;div class=&quot;scrumdo-input-group-extended dropdown&quot; dropdown&gt;
+            &lt;div class=&quot;input-group dropdown-toggle&quot; dropdown-toggle&gt;
+            &lt;button type=&quot;button&quot;
+            class=&quot;scrumdo-btn primary extended scrumdo-select-button&quot;&gt;
+            &lt;span class=&quot;glyphicon glyphicon glyphicon-th scrumdo-icons &quot;&gt;&lt;/span&gt; Label
+            &lt;/button&gt;
+            &lt;div class=&quot;input-group-btn&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;scrumdo-btn primary dropdown-button&quot; aria-expanded=&quot;false&quot;&gt;
+            &lt;span class=&quot;glyphicon glyphicon-chevron-down&quot;&gt;&lt;/span&gt;
+            &lt;span class=&quot;sr-only&quot;&gt;Toggle Dropdown&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+        </code>
+
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-4">
+
+            <select class="form-control"><option>Default Bootstrap</option></select>
+            <br/>
+
+            <div class="scrumdo-select primary">
+                <select><option>scrumdo-select primary</option><option>Option 2</option></select>
+            </div>
+            <br/>
+
+            <div class="scrumdo-select secondary">
+                <select><option>scrumdo-select secondary</option><option>Option 2</option></select>
+            </div>
+            <br/>
+
+            <div class="scrumdo-select primary medium">
+                <select><option>scrumdo-select primary medium</option><option>Option 2</option></select>
+            </div>
+            <br/>
+
+            <div class="scrumdo-select primary smaller">
+                <select><option>scrumdo-select primary smaller</option><option>Option 2</option></select>
+            </div>
+
+        </div>
+
+        <code class="col-md-8 code language-markup">
+            &lt;select class=&quot;form-control&quot;&gt;&lt;/select&gt;
+            &lt;br/&gt;
+
+            &lt;div class=&quot;scrumdo-select primary&quot;&gt;
+            &lt;select&gt;&lt;option&gt;Option 1&lt;/option&gt;&lt;option&gt;Option 2&lt;/option&gt;&lt;/select&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;
+
+            &lt;div class=&quot;scrumdo-select secondary&quot;&gt;
+            &lt;select&gt;&lt;option&gt;Option 1&lt;/option&gt;&lt;option&gt;Option 2&lt;/option&gt;&lt;/select&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;
+
+            &lt;div class=&quot;scrumdo-select primary medium&quot;&gt;
+            &lt;select&gt;&lt;option&gt;Option 1&lt;/option&gt;&lt;option&gt;Option 2&lt;/option&gt;&lt;/select&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;
+
+            &lt;div class=&quot;scrumdo-select primary smaller&quot;&gt;
+            &lt;select&gt;&lt;option&gt;Option 1&lt;/option&gt;&lt;option&gt;Option 2&lt;/option&gt;&lt;/select&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;
+        </code>
+
+    </div>
+</div>
+
+<hr/>
+
+<div class="container">
+    <h1>Buttons</h1>
+    <div class="row">
+        <div class="col-md-4">
+
+            <br/>
+            <button class="btn">btn</button><br/><br/>
+            <button class="scrumdo-btn primary">scrumdo-btn primary</button><br/><br/>
+            <button class="scrumdo-btn secondary">scrumdo-btn secondary</button><br/><br/>
+            <a class="scrumdo-btn secondary">scrumdo-btn secondary a</a><br/><br/>
+            <button class="scrumdo-btn tertiary">scrumdo-btn tertiary</button><br/><br/>
+            <button class="scrumdo-btn box-add">scrumdo-btn box-add</button><br/><br/>
+            <button class="scrumdo-btn toggle-group secondary">scrumdo-btn toggle-group secondary</button><br/><br/>
+            <button class="scrumdo-btn smaller primary">scrumdo-btn smaller primary</button><br/><br/>
+            <button class="scrumdo-btn medium primary">scrumdo-btn medium primary</button><br/><br/>
+            <div class="row">
+                <div class="col-md-10">
+                    <button class="scrumdo-btn extended primary">scrumdo-btn extended primary</button>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-10">
+                    <button class="scrumdo-btn extended-nopadding primary">scrumdo-btn extended-nopadding primary</button>
+                </div>
+            </div>
+        </div>
+
+        <code class="col-md-8 code language-markup">
+            &lt;button class=&quot;btn&quot;&gt;btn&lt;/button&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;button class=&quot;scrumdo-btn primary&quot;&gt;scrumdo-btn primary&lt;/button&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;button class=&quot;scrumdo-btn secondary&quot;&gt;scrumdo-btn secondary&lt;/button&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;a class=&quot;scrumdo-btn secondary&quot;&gt;scrumdo-btn secondary a&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;button class=&quot;scrumdo-btn tertiary&quot;&gt;scrumdo-btn tertiary&lt;/button&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;button class=&quot;scrumdo-btn box-add&quot;&gt;scrumdo-btn box-add&lt;/button&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;button class=&quot;scrumdo-btn toggle-group secondary&quot;&gt;scrumdo-btn toggle-group secondary&lt;/button&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;button class=&quot;scrumdo-btn smaller primary&quot;&gt;scrumdo-btn smaller primary&lt;/button&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;button class=&quot;scrumdo-btn medium primary&quot;&gt;scrumdo-btn medium primary&lt;/button&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;div class=&quot;row&quot;&gt;
+            &lt;div class=&quot;col-md-10&quot;&gt;
+            &lt;button class=&quot;scrumdo-btn extended primary&quot;&gt;scrumdo-btn extended primary&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;
+            &lt;div class=&quot;row&quot;&gt;
+            &lt;div class=&quot;col-md-10&quot;&gt;
+            &lt;button class=&quot;scrumdo-btn extended-nopadding primary&quot;&gt;scrumdo-btn extended-nopadding primary&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+        </code>
+
+    </div>
+</div>
+
+<hr/>
+
+
+<div class="container">
+    <h1>Local Storage (not yet scoped by user)</h1>
+    <div class="form-group col-xs-6" style="background-color: #fafafa">
+        <pre>
+{{$storage|json}}
+        </pre>
+        <a ng-click="$storage.$reset()">Reset</a>
+    </div>
+    <pre class="code col-xs-6">
+        <code ng-non-bindable>
+            {{$storage|json}}
+        </code>
+    </pre>
+</div>
+
+<hr/>
+
+
+<div class="container">
+    <h1>Cell Select</h1>
+    <div class="form-group col-xs-6" style="background-color: #fafafa">
+        <sd-cell-select cells="ctrl.cells"
+                        headers="ctrl.headers"
+                        cell-id="currentStory.cell_id"></sd-cell-select>
+        <br/>
+
+        Selected Cell Id: {{currentStory.cell_id}}
+    </div>
+    <pre class="code col-xs-6">
+        &lt;sd-cell-select cells=&quot;ctrl.cells&quot;
+                        headers=&quot;ctrl.headers&quot;
+                        cell-id=&quot;currentStory.cell_id&quot;&gt;
+        &lt;/sd-cell-select&gt;
+    </pre>
+</div>
+
+<hr/>
+
+<div class="container">
+    <h1>Cell Picker</h1>
+    <div class="form-group col-xs-6" style="background-color: #fafafa">
+        <sd-cell-picker cells="ctrl.cells"
+                        headers="ctrl.headers"
+                        selected-cells="ctrl.selectedCells"></sd-cell-picker>
+        <br/>
+
+        Selected Cells: {{ctrl.selectedCells}}
+    </div>
+    <pre class="code col-xs-6">
+        &lt;sd-cell-picker cells=&quot;ctrl.cells&quot;
+                headers=&quot;ctrl.headers&quot;
+                selected-cells=&quot;ctrl.selectedCells&quot;&gt;
+        &lt;/sd-cell-picker&gt;
+    </pre>
+</div>
+
+<hr/>
+
+
+<div class="container">
+    <h1>Time Estimate Entry</h1>
+    <div class="form-group col-xs-3">
+        <sd-time-entry ng-model="ctrl.timeEstimate"></sd-time-entry>
+        <br/>
+        Value: {{ctrl.timeEstimate}}
+    </div>
+    <pre class="code col-xs-9">
+        &lt;sd-time-entry ng-model=&quot;ctrl.timeEstimate&quot;&gt;&lt;/sd-time-entry&gt;
+    </pre>
+</div>
+
+<hr/>
+
+
+<div class="container">
+    <h1>Archive aware select</h1>
+    <div class="form-group col-xs-3">
+        <sd-select button-icon="iteration"
+                   ng-model="currentIteration"
+                   label-property="name"
+                   buttonIcon=""
+                   archive-property="hidden"
+                   options="iterations"></sd-select><br/>
+    </div>
+    <pre class="code col-xs-9">
+        &lt;sd-attachments project=&quot;project&quot; archive-property="hidden" story=&quot;currentStory&quot;&gt;&lt;/sd-attachments&gt;
+    </pre>
+</div>
+
+<hr/>
+
+
+<div class="container card-modal">
+    <h1>Comments</h1>
+    <div class="form-group col-xs-5">
+        <sd-comments-box project="project" ng-model="newComment" story="currentStory"></sd-comments-box>
+        {{newComment}}
+    </div>
+    <pre class="code col-xs-4">
+    </pre>
+</div>
+
+<hr/>
+
+
+
+<div class="container">
+    <h1>Attachments</h1>
+    <div class="form-group col-xs-3">
+        <sd-attachments project="project" story="currentStory"></sd-attachments>
+        <br/>
+        Selected: {{currentAttachments}}
+
+    </div>
+    <pre class="code col-xs-9">
+        &lt;sd-attachments project=&quot;project&quot; story=&quot;currentStory&quot;&gt;&lt;/sd-attachments&gt;
+
+    </pre>
+</div>
+
+
+
+<hr/>
+
+<div class="container">
+    <h1>Tags Box</h1>
+    <div class="form-group col-xs-3">
+        <sd-tags-box ng-model="currentTags" tags="exampleTags"></sd-tags-box>
+        <br/>
+        Selected: {{currentTags}}
+
+    </div>
+    <pre class="code col-xs-9">
+    </pre>
+</div>
+
+
+
+<hr/>
+
+
+<div class="container">
+    <h1>Labels Box</h1>
+    <div class="form-group col-xs-2">
+        <sd-labels-box ng-model="currentLabels" labels="project.labels"></sd-labels-box>
+        <br/>
+        Selected: {{currentLabels}}
+    </div>
+    <div class="form-group col-xs-3">
+        <sd-labels-box ng-model="currentLabels" labels="project.labels"></sd-labels-box>
+        <br/>
+        Selected: {{currentLabels}}
+    </div>
+    <div class="form-group col-xs-4">
+        <sd-labels-box ng-model="currentLabels" labels="project.labels"></sd-labels-box>
+        <br/>
+        Selected: {{currentLabels}}
+    </div>
+
+    <pre class="code col-xs-9">
+        &lt;sd-labels-box ng-model=&quot;currentLabels&quot; labels=&quot;project.labels&quot;&gt;&lt;/sd-labels-box&gt;
+    </pre>
+</div>
+
+
+
+<hr/>
+
+<div class="container">
+    <h1>Assignee Box</h1>
+    <div class="form-group col-xs-3">
+        <sd-assignee-box ng-model="currentAssignees" people="project.members"></sd-assignee-box>
+        <br/>
+        Selected: {{currentAssignees}}
+
+    </div>
+    <pre class="code col-xs-9">
+                &lt;sd-assignee-box ng-model=&quot;currentAssignees&quot; people=&quot;project.members&quot;&gt;
+                &lt;/sd-assignee-box&gt;
+            </pre>
+</div>
+
+
+
+<hr/>
+
+<div class="container">
+    <h1>ScrumDo Select</h1>
+    <div class="form-group col-xs-3">
+        <sd-select button-icon="iteration"
+                   ng-model="currentIteration"
+                   label-property="name"
+                   options="iterations"></sd-select><br/>
+        Selected: {{currentIteration}}
+    </div>
+    <pre class="code col-xs-9">
+            &lt;sd-select button-icon=&quot;iteration&quot;
+                       ng-model=&quot;currentIteration&quot;
+                       label-property=&quot;name&quot;
+                       options=&quot;iterations&quot;&gt;&lt;/sd-select&gt;
+        </pre>
+
+</div>
+
+<hr/>
+
+<div class="container">
+    <h1>ScrumDo Multi Select</h1>
+    <div class="form-group col-xs-3">
+        <sd-multi-select button-icon="iteration"
+                         ng-model="currentIterations"
+                         label-property="name"
+                         options="iterations"></sd-multi-select><br/>
+        Selected: {{currentIterations}}
+    </div>
+    <pre class="code col-xs-9">
+            &lt;sd-multi-select button-icon=&quot;iteration&quot;
+                 ng-model=&quot;currentIterations&quot;
+                 label-property=&quot;name&quot;
+                 options=&quot;iterations&quot;&gt;&lt;/sd-multi-select&gt;
+        </pre>
+
+</div>
+
+<hr/>
+<div class="container">
+    <h1>Epic Selector</h1>
+    <pre class="code col-xs-5">
+&lt;sd-epic-select ng-model=&quot;selectedOption&quot; epics=&quot;epics&quot;&gt;
+&lt;/sd-epic-select&gt;
+        </pre>
+    <div class="form-group col-xs-7" style="min-height: 600px">
+        <sd-epic-select ng-model="selectedOption" epics="epics"></sd-epic-select> <br/>
+        Selected: {{selectedOption}}
+    </div>
+
+</div>
+
+<hr/>
+<div class="container">
+    <h1>Iteration Selector</h1>
+    <pre class="code col-xs-5">
+&lt;sd-iteration-select ng-model=&quot;selectedOption&quot; iterations=&quot;iterations&quot;&gt;
+&lt;/sd-iteration-select&gt;
+        </pre>
+    <div class="form-group col-xs-7" style="min-height: 600px">
+        <sd-iteration-select ng-model="currentIteration" iterations="iterations"></sd-iteration-select> <br/>
+        Selected: {{currentIteration}}
+    </div>
+
+</div>
+<div class="container">
+    <button ng-click="ctrl.openCardPicker()">Open Card Picker</button>
+    <label>Selected: {{selectedCards}}</label>
+</div>
+</div>

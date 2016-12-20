@@ -1,0 +1,16 @@
+<div class="feature-cards" ng-init="$ctrl = $parent.ctrl">
+    <ul class="features-list-wrapper" ng-if="($ctrl.features)">
+        <li>
+            <ul class="kanban-story-list features-list"
+                ng-class="{'empty': !$ctrl.checkFeatureSchedule(schedule, story)}"
+                ng-repeat="story in $ctrl.features| orderBy:$ctrl.featureOrderBy | filter: $ctrl.isVisibleForSchedule(schedule)">
+                <sd-feature
+                    ng-if="$ctrl.checkFeatureSchedule(schedule, story)"
+                    story="story"
+                    project="project"
+                    layout="'feature_list'">
+                </sd-feature>
+            </ul>
+        </li>
+    </ul>
+</div>

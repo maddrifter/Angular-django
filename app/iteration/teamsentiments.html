@@ -1,0 +1,55 @@
+<div sd-access class="sentiments-wrapper">
+    <div class="col-md-12 team-title">
+        <span style="color: {{team.color|decimalToHexColor}}" class="fa {{team.icon}}"></span>
+        <span>{{team.name}}</span>
+    </div>
+
+    <div class="sentiment-row open" ng-if="canWrite">
+        <div class="col-md-4 user-info">
+            <div class="avatar">
+                <sd-user-portrait user="ctrl.userService.me" uib-tooltip={{ctrl.userService.me|shortuser}} size="32"></sd-user-portrait>
+            </div>
+            <div class="username">
+                {{ctrl.userService.me|tooshortuser}}
+            </div>
+        </div>
+        <div class="col-md-8 sentiment-info">
+            <div class="row">
+                <div class="number-box col-sm-2">
+                    <select 
+                        ng-options="number as number for number in ctrl.numberOptions" 
+                        ng-model="ctrl.sentiment.number" class="selectpicker span4 form-control">
+                    </select>
+                </div>
+                <div class="reason-box col-sm-10">
+                    <input type="text" sd-enter="ctrl.enterKeyPressed()" ng-model="ctrl.sentiment.reason" 
+                        class="scrumdo-form primary" placeholder="Optional comment">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sentiment-row" ng-repeat="sentiment in ctrl.sentiments| orderBy:'-date'">
+        <div class="col-md-4 user-info">
+            <div class="avatar">
+                <sd-user-portrait uib-tooltip={{sentiment.creator|shortuser}} user="sentiment.creator" size="32"></sd-user-portrait>
+            </div>
+            <div class="username">
+                {{sentiment.creator|tooshortuser}}
+            </div>
+        </div>
+        <div class="col-md-8 sentiment-info">
+            <p class="number">{{:: sentiment.number}}</p>
+            <p class="reason">{{:: sentiment.reason}}</p>
+        </div>
+    </div>
+
+    <div class="sentiment-row remaining-members" ng-if="(members | filter: ctrl.filterMembers).length > 0">
+        <span>Not voted yet:</span>
+        <div class="members">
+            <div class="avatar" ng-repeat="member in members | filter: ctrl.filterMembers">
+                <sd-user-portrait uib-tooltip={{member|shortuser}} user="member" size="32"></sd-user-portrait>
+            </div>
+        </div>
+    </div>
+</div>

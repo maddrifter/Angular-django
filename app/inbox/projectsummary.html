@@ -1,0 +1,92 @@
+<div>
+    <a class="pull-right" href="/projects/{{gctrl.project.slug}}/board"><i class="fa fa-external-link"></i> Open Project</a>
+    <h1>
+        {{gctrl.project.name}}
+    </h1>
+
+    <div class="scrumdo-project-boxes-content upper text-center" ng-if="::gctrl.project.stats">
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                <h3 class="scrumdo-project-boxes-heading h3 upper">{{::gctrl.project.stats.story_count}}</h3>
+                <span class="scrumdo-project-boxes-minitext">TOTAL CARDS</span>
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                <h3 class="scrumdo-project-boxes-heading h3 upper">{{::gctrl.project.stats.stories_completed}}</h3>
+                <span class="scrumdo-project-boxes-minitext">CARDS COMPLETED</span>
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                <h3 class="scrumdo-project-boxes-heading h3 upper">{{::gctrl.project.stats.stories_in_progress}}</h3>
+                <span class="scrumdo-project-boxes-minitext">CARDS IN PROGRESS</span>
+            </div>
+
+            <div class="col-sm-3 col-xs-6" ng-if="::gctrl.project.stats.system_lead_time>0">
+                <h3 class="scrumdo-project-boxes-heading h3 upper">{{::gctrl.project.stats.system_lead_time}}</h3>
+                <span class="scrumdo-project-boxes-minitext">LEAD TIME</span>
+            </div>
+        </div>
+    </div>
+    <div class="scrumdo-project-boxes-content lower text-center" ng-if="::gctrl.project.stats">
+        <div class="row">
+
+            <div class="col-sm-3 col-xs-6" ng-if="::gctrl.project.stats.points_claimed>0">
+                <h4 class="scrumdo-project-boxes-heading h4 lower">{{::gctrl.project.stats.points_claimed}}</h4>
+                <span class="scrumdo-project-boxes-minitext">POINTS CLAIMED</span>
+            </div>
+
+
+            <div class="col-sm-3 col-xs-6" ng-if="::gctrl.project.stats.system_flow_efficiency>0">
+                <h4 class="scrumdo-project-boxes-heading h4 lower">{{::gctrl.project.stats.system_flow_efficiency}}%</h4>
+                <span class="scrumdo-project-boxes-minitext">FLOW EFFICIENCY</span>
+            </div>
+
+
+            <div class="col-sm-3 col-xs-6" ng-if="::gctrl.project.stats.daily_flow_efficiency>0">
+                <h4 class="scrumdo-project-boxes-heading h4 lower">{{::gctrl.project.stats.daily_flow_efficiency}}%</h4>
+                <span class="scrumdo-project-boxes-minitext">FLOW EFFICIENCY (daily)</span>
+            </div>
+
+
+            <div class="col-sm-3 col-xs-6" ng-if="::gctrl.project.stats.daily_lead_time>0">
+                <h4 class="scrumdo-project-boxes-heading h4 lower">{{::gctrl.project.stats.daily_lead_time}}</h4>
+                <span class="scrumdo-project-boxes-minitext">LEAD TIME (daily)</span>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="members">
+        <div class="member" uib-tooltip="{{::user|mediumuser}}" ng-repeat="user in gctrl.project.members">
+            <sd-user-portrait  user="::user" size="45"></sd-user-portrait>
+        </div>
+    </div>
+
+
+    <div class="charts">
+        <div class="row">
+            <div class="col-sm-6 text-center">
+                1 month Cummulative Flow
+                <div sd-report-cfd
+                     ng-click="pctrl.goToCFD()"
+                     mini="true"
+                     style="width: 100%; height: 315px; background-color: #ffffff"
+                     project="::gctrl.project"
+                     report-data="pctrl.cfdData">
+                </div>
+            </div>
+            <div class="col-sm-6 text-center">
+                1 month Lead Time
+                <div sd-report-lead
+                     ng-click="pctrl.goToLead()"
+                     style="width: 100%; height: 315px; background-color: #ffffff"
+                     project="::gctrl.project"
+                     report-data="pctrl.leadData">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <iteration-summary project="::gctrl.project" iteration="iteration" ng-repeat="iteration in pctrl.iterations"></iteration-summary>
+
+</div>

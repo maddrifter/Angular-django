@@ -1,0 +1,35 @@
+<div class="scrumdo-wrapper">
+    <div class="scrumdo-wrapper-navigation">
+        <div class="row">
+            <div class="col-sm-2">
+                <button ui-sref='teams' class="scrumdo-btn primary text-left">
+                    <span class="glyphicon glyphicon-arrow-left"></span>
+                    Back To Lists
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="scrumdo-wrapper-content">
+        <div class="row">
+            <div class="col-sm-12 clearfix">
+                <h4 class="scrumdo-heading h4 pull-left">All Organization Members</h4>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="scrumdo-lists a-to-z">
+                 <li class="list-filter">
+                    <input class="col-xs-12" type="text" name="userquery" ng-model="ctrl.userquery" placeholder="Search Users" />
+                </li>
+                <li ng-repeat="member in ctrl.allMembers| filter:ctrl.userquery">
+                    <span class="scrumdo-list-range"></span>
+                    <a class="pull-left" ng-bind-html="member|longuser"></a>
+                    <div class="scrumdo-list-btn-wrapper pull-right" ng-if="user.username != member.username">
+                        <a ng-click="ctrl.removeUser(member)"><span class="scrumdo-icons bin"></span></a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>

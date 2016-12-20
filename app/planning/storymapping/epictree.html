@@ -1,0 +1,40 @@
+<div class="story-map-epics-tree" frang-tree>
+    <div class="scrumdo-panel primary"
+            data-container-type="epic-container"
+            data-epic-id="{{epic.id}}"
+            frang-tree-repeat="epic in mappingCtrl.allEpics|filter:mappingCtrl.filterEpic|orderBy:['order','id']">
+        <div class="scrumdo-panel-heading" role="tab" id="headingOne" ng-class="{active:epic.selected}">
+            <h4 class="scrumdo-panel-title pull-left">
+                <a ng-click="mappingCtrl.toggleExpanded(epic)"
+                    ng-class="{collapsed:!epic.isExpanded,nochildren:epic.children.length == 0}"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <i uib-tooltip="Archived" ng-if="epic.archived" class="glyphicon glyphicon-folder-close"></i>
+                    <span ng-if="epic.number">#{{epic.number}}</span> {{epic.summary | decodeHtmlEntities | words:10}}
+                </a>
+            </h4>
+            <div class="pull-right">
+                <button uib-tooltip="Select Epic"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-change="mappingCtrl.selectedEpicChanged()"
+                    class="scrumdo-btn primary toggle-group medium" ng-model="mappingCtrl.selectedEpic" 
+                    uib-btn-radio="epic">
+                    <i class="fa fa-th fa-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <div uib-collapse="!epic.isExpanded"
+                class="scrumdo-panel-collapse collapse"
+                role="tabpanel"
+                aria-labelledby="headingOne">
+            <div class="scrumdo-panel-body">
+                <div frang-tree-insert-children="epic.children|filter:mappingCtrl.filterEpic|orderBy:['order','id']">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="mappingCtrl.projectData.canWrite()" class="no-epic text-center">
+        <a class="scrumdo-btn primary" href="" ng-click="mappingCtrl.addEpic(mappingCtrl.rootEpic)">+ Add Collection</a>
+    </div>
+</div>

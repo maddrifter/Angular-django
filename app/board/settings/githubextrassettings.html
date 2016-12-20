@@ -1,0 +1,117 @@
+<a class="scrumdo-btn primary medium pull-right" ui-sref="app.settings.extras"><i class="fa fa-arrow-left"></i> Back To Extras</a>
+<h2><i class="fa fa-github"></i> GitHub</h2>
+<hr/>
+
+<div ng-if="! settingsCtrl.organization.subscription.plan.premium_plan">
+    <h3>Upgrade Now!</h3>
+    <p>The GitHub integration is available on any ScrumDo premium plan.
+    You can <a ng-href="/subscription/{{settingsCtrl.organization.slug}}">upgrade your plan here</a>.</p>
+
+    <p>
+        For information on the GitHub integration, please see
+        <a href="http://help.scrumdo.com/github/">http://help.scrumdo.com/github/</a>
+    </p>
+</div>
+
+<div ng-if="settingsCtrl.organization.subscription.plan.premium_plan">
+
+    <a ng-if="githubctrl.extraConfig.configured" class="pull-right" ng-href="{{githubctrl.extraConfig.auth_url}}">Reauthenticate</a>
+    <h4>Step 1: Authentication</h4>
+    <div ng-if="!githubctrl.extraConfig.configured">
+        <a class="scrumdo-btn primary" ng-href="{{githubctrl.extraConfig.auth_url}}"><i class="fa fa-user"></i> Authenticate</a>
+    </div>
+
+
+    <hr/>
+    <h4>Step 2: Configure Github Repos</h4>
+    <div class="row">
+        <form name="importForm">
+            <div class="col-xs-5">
+                <div class="scrumdo-select primary">
+                    <select ng-model="githubctrl.githubImport.name"
+                            name="import_repo"
+                            ng-options="repo.full_name as repo.full_name for repo in githubctrl.extraConfig.github_repos|orderBy:'full_name'"></select>
+                </div>
+            </div>
+            <div class="checkbox col-xs-12">
+                <label>
+                    <input name="upload_issues" ng-model="githubctrl.githubImport.upload_issues" type="checkbox"> Upload ScrumDo stories as GitHub issues.
+                </label>
+            </div>
+            <div class="checkbox col-xs-12">
+                <label>
+                    <input name="download_issues" ng-model="githubctrl.githubImport.download_issues" type="checkbox"> Download GitHub issues into the ScrumDo story queue.
+                </label>
+            </div>
+            <div class="checkbox col-xs-12">
+                <label>
+                    <input name="close_on_delete" ng-model="githubctrl.githubImport.close_on_delete" type="checkbox"> Synchronize issue status with board cell.
+                </label>
+            </div>
+            <div class="checkbox col-xs-12">
+                <label>
+                    <input checked name="commit_messages" ng-model="githubctrl.githubImport.commit_messages" type="checkbox"> Link commits and pull requests to ScrumDo cards.
+                </label>
+            </div>
+
+            <div class="col-xs-5">
+                <button ng-class="{'disabled':!githubctrl.githubImport.name}"
+                        ng-click="githubctrl.addRepo(githubctrl.githubImport)"
+                        class="scrumdo-btn primary"><i class="fa fa-plus"></i> Add Repo</button>
+            </div>
+        </form>
+    </div>
+
+    <div ng-if="githubctrl.extraConfig.existing_configs">
+        <hr/>
+        <h4>Configured Repos:</h4>
+        <hr/>
+    </div>
+    <div ng-repeat="config in githubctrl.extraConfig.existing_configs">
+        <button ng-click="githubctrl.removeBinding(config.id)" class="pull-right scrumdo-btn primary"><i class="fa fa-trash-o"></i> Remove Repo</button>
+        <h5>{{config.github_slug}}</h5>
+        <ul>
+            <li ng-if="config.upload_issues">Uploads ScrumDo cards as GitHub issues.</li>
+            <li ng-if="config.download_issues">Downloads GitHub issues as ScrumDo cards.</li>
+            <li ng-if="config.delete_issues">Synchronizes issue status with board cell.</li>
+            <li ng-if="config.commit_status_updates">Listens for GitHub commit messages</li>
+        </ul>
+        <hr>
+    </div>
+
+
+
+    <div ng-if="githubctrl.extraConfig.existing_configs">
+        <h4>Available message commands</h4>
+        <h5>Tag commit to ScrumDo card</h5>
+        <p>Add these commands to a commit message or pull request to associate a ScrumDo card with it.</p>
+        <p>
+            <b>(Card #|Story #|sd-)99</b><br/>
+            <b>(Card XX-|Story XX-)99</b></br>
+            Tag a ScrumDo card with a commit message.  You can use any of these three message styles.  If you
+            use GitHub issues, the last format will allow you to avoid conflicts with the issue auto-tagging format.
+            Examples:
+            <pre>This is my normal commit message.  I was working on Card #10|Card XX-10</pre>
+            <pre>This is my normal commit message.  I was working on Story #10|Story XX-10</pre>
+            <pre>This is my normal commit message.  sd-10</pre>
+        </p>
+        <hr/>
+        <h5>Move ScrumDo card</h5>
+        <p>Add these commands to a commit message move a ScrumDo card.</p>
+        <p>
+            <b>(Card #|Story #|sd-)99 Cell Name</b><br/>
+            <b>(Card XX-|Story XX-)99 Cell Name</b><br/>
+            Tag a ScrumDo card with a commit message and move it on your board to the specified Cell.  For this
+            workspace, these cell names are valid:
+            <ul>
+                <li ng-repeat="name in githubctrl.cellNames">{{name}}</li>
+            </ul>
+
+            Example:
+            <pre>This is my normal commit message.  I was working on sd-10 {{githubctrl.cellNames[0]}}</pre>
+            <pre>This is my normal commit message.  I was working on Card XX-10 {{githubctrl.cellNames[0]}}</pre>
+        </p>
+        <p class="alert alert-info"><i class="fa fa-info-circle"></i> XX = Workspace Prefix</p>
+
+    </div>
+</div>

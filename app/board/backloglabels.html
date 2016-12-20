@@ -1,0 +1,87 @@
+<div class="scrumdo-panel primary"
+           data-container-type="label-container"
+           data-label="{{::label.id}}"
+           data-iteration-id="{{backlogId}}"
+           ng-init="collapsed=true"
+           ng-repeat="label in boardProject.project.labels|orderBy:'label'">
+    <div class="scrumdo-panel-heading" role="tab" id="headingOne">
+        <h4 class="scrumdo-panel-title pull-left">
+            <a ng-click="collapsed = ! collapsed; $emit('storiesChanged')"
+               ng-class="{collapsed:collapsed}"
+               aria-expanded="true" aria-controls="collapseOne">
+                <i uib-tooltip="Archived" ng-if="epic.archived" class="glyphicon glyphicon-folder-close"></i>
+
+                <span class="labels" ng-style="{'background-color': (label.color|decimalToHexColor)}">{{label.name}}</span>
+            </a>
+        </h4>
+    </div>
+
+
+    <div uib-collapse="collapsed"
+         class="scrumdo-panel-collapse collapse"
+         role="tabpanel"
+         aria-labelledby="headingOne">
+        <div class="scrumdo-panel-body">
+
+            <ul class="kanban-story-list"
+                ng-if="!collapsed"
+                data-epic-id="{{epic.id}}"
+                data-iteration-id="{{backlogId}}"
+                data-label="{{::label.id}}"
+                data-container-type="label-story-list" >
+                <sd-story planning-mode="epic"
+                          story="story"
+                          project="boardProject.project"
+                          epics="epics"
+                          layout="'list'"
+                          ng-repeat="story in boardProject.backlogStories|filter:ctrl.filterByLabel(label)|orderBy:ctrl.sortOrder">
+                </sd-story>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="scrumdo-panel primary"
+     data-container-type="label-container"
+     data-iteration-id="{{backlogId}}"
+     ng-init="collapsed=true">
+
+    <div class="scrumdo-panel-heading" role="tab" id="headingOne">
+        <h4 class="scrumdo-panel-title pull-left">
+            <a ng-click="collapsed = ! collapsed; $emit('storiesChanged')"
+               ng-class="{collapsed:collapsed}"
+               aria-expanded="true" aria-controls="collapseOne">
+                <i uib-tooltip="Archived" ng-if="epic.archived" class="glyphicon glyphicon-folder-close"></i>
+                No Label
+            </a>
+        </h4>
+    </div>
+
+
+    <div uib-collapse="collapsed"
+         class="scrumdo-panel-collapse collapse"
+         role="tabpanel"
+         aria-labelledby="headingOne">
+        <div class="scrumdo-panel-body">
+
+            <ul class="kanban-story-list"
+                data-epic-id="{{epic.id}}"
+                ng-if="!collapsed"
+                data-iteration-id="{{backlogId}}"
+                data-label="-1"
+                data-container-type="label-story-list" >
+                <sd-story planning-mode="epic"
+                          story="story"
+                          project="project"
+                          epics="epics"
+                          layout="'list'"
+                          ng-repeat="story in boardProject.backlogStories|filter:ctrl.filterByNullLabel|orderBy:ctrl.sortOrder">
+                </sd-story>
+            </ul>
+
+        </div>
+    </div>
+</div>

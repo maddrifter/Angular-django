@@ -1,0 +1,6 @@
+<div class="project-app">
+    <sd-subscription-message organization="::projcCtrl.projectData.me().organization" user="::projcCtrl.projectData.me()"></sd-subscription-message>
+    <sd-project-app-breadcrumbs project-data="projcCtrl.projectData"></sd-project-app-breadcrumbs>
+    <sd-project-app-tabs state="projcCtrl.$state" project-data="projcCtrl.projectData"></sd-project-app-tabs>
+    <div class="project-app-content" ui-view="appContent"></div>
+</div>

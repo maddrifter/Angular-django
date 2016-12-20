@@ -1,0 +1,162 @@
+{{#unless news}}
+<div class="scrumdo-overview-timeline" ng-if="news.length==0">
+    <time class="scrumdo-overview-timeline-tag">Today</time>
+    <div class="scrumdo-overview-items">
+        <div>
+        <h4>No recent news</h4>
+        </div>
+
+        <div class="scrumdo-overview-logs">
+            <div class="scrumdo-overview-col-1">
+
+                <img class="img-rounded img-responsive center-block" ng-src="{{STATIC_URL}}img/logo-icon-32.png">
+
+            </div>
+            <div class="scrumdo-overview-col-11">
+                <h4 class="scrumdo-overview-log-h4">
+                <strong>ScrumDo Robot:</strong>
+                <span>
+                    Nothing has happened recently.  I'll fill in this timeline for you as I see activity.
+                </span>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+{{/unless}}
+
+{{#each news}}
+    <div class="scrumdo-overview-timeline">
+        <time class="scrumdo-overview-timeline-tag">{{day}}</time>
+        {{#each data}}
+        <div>
+            <h3><a class="overview-project-link" href="/projects/{{project_slug}}/board">{{project_name}}</a></h3>
+            {{#each entries}}
+            <div class="scrumdo-overview-items">
+                
+
+                {{#if story}}
+                    <ul class="kanban-story-list">
+                        <li class="backlog-container-card">
+                            <div class="cards">
+                                <ul class="cards-tag">
+                                    {{#each story.labels}}
+                                    <li style="background-color: {{#decimalToHexColor color}}{{/decimalToHexColor}}"></li>
+                                    {{/each}}
+                                </ul>
+
+                                <div class="cards-header">
+                                    <a href="/projects/story_permalink/{{story.id}}" class="cards-number">{{../../project_prefix}}-{{story.number}}&nbsp;</a>
+
+                                    <a href="/projects/story_permalink/{{story.id}}"
+                                       class="glyphicon glyphicon-link cards-edit pull-right">
+                                    </a>
+
+                                    {{#if story.epic_label}}
+                                    <ul class="cards-hashtags pull-right">
+                                        <li>{{story.epic_label}}</li>
+                                    </ul>
+                                    {{/if}}
+                                </div>
+                                <div class="cards-content">
+                                    <div class="cards-text">{{{story.summary}}}</div>
+                                </div>
+                                <div>
+                                    <div class="cards-details">
+                                        <ul class="cards-information pull-left">
+                                            {{#if story.points_value}}
+                                            <li>
+                                                <span class="labels label-tag-orange">{{story.points}}</span>
+                                            </li>
+                                            {{/if}}
+
+
+
+                                            <li class="pointer-cursor">
+                                                <span class="scrumdo-icons tasks cards-checked"></span>
+                                                {{#each story.task_counts}}
+                                                    {{#if this}}
+                                                        <span class="status-bg-0 labels smaller vertical-sub">{{this}}</span>
+                                                    {{/if}}
+                                                {{/each}}
+                                            </li>
+
+                                            {{#if story.comment_count}}
+                                            <li>
+                                                <span class="cards-comments-info"><span>{{story.comment_count}}</span> </span>
+                                            </li>
+                                            {{/if}}
+
+                                        </ul>
+
+                                        {{#if story.assignee}}
+                                        <div class="cards-users pull-right">
+                                            <span class="cards-users-number">{{story.assignee.length}}</span>
+
+                                            <ul class="cards-users-images">
+                                                {{#each story.assignee}}
+                                                <li>
+                                                    <img height='30'
+                                                         width='30'
+                                                         src='/avatar/avatar/30/{{ username }}' />
+                                                </li>
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                        {{/if}}
+                                    </div>
+
+                                    <div class="cards-badges-wrapper" >
+                                        {{#each story.tags_list}}
+                                        <span class="badges primary">#{{this}}</span>
+                                        {{/each}}
+
+                                        {{#if story.cell}}
+                                        <span class="mini-cell-label" style="background-color: {{#decimalToHexColor story.cell.color}}{{/decimalToHexColor}}">
+                                            {{story.cell.full_label}}
+                                        </span>
+                                        {{/if}}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+
+                    </ul>
+                {{/if}}
+
+                {{#each news}}
+                    <div class="scrumdo-overview-logs">
+                        <div class="scrumdo-overview-col-1">
+                            <img class="img-rounded img-responsive center-block"
+                                 height='30'
+                                 width='30'
+                                 src='/avatar/avatar/30/{{ user.username }}' />
+                        </div>
+                        <div class="scrumdo-overview-col-11">
+                            <time class="scrumdo-overview-time pull-right">
+                                {{localTime}}
+                            </time>
+                            <h4 class="scrumdo-overview-log-h4">
+                                <strong>{{#shortuser user}}{{/shortuser}}</strong>
+                                <div class="news-text">{{{text}}}</div>
+
+                            </h4>
+                        </div>
+                    </div>
+                {{/each}}
+
+                {{#if truncated}}
+                    {{#if story}}
+                    Results truncated, <a href="/projects/story_permalink/{{story.id}}">view the card</a>
+                    to see the rest.
+                    {{/if}}
+                {{/if}}
+            </div>
+            {{/each}}
+        </div>
+        {{/each}}
+    </div>
+{{/each}}

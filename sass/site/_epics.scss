@@ -1,0 +1,13 @@
+.epic-reorder-list {
+  list-style-type: none;
+  min-height: 5px;
+  font-family: $font-family-roboto;
+  min-height: 10px;
+
+  li {
+    cursor: move;
+    .epic-reorder-list {
+      border: 1px solid #dddddd;
+    }
+  }
+}

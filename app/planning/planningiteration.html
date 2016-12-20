@@ -1,0 +1,47 @@
+<div class="scrumdo-panel primary"
+     sd-access
+     data-iteration-id="{{iteration.id}}"
+     data-container-type="iteration-container">
+    <div class="scrumdo-panel-heading" role="tab" id="headingOne">
+        <h4 class="scrumdo-panel-title pull-left" ng-click="ctrl.toggleExpanded()">
+            <a ng-class="{collapsed:!ctrl.isExpanded}" data-toggle="collapse"  aria-expanded="true" aria-controls="IterationOne">
+                <i uib-tooltip="Archived" ng-if="iteration.hidden" class="glyphicon glyphicon-folder-close"></i>
+                {{iteration.name}}
+            </a>
+        </h4>
+        <div class="dropdown pull-right" uib-dropdown ng-if="canWrite">
+            <button uib-dropdown-toggle class="scrumdo-btn primary medium" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class=" glyphicon glyphicon glyphicon-chevron-down"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                <li><a ng-click="ctrl.addCard()">Add card</a></li>
+                <li><a ng-if="ctrl.isExpanded" ng-click="ctrl.selectAll()">Select All Cards</a></li>
+                <li><a ng-if="ctrl.isExpanded" ng-click="ctrl.selectNone()">Select None</a></li>
+                <li><a ng-click="ctrl.editIteration()">Edit {{::$root['safeTerms'].current.time_period_name}}</a></li>
+                <li><a ng-href="iteration/{{iteration.id}}">Go To {{::$root['safeTerms'].current.time_period_name}} Page</a></li>
+            </ul>
+        </div>
+
+    </div>
+    <div uib-collapse="!ctrl.isExpanded" id="IterationOne" class="scrumdo-panel-collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="scrumdo-panel-body">
+            <div class="column-summary" ng-if="ctrl.storyManager.iterationMap[iteration.id].length">
+                <div class="column-summary-stat"><span class="stat-num">{{ctrl.storyManager.iterationMap[iteration.id].length}}</span> Cards</div>
+                <div class="column-summary-stat" ng-if="ctrl.totalPoints"><span class="stat-num">{{ctrl.totalPoints|setDecimal:2}}</span> Points</div>
+                <div class="column-summary-stat" ng-if="ctrl.totalMinutes"><span class="stat-num">{{ctrl.totalMinutes|formatMinutes}}</span> Estimated Time</div>
+                <div class="column-summary-stat" ng-if="ctrl.businessValue"><span class="stat-num">{{ctrl.businessValue|number:2}}</span> Business Value</div>
+
+            </div>
+            <ul class="kanban-story-list"
+                data-iteration-id="{{iteration.id}}"
+                data-container-type="iteration-story-list">
+                <sd-story story-context-menu planning-mode="'iteration'"
+                           story="story"
+                           project="project"
+                           epics="epics"
+                           layout="cardSize"
+                           ng-repeat="story in ctrl.storyManager.iterationMap[iteration.id]|orderBy:ctrl.sortOrder"></sd-story>
+            </ul>
+        </div>
+    </div>
+</div>

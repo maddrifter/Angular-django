@@ -1,0 +1,43 @@
+<div sd-access class="scrumdo-sidebar pull-right scrumdo-navigation-sidebar"
+     ng-class="{'closed-navigation':!$storage.timelineSidebarOpen, 'opened-navigation':$storage.timelineSidebarOpen}">
+    <div class="scrumdo-navigation pull-right">
+        <button ng-if="canWrite" ng-click="ctrl.createIncrement()" class="scrumdo-btn secondary extended add-iteration">
+            <span class="glyphicon glyphicon-plus"></span> New {{::safeTerms.current.time_period_name}}</button>
+        <nav class="scrumdo-navigation-menu margin-bottom-20">
+            <ul>
+                <li ng-repeat="(key, child_iterations) in ctrl.iterationTree">
+                    <ul>
+                        <li ng-if="child_iterations[0].increment" class="increment-name">
+                            {{::child_iterations[0].increment.name}}
+                        </li>
+                        <li ng-if="!child_iterations[0].increment && ctrl.haveParentIncrement && (ctrl.iterationTree[-1]|filter:{iteration_type:1}).length" class="increment-name">
+                            Others
+                        </li>
+                        <li ng-repeat="iteration in child_iterations|filter:{iteration_type:1}">
+                            <label class="scrumdo-navigation-menu-form scrumdo-backlog-form navigation">
+                                <i uib-tooltip="Archived" ng-if="iteration.hidden" class="glyphicon glyphicon-folder-close pull-left"></i>
+                                <span uib-tooltip="{{iteration.name}}" ui-sref="app.iteration.summary({iterationId:iteration.id})" 
+                                    class="iteration-name"> {{iteration.name}}</span>
+
+                                <label ng-if="ctrl.projectData.canWrite()" uib-tooltip="Edit {{::safeTerms.current.time_period_name}}" class="labels smaller edit-itertion">
+                                    <span ng-click="ctrl.editIncrement(iteration)" class="glyphicon glyphicon-pencil cards-edit pull-right"></span>
+                                </label>
+
+                                <label class="labels smaller pull-right">{{iteration.story_count}}</label>
+                                <label class="labels smaller pull-right"><span class="scrumdo-icons tasks"></span></label>
+                                <label class="labels smaller pull-right iteration-toggle" ng-click="ctrl.toggleIncrement(iteration)">
+                                    <i class="fa" ng-class="{'fa-eye': iteration['showInTimeline']!== false, 'fa-eye-slash': iteration['showInTimeline']===false}" 
+                                        aria-hidden="true"></i></label>
+
+                            </label>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        
+    </div>
+    <div class="scrumdo-pull-sidebar navigation-pull pull-left" ng-click="ctrl.toggleSidebar()">
+        <span class="scrumdo-sidebar-text">{{::safeTerms.current.time_period_name|pluralize}} <span class="glyphicon glyphicon-chevron-up"></span></span>
+    </div>
+</div>

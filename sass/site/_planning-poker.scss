@@ -1,0 +1,69 @@
+//------------------------------
+// *****************************
+// Planning Poker
+// *****************************
+//------------------------------
+
+.scrumdo-planning-poker {
+  position: relative;
+  background: #4c4c4c;
+}
+
+.scrumdo-planning-poker-points-header {
+  position: relative;
+  margin: 35px 0;
+  color: #3b3b3b;
+  font-size: 20px;
+  font-family: $font-family-roboto-bold;
+  text-align: center;
+
+  &:before, &:after {
+    position: absolute;
+    content: " ";
+    width: 38%;
+    top: 11px;
+  }
+  &:before {
+    left: 0;
+    height: 1px;
+    border-top: 1px solid #e7e7e7;
+  }
+  &:after {
+    right: 0;
+    height: 1px;
+    border-top: 1px solid #e7e7e7;
+  }
+}
+
+.scrumdo-planning-poker-memeber-list {
+  padding: 0;
+  margin: 10px 0 25px 0;
+
+  > li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+  }
+}
+
+.scrumdo-planning-poker-other-cards {
+  position: absolute;
+  right: -200px;
+  top: -1px;
+  bottom: -1px;
+  width: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #F5F5F5;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding-left: 0px;
+  padding-right: 0px;
+  .kanban-story-list {
+    padding-left: 0px;
+    padding-right: 0px;
+
+  }
+  >label {
+    padding-left: 10px;
+  }
+}

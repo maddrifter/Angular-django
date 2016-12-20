@@ -1,0 +1,61 @@
+
+<div class="scrumdo-account-details">
+    <h2 class="scrumdo-account-details-title">Your OAuth Applications</h2>
+    <p class="scrumdo-account-details-p">
+        This page lets you register an application that integrates with the ScrumDo API and authenticates via OAuth.
+        This is for developers creating new applications, not for users trying to hook up an existing application
+    </p>
+    <h3 class="scrumdo-account-details-title">New App</h3>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <form class="col-md-6 form-horizontal">
+                <div class="form-group" >
+                    <label class="scrumdo-control-label primary">Name</label>
+                    <input type="text" ng-model="ctrl.newAppName" class="form-control"/>
+                    <label class="scrumdo-control-label primary">Description</label>
+                    <input type="textarea" ng-model="ctrl.newAppDescription" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label></label>
+                    <button ng-click="ctrl.addOAuthApp()" type="submit" class="scrumdo-btn secondary">Register App</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="scrumdo-account-details">
+    <h3 class="scrumdo-account-details-title">Registered Applications</h3>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <div class = "col-md-12">
+                <table class="table scrumdo-table primary">
+                    <thead>
+                    <tr>
+                        <th>App Name</th>
+                        <th>Description</th>
+                        <th>Public Key</th>
+                        <th>Secret Key</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div>
+                        <tr ng-repeat="app in application">
+                            <td>{{app.name}}</td>
+                            <td>{{app.description}}</td>
+                            <td>{{app.key}}</td>
+                            <td>{{app.secret}}</td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+                <button ng-click="ctrl.getOAuthApp()" type="submit" class="scrumdo-btn secondary">Refresh App list</button>
+                <p class="scrumdo-account-details-p">
+                    Need to remove an existing app?  Shoot us an email <a href="mailto:support@scrumdo.com" class="scrumdo-account-details-link hyperlink active">support@scrumdo.com</a></p>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+<a ui-sref="api" class="scrumdo-account-details-link hyperlink active">Return to Access Key Page</a>
+<br/>

@@ -1,0 +1,15 @@
+<div class="form-group cards-comments">
+    <ul class="cards-log">
+        <li ng-repeat="comment in comments|orderBy:'-date_submitted'">
+            <div class="cards-col-1">
+                <sd-user-portrait size="32" user="comment.user" class="img-responsive" />
+            </div>
+            <div class="cards-col-11">
+                <pre class="cards-message-response" ng-bind-html="comment.comment"></pre>
+                <time class="cards-modal-logtime">{{comment.date_submitted|localtime}}
+                    by {{comment.user|shortuser}}
+                </time>
+            </div>
+        </li>
+    </ul>
+</div>

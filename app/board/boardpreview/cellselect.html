@@ -1,0 +1,19 @@
+<div class="scrumdo-input-group-extended dropdown" uib-dropdown is-open="ctrl.isopen">
+    <div class="input-group dropdown-toggle" uib-dropdown-toggle>
+        <button type="button"
+                class="scrumdo-btn primary extended scrumdo-select-button scrumdo-fixed-size">
+            <span class="glyphicon glyphicon glyphicon-th scrumdo-icons "></span> {{ctrl.currentSelection()}}
+        </button>
+        <div class="input-group-btn">
+            <button type="button" class="scrumdo-btn primary dropdown-button" aria-expanded="false">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+        </div>
+    </div>
+    <div class="dropdown-menu scrumdo-dropdown" ng-class="dropdownClass" uib-dropdown-menu role="menu">
+        <sd-cell-picker cells="cells"
+                        headers="headers"
+                        selected-cells="ctrl.selectedCells"></sd-cell-picker>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="team-planning">
+
+    <sd-restricted-feature ng-if="::!ctrl.projectData.isPremiumUser()" 
+        feature-name="'Team Planning'" organization-slug="ctrl.projectData.organizationSlug" 
+        feature-image="'TeamPlanningSample.jpg'"></sd-restricted-feature>
+
+    <div ng-if="::ctrl.noData && ctrl.projectData.isPremiumUser()" class="alert alert-info margin10">
+        There is no team planning data associated with this iteration
+        therefore we can not display the dependency board.
+    </div>
+    <div ng-if="::!ctrl.noData && ctrl.projectData.isPremiumUser()" ng-class="{'backlog-open':ctrl.backlogBoardProject().uiState.backlogOpen}">
+
+        <div>
+            <div class="width220px margin5 display-inline-block">
+                <select class="form-control"
+                        ng-model="ctrl.selectedTeam"
+                        ng-change="ctrl.teamSelected()"
+                        ng-options="project.project_name for project in ctrl.teamOptions">
+                </select>
+            </div>
+
+            <div class="limit-container hidden-sm hidden-xs">
+                <sd-limit-bar set-limit="ctrl.setLimit()" stats="ctrl.getStats()" can-write="ctrl.projectData.canWrite()"></sd-limit-bar>
+            </div>
+
+            <div ng-if="ctrl.rows.length!=0" class="btn-group pull-right export-group">
+                <button uib-tooltip="Export to xls" ng-click="ctrl.exportPlanning($event)" type="button" 
+                    class="scrumdo-btn primary"><span class="glyphicon glyphicon-arrow-down"></span><span class="hidden-sm hidden-xs"> Export</span></button>
+            </div>
+        </div>
+
+        <sd-backlog project="project" board-project="ctrl.backlogBoardProject()"
+            can-drag="ctrl.projectData.currentTeam.canWrite"></sd-backlog>
+
+        <sd-card-grid card-provider="ctrl.gridCardProvider"
+                      rows="ctrl.rows"
+                      sort-order="rank"
+                      dependencies="ctrl.dependencies"
+                      columns="ctrl.columns">
+            <topright>
+                <div class="btn-group" uib-dropdown ng-if="ctrl.projectData.currentTeam.canWrite">
+                    <button class="scrumdo-btn primary"
+                            uib-dropdown-toggle>Pull {{::ctrl.workItemName}}</button>
+                    <ul class="dropdown-menu pull-feature-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+
+                        <li ng-repeat='story in ctrl.projectData.currentStories |orderBy:"rank"'
+                            ng-click="$event.preventDefault(); ctrl.pullFeature(story);"
+                            role="menuitem">
+                            <a href="#">{{ctrl.projectData.currentProject.prefix}}-{{story.number}}
+                                <span ng-bind-html="story.summary|htmlToPlaintext|words:25|to_trusted"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </topright>
+
+        </sd-card-grid>
+
+        <div ng-if="ctrl.rows.length==0" class="alert alert-info infobox">
+            Pull a {{::ctrl.workItemName}} into your plan to start.
+        </div>
+    </div>
+</div>
+<div class="kiosk-toggle" ng-click="kiosk.toggle()">
+    <i class="fa fa-list-alt"></i>
+</div>

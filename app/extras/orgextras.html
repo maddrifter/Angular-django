@@ -1,0 +1,52 @@
+<div class="scrumdo-settings-wrapper org-extras">
+    <div class="scrumdo-settings-container">
+        <div class="col-sm-2">
+            <ul class="scrumdo-account-menu">
+
+                <li>
+                    <span class="header">Information</span>
+                </li>
+                <li ng-class="{active:ctrl.state=='intro'}">
+                    <a ui-sref="intro">ScrumDo Extras</a>
+                </li>
+
+                <li>
+                    <span class="header">Third party integrations</span>
+                </li>
+                <li ng-class="{active:ctrl.state=='github'}">
+                    <a ui-sref="github"><i class="fa fa-github"></i> Github</a>
+                </li>
+
+                <li ng-class="{active:ctrl.state=='basecamp'}">
+                    <a ui-sref="basecamp">Basecamp</a>
+                </li>
+
+
+                <li ng-class="{active:ctrl.state=='chatextras'}">
+                    <a ui-sref="chatextras">Slack</a>
+                </li>
+
+                <li ng-class="{active:ctrl.state=='chatextras'}">
+                    <a ui-sref="chatextras">Flowdock</a>
+                </li>
+
+                <li ng-class="{active:ctrl.state=='chatextras'}">
+                    <a ui-sref="chatextras">Hipchat</a>
+                </li>
+
+
+
+                <li>
+                    <span class="header">ScrumDo API Access</span>
+                </li>
+                <li>
+                    <a target="_blank" href="https://github.com/ScrumDoLLC/ScrumDoAPIV3">Documentation</a>
+                </li>
+            </ul>
+        </div>
+        <div class="scrumdo-settings-content col-sm-10">
+            <div class="scrumdo-extras-details" ui-view="bodyContent">
+            </div>
+        </div>
+    </div>
+</div>

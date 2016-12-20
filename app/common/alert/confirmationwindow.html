@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">{{ title }}</h3>
+</div>
+
+<div class="modal-body">
+   <h4>{{ prompt }}</h4>
+</div>
+<div class="modal-footer">
+    <button class="scrumdo-btn"
+            ng-class="okClass"
+            ng-click="ctrl.ok()"
+            ng-bind-html="okText"></button>
+
+    <button class="scrumdo-btn primary"
+            ng-click="$dismiss('canceled')"
+            ng-bind-html="cancelText"></button>
+</div>

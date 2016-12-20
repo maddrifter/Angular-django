@@ -1,0 +1,46 @@
+<div class="increment-detail">
+    <div class="row top-header" ng-class="{'navbar-open':ctrl.$localStorage.timelineSidebarOpen}">
+        <div class="col-md-8 header">
+            <div>
+                <div class="pull-left">
+                    <span ui-sref="app.iteration.summary({iterationId:increment.id})" class="iteration-name pull-left"> {{increment.name}}</span>
+                    <label ng-if="canWrite" uib-tooltip="Edit Increment" class="labels smaller edit-itertion">
+                        <span ng-click="ctrl.editIncrement()" class="glyphicon glyphicon-pencil cards-edit pull-right"></span>
+                    </label>
+                </div>
+                <span ng-if="ctrl.features.length>0 || ctrl.stats[0]>0" class="cards-info pull-left">
+                    <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+                    <label ng-if="ctrl.features.length>0" uib-tooltip="Current Features" tooltip-placement="top" class="total-cards">{{ctrl.features.length}}</label>
+                    <label ng-if="ctrl.stats[0]>0" class="total-cards sep">/</label>
+                    <label ng-if="ctrl.stats[0]>0" uib-tooltip="Current Points" tooltip-placement="top" class="total-points">{{ctrl.stats[0] | setDecimal:2}}</label>
+                </span>
+            </div>
+            <a class="go-to" ui-sref="app.iteration.summary({iterationId:increment.id})">{{::$root.safeTerms.current.time_period_name}} Details 
+                <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+
+            <increment-sentiments 
+                iteration=increment
+                team=project
+            ></increment-sentiments>
+        </div>
+        <div class="col-md-4 view-type">
+            <label class="action-3 scrumdo-checkbox default pull-right">
+                <label ng-if="ctrl.showByMonth" for="HarvestTracking">Show Quarterly</label>
+                <label ng-if="!ctrl.showByMonth" for="HarvestTracking">Show Monthly</label>
+                <input type="checkbox" id="increment-view-type" ng-change="ctrl.changeViewType()" ng-model="ctrl.showByMonth">
+            </label>
+        </div>
+    </div>
+
+    <div class="row body">
+        <div dateless-timescale class="monthly-timeline timeline-scale"></div> 
+        <div class="col-md-12 features-list">
+            <div class="monthly-feature"
+                ng-repeat="month in ctrl.months | orderBy: ctrl.orderMonths">
+                <monthly-features
+                    month=month
+                ></monthly-features>
+            </div>
+        </div>
+    </div>
+</div>

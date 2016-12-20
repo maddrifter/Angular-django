@@ -1,0 +1,67 @@
+<div sd-access class="modal-header note-action">
+    <button ng-if="ctrl.service.currentNote.editing" type="button" ng-click="ctrl.cancel($event)"
+        class="scrumdo-btn primary  pull-right"> Cancel</button>
+    <button ng-if="!ctrl.service.currentNote.editing" type="button" ng-click="ctrl.close($event)"
+        class="scrumdo-btn primary  pull-right"> Close</button>
+    <button ng-if="!ctrl.service.currentNote.editing && ctrl.isOwner()" ng-click="ctrl.delete()" type="button" 
+        class="scrumdo-btn primary  pull-right"><span class="scrumdo-icons bin">
+        </span> Delete</button>
+    <button ng-if="ctrl.service.currentNote.editing" type="button"
+        class="scrumdo-btn btn-success pull-right card-save-button" 
+        ng-class="{'disabled':!ctrl.isValidNote()}" ng-click="ctrl.save($event)">Save</button>
+    <button ng-if="!ctrl.service.currentNote.editing && ctrl.isOwner()" type="button"
+        class="scrumdo-btn primary  pull-right" ng-click="ctrl.edit($event)">
+        <span class="glyphicon glyphicon-pencil"></span> Edit</button>
+
+    <h4 class="modal-title" ng-if="ctrl.service.currentNote.id == -1">Add Note</h4>
+    <h4 class="modal-title" ng-if="ctrl.service.currentNote.id != -1 && ctrl.service.currentNote.editing">Edit Note</h4>
+    <h4 class="modal-title" ng-if="ctrl.service.currentNote.id != -1 && !ctrl.service.currentNote.editing">Note Details</h4>
+</div>
+
+<div class="modal-body card-modal">
+    <div class="note-details">
+        <div class="note-content" ng-class="{'editing':ctrl.service.currentNote.editing}">
+
+            <div class="note-title form-group">
+                <h4 ng-if="!ctrl.service.currentNote.editing" ng-bind-html="ctrl.service.currentNote.title"></h4>
+                <input autocomplete="off" ng-if="ctrl.service.currentNote.editing" type="text" name="title" 
+                    class="scrumdo-form primary" ng-required="true" initial-focus
+                    ng-model="ctrl.service.currentNote.title" placeholder="Note title here..." />
+            </div>
+            <div class="note-body form-group">
+                <div ng-if="!ctrl.service.currentNote.editing" ng-bind-html="ctrl.service.currentNote.body|to_trusted"></div>
+                <div ng-if="ctrl.service.currentNote.editing" clickable-editor="2001" html="ctrl.service.currentNote.body"></div>
+                <div ng-if="ctrl.service.currentNote.body == '' && ctrl.service.currentNote.editing" class="add-placeholder">
+                    Note detail here...
+                </div>
+            </div>
+            <div class="row">
+                <div class="note-extras col-md-12">
+                    <div class="note-attachments col-md-4">
+                        <sd-attachments ng-if="ctrl.project && canWrite" project="ctrl.project" 
+                            note="ctrl.service.currentNote"></sd-attachments>
+                        <sd-attachments readonly="true" ng-if="ctrl.project && !canWrite" project="ctrl.project" 
+                            note="ctrl.service.currentNote"></sd-attachments>
+                    </div>
+                    <div class="note-comments col-md-8">
+                        <sd-comments-box ng-if="ctrl.project && canWrite" user="ctrl.userService.me"
+                                project="ctrl.project"
+                                ng-model="ctrl.newComment"
+                                note="ctrl.service.currentNote"></sd-comments-box>
+
+                        <sd-comments-box readonly="true" ng-if="ctrl.project && !canWrite" user="ctrl.userService.me"
+                                project="ctrl.project"
+                                ng-model="ctrl.newComment"
+                                note="ctrl.service.currentNote"></sd-comments-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="ctrl.busyMode" class="busy-mode">
+        <div class="progress progress-striped active">
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+        </div>
+    </div>
+</div>

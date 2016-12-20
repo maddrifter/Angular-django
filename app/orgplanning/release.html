@@ -1,0 +1,40 @@
+<div class="release-details">
+
+    <div class="scrumdo-project-boxes release-box">
+        <div class="scrumdo-project-boxes-header">
+            <div class="pull-right">
+                <a class="scrumdo-btn primary"
+                   ng-href="/projects/org/{{releaseCtrl.organizationSlug}}/search?q=release%3A%20{{releasesCtrl.currentRelease.number}}"
+                   target="_blank">
+                    <i class="fa fa-search"></i> Find Cards
+                </a>
+
+                <button ng-if="user.staff"
+                        class="scrumdo-btn primary"
+                        ng-click="releaseCtrl.editRelease(releasesCtrl.currentRelease, releasesCtrl.project)">
+                    <i class="fa fa-pencil"></i> Edit
+                </button>
+
+                <button ng-if="user.staff"
+                        class="scrumdo-btn primary"
+                        ng-click="releaseCtrl.deleteRelease(releasesCtrl.currentRelease)">
+                    <i class="fa fa-trash"></i> Delete
+                </button>
+            </div>
+
+            <h2>{{releasesCtrl.currentRelease.summary|htmlToPlaintext}}</h2>
+        </div>
+
+        <sd-milestone-stats stats="releaseCtrl.currentStats"></sd-milestone-stats>
+
+        <div class="scrumdo-project-boxes-content">
+            <div data-type="cards" sd-release-chart report-data="releaseCtrl.stats"></div>
+
+            <div data-type="points"
+                 ng-if="releaseCtrl.currentStats.points_total > 0"
+                 sd-release-chart
+                 report-data="releaseCtrl.stats"></div>
+        </div>
+    </div>
+
+</div>

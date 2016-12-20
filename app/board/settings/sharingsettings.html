@@ -1,0 +1,221 @@
+<div ng-if="!settingsCtrl.organization.subscription.plan.premium_plan">
+    <h3>Upgrade Now!</h3>
+    <p class="scrumdo-account-details-p">
+        Workspace sharing lets you share a read-only view of your board to stakeholders without a ScrumDo account.
+        It is available on any ScrumDo premium plan.
+        You can <a ng-href="/subscription/{{settingsCtrl.organization.slug}}">upgrade your plan here</a>.</p>
+
+    <p class="scrumdo-account-details-p">
+        For information on workspace sharing, please see
+        <a href="http://help.scrumdo.com/help/sharing.html">http://help.scrumdo.com/help/sharing.html</a>
+    </p>
+
+    <div class="scrumdo-alerts warn">
+        <b>Looking to add coworkers?</b>
+        <p>You can invite people to work on your workspace from the Teams Interface
+            on your organization dashboard with any subscription level.</p>
+
+        <p>The sharing feature on this page is to give read-only
+            access to people without ScrumDo accounts.</p>
+    </div>
+</div>
+
+
+<div class="scrumdo-account-details" ng-if="settingsCtrl.organization.subscription.plan.premium_plan">
+    <h2 class="scrumdo-account-details-title">Sharing</h2>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    You can share a read-only view of your board to stakeholders without a ScrumDo account.
+                </p>
+                <p class="scrumdo-account-details-p">
+                    For more information on workspace sharing, please see
+                    <a href="http://help.scrumdo.com/help/sharing.html">http://help.scrumdo.com/help/sharing.html</a>
+                </p>
+
+                <div class="scrumdo-alerts notify">
+                    <b>Adding Coworkers?</b>
+                    You can invite people to work on your workspace from the Teams Interface
+                    on your organization dashboard.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="scrumdo-select primary">
+                    <select ng-model="sharectrl.selectedIteration"
+                            ng-options="iteration as iteration.name for iteration in sharectrl.boardProject.iterations|filter:{iteration_type:1}">
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <button ng-click="sharectrl.shareIteration()" ng-class="{disabled:!sharectrl.selectedIteration}" class="scrumdo-btn secondary">Share Iteration</button>
+            </div>
+        </div>
+
+        <div class="row" ng-if="sharectrl.shares.length" ng-controller="ProjectSettingsController">
+            <h2 class="scrumdo-account-details-title">Share Workspace:</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="scrumdo-account-details-p">
+                        You can share a single workspace url instead of urls for each iteration.
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label class="action-3 scrumdo-checkbox default">
+                    <label ng-if="!ctrl.project_shared" for="SharedProject">Share Workspace:</label>
+                    <label ng-if="ctrl.project_shared" for="SharedProject">Unshare Workspace:</label>
+                    <input type="checkbox" id="SharedProject" ng-change="ctrl.updateProjectSharing()" ng-model="ctrl.project_shared">
+                </label>
+            </div>
+            <div class="col-sm-5" ng-if="ctrl.project_shared && ctrl.project_shared_key">
+                <p>
+                    <strong>Shared Url:</strong>
+                    <a target="_blank" ng-href="https://app.scrumdo.com/shared/project/{{ctrl.project_shared_key}}/">
+                        https://app.scrumdo.com/shared/project/{{ctrl.project_shared_key}}/
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <h2 class="scrumdo-account-details-title active-share-title" ng-if="sharectrl.shares.length">Active Shares:</h2>
+    <div class="scrumdo-account-details-content" ng-if="sharectrl.shares.length">
+        <div class="scrumdo-sharing-details">
+            <div class="row" ng-repeat="share in sharectrl.shares" ng-form="form">
+                <div class="col-md-12">
+                    <div class="col-md-2"><strong>Iteration:</strong></div>
+                    <div class="col-md-10">
+                        {{share.iteration_id|iterationToName:sharectrl.boardProject.iterations}}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-2"><strong>All Cards?:</strong></div>
+                    <div class="col-md-10">
+                        <input name="allshared" class="" type="checkbox" ng-model="share.all_cards" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-2"><strong>Tag:</strong></div>
+                    <div class="col-md-5">
+                        <input class="form-control" type="text"
+                               ng-if="!share.all_cards"
+                               name="tag"
+                               ng-model="share.tag" />
+                        <span ng-if="share.all_cards">
+                            All cards are shared
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-2"><strong>Shared Url:</strong></div>
+                    <div class="col-md-10">
+                        <a target="_blank" ng-href="https://app.scrumdo.com/shared/{{share.key}}/">
+                            https://app.scrumdo.com/shared/{{share.key}}/
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-2"><strong>Shared Card Fields:</strong></div>
+                    <div class="col-md-10">
+                        <div class="col-sm-4 col-lg-3">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.assignee' class="scrumdo-checkbox" type="checkbox" name="assignee" id="share_assignee_{{share.id}}" value="1">
+                                <label for="share_assignee_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_assignee_{{share.id}}">Assignee</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.summary' class="scrumdo-checkbox" type="checkbox" name="summary" id="share_summary_{{share.id}}" value="1">
+                                <label for="share_summary_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_summary_{{share.id}}">Summary</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.detail' class="scrumdo-checkbox" type="checkbox" name="detail" id="share_detail_{{share.id}}" value="1">
+                                <label for="share_detail_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_detail_{{share.id}}">Detail</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3" ng-if="sharectrl.boardProject.project.extra_1_label">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.custom1' class="scrumdo-checkbox" type="checkbox" name="custom1" id="share_custom1_{{share.id}}" value="1">
+                                <label for="share_custom1_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_custom1_{{share.id}}">{{sharectrl.boardProject.project.extra_1_label}}</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3" ng-if="sharectrl.boardProject.project.extra_2_label">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.custom2' class="scrumdo-checkbox" type="checkbox" name="custom2" id="share_custom2_{{share.id}}" value="1">
+                                <label for="share_custom2_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_custom2_{{share.id}}">{{sharectrl.boardProject.project.extra_2_label}}</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3" ng-if="sharectrl.boardProject.project.extra_3_label">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.custom3' class="scrumdo-checkbox" type="checkbox" name="custom3" id="share_custom3_{{share.id}}" value="1">
+                                <label for="share_custom3_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_custom3_{{share.id}}">{{sharectrl.boardProject.project.extra_3_label}}</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.time_estimates' class="scrumdo-checkbox" type="checkbox" name="share_time_estimates" id="share_time_estimates_{{share.id}}" value="1">
+                                <label for="share_time_estimates_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_time_estimates_{{share.id}}">Time Estimates</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.points' class="scrumdo-checkbox" type="checkbox" name="points" id="share_points_{{share.id}}" value="1">
+                                <label for="share_points_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_points_{{share.id}}">Points</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.epic' class="scrumdo-checkbox" type="checkbox" name="epic" id="share_epic_{{share.id}}" value="1">
+                                <label for="share_epic_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_epic_{{share.id}}">Collection</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.business_value' class="scrumdo-checkbox" type="checkbox" name="business_value" id="share_business_value_{{share.id}}" value="1">
+                                <label for="share_business_value_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_business_value_{{share.id}}">Business Value</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.comments' class="scrumdo-checkbox" type="checkbox" name="comments" id="share_comments_{{share.id}}" value="1">
+                                <label for="share_comments_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_comments_{{share.id}}">Comments</label>
+                        </div>
+                        <div class="col-sm-4 col-lg-3">
+                            <label class="scrumdo-backlog-form navigation">
+                                <input ng-model='share.tasks' class="scrumdo-checkbox" type="checkbox" name="tasks" id="share_tasks_{{share.id}}" value="1">
+                                <label for="share_tasks_{{share.id}}"><span></span></label>
+                            </label>
+                            <label for="share_tasks_{{share.id}}">Tasks</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-10">
+                    <div class="col-md-2 col-sm-1">
+                        <button ng-if="form.$dirty" ng-click="sharectrl.updateShare(share, form)" class="scrumdo-btn secondary">Save</button>
+                        <button ng-if="!form.$dirty" ng-click="sharectrl.unshare(share)" class="scrumdo-btn primary">Unshare</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

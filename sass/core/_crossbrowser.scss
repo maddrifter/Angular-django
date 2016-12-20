@@ -1,0 +1,47 @@
+//------------------------------
+// *****************************
+// Cross Browser Fixes
+// *****************************
+//------------------------------
+
+.ie9, .ie10 {
+  .scrumdo-checkbox {
+    input[type=checkbox],
+    input[type=radio] {
+      background: none;
+      border: none;
+      @include box-shadow(none);
+
+      &:checked {
+        @include box-shadow(none);
+      }
+    }
+  }
+}
+
+
+
+.ie9 {
+
+  .scrumdo-select {
+    background: none;
+    border: none;
+    padding: 0;
+    select {
+      padding: 0;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+    }
+  }
+
+
+
+}
+
+
+
+
+
+.ie10 {
+
+}

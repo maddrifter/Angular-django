@@ -1,0 +1,139 @@
+//------------------------------
+// *****************************
+// List
+// *****************************
+//------------------------------
+
+.scrumdo-lists {
+  display: block;
+
+  &.a-to-z {
+    padding: 0;
+    margin: 15px 0;
+    &.sub-users-list{
+      max-height: 700px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    > .list-filter{
+      input{
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      &:hover {
+        background: none;
+      }
+    }
+    > li {
+      @include clearfix();
+      position: relative;
+      padding-top: 15px;
+      padding-left: 75px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e7e7e7;
+      list-style: none;
+
+//      &:first-child {
+//        border-top: 1px solid #e7e7e7;
+//      }
+
+      &:hover {
+        background: #f1f1f1;
+
+        .scrumdo-checkbox.star {
+          display: inline-block;
+          visibility: visible;
+        }
+      }
+
+      > a {
+        font-size: 16px;
+        font-family: $font-family-roboto-bold;
+        color: #3b3b3d;
+      }
+    }
+
+    .scrumdo-list-range {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      font-family: $font-family-roboto-medium;
+      text-transform: uppercase;
+      font-size: 16px;
+      color: #aaaaaa;
+    }
+
+    .scrumdo-checkbox.star {
+      display: none;
+      visibility: hidden;
+      position: absolute;
+      top: 15px;
+      left: 40px;
+    }
+
+    .scrumdo-list-btn-wrapper {
+      padding: 0 15px;
+    }
+  }
+
+  &.teamlist {
+    padding: 0 0 0 10px;
+    margin: 0 0 15px 0;
+
+    > li {
+      list-style: none;
+      color: #666666;
+      font-size: 14px;
+      font-family: $font-family-roboto-bold;
+      margin-bottom: 5px;
+    }
+  }
+
+  &.default {
+    padding: 0;
+    margin: 25px 0;
+
+    > li {
+      list-style: none;
+      margin-bottom: 10px;
+    }
+  }
+
+  &.teamlist-userlist {
+    padding: 0;
+    margin: 15px 0;
+
+    > li {
+      @include clearfix();
+      list-style: none;
+      margin-bottom: 10px;
+      vertical-align: middle;
+      height: 50px;
+      line-height: 50px;
+      color: #3b3b3b;
+      font-family: $font-family-roboto-bold;
+      font-size: 14px;
+
+      img {
+        float: left;
+        width: 50px;
+        height: 50px;
+        border-radius: 3px;
+        margin-right: 10px;
+      }
+
+      a {
+        float: right;
+        color: #888888;
+        font-family: $font-family-roboto;
+        font-size: 13px;
+
+        &:hover {
+          text-decoration: underline;
+          color: #888888;
+        }
+      }
+    }
+  }
+
+}

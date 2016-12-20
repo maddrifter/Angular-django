@@ -1,0 +1,21 @@
+<div class="scrumdo-boxes scrumdo-labels-box">
+    <div class="scrumdo-box-header">
+        <span class="pull-left"><strong>Labels</strong> ({{currentValue.length}})</span>
+    </div>
+    <div class="scrumdo-box-content">
+        <ul class="labels-list">
+            <li ng-repeat="label in currentValue">
+                <span class="labels" ng-style="{'background-color': (label.color|decimalToHexColor) }">{{label.name}}</span>
+
+            </li>
+        </ul>
+        <sd-multi-select options="labels"
+                         button-icon="glyphicon glyphicon-tags"
+                         ng-model="currentValue"
+                         label-function="obj.name"
+                         show-filter="true"
+                         control-type= "labels"
+                         template-name="common/controls/labelsselectbody.html"></sd-multi-select>
+    </div>
+</div>
+

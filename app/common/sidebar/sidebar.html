@@ -1,0 +1,138 @@
+<div sd-access class="scrumdo-sidebar pull-right scrumdo-navigation-sidebar"
+     ng-class="{'closed-navigation':!$storage.sidebarOpen, 'opened-navigation':$storage.sidebarOpen}">
+    <div class="scrumdo-navigation pull-right">
+        <nav class="scrumdo-navigation-menu margin-bottom-40">
+            <ul>
+                <li ng-if="::(project ? project.project_type != 2 : undefined)">
+                    <a href="/projects/{{::ctrl.projectSlug}}/planning" class="scrumdo-navigation-menu-link" ng-class="::{active:ctrl.sidebarMode=='plan'}">
+                        <span class="scrumdo-navigation-menu-icon planing"></span>
+                        Planning
+                    </a>
+                </li>
+                <li>
+                    <a href="/projects/{{::ctrl.projectSlug}}/board" class="scrumdo-navigation-menu-link" ng-class="::{active:ctrl.sidebarMode=='board'}">
+                        <span class="scrumdo-navigation-menu-icon scrumboard"></span>
+                        Board
+                    </a>
+                </li>
+                <li>
+                    <a href="/projects/{{::ctrl.projectSlug}}/reports" class="scrumdo-navigation-menu-link" ng-class="::{active:ctrl.sidebarMode=='reports'}">
+                        <span class="scrumdo-navigation-menu-icon reports"></span>
+                        Reports
+                    </a>
+                </li>
+                <li>
+                    <a href="/projects/{{::ctrl.projectSlug}}/notes" class="scrumdo-navigation-menu-link" ng-class="::{active:ctrl.sidebarMode=='notes'}">
+                        <span class="scrumdo-navigation-menu-icon notes"></span>
+                        Notes
+                    </a>
+                </li>
+                <li ng-if="::ctrl.hasStoryQueue()">
+                    <a href="/projects/{{::ctrl.projectSlug}}/storyqueue" class="scrumdo-navigation-menu-link" ng-class="::{active:ctrl.sidebarMode=='storyqueue'}">
+                        <i class="fa fa-cloud-download scrumdo-nav-fa-icon"></i>
+                        Import Queue
+                        <span class="badge">{{project.story_queue_count}}</span>
+                    </a>
+                </li>
+
+                <li ng-if="::ctrl.hasMilestones()">
+                    <a href="/projects/{{::ctrl.projectSlug}}/milestones/#list" class="scrumdo-navigation-menu-link" ng-class="::{active:ctrl.sidebarMode=='storyqueue'}">
+                        <i class="fa fa-ticket scrumdo-nav-fa-icon"></i>
+                        Milestones
+                        <span ng-if="ctrl.hasActiveMilestones()"
+                              class="badge">{{project.milestone_counts.active}}</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <nav class="scrumdo-navigation-menu margin-bottom-20">
+            <ul>
+                <li>
+                    <label class="scrumdo-navigation-menu-form scrumdo-backlog-form navigation">
+                        <a ng-href="{{ctrl.storyListUrl(backlog)}}"
+                               class="iteration-name"><span></span> {{backlog.name}} </a>
+
+                        <label class="labels label-tag-darkgray smaller pull-right">{{backlog.story_count}}</label>
+
+                        <div class="scrumdo-navigation-menu-options">
+                            <a ng-href="{{ctrl.storyListUrl(backlog)}}"
+                               ng-class="::{active: ctrl.sidebarMode==''}"
+                               class="scrumdo-justify"><span class="glyphicon glyphicon-align-justify"></span></a>
+                        </div>
+                    </label>
+                </li>
+
+
+                <li ng-class="{'hidden-iteration':iteration.hidden}" ng-repeat="iteration in filteredIterations">
+                    <label class="scrumdo-navigation-menu-form scrumdo-backlog-form navigation">
+                        <input ng-if="::multiselect"
+                               ng-model="iteration.selected"
+                               type="checkbox"
+                               name="iter_{{::iteration.id}}"
+                               id="iter_{{::iteration.id}}">
+
+                        <label ng-if="::multiselect" title="{{iteration.name}}"
+                               class="iteration-name"
+                               for="iter_{{::iteration.id}}"><span></span> {{iteration.name}}</label>
+
+                        <a ng-if="::!multiselect"
+                              ng-href="{{::ctrl.boardUrl(iteration)}}"
+                              class="iteration-name"> {{iteration.name}}</a>
+
+
+                        <label class="labels label-tag-darkgray smaller pull-right">{{iteration.story_count}}</label>
+
+                        <div class="scrumdo-navigation-menu-options">
+                            <a ng-click="ctrl.goToBoard(iteration)"
+                               ng-href="{{::ctrl.boardUrl(iteration)}}"
+                               ng-class="::{active: ctrl.sidebarMode=='board'}"
+                               class="scrumdo-th"><span class="glyphicon glyphicon-th"></span></a>
+
+                            <a ng-href="{{::ctrl.storyListUrl(iteration)}}"
+                               ng-class="::{active: ctrl.sidebarMode==''}"
+                               class="scrumdo-justify"><span class="glyphicon glyphicon-align-justify"></span></a>
+                        </div>
+                    </label>
+
+                    <div class="iteration-dates" ng-if="::iteration.end_date">
+                        <span ng-if="::iteration.start_date">{{::iteration.start_date|ymddate}} - </span>
+                        {{::iteration.end_date|ymddate}}
+                    </div>
+
+                </li>
+
+                <li>
+                    <label class="scrumdo-navigation-menu-form scrumdo-backlog-form navigation">
+                        <a ng-href="{{::ctrl.storyListUrl(archive)}}" class="iteration-name"><span></span> {{archive.name}} </a>
+                        <label class="labels label-tag-darkgray smaller pull-right">{{archive.story_count}}</label>
+                        <div class="scrumdo-navigation-menu-options">
+                            <a ng-href="{{::ctrl.storyListUrl(archive)}}"
+                               ng-class="::{active: ctrl.sidebarMode==''}"
+                               class="scrumdo-justify"><span class="glyphicon glyphicon-align-justify"></span></a>
+                        </div>
+                    </label>
+                </li>
+
+                <li ng-show="ctrl.hasTrashbin && trashbin.story_count > 0" class="trash-bin-li">
+                    <a ng-href="{{::ctrl.storyListUrl(trashbin)}}">
+                        <i class="fa fa-trash" uib-tooltip="{{trashbin.name}}"></i>
+                        Trash Bin
+                    </a>
+                    <label class="labels label-tag-darkgray smaller pull-right">{{trashbin.story_count}}</label>
+                </li>
+            </ul>
+        </nav>
+        <p class="text-right" ng-if="ctrl.hasMoreIterations">
+            <a ng-if="!ctrl.expanded" ng-click="ctrl.expandAll(true)" class="scrumdo-navigation-link">Show all iterations</a>
+            <a ng-if="ctrl.expanded" ng-click="ctrl.expandAll(false)" class="scrumdo-navigation-link">Stop showing all iterations</a>
+        </p>
+        <button ng-if="canWrite" ng-click="ctrl.addIteration()" class="scrumdo-btn secondary extended"><span class="glyphicon glyphicon-plus"></span> Add {{::ctrl.scrumdoTerms.iteration}}</button>
+    </div>
+    <div class="scrumdo-pull-sidebar navigation-pull pull-left" ng-click="ctrl.toggle()">
+        <span class="scrumdo-sidebar-text">Navigation <span class="glyphicon glyphicon-chevron-up"></span></span>
+    </div>
+</div>
+
+
+

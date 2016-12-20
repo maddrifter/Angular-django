@@ -1,0 +1,18 @@
+<div class="increment-blocker">
+    <ul class="blockers-list" ng-scrollbars ng-scrollbars-config="ctrl.scrollbarConfig">
+        <li class="header" ng-if="ctrl.blockers.length > 0">
+            <p class="card-number">{{::$root.safeTerms.current.work_item_name}} Name</p>
+            <p class="blocker-summary">Blocker Description</p>
+        </li>
+        <li ng-repeat="blocker in ctrl.blockers">
+            <p class="card-number" ng-click="ctrl.editStory(blocker)">{{::project.prefix}}-{{::blocker.card.number}}</p>
+            <p class="blocker-summary">{{::blocker.reason}} 
+                <i ng-if="blocker.external" uib-tooltip="External Cause"
+                    class="fa fa-external-link-square fa-2 external-icon scrumdo-text small" aria-hidden="true"></i>
+            </p>
+        </li>
+        <li class="no-data" ng-if="ctrl.blockers.length == 0">
+            <div class="alert alert-info"><i class="fa fa-info-circle" aria-hidden="true"></i> No Blockers to show!</div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,16 @@
+<li class="task-view" data-task-id="{{::task.id}}">
+    <span ng-if="canWrite"
+          ng-click="ctrl.edit()"
+          class="task-toolbar no-drag glyphicon glyphicon-pencil cards-edit pull-right">
+    </span>
+
+    <div class="task-summary">{{ task.summary }} </div>
+
+    <div ng-if="task.tags || task.assignee || task.estimated_minutes > 0" class="cards-badges-wrapper">
+        <div class="task-tags" ng-bind-html="task.tags | prettytasktags"></div>
+        <b class="task-assignee" ng-if="task.assignee">{{ task.assignee|shortuser }}</b>
+        <span ng-if="task.estimated_minutes > 0">
+            {{hours}}:{{minutes}}
+        </span>
+    </div>
+</li>

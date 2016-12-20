@@ -1,0 +1,291 @@
+.portfolio-edit-window {
+  height: 600px;
+
+  label {
+    margin-top: 15px;
+    display: block;
+    margin-bottom: 0px;
+  }
+
+  label:first-child {
+    margin-top: 0px;
+  }
+
+  .parent-projects {
+    margin-top: 15px;
+  }
+
+  .form-control {
+    margin-top: 2px;
+  }
+
+  .portfolio-level {
+    border: 1px solid #f0f0f0;
+    margin: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+    .level-heading {
+      margin-top: 5px;
+    }
+    .project-icon {
+      position: relative;
+      top: 3px;
+      font-size: 28px;
+    }
+    .icon-menu-item {
+      font-size: 18px;
+    }
+    .project {
+      border: 1px solid #f0f0f0;
+      margin: 5px 30px;
+      padding: 10px;
+      background-color: #ffffff;
+
+      .row:first-child {
+        margin-bottom: 5px;
+      }
+      .archived-project{
+        margin: 1px 5px 0 0px;
+      }
+    }
+  }
+
+  .list-comma::before {
+    content: ', ';
+  }
+  .list-comma:first-child::before {
+    content: '';
+  }
+
+  .warning-container {
+    min-height: 42px;
+    .alert {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.icon-dropdown-menu {
+  max-width: 350px;
+  padding-right: 10px;
+  li {
+    display: inline-block;
+    width: 30px;
+  }
+}
+
+
+.portfolio-projects-page {
+
+  .portfolio-subtitle {
+    color: #32383e;
+    size: 14px;
+    font-family: $font-family-roboto-bold;
+    opacity: 0.55;
+  }
+  .scrumdo-wrapper-navigation{
+    margin-bottom: 0;
+  }
+  .portfolio-filter-nav{
+    border-bottom: 1px solid #e7e7e7;
+    margin-bottom: 20px;
+    padding: 0;
+    .filters{
+      float: left;
+      border-right: 1px solid #ddd;
+    }
+    .fa{
+      color: #999;
+    }
+    label{
+      color: #32383e;
+      cursor: pointer;
+    }
+    input{
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      width: auto;
+      display: inline-block;
+      padding-left: 0;
+      height: 40px;
+    }
+    .scrumdo-checkbox{
+      padding: 0 15px;
+      margin: 9px 0;
+      cursor: pointer;
+    }
+    .clear-filters{
+      padding: 10px 0;
+      a{
+        font-size: 12px;
+        color: #f6764e;
+      }
+    }
+  } // ends .portfolio-filter-nav
+
+  .projects-list {
+    width: 100%;
+    padding: 0px;
+    border-top: 1px solid #BBBBBB;
+
+
+    >li {
+      position: relative;
+      min-height: 50px;
+      width: 100%;
+      list-style: none;
+      padding: 5px 0px 5px 5px;
+      background-color: #ffffff;
+      cursor: pointer;
+      vertical-align: middle;
+      border-left: 1px solid #BBBBBB;
+      border-right: 1px solid #BBBBBB;
+      border-bottom: 1px solid #BBBBBB;
+
+
+      .show-on-hover {
+        visibility: hidden;
+      }
+
+
+      .project-name {
+        display: inline-block;
+        padding-top: 8px;
+
+        overflow: hidden;
+        .scrumdo-favorite-icon {
+          left: 0px;
+          margin-right: 5px;
+        }
+
+        a {
+          font-family: $font-family-roboto-bold;
+          font-size: 15px;
+          color: #32383e;
+        }
+
+        span.label {
+          position: relative;
+          top: -1px;
+        }
+
+      } // ends .project-name
+
+      .rightmenu {
+        display: none;
+        float: right;
+        height: 40px;
+        width: 160px;
+        text-align: right;
+        .scrumdo-navigation-menu-icon {
+          margin-right: 0px;
+        }
+      } // ends .rightmenu
+
+      .project-stats {
+        position: absolute;
+        right: 10px;
+        top: 6px;
+        vertical-align: middle;
+        background-color: #ffffff;
+        max-width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        height: 34px;
+        pointer-events: none;
+
+
+        .stat {
+          display: inline-block;
+          font-family: $font-family-roboto;
+          font-size: 24px;
+          color: #7a7b7f;
+          vertical-align: middle;
+          margin-left: 18px;
+          small {
+            font-family: $font-family-roboto;
+            display: inline-block;
+            font-size: 10px;
+            line-height: 11px;
+            vertical-align: middle;
+            position: relative;
+            top: -2px;
+            text-transform: uppercase;
+            color: #888888;
+          }
+        } // ends .stat
+      } // ends .project-stats
+
+      &:hover {
+        background-color: #fafafa;
+        .show-on-hover {
+          visibility: inherit;
+        }
+        .rightmenu {
+          display: inline-block;
+        }
+      } // ends &:hover
+    } // ends .project-list >li
+  } // ends .project-list
+
+
+
+  .portfolio {
+    padding: 0px;
+    background-color: #ffffff;
+    cursor: pointer;
+    vertical-align: middle;
+    border: none;
+    border-top: 1px solid #BBBBBB;
+
+    margin: 0px -15px 15px -15px;
+
+
+
+    .projects-list {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      border-top: none;
+    }
+
+    .project-icon {
+      padding-left: 2px;
+      display: inline-block;
+      width: 32px;
+      text-align: center;
+
+      &.indented {
+        padding-left: 32px;
+        width: 58px;
+      }
+    }
+    .fa {
+      font-size: 24px;
+      position: relative;
+      top: -3px;
+    }
+
+    .expando {
+      color: #a4a7a9;
+      display: inline-block;
+      width: 25px;
+      text-align: center;
+      position: relative;
+      padding-top: 4px;
+      top: -5px;
+      background-color: #ffffff;
+      height: 24px;
+      .fa {
+        font-size: 14px;
+      }
+    }
+  } // Ends .portfolio
+
+
+  .portfolio-project-menu {
+    .scrumdo-btn {
+      margin-left: -1px !important;
+    }
+  }
+} // ends .portfolio-projects-page

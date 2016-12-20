@@ -1,0 +1,289 @@
+<div class="subscription-table">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
+            <table class="table table-hover table-condensed subscription-feature-table table-bordered">
+                <tr>
+                    <th></th>
+                    <th ng-if="ctrl.userCount == 2" class="header">Free</th>
+                    <th ng-if="ctrl.userCount > 2" class="header">Standard</th>
+                    <th class="header">Premium</th>
+                </tr>
+                <tr ng-if="ctrl.userCount > 2">
+                    <td class="rowHdr">Workspaces</td>
+                    <td class="checked">&#8734</td>
+                    <td class="checked">&#8734</td>
+                </tr>
+                <tr ng-if="ctrl.userCount == 2">
+                    <td class="rowHdr">Workspaces</td>
+                    <td class="checked">3</td>
+                    <td class="checked">&#8734</td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Time tracking</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="rowHdr">Release Planning</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="rowHdr">Value Stream Planning</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="rowHdr">Share Your Workspace</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Time sheet reports</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="rowHdr">REST API access</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="rowHdr">Github Integration</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="rowHdr">Slack Integration</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="rowHdr">Flowdock Integration</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="rowHdr">Hip Chat Integration</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="rowHdr">Send an email to create a card</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+
+                <!--<tr>-->
+                <!--<td class="rowHdr">Zapier Integration</td>-->
+                <!--<td class="checked"></td>-->
+                <!--<td class="checked"><i class="fa fa-check-circle-o"></i></td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td class="rowHdr">Basecamp Integration</td>-->
+                <!--<td class="checked"></td>-->
+                <!--<td class="checked"><i class="fa fa-check-circle-o"></i></td>-->
+                <!--</tr>-->
+                <tr>
+                    <td class="rowHdr">Early Access to New Features</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Priority Support</td>
+                    <td class="checked"></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Polished User Interface</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">File Attachments</td>
+                    <td class="checked"><i ng-if="ctrl.userCount > 2" class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Email Notifications</td>
+                    <td class="checked"><i ng-if="ctrl.userCount > 2" class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Group Chat</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Custom Statuses</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Planning Poker</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Multi level Collection break down</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Iteration Planning</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Flexible Boards</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Customized Reporting</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Lead Time Histogram</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Filterable Reporting</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 ">
+            <table class="table table-hover table-condensed subscription-feature-table table-bordered">
+                <tr>
+                    <th></th>
+                    <th ng-if="ctrl.userCount == 2" class="header">Free</th>
+                    <th ng-if="ctrl.userCount > 2" class="header">Standard</th>
+
+                    <th class="header">Premium</th>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Cumulative Flow Diagram</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Flow Efficiency</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Burn Up/ Burn Down</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Velocity</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Custom Fields</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Tagging and Labels</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">@mention</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Vertical WIP limits</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Horizontal WIP limits</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Google Auth</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Import / Export Data</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Saved Searches</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Live Boards</td>
+                    <td class="checked"><i ng-if="ctrl.userCount > 2" class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Definition of Done & Policy</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Multiple Assignees</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Value priortization</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Personal Kanban Boards</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">My assignments</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Tasks</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Team Management</td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+                <tr>
+                    <td class="rowHdr">Daily Email Digests</td>
+                    <td class="checked"><i ng-if="ctrl.userCount > 2" class="fa fa-check-circle-o"></i></td>
+                    <td class="checked"><i class="fa fa-check-circle-o"></i></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>

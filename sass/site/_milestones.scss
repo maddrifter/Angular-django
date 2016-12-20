@@ -1,0 +1,114 @@
+.milestones-page {
+  overflow-y: hidden;
+  overflow-x: hidden;
+
+  -webkit-transition: right 0.3s ease-out;
+  -moz-transition: right 0.3s ease-out;
+  -o-transition: right 0.3s ease-out;
+  transition: right 0.3s ease-out;
+
+  h2 {
+    margin-top: 0px;
+  }
+
+  &.navbar-open {
+    right: 325px;
+  }
+
+  .panel-body {
+    background-color: #ffffff;
+  }
+
+  .scrumdo-milestones-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid #e2e2e2;
+    border-radius: 3px;
+    background: #fafafa;
+
+    .milestone-assignment-intro {
+
+      font-family: $font-family-roboto;
+      color: #666666;
+
+      background-color: #f5f5f5;
+      border: 1px solid #e3e3e3;
+      border-radius: 1px;
+      @include center-block();
+      padding: 30px;
+
+      max-width: 600px;
+
+      .assignment-abilities {
+        @include center-block();
+      }
+
+      p {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-size: 20px;
+        margin-top: 0px;
+      }
+
+      .fa {
+        font-size: 48px;
+        vertical-align: middle;
+        margin-right: 10px;
+        position: relative;
+        top: -10px;
+      }
+
+    }
+
+    .milestones-navigation {
+      overflow-y: auto;
+      position: absolute;
+      top: 0px;
+      bottom: 0;
+      left: 0px;
+      width: 25%;
+      border-right: 1px solid #eeeeee;
+      padding-top: 15px;
+      padding-left: 15px;
+      color: #555555;
+      font-family: $font-family-roboto;
+      ul {
+        list-style: none;
+        padding-left: 15px;
+        margin-top: 5px;
+        li.active {
+          color: $orangeHighlight;
+        }
+      }
+    }
+
+    .milestones-area {
+      overflow-y: auto;
+      overflow-x: auto;
+      position: absolute;
+      background-color: #ffffff;
+      top: 0px;
+      bottom: 0;
+      right: 0;
+      width: 75%;
+      padding: 20px;
+
+      .milestone-status {
+        width: 200px;
+      }
+
+      .grey-milestone-bg {
+        background-color: #fafafa;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding: 20px;
+      }
+    }
+  }
+}

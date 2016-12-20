@@ -1,0 +1,49 @@
+  .cards-modal-members {
+    padding: 0;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    min-height: 50px;
+
+    li {
+      position: relative;
+      display: inline-block;
+      list-style: none;
+//      background: #d83547;
+      width: 40px;
+      height: 40px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid #ffffff;
+
+
+      a {
+        display: inline-block;
+        width: 100%;
+
+        img {
+          width: 100%;
+        }
+
+//        &:hover {
+//          opacity: 0.3;
+//        }
+      }
+
+//      &:hover:before {
+//        display: inline-block;
+//        position: absolute;
+//        top: 12px;
+//        left: 14px;
+//        font-family: 'Glyphicons Halflings';
+//        font-style: normal;
+//        font-weight: 400;
+//        line-height: 1;
+//        color: #ffffff;
+//        content: "\e082";
+//      }
+    }
+  }

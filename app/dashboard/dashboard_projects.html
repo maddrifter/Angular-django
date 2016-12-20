@@ -1,0 +1,173 @@
+<div class="scrumdo-wrapper-navigation">
+    <div class="row">
+        <div class="col-md-2">
+            <a sd-staff-only href="/projects/project/{{organizationSlug}}/create" class="scrumdo-btn secondary extended text-left">
+                <span class="glyphicon glyphicon-plus"></span>
+                New Workspace
+            </a>
+        </div>
+        <div class="col-md-3 col-md-offset-7 col-lg-2 col-lg-offset-8">
+            <a href="/projects/project/{{organizationSlug}}/create/personal" class="scrumdo-btn primary extended text-left">
+                <span class="glyphicon glyphicon-plus"></span>
+                New Personal Workspace
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="scrumdo-wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <h4 class="scrumdo-heading h4"><span class="scrumdo-star-icon yellowstar"></span> Watched Workspaces </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-controller="DashboardProjectController"
+             ng-repeat="project in projects|filter:{watched:true}"
+             class="col-sm-4 col-md-3">
+            <div class="scrumdo-project-boxes">
+                <div class="scrumdo-project-boxes-header">
+                    <a href="/projects/{{project.slug}}/#defaultboard" class="scrumdo-project-boxes-title pull-left">{{project.name}}</a>
+                    <span ng-click="ctrl.removeFavorite(project)" class="scrumdo-star-icon yellowstar pull-right"></span>
+                </div>
+                <a href="/projects/{{project.slug}}/#defaultboard">
+                    <div class="scrumdo-project-boxes-content upper text-center">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h3 class="scrumdo-project-boxes-heading h3 upper">{{project.stats.story_count}}</h3>
+                                <span class="scrumdo-project-boxes-minitext">TOTAL ACTIVE CARDS</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <h3 class="scrumdo-project-boxes-heading h3 upper">{{project.stats.storieoards_completed}}</h3>
+                                <span class="scrumdo-project-boxes-minitext">CARDS COMPLETED</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <h3 class="scrumdo-project-boxes-heading h3 upper">{{project.stats.stories_in_progress}}</h3>
+                                <span class="scrumdo-project-boxes-minitext">CARDS IN PROGRESS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scrumdo-project-boxes-content lower text-center">
+                        <div class="row">
+                            <div class="col-sm-3" ng-repeat="stat in stats">
+                                <h4 class="scrumdo-project-boxes-heading h4 lower">{{stat.value}}</h4>
+                                <span class="scrumdo-project-boxes-minitext">{{stat.label}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <div class="scrumdo-project-boxes-footer text-right">
+                    <!--<button type="button" class="scrumdo-btn primary smaller">-->
+                        <!--<span class="glyphicon glyphicon-folder-close"></span>-->
+                        <!--Files-->
+                    <!--</button>-->
+                    <button ng-click="ctrl.exportProject(project)" type="button" class="scrumdo-btn primary smaller">
+                        <span class="glyphicon glyphicon-circle-arrow-up"></span>
+                        Export
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12 clearfix">
+            <h4 class="scrumdo-heading h4 pull-left">All Workspaces</h4>
+            <a ng-click="showInactive=!showInactive" class="scrumdo-project-view-archive pull-right">View Archived</a>
+        </div>
+    </div>
+    <div class="row" ng-repeat="group in projectByCategory ">
+        <h5>{{group[0].category}}</h5>
+        <ul class="scrumdo-lists a-to-z">
+                <li ng-repeat="project in group|filter:{personal:false}" ng-if="project.active || showInactive">
+                    <span class="scrumdo-list-range">
+                    </span>
+
+                    <span ng-click="ctrl.toggleFavorite(project)"
+                          ng-class="{'inactive-yellowstar':!project.watched, 'yellowstar':project.watched}"
+                          class="scrumdo-favorite-icon scrumdo-star-icon smaller"></span>
+
+                    <a href="/projects/{{project.slug}}/#defaultboard" class="pull-left">
+                        {{project.name}}
+                        <i ng-if="!project.active">(Archived)</i>
+                    </a>
+
+                    <div class="scrumdo-list-btn-wrapper pull-right">
+                        <!--<button ng-click="ctrl.goToFiles(project)" type="button" class="scrumdo-btn primary smaller">-->
+                            <!--<span class="glyphicon glyphicon-folder-close"></span>-->
+                            <!--Files-->
+                        <!--</button>-->
+                        <button ng-click="ctrl.exportProject(project)" type="button" class="scrumdo-btn primary smaller">
+                            <span class="glyphicon glyphicon-circle-arrow-up"></span>
+                            Export
+                        </button>
+                    </div>
+                </li>
+
+        </ul>
+
+        <ul class="scrumdo-lists a-to-z">
+            <li ng-repeat="project in group|filter:{personal:true}" ng-if="project.creator_id==user.id">
+                <span class="scrumdo-list-range">
+                    </span>
+
+                    <span ng-click="ctrl.toggleFavorite(project)"
+                          ng-class="{'inactive-yellowstar':!project.watched, 'yellowstar':project.watched}"
+                          class="scrumdo-favorite-icon scrumdo-star-icon smaller"></span>
+
+                <a href="/projects/{{project.slug}}/#defaultboard" class="pull-left">
+                    {{project.name}}
+                    <i>(Personal Workspace)</i>
+                    <i ng-if="!project.active">(Archived)</i>
+                </a>
+
+                <div class="scrumdo-list-btn-wrapper pull-right">
+                    <!--<button ng-click="ctrl.goToFiles(project)" type="button" class="scrumdo-btn primary smaller">-->
+                    <!--<span class="glyphicon glyphicon-folder-close"></span>-->
+                    <!--Files-->
+                    <!--</button>-->
+                    <button ng-click="ctrl.exportProject(project)" type="button" class="scrumdo-btn primary smaller">
+                        <span class="glyphicon glyphicon-circle-arrow-up"></span>
+                        Export
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div ng-if="ctrl.classicProjects" sd-staff-only>
+        <h4>Classic Workspaces</h4>
+        <div class="scrumdo-alerts notify">
+            Classic workspaces must be upgraded to the new ScrumDo before you can use them here.  You can still use
+            these workspaces in <a href="https://www.scrumdo.com/orgs">Classic ScrumDo</a>.  When you upgrade a workspace, you
+            will have the option to make it permanent or not.
+        </div>
+        <ul class="scrumdo-lists a-to-z">
+            <li ng-repeat="project in ctrl.classicProjects">
+                <span class="scrumdo-list-range">
+                </span>
+
+
+                {{project.name}}
+
+                <div class="scrumdo-list-btn-wrapper pull-right">
+                    <!--<button ng-click="ctrl.goToFiles(project)" type="button" class="scrumdo-btn primary smaller">-->
+                    <!--<span class="glyphicon glyphicon-folder-close"></span>-->
+                    <!--Files-->
+                    <!--</button>-->
+                    <button ng-click="ctrl.upgradeProject(project)" type="button" class="scrumdo-btn primary smaller">
+                        <span class="glyphicon glyphicon-star"></span>
+                        Upgrade Workspace
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+

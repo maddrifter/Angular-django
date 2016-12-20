@@ -1,0 +1,44 @@
+<div sd-access class="increment-notes">
+    <button ng-if="canWrite" ng-click="ctrl.showNoteWindow()" class="scrumdo-btn add-note-btn summary-btn">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add Note
+    </button>
+    <ul class="noteslist" ng-scrollbars ng-scrollbars-config="ctrl.scrollbarConfig">
+        <li class="col-md-12" ng-repeat="note in ctrl.notes | orderBy:-created_date" ng-if="$index < ctrl.showInitial || ctrl.showAll">
+            <div class="">
+                <div class="timeinfo">
+                    {{note.created_date | mdydate}}
+                </div>
+                <div class="noteinfo">
+                    <h5>{{note.title}}</h5>
+                    <div class="notecontent" ng-bind-html="note.body|to_trusted"></div>
+                </div>
+            </div>
+            <div class="metainfo ">
+                <p class="counts">
+                    <i uib-tooltip="Note Comments" ng-click="ctrl.editNote(note)" class="fa fa-comment" aria-hidden="true">
+                        <span ng-if="note.comments_count > 0" class="">{{note.comments_count}}</span>
+                    </i>
+                    <i uib-tooltip="Note Attachments" ng-click="ctrl.editNote(note)" class="fa fa-paperclip" aria-hidden="true">
+                        <span ng-if="note.attachments_count > 0">{{note.attachments_count}}</span>
+                    </i>
+                    <span class="author">by - {{note.creator|shortuser}}</span>
+                    <span ng-click="ctrl.editNote(note)" class="pull-right edit-note glyphicon glyphicon-pencil"></span>
+                </p>
+            </div>
+        </li>
+        <li ng-if="ctrl.notes.length > ctrl.showInitial && !ctrl.showAll">
+            <p class="showmore">
+                {{ctrl.notes.length-ctrl.showInitial}} more - <span ng-click="ctrl.showAllNotes()">SHOW ALL</span>
+            </p>
+        </li>
+        <li ng-if="ctrl.notes.length > ctrl.showInitial && ctrl.showAll">
+            <p class="showmore">
+                <span ng-click="ctrl.showLessNotes()">SHOW LESS</span>
+            </p>
+        </li>
+        <li ng-if="ctrl.notes.length==0">
+            <div class="alert alert-info"><i class="fa fa-info-circle" aria-hidden="true"></i> No Notes to show!</div>
+        </li>
+    </ul>
+</div>

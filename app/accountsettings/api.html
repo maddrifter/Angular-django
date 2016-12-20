@@ -1,0 +1,45 @@
+<div class="scrumdo-account-details">
+    <h2 class="scrumdo-account-details-title">API Access Key</h2>
+    <div class="scrumdo-account-details-content">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    These are the applications that you have granted access to ScrumDo. If you no
+                    longer wish to be authenticated, you can revoke that access any time (if you do
+                    this, you will probably be prompted to log in in the next time you use the application).
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table scrumdo-table primary">
+                    <thead>
+                        <tr>
+                            <th>App Name</th>
+                            <th>Authentication Key</th>
+                            <th>Revoke Access</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div>
+                            <tr ng-repeat="key in token">
+                                <td><strong>{{key.consumer.name}}</strong></td>
+                                <td>{{key.key}}</td>
+                                <td>
+                                    <button ng-click="ctrl.revokeOAuthToken(key.key)" type="button" class="scrumdo-btn primary extended">Revoke</button>
+                                </td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="scrumdo-account-details-p">
+                    Tips: Are you a developer creating an application? You can <a ui-sref="devapi" class="scrumdo-account-details-link hyperlink active">register it here</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

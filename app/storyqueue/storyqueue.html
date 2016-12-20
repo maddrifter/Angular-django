@@ -1,0 +1,68 @@
+<div class="scrumdo-storyqueue-wrapper"
+     ng-class="{'navbar-open':$storage.sidebarOpen}">
+
+
+    <div class="scrumdo-storyqueue-container">
+        <div class="storyqueue-container-content scrumdo-story-queue">
+            <div class="row">
+                <div class="col-sm-12 col-md-10 col-md-offset-1" ng-if="ctrl.working">
+                    <uib-progressbar value="ctrl.progress" max="100"></uib-progressbar>
+                </div>
+                <div class="col-sm-12 col-md-10 col-md-offset-1">
+                    <div class="storyqueue-container-tools">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button ng-click="ctrl.batchImport()" type="button" class="scrumdo-btn primary"><span class="glyphicon glyphicon-arrow-down"></span> Import</button>
+                                <button ng-click="ctrl.batchArchive()" type="button" class="scrumdo-btn primary"><span class="glyphicon glyphicon-inbox"></span> Archive</button>
+
+
+                                <div class="import-destination pull-right">
+
+                                    <sd-select button-icon="iteration"
+                                               ng-model="ctrl.target"
+                                               label-property="name"
+                                               archive-property="hidden"
+                                               options="iterations"></sd-select>
+                                </div>
+                                <span class="import-destination-label pull-right">Import to:</span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <a ng-click="ctrl.showArchived()" class="pull-right storyqueue-container-selectall">Show Archived</a>
+                    <a ng-click="ctrl.selectAll()" class="storyqueue-container-selectall">Select All</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 col-md-offset-1 ">
+                    <div class="storyqueue-container-card" ng-repeat="item in ctrl.items">
+                        <input type="checkbox" ng-model="item.selected"/>
+                        <div class="cards">
+                            <div class="cards-content">
+                                <h6 class="storyqueue-card-title">{{item.summary}}</h6>
+                                <a target="_blank" ng-href="{{item.external_url}}" class="storyqueue-card-link ">{{item.external_url}}</a>
+                                <pre class="cards-text" ng-if="item.detail">{{item.detail}}</pre>
+                            </div>
+                        </div>
+                        <div class="storyqueue-shortcut-buttons">
+                            <button ng-click="ctrl.import(item.id)" type="button" class="scrumdo-btn primary extended-nopadding"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                            <button ng-click="ctrl.archive(item.id)" type="button" class="scrumdo-btn primary extended-nopadding"><span class="glyphicon glyphicon-inbox"></span></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <uib-pagination ng-if="ctrl.count > 200"
+                        ng-change="ctrl.reload()"
+                        boundary-links="true"
+                        total-items="ctrl.count"
+                        ng-model="ctrl.current_page"
+                        class="pagination-sm"
+                        items-per-page="200"
+                        previous-text="&lsaquo;"
+                        next-text="&rsaquo;"
+                        first-text="&laquo;"
+                        last-text="&raquo;"></uib-pagination>
+        </div>
+    </div>
+</div>

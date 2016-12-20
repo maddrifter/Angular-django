@@ -1,0 +1,151 @@
+.subscription-options-page {
+  background: #f6f6f6;
+}
+
+.subscription-feature-table {
+  table-layout: fixed;
+
+  th.header {
+    width: 75px;
+    text-align: center;
+  }
+  td {
+    vertical-align: middle;
+  }
+  tr {
+    min-height: 39px;
+  }
+  .rowHdr {
+    font-weight: bold;
+    padding: 8px 0px 0px 10px;
+  }
+  .checked {
+    font-size: 20px;
+    color: #117700;
+    text-align: center;
+  }
+  .feature-value {
+    text-align: center;
+
+  }
+}
+
+
+.subscription-upgrade {
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 20px;
+  .upgrade-box {
+    background-color: $greyBackground;
+    padding: 20px;
+    display: inline-block;
+    min-width: 260px;
+
+    .price {
+      color: #DDDDDD;
+      font-family: $font-family-roboto;
+      font-size: 14px;
+    }
+
+    h4 {
+      color: #DDDDDD;
+    }
+
+    a {
+      margin-top: 15px;
+    }
+  }
+}
+
+.subscription-table, .current-subscription {
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 20px;
+
+  .sub-code {
+    max-width: 300px;
+    input {
+      height: 33px;
+    }
+  }
+
+  .scrumdo-box-header-plan {
+    background-color: $greyBackground;
+    color: #DDDDDD;
+    text-align: center;
+    font-family: $font-family-roboto-bold;
+    font-size: 24px;
+    letter-spacing: 2px;
+  }
+
+  .subscription-box-content {
+    padding-top: 40px;
+    min-height: 362px;
+    h4 {
+      margin-bottom: 6px;
+    }
+    hr {
+      margin: 30px;
+    }
+  }
+  .price {
+    color: $greyBackground;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  small {
+    font-size: 12px;
+    color: #444444;
+  }
+
+
+
+  sup {
+    position: relative;
+    top: -7px;
+    font-size: 14px;
+  }
+
+
+  .user-dropdown-label {
+    margin-top: 5px;
+    font-family: $font-family-roboto-bold;
+  }
+
+  .plan-options {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+//    text-align: center;
+
+    .subscription-option-label {
+      background-color: #ffffff;
+      font-family: $font-family-roboto-bold;
+      font-size: 16px;
+    }
+
+
+
+    .subscription-option {
+      text-align: center;
+      font-family: $font-family-roboto-bold;
+      font-size: 14px;
+      background-color: #f9f9f9;
+      min-width: 62px;
+
+      small.users {
+        font-family: $font-family-roboto;
+        color: #AAAAAA;
+      }
+
+      &.active {
+        border-color: $orangeHighlight;
+        border-width: 2px;
+        background-color: #FFFFFF;
+        box-shadow: none;
+      }
+    }
+  }
+}

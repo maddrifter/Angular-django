@@ -1,0 +1,10 @@
+<div class="cluster-stats">
+    <ul>
+        <li class="waiting" ng-class="ctrl.cellClass(cell['cell'])" ng-repeat="cell in ctrl.stats.cell_data">
+            <div>
+                <p class="cards-count">{{::cell.total_cards}} <span>CARDS</span></p>
+                <p class="time">{{::cell.total_time | hoursToDay}}</p>
+            </div>
+        </li>
+    </ul>
+</div>

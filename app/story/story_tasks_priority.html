@@ -1,0 +1,21 @@
+<ul class="cards-tag">
+    <li ng-repeat="label in story.labels"
+        ng-style="{'background-color': (label.color|decimalToHexColor) }"
+        uib-tooltip="{{label.name}}"
+        tooltip-placement="bottom"
+        tooltip-trigger="mouseenter"></li>
+</ul>
+<div class="cards-header">
+    <span class="cards-number">{{::project.prefix}}-{{::story.number}}&nbsp;</span>
+
+    <span ng-click="ctrl.onEdit()" class="glyphicon glyphicon-pencil cards-edit pull-right" ng-class="{'glyphicon-eye-open': !ctrl.canWrite}"></span>
+
+
+    <span class="cards-text" ng-bind-html="story.summary|to_trusted"></span>
+
+</div>
+
+
+<sd-task-grid user="user" project="project" story="story"></sd-task-grid>
+
+<sd-priority-display story="::story"></sd-priority-display>

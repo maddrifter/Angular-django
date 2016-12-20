@@ -1,0 +1,92 @@
+<div id="epic-column-2" class="planning-column-content active" sd-access sd-autoscroll-vertical>
+    <div class="row">
+        <div class="col-sm-12" frang-tree>
+            <div class="scrumdo-panel primary"
+                 data-container-type="epic-container"
+                 data-epic-id="{{epic.id}}"
+                 data-iteration-id="{{iteration}}"
+                 frang-tree-repeat="epic in nestedEpics|filter:ctrl.filterEpic|orderBy:['archived','order','id']"
+                 ng-controller="PlanningEpicController">
+                <div class="scrumdo-panel-heading" role="tab" id="headingOne">
+                    <h4 class="scrumdo-panel-title pull-left">
+                        <a ng-click="ctrl.toggleExpanded()"
+                           ng-class="{collapsed:!ctrl.isExpanded}"
+                           aria-expanded="true" aria-controls="collapseOne">
+                            <i uib-tooltip="Archived" ng-if="epic.archived" class="glyphicon glyphicon-folder-close"></i>
+                            #{{epic.number}} {{epic.summary}}
+                        </a>
+                    </h4>
+
+                    <!--{"points_in_progress":0,-->
+                    <!--"cards_completed":27,-->
+                    <!--"points_total":363,-->
+                    <!--"points_completed":118,-->
+                    <!--"cards_in_progress":3,-->
+                    <!--"cards_total":115}-->
+
+
+                    <div class="dropdown pull-right" uib-dropdown ng-if="canWrite">
+                        <button  class="scrumdo-btn primary medium" type="button" aria-expanded="false" uib-dropdown-toggle>
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-right scrumdo-dropdown" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                            <li><a ng-click="ctrl.editEpic()">Edit Collection</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li><a ng-click="ctrl.addCard()">Add Child Card</a></li>
+                            <li><a ng-click="ctrl.addEpic()">Add Child Collection</a></li>
+                            <li ng-if="ctrl.isExpanded" role="presentation" class="divider"></li>
+                            <li><a ng-if="ctrl.isExpanded" ng-click="ctrl.selectAll()">Select All Cards</a></li>
+                            <li><a ng-if="ctrl.isExpanded" ng-click="ctrl.selectNone()">Select None</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="epic-progress" ng-if="epic.stats.cards_total>0">
+                        <uib-progress max="100" animate="false">
+                            <uib-bar value="ctrl.percentage(epic.stats.cards_completed, epic.stats.cards_total)" type="success"></uib-bar>
+                            <uib-bar value="ctrl.percentage(epic.stats.cards_in_progress, epic.stats.cards_total)"></uib-bar>
+                            <uib-bar value="ctrl.todoPercentage(epic.stats)" type="warning"></uib-bar>
+                        </uib-progress>
+                    </div>
+                </div>
+
+                <div uib-collapse="!ctrl.isExpanded"
+                     class="scrumdo-panel-collapse collapse"
+                     role="tabpanel"
+                     aria-labelledby="headingOne">
+                    <div class="scrumdo-panel-body">
+                        <div class="column-summary" ng-if="ctrl.storyManager.storiesByEpic[epic.id].length">
+                            <div class="column-summary-stat"><span class="stat-num">{{ctrl.storyManager.storiesByEpic[epic.id].length}}</span> Cards</div>
+                            <div class="column-summary-stat" ng-if="ctrl.storyManager.storiesByEpic[epic.id].length != epic.stats.cards_total"><span class="stat-num">{{epic.stats.cards_total}}</span> Total Cards</div>
+                            <div class="column-summary-stat" ng-if="ctrl.totalPoints"><span class="stat-num">{{ctrl.totalPoints|setDecimal:2}}</span> Points</div>
+                            <div class="column-summary-stat" ng-if="epic.stats.cards_total>0 && ctrl.totalPoints!=epic.stats.cards_total"><span class="stat-num">{{epic.stats.points_total|setDecimal:2}}</span> Total Points</div>
+                            <div class="column-summary-stat" ng-if="ctrl.totalMinutes"><span class="stat-num">{{ctrl.totalMinutes|formatMinutes}}</span> Estimated Time</div>
+                            <div class="column-summary-stat" ng-if="ctrl.businessValue"><span class="stat-num">{{ctrl.businessValue|number:2}}</span> Business Value</div>
+                        </div>
+                        <ul class="kanban-story-list"
+                            data-epic-id="{{epic.id}}"
+                            data-iteration-id="{{iteration}}"
+                            data-container-type="epic-story-list" >
+                            <sd-story story-context-menu planning-mode="'epic'"
+                                      story="story"
+                                      project="project"
+                                      iterations="iterations"
+                                      epics="epics"
+                                      layout="cardSize"
+                                      ng-repeat="story in ctrl.storyManager.storiesByEpic[epic.id]|filter:ctrl.filterStory|orderBy:ctrl.epicSortOrder">
+                            </sd-story>
+                        </ul>
+                        <div frang-tree-insert-children="epic.children|filter:ctrl.filterEpic|orderBy:['order','id']">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <sd-no-epic-column iterations="iterations"
+                            project="project"
+                            can-write="canWrite"
+                            card-size="cardSize"
+                            show-archived="showArchived"
+                            iteration="iteration"></sd-no-epic-column>
+        </div>
+    </div>
+</div>

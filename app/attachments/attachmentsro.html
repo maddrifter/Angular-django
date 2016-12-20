@@ -1,0 +1,10 @@
+<div class="attachments-horizontal">
+    <div class="cards-modal-files" ng-repeat="attachment in attachments">
+        <sd-attachment-preview attachment="attachment"></sd-attachment-preview>
+        <h2 class="cards-modal-filename">
+            <a ng-if="attachment.attachment_type == 'local'" target="_blank" href="{{attachment.url}}">{{attachment.filename}}</a>
+            <a ng-if="attachment.attachment_type != 'local'" target="_blank" href="{{attachment.attachment_url}}">{{attachment.attachment_name}}</a>
+        </h2>
+        <time class="cards-modal-uploadtime">Uploaded by <b>{{::attachment.creator|shortuser}}</b> on {{::attachment.created|localtime}}</time>
+    </div>
+</div>

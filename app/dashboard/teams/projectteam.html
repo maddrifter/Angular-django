@@ -1,0 +1,67 @@
+<div class="col-md-4 scrumdo-team" ng-if="ctrl.canAdminTeam()">
+    <div class="scrumdo-project-boxes">
+        <div class="scrumdo-project-boxes-header">
+            <h5 class="team-title">{{::team.name}}</h5>
+            <span class="scrumdo-project-boxes-minititle pull-right">(<ng-pluralize count="team.members.length"
+                              when="{'0': 'No Members',
+                     'one': '1 Member',
+                     'other': '{} Members'}">
+                </ng-pluralize>)</span>
+        </div>
+        <div class="scrumdo-project-boxes-content teams">
+            <div class="row invitee-form" ng-if="ctrl.isTeamAdmin">
+                <div class="col-sm-12">
+                    <span class="invitee-message">
+                        Enter ScrumDo username or email address to invite
+                    </span>
+                    <div class="form-group" ng-repeat="invitee in invitees" ng-style="{'margin-bottom':'0px'}">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <img ng-src="{{STATIC_URL}}img/dummy-profile-pic.png" alt="" class="img-responsive center-block"/>
+                            </div>
+                            <div class="col-sm-10 form-group" ng-style="{'margin-bottom':'0px'}" ng-class="{'has-error':invitee.result}">
+
+                                <input ng-change="ctrl.inviteeChanged()"
+                                        autocomplete="off"
+                                        name="invitee"
+                                        ng-model="invitee.name"
+                                        type="text"
+                                        class="scrumdo-form primary scrumdo-teamlist-input-center"
+                                        />
+
+                                <p ng-if="invitee.result">{{invitee.result.reason}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 text-right">
+                    <button ng-click='ctrl.sendInvitations()' type="button" class="scrumdo-btn secondary">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        Send Invitation
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="scrumdo-lists teamlist">
+                        <li ng-repeat="member in team.members">
+                            <a ng-if="ctrl.rootScope.user.username!=member.username && ctrl.isTeamAdmin" 
+                                uib-tooltip="Remove User" ng-click="ctrl.removeUser(member)">
+                                <span class="scrumdo-tags-close glyphicon glyphicon-remove"></span>
+                            </a>
+                            {{::member|shortuser}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="scrumdo-project-boxes-footer">
+            <span ng-if="accessby=='self'" class="team-access-type">
+                {{::accessLabel}}
+            </span>
+            <span ng-switch="accessby" class="team-access-by">
+                <span ng-switch-when="parent"><i>{{::accessLabel}}</i>, Implied by access to {{::team.projects[0].name}}</span>
+                <span ng-switch-when="child"><i>Read Only Access</i>, Implied by access to {{::team.projects[0].name}}</span>
+            </span>
+        </div>
+    </div>
+</div>

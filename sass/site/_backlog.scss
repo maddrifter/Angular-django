@@ -1,0 +1,338 @@
+//------------------------------
+// *****************************
+// Backlog
+// *****************************
+//------------------------------
+
+.scrumdo-backlog-wrapper {
+  background: #f9f9f9;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-transition: right 0.3s ease-out;
+  -moz-transition: right 0.3s ease-out;
+  -o-transition: right 0.3s ease-out;
+  transition: right 0.3s ease-out;
+}
+
+.iteration-chart {
+  background-color: #9DA4AB;
+  border-radius: 5px;
+
+  text {
+    fill: #ffffff;
+  }
+  .axis {
+    path, line {
+      stroke: #ffffff !important;
+    }
+  }
+}
+
+.size-button {
+  font-size: 18px !important;
+  font-weight: bold !important;;
+}
+
+.scrumdo-backlog-wrapper.navbar-open {
+  right: 325px;
+}
+
+.scrumdo-backlog-container  {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+  background: #ffffff;
+
+  .add-placeholder {
+    display: none;
+  }
+
+
+  .backlog-container-tickets {
+//    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #fafafa;
+    padding: 20px 15px;
+    border-bottom: 1px solid #e2e2e2;
+    z-index: 100;
+
+    .backlog-container-tickets-buttons {
+      margin-top: 20px;
+    }
+
+    .ta-root {
+      .ta-scroll-window > .ta-bind, .ta-editor.ta-html, .ta-scroll-window.form-control {
+        min-height: 40px;
+      }
+
+      .ta-toolbar {
+        display: none;
+      }
+
+      &.focussed {
+        .ta-toolbar {
+          display: block;
+        }
+      }
+    }
+
+
+
+    .collapsed
+    {
+      .add-placeholder {
+        position: absolute;
+        top: 10px;
+        right: 30px;
+        color: #DFDFDF;
+        pointer-events:none;
+        display: block;
+
+      }
+
+      .summary-editor {
+        .ta-toolbar {
+          display: none !important;
+        }
+        .ta-scroll-window > .ta-bind, .ta-editor.ta-html, .ta-scroll-window.form-control {
+          overflow: hidden;
+          height: 33px;
+          min-height: 33px;
+        }
+      }
+    }
+  }
+
+
+
+
+
+
+
+
+  .backlog-container-content {
+    background: #ffffff;
+    padding: 20px 15px 20px 15px;
+
+    .backlog-container-tools {
+      padding: 10px 0;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #e2e2e2;
+    }
+
+    .backlog-container-card-count {
+      color: #888888;
+      font-size: 12px;
+      font-family: $font-family-roboto;
+    }
+
+    .backlog-container-selectall {
+      display: inline-block;
+      color: #888888;
+      font-size: 12px;
+      font-family: $font-family-roboto;
+      margin-bottom: 10px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+  }
+}
+
+
+
+
+.backlog-container-card {
+  @include clearfix();
+  position: relative;
+  padding: 10px 0;
+  background: #f9f9f9;
+  margin-bottom: 2px;
+
+  .cards-information li {
+    &:last-child {
+      border-right: 1px solid #f1f1f1;
+    }
+  }
+
+  .f5background {
+    background-color: #F5F5F5;
+    .value-displays {
+      text-align: right;
+    }
+    .value-block {
+      width: 90px;
+      height: 30px;
+    }
+  }
+
+
+  .cards-cell {
+    font-family: $font-family-roboto;
+    font-size: 10px;
+    color: #aaaaaa;
+    border-left-color: rgb(241, 241, 241);
+    border-left-style: solid;
+    border-left-width: 1px;
+    padding: 0px 5px 0px 5px;
+  }
+  .epic-label {
+    color: rgb(52, 152, 219);
+    font-family: $font-family-roboto;
+    font-size: 10px;
+    padding-left: 5px;
+    border-left-color: rgb(241, 241, 241);
+    border-left-style: solid;
+    border-left-width: 1px;
+  }
+  .cards-badges-wrapper {
+    padding-right: 3px;
+    min-height: 31px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .backlog-container-card {
+    .cards-badges-wrapper {
+      min-height: 28px;
+    }
+  }
+
+  .cards-users-images {
+    height: 31px;
+    width: 30px;
+    position: relative;
+    top: 0px;
+    background: #f5f5f5;
+    li {
+
+      &:nth-child(1) {
+        top: 3px;
+        left: -3px;
+        z-index: 1;
+      }
+      &:nth-child(2) {
+        top: 5px;
+        left: -5px;
+        z-index: 2;
+      }
+      &:nth-child(3) {
+        top: 7px;
+        left: -7px;
+        z-index: 3;
+      }
+    }
+  }
+
+  input[type="checkbox"] {
+    vertical-align: middle;
+    margin: 0 10px;
+  }
+
+  .cards {
+    width: 90%;
+    margin-bottom: 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+
+  &.collapsed-container {
+    padding: 0px;
+    background-color: #ffffff;
+    margin-bottom: 0px;
+
+    .cards {
+      width: 100%;
+    }
+
+    p {
+      margin-bottom: 2px;
+    }
+  }
+
+}
+
+
+.scrumdo-epic-heading {
+  .sortable-drag-placeholder {
+    height: 20px;
+  }
+}
+
+
+
+// We use this header in the inbox as well.
+.backlog-container-header {
+  background: #f6f6f6;
+  min-height: 50px;
+  padding: 5px 15px;
+  border-bottom: 1px solid #dbdbdb;
+
+  .backlog-container-header-h2 {
+    font-size: 20px;
+    color: #ffffff;
+    font-family: $font-family-roboto-bold;
+    padding: 0;
+    margin: 15px 0;
+  }
+  .backlog-container-info-nav {
+    text-align: right;
+    a {
+      color: #ffffff;
+      font-size: 10px;
+      padding: 4px;
+    }
+    a:hover {
+      color: $orangeHighlight;
+    }
+  }
+  .backlog-container-info-section {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    margin: 0;
+    padding: 6px 0;
+
+    > li {
+      display: inline-block;
+      text-align: center;
+      width: 32%;
+      line-height: 1;
+      border-left: 1px solid #747e89;
+
+      &:first-child {
+        border-left: none;
+      }
+
+      > span {
+        font-size: 10px;
+        font-family: $font-family-roboto;
+        color: #ffffff;
+        text-transform: uppercase;
+      }
+
+      > h3 {
+        font-family: $font-family-roboto-bold;
+        font-size: 20px;
+        color: #ffffff;
+        padding: 0;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.editor-margin{
+    margin-top: 10px;
+}

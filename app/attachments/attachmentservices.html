@@ -1,0 +1,24 @@
+<div class="modal-header card-modal attachment-services-modal">
+    <button type="button" class="close" ng-click="$close()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4>Attachment Services</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="attachment-service-area">
+                <uib-tabset vertical="false" type="tabs">
+                    <uib-tab><uib-tab-heading><span class="glyphicon glyphicon-hdd"></span> My Computer</uib-tab-heading>
+                        <sd-local-attachments project="project" story="story" note="note"></sd-local-attachments>
+                    </uib-tab>
+                    <uib-tab><uib-tab-heading><span class="glyphicon glyphicon-cloud"></span> Dropbox</uib-tab-heading>
+                        <dropbox-attachments project="project" story="story" note="note"></dropbox-attachments>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer attachment-service-footer">
+    <p class="text-left col-md-10 file-success-message"></p>
+    <button class="btn btn-primary" ng-click="$close()">OK</button>
+</div>

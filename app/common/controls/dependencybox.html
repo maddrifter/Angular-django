@@ -1,0 +1,107 @@
+﻿<div class="scrumdo-boxes">
+    <div class="scrumdo-box-content">
+
+        <button ng-click="ctrl.startAdding()"
+                ng-if="!ctrl.isAdding"
+                class="pull-right scrumdo-btn primary add-dependency-button"
+                uib-tooltip="Add Dependency">+</button>
+        <strong>Dependencies:</strong>
+
+
+        <!-- start add-dependency form -->
+        <div ng-if="ctrl.isAdding" class="add-dependency-form">
+
+            <div class="row">
+                <div class="col-xs-5">
+                    <safe-project-dropdown
+                            alignment="dropdown-menu"
+                            project-selected="ctrl.projectSelected(project)"
+                            project="ctrl.project"></safe-project-dropdown>
+                </div>
+                <div class="col-xs-7">
+                    <dropdown-filter
+                            ng-change="ctrl.loadPossibleDependencies()"
+                            ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 250, 'blur': 0 } }"
+                            ng-model="ctrl.userSearchInput"></dropdown-filter>
+                </div>
+
+            </div>
+
+            <div class="add-dependency-results" ng-if="ctrl.options.items.length > 0">
+                Choose dependency to add:
+                <ul>
+                    <li ng-repeat="option in ctrl.options.items" ng-if="option.id != story.id">
+                        <a ng-click='ctrl.select($event, option)'
+                           ng-class="{'selected-option':angular_equals(option, currentValue)}"
+                           href='#'>
+                            <span>{{ctrl.getLabel(option)|htmlToPlaintext|decodeHtmlEntities|words:20}}</span>
+                        </a>
+                    </li>
+
+                    <li ng-if="ctrl.options.items.length==0">
+                        No results found.
+                    </li>
+
+                    <li ng-if="ctrl.hasMore()" role="presentation" class="divider"></li>
+                    <li ng-if="ctrl.hasMore()">
+                        <a href='#' ng-click="ctrl.showMore($event)">
+                            Show More...
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <span class="loading-indicator" ng-if="ctrl.isLoading">
+                <i class="fa fa-spinner fa-spin"></i>
+            </span>
+
+            <a href="#" class="pull-right" ng-click="ctrl.isAdding=false; $event.preventDefault()">Cancel</a>
+        </div>
+
+        <!-- end add-dependency form -->
+
+        <div class="row story-dependencies-box">
+            <div svg-connect id="svgConnect"></div>
+            <div ng-if="ctrl.dependentOn.length || ctrl.dependentTo.length" class="col-sm-4">
+                <strong>Dependants on:</strong>
+                <ul class="kanban-story-list">
+                    <li class="story-dependency" ng-repeat="dependency in ctrl.dependentOn" id="dependentOn-{{dependency.id}}">
+                        <span ng-click="ctrl.openStory(dependency)" class="scrumdo-modal-card-nr">
+                            {{::dependency.project.prefix}}-{{::dependency.number}}</span>
+                        <div class="cards-text">{{:: ctrl.formatDependency(dependency)}}</div>
+                        <a uib-tooltip="Remove this Dependency" class="pull-right action-btn" ng-click="ctrl.removeDependency(story.id, dependency.id)">
+                            <i class="fa fa-trash"></i>
+                        </a> 
+                    </li>
+                </ul>
+            </div>
+
+            <div ng-if="ctrl.dependentTo.length || ctrl.dependentOn.length" class="col-sm-4">
+                <strong>&nbsp;</strong>
+                <ul class="kanban-story-list">
+                    <li class="story-dependency" id="story-{{story.id}}">
+                        <span ng-click="ctrl.openStory(dependency)" class="scrumdo-modal-card-nr">
+                            {{::story.prefix}}-{{::story.number}}</span>
+                        <div class="cards-text">{{:: ctrl.formatDependency(story)}}</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div ng-if="ctrl.dependentTo.length" class="col-sm-4">
+                <strong>Cards dependant on this:</strong>
+                <ul class="kanban-story-list">
+                    <li class="story-dependency" ng-repeat="dependency in ctrl.dependentTo" id="dependentTo-{{dependency.id}}">
+                        <span ng-click="ctrl.openStory(dependency)" class="scrumdo-modal-card-nr">
+                            {{::dependency.project.prefix}}-{{::dependency.number}}</span>
+                        <div class="cards-text">{{:: ctrl.formatDependency(dependency)}}</div>
+                        <a uib-tooltip="Remove this Dependency" class="pull-right action-btn" ng-click="ctrl.removeDependency(dependency.id, story.id)">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+

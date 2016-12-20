@@ -1,0 +1,46 @@
+//------------------------------
+// *****************************
+// Alerts
+// *****************************
+//------------------------------
+
+.scrumdo-alert, .scrumdo-alerts {
+  @extend .alert;
+  padding: 10px;
+
+  &.notify {
+    background: transparent;
+    border: 1px solid #eeeeee;
+    border-radius: 3px;
+    margin: 20px 0;
+    color: #888888;
+    font-size: 12px;
+  }
+
+  &.warn {
+    background: transparent;
+    border: 1px solid $orangeHighlight;
+    border-radius: 3px;
+    margin: 20px 0;
+    color: #888888;
+    font-size: 12px;
+    &.withbg{
+      background-color: #F7ECC9;
+      font-size: 14px;
+      margin-top: 0px;
+    }
+  }
+
+  &.white {
+    background-color: #ffffff;
+  }
+  &.slick{
+    padding: 5px 10px;
+    width: auto;
+    display: inline-block;
+    &.alert-danger{
+      margin-bottom: 8px;
+    }
+  }
+
+}

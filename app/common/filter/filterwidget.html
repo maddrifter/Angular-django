@@ -1,0 +1,47 @@
+<div class="input-group">
+    <span class="input-group-btn" uib-dropdown>
+        <button class="scrumdo-btn primary dropdown-toggle"
+                uib-dropdown-toggle
+                ng-click="ctrl.loadSavedFilters()"
+                type="button">
+            <span class="glyphicon glyphicon-cog"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+            <li ng-repeat="query in ctrl.savedFilters">
+                <a ng-click="ctrl.onQuery(query.query)">{{query.name}}</a>
+            </li>
+        </ul>
+
+        <button tooltip-append-to-body='true'
+                uib-tooltip="Show My Cards"
+                ng-if="name != 'projectFilter'"
+                uib-btn-checkbox
+                ng-change="ctrl.showMyCards()"
+                ng-model="ctrl.myCardsFlag"
+                type="button"
+                class="scrumdo-btn primary">
+            <i class="glyphicon glyphicon-user"></i>
+        </button>
+
+    </span>
+    <input type="text"
+           sd-enter="ctrl.enterKeyPressed()"
+           ng-model="ctrl.query" ng-change="ctrl.checkFilterStatus(ctrl.query)"
+           class="scrumdo-form primary"
+           placeholder="{{placeholder}}"/>
+
+    <span ng-if="ctrl.showFilter" class="input-group-btn">
+        <button class="scrumdo-btn primary dropdown-toggle"
+                type="button"
+                ng-click="ctrl.openFilterBuilder()">
+            <span class="glyphicon" ng-class="icon"></span>
+        </button>
+    </span>
+    <span ng-if="!ctrl.showFilter" class="input-group-btn">
+        <button class="scrumdo-btn primary dropdown-toggle" type="button" ng-click="ctrl.clearFilters()" >
+            <span class="glyphicon glyphicon-remove-circle"></span>
+        </button>
+    </span>
+
+</div>
+

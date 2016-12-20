@@ -1,0 +1,138 @@
+//------------------------------
+// *****************************
+// Backlog
+// *****************************
+//------------------------------
+
+.scrumdo-storyqueue-wrapper {
+  position: fixed;
+  top: 114px;
+  bottom: 0px;
+  left: 00px;
+  right: 40px;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  -webkit-transition: right 0.3s ease-out;
+  -moz-transition: right 0.3s ease-out;
+  -o-transition: right 0.3s ease-out;
+  transition: right 0.3s ease-out;
+
+  background: #f9f9f9;
+  padding: 25px;
+
+  &.navbar-open {
+    right: 325px;
+  }
+}
+
+.scrumdo-storyqueue-container  {
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e2e2e2;
+  overflow: hidden;
+  min-height: 100%;
+  background: #ffffff;
+
+  .storyqueue-container-content {
+    background: #ffffff;
+    padding: 20px 15px 20px 15px;
+
+    .import-destination {
+      width: 250px;
+    }
+
+    .import-destination-label {
+      color: #888888;
+      font-size: 12px;
+      font-family: "robotoregular", sans-serif;
+      margin-bottom: 10px;
+      padding: 7px 7px 0px 0px;
+    }
+
+    pre {
+      background: none;
+      border: none;
+      padding: 0px;
+    }
+
+    .storyqueue-container-tools {
+      padding: 10px 0;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #e2e2e2;
+    }
+
+    .storyqueue-container-card {
+      @include clearfix();
+      padding: 10px 60px 10px 40px;
+      background: #f9f9f9;
+      margin-bottom: 2px;
+      position: relative;
+
+      input[type="checkbox"] {
+        //vertical-align: middle;
+        //margin: 0 10px;
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .cards {
+        width: 95%;
+        margin-bottom: 0;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    .storyqueue-container-selectall {
+      display: inline-block;
+      color: #888888;
+      font-size: 12px;
+      font-family: $font-family-roboto;
+      margin-bottom: 10px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .storyqueue-shortcut-buttons {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 40px;
+    height: 70px;
+    margin-top: -35px;
+
+    > .scrumdo-btn {
+      display: block;
+      margin: 0 auto;
+
+      &:first-child {
+        margin-bottom: 4px;
+      }
+
+    }
+  }
+
+  .storyqueue-card-title {
+    font-family: $font-family-roboto-bold;
+    color: #3b3b3b;
+    font-size: 14px;
+    margin: 0 0 5px 0;
+  }
+
+  .storyqueue-card-link {
+    display: inline-block;
+    font-family: $font-family-roboto;
+    color: #f6764e;
+    font-size: 13px;
+    text-decoration: underline;
+    margin: 0 0 5px 0;
+  }
+
+}

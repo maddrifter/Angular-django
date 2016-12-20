@@ -1,0 +1,18 @@
+<div class="cards-header feature-card">
+    <span class="cards-text" ng-bind-html="story.summary|to_trusted"></span>
+</div>
+
+<div class="cards-details">
+    <span class="total-team"><i class="fa fa-user" aria-hidden="true"></i> {{:: story.feature_stats.teams}}</span>
+    <span class="total-cards"><span class="scrumdo-icons tasks"></span> {{:: story.feature_stats.story_count}}</span>
+</div>
+
+<div class="card-footer">
+    <div class="feature-progress" ng-if="ctrl.releaseStats[story.id].cards_total>0">
+        <uib-progress max="100" animate="false">
+            <uib-bar value="ctrl.percentage(ctrl.releaseStats[story.id].cards_completed, ctrl.releaseStats[story.id].cards_total)" type="success"></uib-bar>
+            <uib-bar value="ctrl.percentage(ctrl.releaseStats[story.id].cards_in_progress, ctrl.releaseStats[story.id].cards_total)"></uib-bar>
+            <uib-bar value="ctrl.todoPercentage(ctrl.releaseStats[story.id])" type="warning"></uib-bar>
+        </uib-progress>
+    </div>
+</div>

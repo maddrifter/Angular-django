@@ -1,0 +1,422 @@
+<div class="scrumdo-reports-wrapper">
+
+    <div class="scrumdo-reports-container">
+        <div class="scrumdo-reports-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-1 hidden-xs hidden-sm text-right">
+                            <label ng-show="ctrl.showFilters()" class="scrumdo-control-label primary margin-5">Filters</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div ng-show="ctrl.showFilters()" class="row">
+                                <div class="col-sm-3 hidden-xs">
+                                    <div class="scrumdo-select primary medium">
+                                        <select ng-options="epic as epic.indentedSummary for epic in epics"
+                                                ng-model="ctrl.reportOptions.epic"
+                                                class="form-control"
+                                                name="epic">
+                                            <option value="" selected="selected">All Collections</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 hidden-xs">
+                                    <div class="scrumdo-select primary medium">
+                                        <select ng-options="label as label.name for label in project.labels"
+                                                ng-model="ctrl.reportOptions.label"
+                                                class="form-control"
+                                                name="label">
+                                            <option value="">All Labels</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 hidden-xs">
+                                    <div class="scrumdo-select primary medium">
+                                        <select ng-options="tag.name for tag in project.tags|orderBy:'name'"
+                                                ng-model="ctrl.reportOptions.tag"
+                                                class="form-control"
+                                                name="tag">
+                                            <option value="">All Tags</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 hidden-xs">
+                                    <sd-multi-select button-icon="glyphicon glyphicon-user"
+                                                     compare-function="ctrl.compareUsers(value1, value2)"
+                                                ng-model="ctrl.reportOptions.assignee"
+                                                     label-function="ctrl.userLabel(obj)"
+                                                     template-name="user/usermultibody.html"
+                                                     options="project.members"
+                                                     show-filter="true"
+                                                     control-type= "assignee"
+                                                     default-label="Anyone"
+                                                    ></sd-multi-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <button ng-click="ctrl.refresh()"
+                                    type="button"
+                                    ng-class="{disabled: ctrl.loading, primary:!ctrl.refreshNeeded, secondary:ctrl.refreshNeeded}"
+                                    class="scrumdo-btn secondary extended">
+                                <span class="scrumdo-icons refresh"></span> Refresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scrumdo-reports-content">
+
+
+
+                <div class="reports-navigation">
+                    <div class="report-selector">
+                        <label>Report:</label>
+                        <select class="form-control" ng-model="selectedReport" ng-change="ctrl.selectReport(selectedReport)">
+                            <option value="app.reports.milestones" ng-if="project.project_type==2">Milestones</option>
+                            <option value="app.reports.cfd">Cumulative Flow</option>
+                            <option value="app.reports.lead">Lead Time</option>
+
+
+                            <optgroup label="Burn (Story Points)">
+                                <option value="app.reports.burn:2">Burn Up</option>
+                                <option value="app.reports.burn:1">Burn Down</option>
+                                <option value="app.reports.burn:3">Stacked</option>
+                            </optgroup>
+
+                            <optgroup label="Aging">
+                                <option value="app.reports.aging:1">Time in State Histogram</option>
+                                <option value="app.reports.aging:2">Age Breakdown</option>
+                                <option value="app.reports.aging:3">Relative Time</option>
+                            </optgroup>
+
+                            <optgroup label="Blockers">
+                                <option value="app.reports.blocklist">Blockers List</option>
+                                <option value="app.reports.block">Blocker Clustering</option>
+                                <option value="app.reports.blockfreq">Blocker Frequency</option>
+                            </optgroup>
+
+                        </select>
+                    </div>
+                    <!-- Report Options ------------------------------------------------------------------------------>
+
+                    <div  ng-show="ctrl.milestonesOpen">
+                        <div class="report-name">
+                            Milestones
+                        </div>
+
+                        <div class="report-options">
+                            <label>Milestone:</label>
+                            <select class="form-control"
+                                    name="iteration"
+                                    ng-model="ctrl.milestone"
+                                    ng-change="ctrl.markRefreshNeeded()"
+                                    ng-options="milestone as milestone.summary|htmlToPlaintext for milestone in ctrl.milestones">
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div ng-show="ctrl.cfdOpen">
+                        <div class="report-name">
+                            Cumulative Flow
+                        </div>
+
+                        <div class="report-options">
+                            <label>Report Profile:</label>
+                            <select class="form-control"
+                                    ng-model="ctrl.workflow"
+                                    ng-options="workflow as workflow.name for workflow in workflows">
+                            </select>
+
+                            <label>Start Date:</label>
+                            <sd-date-picker ng-model="ctrl.reportOptions.startdate"></sd-date-picker>
+
+
+                            <label>End Date:</label>
+                            <sd-date-picker ng-model="ctrl.reportOptions.enddate"></sd-date-picker>
+
+                            <label>Y-Axis:</label>
+                            <select ng-model="ctrl.reportOptions.yaxis" class="form-control" name="yaxis" convert-to-number>
+                                <option value="1">Number of Cards</option>
+                                <option value="2">Number of Points</option>
+                                <option value="3">Number of Hours</option>
+                            </select>
+
+                            <label>Iteration:</label>
+                            <select class="form-control"
+                                    name="iteration"
+                                    ng-model="ctrl.reportOptions.iteration"
+                                    ng-change="ctrl.iterationChanged()"
+                                    ng-options="iteration as iteration.name for iteration in iterationOptions">
+                                <option value="ALL">All iterations</option>
+                            </select>
+
+                            <label for="cfd_show_backlog">
+                                <input id="cfd_show_backlog"
+                                       type="checkbox"
+                                       ng-model="ctrl.reportOptions.cfd_show_backlog">
+                                Show Backlog
+                            </label>
+
+
+
+                        </div>
+                    </div>
+
+
+                    <div ng-show="ctrl.lthOpen">
+                        <div class="report-name">
+                                Lead Time
+                        </div>
+                            <div class="report-options">
+                            <label>Report Profile:</label>
+                            <select class="form-control"
+                                    ng-model="ctrl.workflow"
+                                    ng-options="workflow as workflow.name for workflow in workflows">
+                            </select>
+
+                            <label>Start Step:</label>
+                            <select class="form-control"
+                                    ng-model="ctrl.reportOptions.lead_start_step"
+                                    ng-options="step as step.name for step in ctrl.workflow.steps">
+                            </select>
+
+                            <label>End Step:</label>
+                            <select class="form-control"
+                                    ng-model="ctrl.reportOptions.lead_end_step"
+                                    ng-options="step as step.name for step in ctrl.workflow.steps">
+                            </select>
+
+                            <label>Interval:</label>
+                            <select class="form-control"
+                                    convert-to-number
+                                    ng-model="ctrl.reportOptions.interval"
+                                    name="interval">
+                                <option value="-1">Automatic</option>
+                                <option value="1">One Day</option>
+                                <option value="2">Three Day</option>
+                                <option value="4">Powers of 2</option>
+                            </select>
+
+                        <label>Start Date:</label>
+                        <sd-date-picker ng-model="ctrl.reportOptions.startdate"></sd-date-picker>
+
+
+                        <label>End Date:</label>
+                        <sd-date-picker ng-model="ctrl.reportOptions.enddate"></sd-date-picker>
+                        </div>
+
+                    </div>
+
+                    <div ng-show="ctrl.burnOpen">
+                        <div class="report-name">
+                                Burn Up / Down
+                        </div>
+                        <div class="report-options">
+
+                            <label>Iteration:</label>
+
+                            <select class="form-control"
+                                    ng-if="ctrl.burnType != '3'"
+                                    name="iteration"
+                                    ng-model="ctrl.reportOptions.iteration"
+                                    ng-options="iteration as iteration.name for iteration in iterationOptions">
+                                <option value="ALL">All iterations</option>
+                            </select>
+
+                            <select class="form-control"
+                                    ng-if="ctrl.burnType == '3'"
+                                    name="iteration"
+                                    ng-model="ctrl.reportOptions.iteration"
+                                    ng-options="iteration as iteration.name for iteration in iterationOnlyOptions">
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div ng-show="ctrl.agingOpen">
+                        <div class="report-name">
+                                Aging
+                        </div>
+                        <div class="report-options">
+                            <!--<label>Chart Type:</label>-->
+                            <!--<select ng-model="ctrl.reportOptions.agingType" class="form-control" name="yaxis" convert-to-number>-->
+                                <!--<option value="1">Time in State Histogram</option>-->
+                                <!--<option value="2">Age Breakdown</option>-->
+                                <!--<option value="3">Relative Time</option>-->
+                            <!--</select>-->
+
+                            <label>Data By:</label>
+                                <select class="form-control" ng-model="ctrl.reportOptions.agingData" >
+                                    <option value="tag">Tag</option>
+                                    <option value="step">Report Profile Step</option>
+                                </select>
+
+                            <div class="scrumdo-alerts warn" ng-if="ctrl.reportOptions.agingData == 'tag' ">
+                                Reporting by Tag only includes data after June 4, 2015
+                            </div>
+
+                            <div ng-if="ctrl.reportOptions.agingData == 'step'">
+                                <label>Report Profile:</label>
+                                <select class="form-control"
+                                        ng-model="ctrl.workflow"
+                                        ng-options="workflow as workflow.name for workflow in workflows">
+                                </select>
+
+                                <div ng-if="ctrl.reportOptions.agingType != '1'">
+                                    <label>Steps:</label>
+                                    <ui-select multiple ng-model="ctrl.reportOptions.agingSteps"
+                                               theme="bootstrap"
+                                               search-enabled="false"
+                                               append-to-body="true"
+                                               on-select="ctrl.markRefreshNeeded()"
+                                               close-on-select="false" title="Choose steps">
+                                        <ui-select-match placeholder="Select Cells...">{{$item.name}}</ui-select-match>
+                                        <ui-select-choices repeat="step in ctrl.workflow.steps | filter: {name: $select.search}">
+                                            {{step.name}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-if="ctrl.reportOptions.agingType == '1'">
+                                    <label>Step:</label>
+                                    <select class="form-control"
+                                            ng-change="ctrl.markRefreshNeeded()"
+                                            ng-model="ctrl.reportOptions.agingStep"
+                                            ng-options="step as step.name for step in ctrl.workflow.steps">
+                                    </select>
+                                </div>
+
+
+                            </div>
+                            <div ng-if="ctrl.reportOptions.agingData == 'tag'">
+
+                                <div ng-if="ctrl.reportOptions.agingType != '1'">
+                                    <label>Tags:</label>
+                                    <ui-select multiple ng-model="ctrl.reportOptions.agingTags"
+                                               theme="bootstrap"
+                                               search-enabled="false"
+                                               append-to-body="true"
+                                               on-select="ctrl.markRefreshNeeded()"
+                                               close-on-select="false" title="Choose tags">
+                                        <ui-select-match placeholder="Select Tags...">{{$item.name}}</ui-select-match>
+                                        <ui-select-choices repeat="tag in project.tags | orderBy:'name' | filter: {name: $select.search}">
+                                            {{tag.name}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-if="ctrl.reportOptions.agingType == '1'">
+                                    <label>Tag:</label>
+                                    <select class="form-control"
+                                            ng-change="ctrl.markRefreshNeeded()"
+                                            ng-model="ctrl.reportOptions.agingTag"
+                                            ng-options="tag as tag.name for tag in project.tags|orderBy:'name'">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="scrumdo-alerts notify">
+                                Need some help with this report?
+                                <a target="_blank" href="http://help.scrumdo.com/help/kanban/report-aging.html">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="ctrl.blockersClusterOpen">
+                        <div class="report-name">
+                                Blocker Clustering
+                        </div>
+                        <div class="report-options">
+                            <label>Start Date:</label>
+                            <sd-date-picker ng-model="ctrl.reportOptions.startdate"></sd-date-picker>
+                            <label>End Date:</label>
+                            <sd-date-picker ng-model="ctrl.reportOptions.enddate"></sd-date-picker>
+                            <label>Iteration:</label>
+                            <select class="form-control"
+                                    name="iteration"
+                                    ng-model="ctrl.reportOptions.iteration"
+                                    ng-options="iteration as iteration.name for iteration in iterationOptions">
+                                <option value="ALL">All iterations</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div ng-show="ctrl.blockersFreqOpen">
+                        <div class="report-name">
+                                Blocker Frequency
+                        </div>
+                        <div class="report-options">
+                            <label>Start Date:</label>
+                            <sd-date-picker ng-model="ctrl.reportOptions.startdate"></sd-date-picker>
+                            <label>End Date:</label>
+                            <sd-date-picker ng-model="ctrl.reportOptions.enddate"></sd-date-picker>
+                            <label>Iteration:</label>
+                            <select class="form-control"
+                                    name="iteration"
+                                    ng-model="ctrl.reportOptions.iteration"
+                                    ng-options="iteration as iteration.name for iteration in iterationOptions">
+                                <option value="ALL">All iterations</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div ng-show="ctrl.blockersReportOpen">
+                        <div class="report-name">
+                                Blockers List
+                        </div>
+                        <div class="report-options">
+                            <label>Start Date:</label>
+                            <sd-date-picker ng-model="ctrl.reportOptions.startdate"></sd-date-picker>
+                            <label>End Date:</label>
+                            <sd-date-picker ng-model="ctrl.reportOptions.enddate"></sd-date-picker>
+                            <label>Iteration:</label>
+                            <select class="form-control"
+                                    name="iteration"
+                                    ng-model="ctrl.reportOptions.iteration"
+                                    ng-options="iteration as iteration.name for iteration in iterationOptions">
+                                <option value="ALL">All iterations</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div ng-if="ctrl.savedReports.length>0">
+                        <hr />
+
+                        <div>
+                            <!--ng-class="{active:ctrl.milestonesOpen}"-->
+                            <b>Favorited Reports:</b>
+                        </div>
+
+                        <div class="report-options">
+                            <ul>
+                                <li ng-repeat="report in ctrl.savedReports">
+                                    <i class="pull-right fa fa-trash" ng-click="ctrl.deleteSavedReport(report.id)"></i>
+                                    <a ng-click="ctrl.loadSavedReport(report.id)">{{report.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="reports-area" ng-if="!reportsLocked" ui-view="reportArea">
+                </div>
+                <div class="reports-area" ng-if="reportsLocked">
+                    <p class="reports-locked alert alert-info text-center">Your reports are currently unavailable due to a change in your board structure or report profiles.<br/>
+                    Please try again in a few minutes, once we've rebuilt your reports.</p>
+                </div>
+                <button ng-click="ctrl.saveReportSettings()"
+                        ng-if="ctrl.hasReportData"
+                        class="save-report-button btn btn-default"
+                        tooltip-append-to-body="true"
+                        uib-tooltip="Favorite Report Settings"><i class="fa fa-star"></i></button>
+
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,41 @@
+<main class="scrumdo-releases">
+
+    <div class="scrumdo-releases-wrapper">
+        <div class="scrumdo-releases-container">
+            <div class="scrumdo-releases-content row">
+                <div class="scrumdo-releases-projects col-xs-2">
+                    <button class="scrumdo-btn extended secondary"
+                            ng-if="user.staff"
+                            ng-click="releasesCtrl.newRelease()"><i class="fa fa-plus"></i> New Release</button>
+
+                    <ul class="scrumdo-release-menu">
+                        <li ng-repeat="release in releasesCtrl.releases|orderBy:'-number'"
+                            ng-class="{active:(releasesCtrl.currentRelease == release)}">
+                            <a ui-sref="app.releases.release({id:release.id})">
+                                {{release.summary|htmlToPlaintext}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-10 scrumdo-releases-detail-wrapper">
+                    <div class="scrumdo-releases-content-area">
+                        <ui-view name="releasesArea">
+                            <div class="scrumdo-alert notify white release-explanation">
+                                <h1>Releases</h1>
+                                <p>A release allows you to group work across workspaces and track progress on that work.</p>
+                                <p>Click the New Release button on the left to get started.</p>
+                                <p>
+                                    Read more here:
+                                    <a href="http://help.scrumdo.com/help/releases.html" target="_blank">http://help.scrumdo.com/help/releases.html</a>
+                                </p>
+                            </div>
+                        </ui-view>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>

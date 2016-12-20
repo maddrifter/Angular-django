@@ -1,0 +1,49 @@
+<ul class="cards-tag">
+    <li ng-repeat="label in story.labels"
+        ng-style="::{'background-color': (label.color|decimalToHexColor) }"
+        uib-tooltip="{{::label.name}}"
+        tooltip-placement="bottom"
+        tooltip-trigger="mouseenter"></li>
+</ul>
+<div class="cards-header">
+    <span ng-if="project.prefix" class="cards-number">{{::project.prefix}}-{{::story.number}}&nbsp;</span>
+    <!-- for org wide search page we don't have project -->
+    <span ng-if="!project.prefix" class="cards-number">{{::story.prefix}}-{{::story.number}}&nbsp;</span>
+    <span ng-click="ctrl.onEdit()" class="glyphicon glyphicon-pencil cards-edit pull-right" ng-class="{'glyphicon-eye-open': !ctrl.canWrite}"></span>
+    <span ng-if="story.points != '?'" class="nudge-up-2 pad-right-2 pull-right labels label-tag-orange-small">{{story.points}}</span>
+    <a class="nudge-up-2 pull-right pad-right-2" href="{{::story.commits[0].link}}" ng-if="story.commits.length>0" uib-tooltip="Commit {{::story.commits[0].name}}"><i class="fa fa-github"></i> </a>
+    <a class="nudge-up-2 pull-right pad-right-2"
+       ng-class="{'pr-open':pr.state==0, 'pr-closed':pr.state==1}"
+       target="_blank"
+       href="{{::pr.link}}" ng-repeat="pr in story.pull_requests" uib-tooltip="PR {{::pr.name}}"><i class="fa fa-github"></i> </a>
+
+    <span class="cards-text" ng-bind-html="story.summary|to_trusted"></span>
+
+</div>
+
+<div class="story-mini-display" ng-if="::planningMode == 'epic'">
+    <span sd-due-date ng-if="story.due_date" class="due-date" story="story"></span>
+
+    {{::ctrl.workTypeName}}: {{story.iteration_id|iterationToName:iterations}}
+
+    <span class="mini-cell-label" ng-if="story.cell"
+          ng-style="{ 'background-color': (story.cell.color|decimalToHexColor) }">
+        {{story.cell.full_label}}
+    </span>
+
+
+
+</div>
+
+<div class="story-mini-display" ng-if="::planningMode == 'iteration'">
+    <span sd-due-date ng-if="story.due_date" class="due-date" story="story"></span>
+    <span ng-if="story.epic">
+        Collection: {{story.epic|epicToName:epics}} {{story.epic|parentEpicToName:epics}}
+    </span>
+
+    <span class="mini-cell-label" ng-if="story.cell"
+          ng-style="{'background-color': (story.cell.color|decimalToHexColor) }">
+        {{story.cell.full_label}}
+    </span>
+
+</div>

@@ -1,0 +1,10 @@
+<div ng-if="isImage" class="image-preview" ng-click="ctrl.openFullSize()">
+    <img ng-src="{{attachment.url}}">
+</div>
+<div ng-if="isImageUrl" class="image-preview">
+    <a target="_blank" href="{{attachment.attachment_url}}"><img ng-src="{{attachment.thumb_url}}"></a>
+</div>
+<div ng-if="!isImage && !isImageUrl" class="text-center">
+    <i class="fa fa-file attachment-icon"></i><br/>
+    <a target="_blank" href="{{downloadUrl}}">Download File</a>
+</div>

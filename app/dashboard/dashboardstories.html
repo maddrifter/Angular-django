@@ -1,0 +1,17 @@
+<h2 id="myCardsTitle" class="scrumdo-overview-h2">My Cards</h2>
+<div class="scrumdo-overview-cardlist"
+     ng-repeat="p in myStories"
+     sd-project="{{p.slug}}"
+     sd-access>
+    <h3><a ng-href="/projects/{{project.slug}}/#defaultboard">{{project.name}}</a></h3>
+    <ul>
+        <li ng-repeat="story in p.stories track by story.id">
+            <span uib-tooltip="Edit Card" ng-click="ctrl.onEditCard(story, project)" class="glyphicon glyphicon-pencil cards-edit pull-left"></span>
+            <a  href="/projects/story_permalink/{{::story.id}}">
+                <span class="pull-left">{{::project.prefix}}-{{::story.number}}&nbsp;</span>
+                <span class="cards-text" ng-bind-html="::story.summary|to_trusted"></span>
+            </a>
+        </li>
+    </ul>
+</div>
+<h5 ng-if="myStories.length == 0">No cards found. <a href="http://help.scrumdo.com/help/mycards.html" target="_blank">Need Help</a>?</h5>

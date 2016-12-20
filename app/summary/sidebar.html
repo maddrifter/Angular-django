@@ -1,0 +1,41 @@
+<div sd-access class="scrumdo-sidebar pull-right scrumdo-navigation-sidebar"
+     ng-class="{'closed-navigation':!$storage.timelineSidebarOpen, 'opened-navigation':$storage.timelineSidebarOpen}">
+    <div class="scrumdo-navigation pull-right">
+        <h4 class="title">{{::safeTerms.children.time_period_name|pluralize}}</h4>
+        <button ng-if="canWrite" ng-click="ctrl.createIncrementSchedule()" class="scrumdo-btn secondary extended add-iteration">
+            <span class="glyphicon glyphicon-plus"></span> New {{::safeTerms.children.time_period_name}}</button>
+        <nav class="scrumdo-navigation-menu margin-bottom-20">
+            <ul>
+                <li ng-repeat="schedule in ctrl.projectData.currentIncrement.schedule">
+                    <label class="scrumdo-navigation-menu-form scrumdo-backlog-form navigation">
+
+                        <span uib-tooltip="{{schedule.default_name}}"
+                            class="iteration-name"> {{schedule.default_name}}
+                            <p class="iteration-date">{{schedule.start_date|mdydate}} - {{schedule.end_date|mdydate}}</p>
+                        </span>
+                        <label uib-tooltip="Edit {{::safeTerms.children.time_period_name}}" class="labels smaller edit-itertion">
+                            <span ng-click="ctrl.editIncrementSchedule(schedule)" class="glyphicon glyphicon-pencil cards-edit pull-right"></span>
+                        </label>
+                        <label uib-tooltip="Delete {{::safeTerms.children.time_period_name}}" class="labels smaller edit-itertion cards-delete">
+                            <span ng-click="ctrl.deleteIncrementSchedule(schedule)" class="scrumdo-icons bin pull-right"></span>
+                        </label>
+
+                        <label class="labels smaller pull-right">{{ctrl.getScheduleCardsCount(schedule)}}</label>
+                        <label class="labels smaller pull-right"><span class="scrumdo-icons tasks"></span></label>
+                        <label uib-tooltip="Toggle {{::safeTerms.children.time_period_name}}"
+                            tooltip-placement="left" class="labels smaller pull-right iteration-toggle" 
+                            ng-click="ctrl.toggleSchedule(schedule)">
+                            <i class="fa" ng-class="{'fa-eye': ctrl.visibleSchedules[schedule.id]!== false, 
+                                'fa-eye-slash': ctrl.visibleSchedules[schedule.id]===false}" aria-hidden="true">
+                            </i>
+                        </label>
+                    </label>
+                </li>
+            </ul>
+        </nav>
+        
+    </div>
+    <div class="scrumdo-pull-sidebar navigation-pull pull-left" ng-click="ctrl.toggleSidebar()">
+        <span class="scrumdo-sidebar-text">{{::safeTerms.children.time_period_name|pluralize}}<span class="glyphicon glyphicon-chevron-up"></span></span>
+    </div>
+</div>

@@ -1,0 +1,164 @@
+//------------------------------
+// *****************************
+// Buttons
+// *****************************
+//------------------------------
+
+.scrumdo-btn {
+  @extend .btn;
+  height: 33px;
+
+  &.primary {
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    color: #888888;
+    font-family: $font-family-roboto-medium;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+    outline: none;
+    @include gradient-vertical(#fafafa, #f5f5f5, 0%, 100%);
+  }
+
+  &.secondary {
+    background: #f6764e;
+    border: none;
+    border-bottom: 1px solid #d1d1d1;
+    color: #ffffff;
+    padding: 6px 12px;
+    outline: none;
+    border-radius: 3px;
+  }
+
+  &.tertiary {
+    background: #dd1c1c;
+    border: none;
+    border-bottom: 1px solid #d1d1d1;
+    color: #ffffff;
+    padding: 6px 12px;
+    outline: none;
+    border-radius: 3px;
+  }
+
+  &.go-green {
+    background: #818B16;
+    height: auto;
+    color: #fff;
+  }
+
+   &.highlight {
+    background: #f9f9f9;
+    background-color: rgb(245, 118, 78);
+     color:#fff;
+    height: auto;
+    //-webkit-animation-name: highLightBtn !important;  /* Chrome, Safari, Opera */
+    //-webkit-animation-duration: 15s !important; /* Chrome, Safari, Opera */
+    //animation-name: highLightBtn;
+    //animation-duration: 15s;
+  }
+
+  &.box-add {
+    border: none;
+    border-radius: 3px;
+    background: #ccccce;
+    color: #ffffff;
+    padding: 1px 2px 0 4px;
+    outline: none;
+    height: 22px;
+  }
+
+  &.toggle-group {
+    color: #cccccc;
+    min-width: 75px;
+
+    &:active, &:focus, &.active {
+      color: #666669;
+      @include box-shadow(none);
+      @include gradient-vertical(#f5f5f5, #fafafa, 0%, 100%);
+    }
+  }
+
+  &.smaller {
+    height: 24px;
+    padding: 2px 6px;
+    font-size: 12px;
+
+    .glyphicon {
+      font-size: 10px;
+    }
+  }
+  &.medium {
+    height: 26px;
+    padding: 4px 8px;
+    font-size: 11px;
+    min-width: 35px;
+    .glyphicon {
+      font-size: 12px;
+    }
+  }
+
+  &.icon-active {
+    color: #cccccc;
+  }
+
+  &.min-width {
+    min-width: 100px;
+  }
+
+  &.extended {
+    width: 100%;
+  }
+  &.extended-nopadding {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &:focus {
+    border-color: $orangeHighlight;
+
+  }
+  
+  &.active-no-border{
+    &:focus{
+      border-color: #d8d8d8;
+    }
+  }
+
+}
+
+.scrumdo-input-group-extended {
+  width: 100%; //190px;
+  .scrumdo-select-button {
+    height: 33px;
+  //    width: 156px;
+  }
+  .scrumdo-btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    @include clearfix();
+
+    .scrumdo-icons {
+      float: left;
+      margin-top: 2px;
+      margin-right: 4px;
+    }
+  }
+}
+
+.business-point-scale{
+  .scrumdo-btn{
+    border-radius: 4px 0 0px 4px;
+  }
+  .scrumdo-select{
+    .scrumdo-btn{
+      border-radius: 0;
+    }
+  }
+}
+
+.card-picker-select{
+    margin-top: -65px;
+}

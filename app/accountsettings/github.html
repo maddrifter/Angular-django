@@ -1,0 +1,59 @@
+
+<div class="scrumdo-account-content col-md-10">
+    <div class="scrumdo-account-details">
+        <h2 class="scrumdo-account-details-title">Github Account Association</h2>
+
+
+        <div class="scrumdo-account-details-content" ng-show="ctrl.github.accounts.length > 0">
+            <h3 class="scrumdo-account-details-title">Manage Accounts</h3>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div>
+                        <p class="scrumdo-account-details-p">
+                            Your account is currently associated with the following Github account
+                        </p>
+                        <table class="table scrumdo-table primary">
+                            <thead>
+                            <tr>
+                                <th>Github Username</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <div>
+                                <tr ng-repeat="acc in ctrl.github.accounts">
+                                    <td>{{acc.github_username}}</td>
+                                    <td>
+                                        <button ng-click="ctrl.removeGithubAssociation()" type="button" class="scrumdo-btn primary extended">Remove Association</button>
+                                    </td>
+                                </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="scrumdo-account-details-content" ng-if="ctrl.github.accounts.length == 0">
+            <h3 class="scrumdo-account-details-title">Add Account</h3>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="scrumdo-account-details-p">
+                        To associate a new Github account with this account, sign in with it here:
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <form action="/openid/" method="POST">
+                    <sd-csrf></sd-csrf>
+
+                    <div class="col-md-5">
+                        <a ng-href="{{ctrl.github.login_url}}" class="scrumdo-btn secondary">Authenticate and associate with this account</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

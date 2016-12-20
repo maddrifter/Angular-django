@@ -1,0 +1,241 @@
+<div sd-access="project"
+     class="scrumdo-planning-wrapper">
+     <div class="scrumdo-planning-container">
+        <div class="sub-nav planning">
+            <sd-planning-subnav></sd-planning-subnav>
+        </div>
+        <div class="scrumdo-planning-column">
+            <div class="planning-column-header">
+                <div class="table-cell small-left">
+                    <div class="btn-group">
+                        <button tooltip-append-to-body='true' uib-tooltip="Collections" type="button" class="scrumdo-btn primary toggle-group medium" 
+                            ng-change="planningCtrl.setColumnMode(0, 'left')" ng-model="planningCtrl.leftMode" uib-btn-radio="0">
+                            <i class="fa fa-sitemap"></i>
+                        </button>
+                        <button tooltip-append-to-body='true' uib-tooltip="Iterations" type="button" class="scrumdo-btn primary toggle-group medium" 
+                            ng-change="planningCtrl.setColumnMode(1, 'left')" ng-model="planningCtrl.leftMode" uib-btn-radio="1">
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="table-cell">
+                    <div class="planning-select medium">
+
+                        <sd-iteration-select
+                                   ng-model="planningCtrl.leftIteration"
+                                   time-period-name="$root['safeTerms'].current.time_period_name"
+                                   iterations="planningCtrl.iterationsOrNone"></sd-iteration-select>
+                    </div>
+                </div>
+
+                <div class="table-cell filter-cell" ng-if="planningCtrl.leftMode == 1">
+                    <sd-filter-button filter="planningCtrl.commitLeftSearch(filter)"
+                                      project="project"
+                                      cells="cells">
+                    </sd-filter-button>
+                </div>
+
+                <div class="table-cell right-side">
+                    <div class="dropdown" uib-dropdown ng-if="planningCtrl.leftMode==0 && canWrite">
+                        <button  class="scrumdo-btn primary medium" type="button" aria-expanded="false" uib-dropdown-toggle>
+                            <span class=" glyphicon glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right scrumdo-dropdown" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                            <li><a ng-click="planningCtrl.addEpic()">Add Collection</a></li>
+                            <li><a ng-click="planningCtrl.reorderEpics()">Reorder Collections</a></li>
+                            <li>
+                                <a ng-click="planningCtrl.leftShowArchived = ! planningCtrl.leftShowArchived">
+                                    <span ng-if="planningCtrl.leftShowArchived" class="glyphicon glyphicon-ok"></span>
+                                    Show Archived Collections
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="dropdown" uib-dropdown ng-if="planningCtrl.leftMode==1 && canWrite">
+                        <button  class="scrumdo-btn primary medium" type="button" aria-expanded="false" uib-dropdown-toggle>
+                            <span class=" glyphicon glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right scrumdo-dropdown" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                            <li><a ng-click="planningCtrl.addIteration()">Create New {{::$root['safeTerms'].current.time_period_name}}</a></li>
+                            <li>
+                                <a ng-click="planningCtrl.leftShowArchived = ! planningCtrl.leftShowArchived">
+                                    <span ng-if="planningCtrl.leftShowArchived" class="glyphicon glyphicon-ok"></span>
+                                    Show Archived {{::$root['safeTerms'].current.time_period_name|pluralize}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <sd-epic-column ng-if="planningCtrl.leftMode == 0"
+                            iterations="planningCtrl.iterations"
+                            nested-epics="planningCtrl.nestedEpics"
+                            epics="epics"
+                            project="project"
+                            card-size="planningCtrl.cardSize"
+                            show-archived="planningCtrl.leftShowArchived"
+                            iteration="planningCtrl.leftIteration.id"></sd-epic-column>
+
+            <sd-list-column ng-if="planningCtrl.leftMode == 1"
+                            iterations="planningCtrl.iterations"
+                            epics="epics"
+                            project="project"
+                            card-size="planningCtrl.cardSize"
+                            filter="planningCtrl.leftFilter"
+                            show-archived="planningCtrl.leftShowArchived"
+                            iteration="planningCtrl.leftIteration.id"></sd-list-column>
+
+        </div>
+
+        <div class="scrumdo-planning-column hidden-xs">
+            <div class="planning-column-header">
+
+                <div class="table-cell medium-left">
+                    <div class="btn-group">
+                        <button tooltip-append-to-body='true' uib-tooltip="Collections" type="button" class="scrumdo-btn primary toggle-group medium"
+                                ng-change="planningCtrl.setColumnMode(0, 'right')"
+                                ng-model="planningCtrl.rightMode" uib-btn-radio="0">
+                            <i class="fa fa-sitemap"></i>
+                        </button>
+                        <button tooltip-append-to-body='true' uib-tooltip="Iterations" type="button" class="scrumdo-btn primary toggle-group medium"
+                                ng-change="planningCtrl.setColumnMode(1, 'right')"
+                                ng-model="planningCtrl.rightMode" uib-btn-radio="1">
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                        </button>
+                        <button tooltip-append-to-body='true' uib-tooltip="Board" type="button"
+                                ng-change="planningCtrl.setColumnMode(2, 'right')"
+                                ng-if="{disabled:plannintCtrl.boardIteration==null}"
+                                class="scrumdo-btn primary toggle-group medium"
+                                ng-model="planningCtrl.rightMode" uib-btn-radio="2">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </button>
+                        <button tooltip-append-to-body='true' uib-tooltip="SAFe" type="button"
+                                ng-change="planningCtrl.setColumnMode(4, 'right')"
+                                ng-if="project.parents.length > 0"
+                                class="scrumdo-btn primary toggle-group medium"
+                                ng-model="planningCtrl.rightMode" uib-btn-radio="4">
+                            <i class="fa fa-bullseye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-cell">
+                    <div class="planning-select medium">
+
+                        <sd-iteration-select ng-if="planningCtrl.rightMode==2"
+                                   ng-model="planningCtrl.boardIteration"
+                                   time-period-name="$root['safeTerms'].current.time_period_name"
+                                   iterations="planningCtrl.workIterations"></sd-iteration-select>
+
+                        <sd-iteration-select ng-if="planningCtrl.rightMode!=2 && planningCtrl.rightMode!=3 && planningCtrl.rightMode!=4"
+                                   ng-model="planningCtrl.rightIteration"
+                                   time-period-name="$root['safeTerms'].current.time_period_name"
+                                   iterations="planningCtrl.iterationsOrNone"></sd-iteration-select>
+                    </div>
+                </div>
+                <div class="table-cell filter-cell" ng-if="planningCtrl.rightMode == 1">
+                    <sd-filter-button filter="planningCtrl.commitRightSearch(filter)"
+                                      project="project"
+                                      uib-tooltip="Filter"
+                                      tooltip-append-to-body='true'
+                                      cells="cells">
+                    </sd-filter-button>
+                </div>
+
+
+                <div class="table-cell right-side">
+                    <div class="dropdown pull-right" uib-dropdown ng-if="planningCtrl.rightMode==0 && canWrite">
+                        <button  class="scrumdo-btn primary medium" type="button" aria-expanded="false" uib-dropdown-toggle>
+                            <span class=" glyphicon glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right scrumdo-dropdown" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                            <li><a ng-click="planningCtrl.addEpic()">Add Collection</a></li>
+                            <li><a ng-click="planningCtrl.reorderEpics()">Reorder Collections</a></li>
+                            <li>
+                                <a ng-click="planningCtrl.rightShowArchived = ! planningCtrl.rightShowArchived">
+                                    <span ng-if="planningCtrl.rightShowArchived" class="glyphicon glyphicon-ok"></span>
+                                    Show Archived Collections
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+
+                    <div class="dropdown pull-right" uib-dropdown ng-if="planningCtrl.rightMode==1 && canWrite">
+                        <button  class="scrumdo-btn primary medium" type="button" aria-expanded="false" uib-dropdown-toggle>
+                            <span class=" glyphicon glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right scrumdo-dropdown" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                            <li><a ng-click="planningCtrl.addIteration()">Create New {{::$root['safeTerms'].current.time_period_name}}</a></li>
+                            <li>
+                                <a ng-click="planningCtrl.rightShowArchived = ! planningCtrl.rightShowArchived">
+                                    <span ng-if="planningCtrl.rightShowArchived" class="glyphicon glyphicon-ok"></span>
+                                    Show Archived {{::$root['safeTerms'].current.time_period_name|pluralize}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <sd-epic-column ng-if="planningCtrl.rightMode == 0"
+                            iterations="planningCtrl.iterations"
+                            nested-epics="planningCtrl.nestedEpics"
+                            epics="epics"
+                            card-size="planningCtrl.cardSize"
+                            show-archived="planningCtrl.rightShowArchived"
+                            project="project"
+                            iteration="planningCtrl.rightIteration.id"></sd-epic-column>
+
+            <sd-list-column ng-if="planningCtrl.rightMode == 1"
+                            epics="epics"
+                            iterations="planningCtrl.iterations"
+                            card-size="planningCtrl.cardSize"
+                            project="project"
+                            show-archived="planningCtrl.rightShowArchived"
+                            filter="planningCtrl.rightFilter"
+                            iteration="planningCtrl.rightIteration.id"></sd-list-column>
+
+            <sd-safe-column ng-if="planningCtrl.rightMode == 4"
+                               iterations="planningCtrl.iterations"
+                               project="project"
+                               card-size="planningCtrl.cardSize"
+                               filter="planningCtrl.rightFilter"></sd-safe-column>
+
+
+            <div class="planning-column-content active cells"
+                 ng-if="planningCtrl.rightMode == 2">
+                <div class="cell-picker-header">
+                    <span ng-if="planningCtrl.boardHover.cell != null">{{planningCtrl.boardHover.cell.full_label}}</span>
+                </div>
+                <ul class="cell-picker kanban-story-list" data-container-type="cells">
+                    <li>
+                    <sd-board-preview cells="cells"
+                                  headers="headers"
+                                  draw-mode="false"
+                                  grid="false"
+                                  workflow-steps="[]"
+                                  gridsize="7"
+                                  hover="planningCtrl.boardHover"
+                                  selection-mode="true"
+                                  single-select-mode="true"
+                                  width="1500"
+                                  height="5000"></sd-board-preview>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="multiDragPlaceholder">
+        <span ng-if="selectedCount<=1">1 Card</span>
+        <span ng-if="selectedCount>1">{{ selectedCount }} Cards</span>
+    </div>
+
+</div>

@@ -1,0 +1,142 @@
+<div class="modal-header card-modal epic-modal-header">
+    <button type="button" class="close"  ng-click="$dismiss('canceled')"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+    <h4 ng-if="iteration.id == -1">New {{::ctrl.scrumdoTerms[ctrl.windowType]}}</h4>
+    <h4 ng-if="iteration.id != -1">Edit {{::ctrl.scrumdoTerms[ctrl.windowType]}}</h4>
+
+</div>
+
+<div class="modal-body card-modal">
+
+    <form name="iterationForm" class="iteration-edit-window">
+        <div ng-show="!ctrl.busyMode" class="row">
+
+            <div class="col-sm-7">
+                <div class="form-group">
+                    <label class="scrumdo-control-label card-popup">Name</label>
+                    <input ng-required="true" type="text" class="scrumdo-form" ng-model="iteration.name" />
+                </div>
+            </div>
+
+            <div class="col-sm-7" ng-if="iteration.iteration_type==1">
+                <div class="form-group">
+                    <label class="scrumdo-control-label card-popup">Start</label>
+                    <sd-date-picker ng-if="!iteration.increment.schedule" ng-model="iteration.start_date" ng-change="ctrl.checkDates()"></sd-date-picker>
+                    <span class="iteration-date" ng-if="iteration.increment.schedule">{{iteration.increment.schedule.start_date}}</span>
+                </div>
+            </div>
+
+            <div class="col-sm-7"  ng-if="iteration.iteration_type==1">
+                <div class="form-group">
+                    <label class="scrumdo-control-label card-popup">End</label>
+                    <sd-date-picker ng-if="!iteration.increment.schedule" ng-model="iteration.end_date" ng-change="ctrl.checkDates()"></sd-date-picker>
+                    <span class="iteration-date" ng-if="iteration.increment.schedule">{{iteration.increment.schedule.end_date}}</span>
+                </div>
+            </div>
+            <div class="col-sm-12 alert alert-info" ng-if="iteration.increment.schedule">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+                Schedule is managed via the parent project.
+            </div>
+            <!-- Advance Options -->
+            <div class="col-sm-12 iteration-advance-options" ng-if="ctrl.parentProjects.length && iteration.iteration_type==1">
+                <a class="show-options scrumdo-text" ng-click="ctrl.showOptions()">
+                    <span ng-if="!ctrl.showAdvanceOptions"> <i class="fa fa-plus-circle" aria-hidden="true"></i> </span>
+                    <span ng-if="ctrl.showAdvanceOptions"> <i class="fa fa-minus-circle" aria-hidden="true"></i> </span>   
+                    Advanced options</a>
+                <div class="row" ng-if="ctrl.showAdvanceOptions">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="scrumdo-control-label card-popup">Increment Schedule: </label>
+                            {{ iteration.increment.schedule.default_name }}
+                            <span ng-if="!iteration.increment.schedule">None</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="scrumdo-control-label card-popup">Parent Project</label>
+                            <div class="scrumdo-select primary medium">
+                                <select ng-options="project as project.name for project in ctrl.parentProjects"
+                                        ng-change="ctrl.loadParentIterations()"
+                                        ng-model="ctrl.parentProject">
+                                    <option value="">Select Project</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="scrumdo-control-label card-popup">Iteration</label>
+                            <div class="scrumdo-select primary medium">
+                                <select ng-options="iteration as iteration.name for iteration in ctrl.parentIterations | filter: {iteration_type: 1}"
+                                        ng-change="ctrl.loadIterationSchedules()"
+                                        ng-model="ctrl.parentIteration">
+                                    <option value="">Select Parent Iteration</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="scrumdo-control-label card-popup">Schedule</label>
+                            <div class="scrumdo-select primary medium">
+                                <select ng-options="schedule as schedule.default_name for schedule in ctrl.parentScedules"
+                                        ng-model="iteration.increment.schedule">
+                                    <option value="">Select Iteration Scedule</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12" class="col-sm-12" ng-if="iteration.iteration_type==1">
+                <div class="checkbox">
+                    <label>
+                        <input ng-required="false" ng-model="iteration.include_in_velocity" type="checkbox"> Include in velocity calculations
+                    </label>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12" class="col-sm-12" ng-if="iteration.iteration_type==1">
+                <div class="checkbox">
+                    <label>
+                        <input ng-required="false" ng-model="iteration.hidden" type="checkbox"> Archived
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-sm-12" ng-if="iteration.iteration_type==1">
+                If you don't specify dates for an {{::ctrl.scrumdoTerms[ctrl.windowType]}},
+                it will be considered a continuous {{::ctrl.scrumdoTerms[ctrl.windowType]}}, useful
+                for Kanban and Scrumban style workspaces.
+            </div>
+
+
+            <div class="col-sm-12" class="col-sm-12" ng-if="iteration.iteration_type!=1">
+                You can rename your <span ng-if="iteration.iteration_type==0">backlog</span><span ng-if="iteration.iteration_type==2">archive</span>,
+                but it will still function the same as always.
+            </div>
+
+        </div>
+    </form>
+
+    <div ng-if="ctrl.busyMode" class="busy-mode">
+        <div class="progress progress-striped active">
+            <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                Working...
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+    <button ng-if="(iteration.id != -1) && (iteration.iteration_type == 1)" ng-click="ctrl.deleteIteration()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons bin"></span> Delete</button>
+    <button ng-class="{disabled:!ctrl.validDate}" ng-if="iterationForm.$valid && iterationForm.$dirty && !ctrl.busyMode"
+            type="button"
+            class="delete-button scrumdo-btn secondary pull-right"
+            ng-click="ctrl.save()" >Save</button>
+</div>
+

@@ -1,0 +1,50 @@
+<div class="project-stats hidden-xs">
+    <div class="stat" ng-repeat="stat in stats">
+        {{stat.value}}
+        <small class="scrumdo-project-boxes-minitext" ng-bind-html="stat.label"></small>
+    </div>
+</div>
+
+<div class="btn-group rightmenu portfolio-project-menu">
+
+
+    <button ng-click="ctrl.configurePortfolio(portfolio)"
+            type="button"
+            ng-if="isRoot"
+            uib-tooltip="Configure Portfolio"
+            class="scrumdo-btn primary">
+        <span class="glyphicon glyphicon-cog"></span>
+    </button>
+
+    <button ng-click="ctrl.exportProject(project)"
+            type="button"
+            uib-tooltip="Export"
+            class="scrumdo-btn primary">
+        <span class="glyphicon glyphicon-circle-arrow-down"></span>
+    </button>
+
+
+
+    <a href="/projects/{{project.slug}}/board"
+       uib-tooltip="Kanban Board"
+       class="scrumdo-btn primary"><span class="scrumdo-navigation-menu-icon scrumboard"></span></a>
+
+    <a href="/projects/{{project.slug}}/reports"
+       uib-tooltip="Reports"
+       class="scrumdo-btn primary"><span class="scrumdo-navigation-menu-icon reports"></span></a>
+
+</div>
+
+<div class="project-name">
+                        <span ng-click="ctrl.toggleFavorite(project)"
+                              uib-tooltip="Watch Project"
+                              ng-class="{'inactive-yellowstar show-on-hover':!project.watched, 'yellowstar':project.watched}"
+                              class="scrumdo-favorite-icon scrumdo-star-icon smaller"></span>
+
+    <a href="/projects/{{project.slug}}/board">
+        {{project.name}}
+    </a>
+
+    <span class="label label-primary show-on-hover" ng-if="::project.personal">Personal</span>
+    <span class="label label-default" ng-if="::!project.active">Archived</span>
+</div>

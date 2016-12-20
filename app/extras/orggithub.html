@@ -1,0 +1,188 @@
+<h4><i class="fa fa-github"></i> Github Integration</h4>
+<hr/>
+
+<a class="pull-right" ng-href="{{ctrl.orgExtra.auth_url}}" ng-if="ctrl.orgExtra.configured">Reauthenticate</a>
+<h4>
+    Step 1: Authenticate
+</h4>
+
+
+<div ng-if="ctrl.loaded && !ctrl.orgExtra.configured">
+    <p>First, you need to authenticate a GitHub account.  This account will need access to:
+    <ul>
+        <li>See team membership</li>
+        <li>Set up GitHub webhooks</li>
+    </ul>
+    </p>
+
+    <p>
+        <b>Important</b> When you get to the GitHub authorization page, make sure to grant access to the GitHub
+        organization you wish to use with ScrumDo.
+    </p>
+
+
+    <a ng-href="{{ctrl.orgExtra.auth_url}}" class="scrumdo-btn primary">Authenticate</a>
+</div>
+
+<div class="alert alert-warning" ng-if="ctrl.orgExtra.error == 'bad_credentials'">
+    <p><b>Authentication Problem!</b><br/>
+    We couldn't authenticate with GitHub, sometimes this happens if you change your password
+    or if you revoke access to ScrumDo.  Try re-authenticating to fix it.
+    </p>
+    <hr/>
+    <a ng-href="{{ctrl.orgExtra.auth_url}}" class="scrumdo-btn primary">Reauthenticate</a>
+</div>
+
+<hr/>
+
+<span class="pull-right" ng-if="ctrl.orgExtra.github_organization_name">
+        {{ctrl.orgExtra.github_organization_name}}
+        <a ng-click="ctrl.editOrg=true">Change</a>
+</span>
+
+
+<h4>
+    Step 2: Select Github Organization
+</h4>
+
+<div ng-if="ctrl.orgExtra.configured">
+    <div class="row" ng-if="ctrl.editOrg">
+        <div class="col-xs-5">
+            <div class="scrumdo-select primary">
+                <select ng-if="ctrl.orgExtra.github_organizations"
+                        ng-model="ctrl.orgExtra.github_organization_name"
+                        ng-options="org.login as org.login for org in ctrl.orgExtra.github_organizations"></select>
+            </div>
+        </div>
+        <div class="col-xs-5">
+            <button ng-class="{'disabled':!ctrl.orgExtra.github_organization_name}"
+                    ng-click="ctrl.setGithubOrganization()"
+                    class="scrumdo-btn primary">Set Organization</button>
+        </div>
+    </div>
+
+
+
+    <span ng-if="!ctrl.orgExtra.github_organizations">
+        No organizations found.
+        Make sure you granted access to the organization in the authentication step.
+
+        If your organization required approval of third party applications,
+        have an administrator of your GitHub account
+        <a target="_blank" href="https://help.github.com/articles/approving-third-party-applications-for-your-organization/">follow these instructions</a>.
+
+    </span>
+</div>
+
+
+<hr/>
+
+<h4>
+    Step 3: Select Github Teams (Optional)
+</h4>
+
+
+<div ng-if="ctrl.orgExtra.github_teams">
+    <p>
+        Syncronize your ScrumDo teams and user lists from your GitHub teams.  Your users can then use their Github login
+        instead of creating a separate ScrumDo account.
+    </p>
+
+    <ul>
+        <li>Import your GitHub teams into ScrumDo</li>
+        <li>When people are added or removed from GitHub team, synchronize to ScrumDo</li>
+        <li>Your users do not need to be invited to ScrumDo, and they do not need to create a ScrumDo account</li>
+    </ul>
+
+    <p>If you don't want to sync your Github Teams, you can import workspaces below and manually manage permissions from the ScrumDo
+    Teams interface.</p>
+
+    <table class="table table-condensed">
+        <tr>
+            <th>Sync?</th>
+            <th>Team</th>
+            <th>Access Type</th>
+        </tr>
+        <tr ng-repeat="team in ctrl.orgExtra.github_teams">
+            <td><input id="check_{{team.id}}" type="checkbox" ng-model="team.sync"></td>
+            <td>
+                <label for="check_{{team.id}}">{{team.name}}</label>
+            </td>
+            <td>
+                {{ctrl.translatePermission(team.permission)}}
+            </td>
+        </tr>
+    </table>
+    <button class="scrumdo-btn primary" ng-click="ctrl.saveTeams()">Save Team Selection</button>
+</div>
+
+
+<hr/>
+
+<h4>
+    Step 4: Synchronize
+</h4>
+<div ng-if="ctrl.orgExtra.configured_teams">
+    <table class="table table-condensed">
+        <tr>
+            <th>Team</th>
+            <th>Last Sync</th>
+        </tr>
+        <tr ng-repeat="team in ctrl.orgExtra.configured_teams">
+            <td>
+                {{team.team_name}}
+            </td>
+            <td>
+                {{team.last_sync}}
+                <span ng-if="!team.last_sync">Never</span>
+            </td>
+        </tr>
+    </table>
+
+    <button ng-class="{'disabled':!ctrl.showSync}" ng-click="ctrl.syncNow()" class="scrumdo-btn primary">Synchronize Now</button>
+    <span ng-if="!ctrl.showSync">You are all set, teams will be synced up soon.</span>
+</div>
+
+<hr/>
+
+<h4>
+    Step 5: Import Workspaces
+</h4>
+
+<div class="row" ng-if="ctrl.orgExtra.github_repos">
+    <form name="importForm">
+        <div class="col-xs-5">
+            <div class="scrumdo-select primary">
+                <select ng-model="ctrl.githubImport.name"
+                        name="import_repo"
+                        ng-options="repo.full_name as repo.full_name for repo in ctrl.orgExtra.github_repos|orderBy:'full_name'"></select>
+            </div>
+        </div>
+        <div class="checkbox col-xs-12">
+            <label>
+                <input name="upload_issues" ng-model="ctrl.githubImport.upload_issues" type="checkbox"> Upload ScrumDo stories as GitHub issues.
+            </label>
+        </div>
+        <div class="checkbox col-xs-12">
+            <label>
+                <input name="download_issues" ng-model="ctrl.githubImport.download_issues" type="checkbox"> Download GitHub issues into the ScrumDo story queue.
+            </label>
+        </div>
+        <div class="checkbox col-xs-12">
+            <label>
+                <input name="close_on_delete" ng-model="ctrl.githubImport.close_on_delete" type="checkbox"> Synchronize issue status with board cell.
+            </label>
+        </div>
+        <div class="checkbox col-xs-12">
+            <label>
+                <input checked name="commit_messages" ng-model="ctrl.githubImport.commit_messages" type="checkbox"> Link commits and pull requests to ScrumDo cards.
+            </label>
+        </div>
+
+        <div class="col-xs-5">
+            <button ng-class="{'disabled':!ctrl.githubImport.name}"
+                    ng-click="ctrl.importGithubProject(ctrl.githubImport)"
+                    class="scrumdo-btn primary">Import As New Workspace</button>
+        </div>
+    </form>
+</div>

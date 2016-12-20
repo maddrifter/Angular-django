@@ -1,0 +1,48 @@
+<table class="table table-striped blockers-table">
+    <thead>
+        <tr>
+            <th>Reason</th>
+            <th>Blocked On</th>
+            <th>Blocked By</th>
+            <th>#Card</th>
+            <th>Card Summary</th>
+            <th>Card Iteration</th>
+            <th class="status">Status
+                <div class="scrumdo-select primary medium">
+                    <select ng-change="ctrl.updateData()" ng-model="ctrl.blockersStatus">
+                        <option value="all">All</option>
+                        <option value="open">Open</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody ng-if="ctrl.totalItems>0">
+        <tr ng-repeat="blocker in ctrl.blockersData | startFrom:(ctrl.currentPage-1)*ctrl.entryLimit | limitTo:ctrl.entryLimit | filter:ctrl.filterBlockers">
+            <td class="blocker-reason">{{::blocker.reason}}
+                <i ng-if="blocker.external" uib-tooltip="External Cause" tooltip-append-to-body="true"
+                    class="fa fa-external-link-square external-icon" aria-hidden="true"></i>    
+            </td>
+            <td>{{::blocker.blocked_date}}</td>
+            <td>{{::blocker.blocker | shortuser}}</td>
+            <td>{{::project.prefix}}-{{::blocker.card.number}}</td>
+            <td>{{::blocker.card.summary | htmlToPlaintext | decodeHtmlEntities | words:10}}</td>
+            <td>{{::blocker.card_iteration}}</td>
+            <td>{{::blocker.resolved? 'Closed': 'Open'}}</td>
+        </tr>
+        <tr class="blocker-pager" ng-show="ctrl.totalItems > ctrl.entryLimit">
+            <td colspan="6">
+                <uib-pagination items-per-page="ctrl.entryLimit" ng-change="ctrl.showCurrentPage()"
+                    max-size="8" total-items="ctrl.totalItems" ng-model="ctrl.currentPage"></uib-pagination>
+            </td>
+        </tr>
+    </tbody>
+    <tbody ng-if="ctrl.totalItems == 0 && ctrl.blockersData!=null">
+        <tr class="blocker-pager">
+            <td colspan="6">
+                No data, check your report params on the left.
+            </td>
+        </tr>
+    </tbody>
+</table>

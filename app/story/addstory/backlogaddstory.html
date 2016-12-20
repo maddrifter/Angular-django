@@ -1,0 +1,107 @@
+<div class="scrumdo-backlog-add-container" ng-class="{'create-card-open':ctrl.story.summary.length>0}">
+    <div class="scrumdo-backlog-add">
+        <div class="form-group">
+            <div class="row">
+                <div ng-class="{'col-sm-12':ctrl.story.summary.length==0, 'col-sm-9':ctrl.story.summary.length>0}"
+                     class="posRel">
+                    <div id="toolbar-sdmentio-cp-10000" class="editor-toolbar"></div>
+                    <div name="addStorySummary"
+                         class="summary-editor scrumdo-mce-editor"
+                         ui-tinymce="ctrl.summaryEditorConfig"
+                         mentio
+                         mentio-id="'sdmentio-cp-10000'"
+                         mentio-require-leading-space='true'
+                         ng-model="ctrl.story.summary">
+                    </div>
+                    <div class="backlog-add-placeholder">
+                        Type here to add new {{::ctrl.workItemName}}...
+                    </div>
+                </div>
+
+                <div class="col-sm-3 editor-margin" ng-if="ctrl.story.summary.length>0">
+                    <div class="form-group">
+                        <button ng-click="ctrl.addCard()"
+                                ng-class="{disabled:ctrl.working}"
+                                class="scrumdo-btn primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{::ctrl.workItemName}}</button>
+
+                        <button ng-click="ctrl.story.summary = ''"
+                                class="scrumdo-btn primary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="create-card-extra" class="create-card-extra row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div>
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label card-popup">Detail</label>
+                                <div id="toolbar-sdmentio-cp-10001" class="editor-toolbar"></div>
+                                <div ui-tinymce="ctrl.editorConfig"
+                                     mentio
+                                     mentio-id="'sdmentio-cp-10001'"
+                                     mentio-require-leading-space='true'
+                                     class="scrumdo-mce-editor"
+                                     ng-model="ctrl.story.detail">
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="project.use_extra_1">
+                                <label for="#" class="scrumdo-control-label card-popup">{{project.extra_1_label}}</label>
+                                <div id="toolbar-sdmentio-cp-10002" class="editor-toolbar"></div>
+                                <div ui-tinymce="ctrl.customConfig"
+                                     mentio
+                                     mentio-id="'sdmentio-cp-10002'"
+                                     mentio-require-leading-space='true'
+                                     class="scrumdo-mce-editor"
+                                     ng-model="ctrl.story.extra_1" ng-click="ctrl.changeToolbar('toolsdmentio-cp-10002')">
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="project.use_extra_2">
+                                <label class="scrumdo-control-label card-popup">{{project.extra_2_label}}</label>
+                                <div id="toolbar-sdmentio-cp-10003" class="editor-toolbar"></div>
+                                <div ui-tinymce="ctrl.customConfigSecond"
+                                     mentio
+                                     mentio-id="'sdmentio-cp-10003'"
+                                     mentio-require-leading-space='true'
+                                     class="scrumdo-mce-editor"
+                                     ng-model="ctrl.story.extra_2" ng-click="ctrl.changeToolbar('toolsdmentio-cp-10003')">
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="project.use_extra_3">
+                                <label class="scrumdo-control-label card-popup">{{project.extra_3_label}}</label>
+                                <div id="toolbar-sdmentio-cp-10004" class="editor-toolbar"></div>
+                                <div ui-tinymce="ctrl.customConfigThird"
+                                     mentio
+                                     mentio-id="'sdmentio-cp-10004'"
+                                     mentio-require-leading-space='true'
+                                     class="scrumdo-mce-editor"
+                                     ng-model="ctrl.story.extra_3" ng-click="ctrl.changeToolbar('toolsdmentio-cp-10004')">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <sd-labels-box ng-model="ctrl.story.labels" labels="project.labels"></sd-labels-box>
+                            </div>
+                            <div class="col-sm-6">
+                                <sd-tags-box ng-model="ctrl.story.tags_list" tags="project.tags"></sd-tags-box>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 editor-margin">
+                        <div class="backlog-container-tickets-buttons">
+                            <sd-story-fields></sd-story-fields>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,368 @@
+
+                <div class="scrumdo-account-details">
+                    <h2 class="scrumdo-account-details-title">Avatar</h2>
+                    <div class="scrumdo-account-details-content row">
+
+                        <div class="col-sm-2">
+                            <div class="thumbnail pull-right">
+                                <img height='72' width='72' ng-src='/avatar/avatar/72/{{ user.username}}/{{ctrl.avatarVersion}}' />
+                            </div>
+                        </div>
+
+                        <div class="scrumdo-account-details-upload col-sm-10">
+                            
+                            <div ng-show="ctrl.displayAllAvatars" class="scrumdo-input-form secondary">
+                                <p>
+                                    This is the avatar other people will see when you perform actions
+                                    or are assigned to a card. By default, we'll use your
+                                    <a href="https://en.gravatar.com/">Gravatar</a> or generate one based on your username.
+                                    Upload a square image around 128px x 128px for best results.
+                                </p>
+                                <span ng-show="uploader.isUploading">
+                                    Uploading...
+                                </span>
+                                <span ng-hide="uploader.isUploading">
+                                    <label for="fileUpload" class="scrumdo-btn secondary">Upload New Avatar</label>
+                                    <input type="file" value="file" id="fileUpload" nv-file-select uploader="uploader"/>
+                                    <button class="scrumdo-btn primary" ng-click="ctrl.resetAvatar()">Reset</button>
+                                </span>
+
+                            </div>
+                        </div>
+
+                    </div>                     
+                </div>
+                <div class="scrumdo-account-details">
+                    <h2 class="scrumdo-account-details-title">Name</h2>
+                    <div class="scrumdo-account-details-content">
+                        <div class="row">
+                            <form name="nameForm">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="#" class="scrumdo-control-label primary">First Name</label>
+                                    <!--<div class="scrumdo-form primary"><p>{{user.first_name}}</p></div>-->
+                                    <input class="form-control" ng-model="user.first_name" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="#" class="scrumdo-control-label primary">Last Name</label>
+                                    <input class="form-control" ng-model="user.last_name" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-2" ng-if="nameForm.$dirty">
+                                <div class="form-group">
+                                    <br/>
+                                    <button ng-click="ctrl.saveName(nameForm)" class="scrumdo-btn secondary extended">Save</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="scrumdo-account-details">
+                    <h2 class="scrumdo-account-details-title">Email Address</h2>
+                    <div class="scrumdo-account-details-content">
+                        <form name="emailForm">
+                            <div ng-hide = "ctrl.showEmailUpdateForm" class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <input class="form-control" ng-model="userEmail.email">
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-md-3" ng-if="emailForm.$dirty">
+                                            <a ng-click="ctrl.updateEmail(emailForm)"
+                                               class="scrumdo-btn secondary">Update</a>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <span ng-show="userEmail.verified" class="scrumdo-account-details-link">Verified</span>
+                                            <span ng-hide="userEmail.verified" class="scrumdo-account-details-link">Unverified</span>
+                                        </div>
+                                        <!-- Displayed only when email address is unverified -->
+                                        <div class="col-md-6" ng-hide="userEmail.verified">
+                                            <a ng-click="ctrl.confirmEmail(userEmail.email)" href="#" class="scrumdo-account-details-link hyperlink active">Resend verification email</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+
+                <div class="scrumdo-account-details">
+                    <h2 class="scrumdo-account-details-title">Email Subscriptions</h2>
+                    <div class="scrumdo-account-details-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="scrumdo-account-details-p">
+                                    Which email notifications would you like to receive?
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <form name="subscriptionsForm">
+                                    <table class="table scrumdo-table secondary">
+                                        <thead>
+                                        <tr>
+                                            <th>&nbsp;</th>
+                                            <th>Never</th>
+                                            <th>Watched Workspaces</th>
+                                            <th>All Workspaces</th>
+                                            <th>Assigned To You</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Story and Task</td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.story_task" type="radio" name="story" id="subscription1" value="0">
+                                                    <label for="subscription1"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.story_task" type="radio" name="story" id="subscription2" value="1">
+                                                    <label for="subscription2"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.story_task" type="radio" name="story" id="subscription3" value="2">
+                                                    <label for="subscription3"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.story_task" type="radio" name="story" id="subscription4" value="3">
+                                                    <label for="subscription4"><span></span></label>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Workspace Events</td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.project_events" type="radio" name="project_events" id="subscription20" value="0">
+                                                    <label for="subscription20"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.project_events" type="radio" name="project_events" id="subscription21" value="1">
+                                                    <label for="subscription21"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.project_events" type="radio" name="project_events" id="subscription22" value="2">
+                                                    <label for="subscription22"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Collection</td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.epic" type="radio" name="epic" id="subscription5" value="0">
+                                                    <label for="subscription5"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.epic" type="radio" name="epic" id="subscription6" value="1">
+                                                    <label for="subscription6"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.epic" type="radio" name="epic" id="subscription7" value="2">
+                                                    <label for="subscription7"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Daily digest of workspace activity</td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.digest" type="radio" name="digest" id="subscription9" value="0">
+                                                    <label for="subscription9"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.digest" type="radio" name="digest" id="subscription10" value="1">
+                                                    <label for="subscription10"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.digest" type="radio" name="digest" id="subscription11" value="2">
+                                                    <label for="subscription11"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>End of iteration report</td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.iteration_summary" type="radio" name="iteration_summary" id="subscription13" value="0">
+                                                    <label for="subscription13"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.iteration_summary" type="radio" name="iteration_summary" id="subscription14" value="1">
+                                                    <label for="subscription14"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.iteration_summary" type="radio" name="iteration_summary" id="subscription15" value="2">
+                                                    <label for="subscription15"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mentioned by username</td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.mention" type="radio" name="mentioned" id="subscription17" value="0">
+                                                    <label for="subscription17"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model="user.subscriptions.mention" type="radio" name="mentioned" id="subscription19" value="2">
+                                                    <label for="subscription19"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="as-header">
+                                            <th>&nbsp;</th>
+                                            <th>Subscribed</th>
+                                            <th>&nbsp;</th>
+                                            <th>&nbsp;</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                        <tr>
+                                            <td>News and updates about ScrumDo</td>
+                                            <td>
+                                                <label class="scrumdo-backlog-form navigation">
+                                                    <input ng-model='user.subscriptions.marketing' class="scrumdo-checkbox" type="checkbox" name="news" id="subscription24" value="1">
+                                                    <label for="subscription24"><span></span></label>
+                                                </label>
+                                            </td>
+                                            <td colspan="3"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <button class="scrumdo-btn secondary"
+                                            ng-click="ctrl.saveSubscriptions(subscriptionsForm)"
+                                            ng-if="subscriptionsForm.$dirty">Save Subscriptions</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scrumdo-account-details">
+                    <h2 class="scrumdo-account-details-title">Change Password</h2>
+                    <div class="scrumdo-account-details-content">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="#" class="scrumdo-control-label primary">Enter Old Password</label>
+                                    <input type="password" ng-model="ctrl.oldPass" class="scrumdo-form primary"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="#" class="scrumdo-control-label primary">Enter New Password</label>
+                                    <input type="password" ng-model="ctrl.newPass1" class="scrumdo-form primary"/>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="#" class="scrumdo-control-label primary">Confirm New Password</label>
+                                    <input type="password" ng-model="ctrl.newPass2" class="scrumdo-form primary"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4>{{ctrl.passwordResult.data}}</h4>
+                        </div>
+                        <div ng-if = "!ctrl.isMatch" class="col-md-9">
+                            <h4> Passwords don't match - Enter the same password </h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button type="submit" ng-click="ctrl.changePassword()" class="scrumdo-btn secondary">Change Password</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div> 
+                <div class="scrumdo-account-details">
+                    <h2 class="scrumdo-account-details-title">Delete Account</h2>
+                    <div class="scrumdo-account-details-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="scrumdo-account-details-p">
+                                    You can delete your account to erase all traces of yourself from our system.
+                                    Before you do that, you need to delete, or be removed from any organization you are a member of.
+                                    <strong>Looking to cancel your subscription?</strong> That is done from the billing link on the
+                                    subscription page of your organization.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" ng-hide="ctrl.authenticateDelete">
+                                <button type="button" ng-click="ctrl.authenticateDelete=true" class="scrumdo-btn tertiary">Delete Account</button>
+                            </div>
+
+                            <div class="col-md-3" ng-show="ctrl.authenticateDelete">
+                                <label for="#" class="scrumdo-control-label primary">Enter Password</label>
+                                <input type="password" ng-model="ctrl.deleteAccountPassword" class="scrumdo-form primary"/>
+                            </div>
+                            <div class="col-md-3" ng-show="ctrl.authenticateDelete">
+                                <br/>
+                                <button type="button" ng-click="ctrl.deleteAccount()" class="scrumdo-btn tertiary">Delete Account</button>
+                            </div>
+                        </div>
+                        <h4>
+                            {{ctrl.deleteResult}}
+                        </h4>
+                    </div>
+                </div>
+
+
+
+
+    

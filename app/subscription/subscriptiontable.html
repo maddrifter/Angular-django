@@ -1,0 +1,172 @@
+<div class="subscription-table">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-11 col-lg-10" style="height: 50px;">
+            <button ng-class="{secondary:!ctrl.annual}" class="scrumdo-btn primary pull-right" ng-click="ctrl.toggleAnnual()">
+                Monthly
+            </button>
+            <button style="margin-right: 5px;" ng-class="{secondary:ctrl.annual}" class="scrumdo-btn primary pull-right" ng-click="ctrl.toggleAnnual()">
+                Annual
+            </button>
+        </div>
+
+
+        <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
+            <div class="scrumdo-box-modal scrumdo-boxes">
+                <div class="scrumdo-box-modal-header scrumdo-box-header-plan">
+                    Standard
+                </div>
+                <div class="scrumdo-box-content subscription-box-content">
+
+                    <div class="price" ng-if="ctrl.selectedStandardPlan">
+                        <sup>$</sup>{{ctrl.standardPrice}}<small> per month</small>
+                    </div>
+                    <div class="text-center" ng-if="ctrl.selectedStandardPlan.yearly">
+                        paid annually
+                    </div>
+
+                    <div class="price" ng-if="! ctrl.selectedStandardPlan">
+                        
+                    </div>
+
+                    <hr/>
+
+                    <div class="text-center">
+                        Up to {{ctrl.userCount}} Users
+                    </div>
+
+                    <hr/>
+
+                    <div class="text-center">
+                        Everything you need for Scrum, Kanban or Scrumban
+                    </div>
+
+                    <hr/>
+
+                    <div class="text-center">
+                        <a ng-href="{{ctrl.subscription.spreedly_url}}/subscribers/{{user.organization.id}}/subscribe/{{ctrl.selectedStandardPlan.spreedly_id}}/{{user.organization.slug}}?email={{user.email}}&first_name={{user.first_name}}&last_name={{user.last_name}}&return_url={{user.base_url}}/subscription/completed/{{user.organization.slug}}"
+                           ng-if="ctrl.selectedStandardPlan.users >= ctrl.subscription.users_used"
+                           class="scrumdo-btn secondary">Select Plan</a>
+
+                        <a ng-click="ctrl.cancelSubscription()"
+                           ng-if="!ctrl.selectedStandardPlan && ctrl.userCount > ctrl.subscription.users_used"
+                           class="scrumdo-btn secondary">Select Plan</a>
+
+                        <div class="alert alert-danger" ng-if="ctrl.userCount < ctrl.subscription.users_used">
+                            This plan does not include enough users for your organization.
+                        </div>
+
+                        <div ng-if="ctrl.plansPage">
+                            <a href="/account/signup/" class="scrumdo-btn secondary ">Start Free Trial</a>
+                            <br/><br/><small>No Credit Card Required</small>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 ">
+            <div class="scrumdo-box-modal scrumdo-boxes">
+                <div class="scrumdo-box-modal-header scrumdo-box-header-plan">
+                    Premium
+                </div>
+
+                <div class="scrumdo-box-content subscription-box-content text-center" ng-if="!ctrl.selectedPremiumPlan">
+                    <h2>Contact Us</h2>
+                    <h4>
+                        <a href="mailto:support@scrumdo.com">support@scrumdo.com</a>
+                    </h4>
+                    <hr>
+                    <div class="text-center">
+                        Let us help you find exactly the right subscription and payment terms for your needs.
+                    </div>
+                </div>
+
+                <div class="scrumdo-box-content subscription-box-content" ng-if="ctrl.selectedPremiumPlan">
+
+                    <div class="price">
+                        <sup>$</sup>{{ctrl.premiumPrice}}<small> per month</small>
+                    </div>
+                    <div class="text-center" ng-if="ctrl.selectedPremiumPlan.yearly">
+                        paid annually
+                    </div>
+
+                    <hr/>
+
+                    <div class="text-center">
+                        Up to {{ctrl.userCount}} Users
+                    </div>
+
+                    <hr/>
+
+                    <div class="text-center">
+                        All Features Included
+                    </div>
+
+                    <hr/>
+
+                    <div class="text-center">
+                        <a ng-href="{{ctrl.subscription.spreedly_url}}/subscribers/{{user.organization.id}}/subscribe/{{ctrl.selectedPremiumPlan.spreedly_id}}/{{user.organization.slug}}?email={{user.email}}&first_name={{user.first_name}}&last_name={{user.last_name}}&return_url={{user.base_url}}/subscription/completed/{{user.organization.slug}}"
+                           ng-class="{disabled:(ctrl.selectedPremiumPlan.id == ctrl.subscription.plan.id) && (ctrl.subscription.billing.recurring)}"
+                           ng-if="ctrl.selectedPremiumPlan.users >= ctrl.subscription.users_used"
+                           class="scrumdo-btn secondary ">Select Plan</a>
+
+                        <div class="alert alert-danger" ng-if="ctrl.selectedPremiumPlan.users < ctrl.subscription.users_used">
+                            This plan does not include enough users for your organization.
+                        </div>
+
+                        <div ng-if="ctrl.plansPage">
+                            <a href="/account/signup/" class="scrumdo-btn secondary ">Start Free Trial</a>
+                            <br/><br/><small>No Credit Card Required</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>  <!-- Ends the two boxes at the top. -->
+
+
+    <div class="text-center">  <!-- The user count buttons -->
+
+        <div class="visible-xs row">
+            <div class="col-xs-5 text-right">
+                <label class="user-dropdown-label">Number of Users:</label>
+            </div>
+            <div class="col-xs-5" style="margin-bottom: 20px;">
+                <sd-select button-icon="iteration"
+                        ng-model="ctrl.userSelectOption"
+                        buttonIcon=""
+                        ng-change="ctrl.selectPlan(ctrl.userSelectOption.value)"
+                        options="ctrl.longOptions"></sd-select>
+            </div>
+
+        </div>
+
+        <div class="plan-options hidden-xs">
+            <div class="btn-group">
+                <button ng-click="ctrl.selectPlan(userCount)"
+                        class="btn btn-default subscription-option"
+                        ng-class="{active:ctrl.userCount==userCount}"
+                        ng-repeat="userCount in ctrl.userCountLevels">
+                    {{userCount}}
+                    <br/>
+                    <small class="users">users</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div ng-if="ctrl.annual" class="text-center" style="color: #CCCCCC">
+        This pricing is based on annual upfont payment and includes a discount.
+        Annual discounts only apply to credit card purchases
+    </div>
+
+
+
+</div>

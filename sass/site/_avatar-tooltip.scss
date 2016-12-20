@@ -1,0 +1,66 @@
+/**
+ * @Directive [avatarTooltip]
+ * Styles for avatar tooltip that is visible on user potrait click and 
+ * is appended to the body end. 
+ */
+.avatar-tooltip-holder {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
+    width: 225px;
+    height: auto;
+    background: #fff;
+    border:1px solid #eeeeee;
+    box-shadow: 0 0 5px 1px #eeeeee;
+    padding: 5px 5px 0px 5px;
+
+    &.shown {
+        display: block;
+    }
+    
+    .avatar-tooltip-inner{
+        max-height: 280px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        
+        .epicToolTip{
+            p{
+                margin-bottom: 5px;
+                word-break: break-all;
+            }
+        }
+    }
+    
+    .row{
+        height:70px;
+    }
+    
+    .avatar-img{
+        position: absolute;
+        background: #ccc;
+        background-size: cover;
+        width: 64px;
+        height: 64px;
+        left: 15px;
+        top: 0;
+        
+        img{
+            width:64px;
+            height: 64px;
+        }
+    }
+    .avatar-info{
+        padding-left: 10px;
+        
+        .username{
+            font-style: italic;
+            font-size: 12px;
+            color: #428bca;
+        }
+        .fullname{
+            text-transform: capitalize;
+            margin: 0 0 0 0;
+        }
+    }
+}

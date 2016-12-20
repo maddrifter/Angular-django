@@ -1,0 +1,23 @@
+<div class="scrumdo-wrapper">
+    <div class="scrumdo-wrapper-navigation">
+        <div class="row">
+            <div class="col-sm-2">
+                <button sd-staff-only ui-sref="newteam" class="scrumdo-btn secondary extended text-left">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add New Team List
+                </button>
+            </div>
+            <div class="col-sm-2 col-sm-offset-8 text-right">
+                <button sd-staff-only ui-sref="allmembers" type="button" class="scrumdo-btn primary">
+                    All Team Members
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="scrumdo-wrapper-content">
+        <div class="row">
+            <sd-team team="team" ng-repeat="team in teams"></sd-team>
+        </div>
+    </div>
+</div>

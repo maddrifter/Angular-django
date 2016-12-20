@@ -1,0 +1,25 @@
+<div class="scrumdo-select scrumdo-input-group-extended dropdown" is-open="ctrl.menuOpen" uib-dropdown>
+    <div class="" ng-click="ctrl.toggleMenu($event)">
+        <button type="button"
+                class="scrumdo-btn dropdown-main-button primary extended scrumdo-select-button">
+            <span class="scrumdo-icons" ng-class="buttonIcon"></span> {{ctrl.getMainLabel()}}
+        </button>
+        <div class="input-group-btn dropdown-button-container">
+            <button type="button" class="scrumdo-btn primary" aria-expanded="false">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+        </div>
+    </div>
+    <div ng-if="ctrl.menuOpen" class="dropdown-menu dropdown-menu-right scrumdo-dropdown scrumdo-multi-dropdown" uib-dropdown-menu role="menu">
+        <dropdown-filter ng-if="ctrl.showFilter && options.length>0" ng-model="ctrl.filterQuery"></dropdown-filter> 
+        <ul ng-if="ctrl.menuOpen">
+            <li ng-repeat="option in options | filter:ctrl.doFilterQuery">
+                <a ng-click='ctrl.select($event, option)' href='#'>
+                    <span ng-if="ctrl.isSelected(option)" class="glyphicon glyphicon-ok"></span>
+                    <span ng-include="ctrl.templateName"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

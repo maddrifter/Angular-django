@@ -1,0 +1,142 @@
+<li>
+
+    <span ng-click="pctrl.toggleFavorite(project)"
+          ng-class="{'inactive-yellowstar':!project.watched, 'yellowstar':project.watched}"
+          uib-tooltip="Watch Project"
+          tooltip-append-to-body="true"
+          class="scrumdo-favorite-icon scrumdo-star-icon smaller pull-right"></span>
+
+    <a class="collapse-arrow" ng-class="{'collapsed':!pctrl.expanded}" ng-click="pctrl.toggleExpanded()">
+        {{project.name}}
+        <a uib-tooltip="Go To Project" class="go-to-project-link" href="/projects/{{project.slug}}/board"><i class="fa fa-external-link"></i></a>
+        <i class="fa fa-spinner fa-spin" ng-if="pctrl.loading"></i>
+        <i ng-if="!project.active">(Archived)</i>
+    </a>
+
+
+
+    <div class="scrumdo-list-btn-wrapper pull-right">
+        <button ng-click="pctrl.exportProject(project)" uib-tooltip="Export Workspace"
+                toolip-placement="left"
+                tooltip-append-to-body="true"
+                type="button" class="scrumdo-btn primary smaller">
+            <span class="glyphicon glyphicon-circle-arrow-down"></span>
+        </button>
+    </div>
+
+    <div class="clearfix" ng-if="pctrl.expanded">
+
+        <div class="message-list clearfix">
+            <div ng-if="pctrl.groups.length==0">
+                No Recent Activity
+            </div>
+            <table class="message-table">
+                <tbody ng-repeat="group in pctrl.groups">
+
+                    <tr class="summary-row" ng-click="pctrl.openGroup(group)" ng-if="group.projectSummary">
+                        <td class="inbox-col-num">
+                             <i class="fa fa-area-chart"></i>
+                        </td>
+                        <td class="inbox-col-summary">
+                            Workspace summary
+                        </td>
+                        <td class="inbox-col-action">
+                        </td>
+                        <td class="inbox-col-date">
+                            <span class="pull-right">{{group.date}}</span>
+                        </td>
+                    </tr>
+
+                    <tr class="summary-row" ng-click="pctrl.openGroup(group)" ng-if="group.epic!=null">
+                        <td class="inbox-col-num">
+                            <a href="/projects/epic_permalink/{{group.epic.id}}"
+                               ng-click="pctrl.numClicked($event)"
+                               class="inbox-story-num" ng-if="group.epic"><b>{{group.epic.short_name}}</b> <i class="fa fa-external-link"></i></a>
+                        </td>
+                        <td class="inbox-col-summary" ng-bind-html="group.epic.summary|htmlToPlaintext|to_trusted">
+
+                        </td>
+                        <td class="inbox-col-action">
+                            {{group.entries[0].subject}}
+                            <span ng-if="group.entries.length>1">({{group.entries.length}})</span>
+                        </td>
+                        <td class="inbox-col-date">
+                            <span class="pull-right">{{group.date}}</span>
+                        </td>
+                    </tr>
+                    <tr class="summary-row" ng-click="pctrl.openGroup(group)" ng-if="group.story!=null">
+                        <td class="inbox-col-num">
+                            <a href="/projects/story_permalink/{{group.story.id}}"
+                               ng-click="pctrl.numClicked($event)"
+                               class="inbox-story-num" ng-if="group.story"><b>{{project.prefix}}-{{group.story.number}}</b> <i class="fa fa-external-link"></i></a>
+                        </td>
+                        <td class="inbox-col-summary">
+                            <span ng-if="group.story" ng-bind-html="group.story.summary|htmlToPlaintext|to_trusted"></span>
+                        </td>
+                        <td class="inbox-col-action">
+                            {{group.entries[0].subject}}
+                            <span ng-if="group.entries.length>1">({{group.entries.length}})</span>
+                        </td>
+                        <td class="inbox-col-date">
+                            <span class="pull-right">{{group.date}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-if="group.entries[0].body.event_type.indexOf('iteration')==0" class="summary-row" ng-click="pctrl.openGroup(group)">
+                        <td class="inbox-col-num">
+                            <a ng-href="/projects/{{project.slug}}/iteration/{{group.entries[0].body.message.iteration_id}}"
+                               ng-click="pctrl.numClicked($event)">
+                                <i class="fa fa-calendar-o"></i>
+                            </a>
+                        </td>
+                        <td>
+                            {{group.entries[0].body.message.iteration_name}}
+                        </td>
+
+                        <td>
+                            {{group.entries[0].subject}}
+                        </td>
+                        <td class="inbox-col-date">
+                            <span class="pull-right">{{group.date}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-if="group.entries[0].body.event_type=='project_created'" class="summary-row" ng-click="pctrl.openGroup(group)">
+                        <td class="inbox-col-num">
+                            <a ng-href="/projects/{{project.slug}}/board"
+                               ng-click="pctrl.numClicked($event)">
+                                <i class="fa fa-newspaper-o"></i>
+                            </a>
+                        </td>
+                        <td colspan="2">
+                            {{group.entries[0].subject}}
+                        </td>
+                        <td class="inbox-col-date">
+                            <span class="pull-right">{{group.date}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-if="group.entries[0].body.event_type.indexOf('note')==0" class="summary-row" ng-click="pctrl.openGroup(group)">
+                        <td class="inbox-col-num">
+                            <a ng-href="/projects/{{project.slug}}/notes#/note/{{group.entries[0].body.message.note_id}}"
+                               ng-click="pctrl.numClicked($event)">
+                                <i class="fa fa-sticky-note-o"></i>
+                            </a>
+                        </td>
+                        <td class="inbox-col-summary">
+                            <span ng-bind-html="group.entries[0].body.message.text|htmlToPlaintext|to_trusted"></span>
+                        </td>
+                        <td>
+                            {{group.entries[0].subject}}
+                            <span ng-if="group.entries.length>1">({{group.entries.length}})</span>
+                        </td>
+                        <td class="inbox-col-date">
+                            <span class="pull-right">{{group.date}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a ng-click="pctrl.loadMore()" ng-if="!pctrl.loading && pctrl.hasMore">Load More...</a>
+
+        </div>
+    </div>
+</li>
+

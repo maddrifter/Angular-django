@@ -1,0 +1,9 @@
+<li class="cards"
+    data-story-id="{{::story.id}}"
+    sd-access
+    ng-class="ctrl.getCardClass()"
+    ng-mousedown="ctrl.onMouseDown($event)"
+    ng-click="$evalAsync(ctrl.onClicked($event))"
+    ng-dblclick="ctrl.onDoubleClick($event)">
+    <div ng-include="ctrl.templateName"></div>
+</li>

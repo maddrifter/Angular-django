@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Move Cards</h3>
+</div>
+
+<div class="modal-body move-cell-body">
+    <h4>Select a cell to move the cards to.</h4>
+
+    <sd-cell-select cells="ctrl.cells"
+                    headers="ctrl.headers"
+                    cell-id="ctrl.selectedCell"></sd-cell-select>
+
+
+</div>
+<div class="modal-footer">
+    <button class="scrumdo-btn primary" ng-click="$dismiss('canceled')">Cancel</button>
+    <button ng-click="ctrl.ok()" class="scrumdo-btn secondary">Move</button>
+</div>

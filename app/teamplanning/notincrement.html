@@ -1,0 +1,11 @@
+<div>
+    <sd-restricted-feature ng-if="::!projectData.isPremiumUser()" 
+        feature-name="'Team Planning'" organization-slug="projectData.organizationSlug" 
+        feature-image="'TeamPlanningSample.jpg'"></sd-restricted-feature>
+
+    <div class="alert alert-info margin10" ng-if="::projectData.isPremiumUser()">
+        There is no portfolio increment data associated with this iteration
+        therefore we can not display the team planning tool.
+    </div>
+    <!-- TODO - Do we want to give them the option to turn it into an increment? -->
+</div>

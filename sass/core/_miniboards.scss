@@ -1,0 +1,122 @@
+//------------------------------
+// *****************************
+// Planning
+// *****************************
+//------------------------------
+
+.scrumdo-miniboards {
+  display: block;
+  width: 65px;
+  min-height: 130px;
+  background: #ffffff;
+  border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  border-top: none;
+  float: left;
+  margin-left: -1px;
+
+  &.wizard-miniboards {
+    width: 100px;
+    height: 100%;
+    min-height: 50px;
+  }
+
+  &.settings-miniboards {
+    position: relative;
+    width: 100px;
+    height: 100%;
+    min-height: 200px;
+    line-height: 189px;
+    text-align: center;
+    color: #888888;
+    font-size: 13px;
+    font-family: $font-family-roboto-medium;
+    margin: 0;
+
+    > .scrumdo-miniboards-header {
+      min-height: 9px;
+    }
+  }
+
+  &.mini-container {
+    width: auto;
+    height: auto;
+    min-height: 0;
+    border: none;
+    margin-left: 1px;
+    @include clearfix()
+  }
+  
+  .scrumdo-miniboards-header {
+    width: 100%;
+    min-height: 5px;
+    background: #e7e7e7;
+    font-size: 12px;
+    font-family: $font-family-roboto;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  &.width-150 {
+    width: 150px;
+  }
+
+  &.width-100 {
+    width: 101px;
+  }
+
+  &.width-50 {
+    width: 50px;
+  }
+
+  &.highlighted {
+    border: 1px solid #f6764e;
+
+    &:before {
+      position: absolute;
+      bottom: -1px;
+      left: -1px;
+      content: " ";
+      width: 10px;
+      height: 10px;
+      border: 1px solid #f6764e;
+      background: rgba(246,118,78, 0.5);
+    }
+
+    &:after {
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      content: " ";
+      width: 10px;
+      height: 10px;
+      border: 1px solid #f6764e;
+      background: rgba(246,118,78, 0.5);
+    }
+
+    > .scrumdo-miniboards-header {
+      &:before {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        content: " ";
+        width: 10px;
+        height: 10px;
+        border: 1px solid #f6764e;
+        background: rgba(246,118,78, 0.5);
+      }
+
+      &:after {
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        content: " ";
+        width: 10px;
+        height: 10px;
+        border: 1px solid #f6764e;
+        background: rgba(246,118,78, 0.5);
+      }
+    }
+  }
+}

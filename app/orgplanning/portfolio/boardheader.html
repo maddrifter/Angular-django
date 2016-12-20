@@ -1,0 +1,76 @@
+<ul class="board-header">
+    <li class="epic-list regular-cell" 
+        ng-repeat="parentStory in portfolioCtrl.level1_cards = (portfolioCtrl.storyManager.iterationMap[portfolioCtrl.filterIteration.id]|
+            orderBy:'number'|filter:portfolioCtrl.quickFilterLevel1)">
+        <div class="epic-box-wrapper">
+            <div class="epic-box-first-level">
+                <ul class="kanban-story-list avoid portfolio-cards no-drag">
+                    <sd-story planning-mode="'epic'"
+                        listchild="portfolioCtrl.storiesFlags[parentStory.id]"
+                        story="parentStory"
+                        project="portfolioCtrl.activePortfolio.root"
+                        epics="portfolioCtrl.epics"
+                        iterations="portfolioCtrl.iterations"
+                        layout="portfolioCtrl.cardSize">
+                    </sd-story>
+                </ul>
+            </div>
+            <ul class="epic-box-second-level">
+                <li ng-if="portfolioCtrl.storiesFlags[parentStory.id]"
+                    ng-repeat="story in portfolioCtrl.level2_cards[parentStory.id] = (portfolioCtrl.storyManager.storiesByRelease[parentStory.id]|
+                    orderBy:'rank'|filter:portfolioCtrl.quickFilterLevel2)">
+                    <ul class="kanban-story-list portfolio-cards" 
+                        ng-class="{'no-drag avoid have-child':portfolioCtrl.activePortfolio.levels[portfolioCtrl.rootLevel+1]!=null}"
+                        data-release-id="{{parentStory.id}}"
+                        data-container-type="release-story-list">
+                        <sd-story planning-mode="'epic'"
+                            listchild="portfolioCtrl.storiesFlags[story.id]"
+                            story="story"
+                            project="portfolioCtrl.getProject(story.project_slug)"
+                            epics="null"
+                            iterations="null"
+                            layout="portfolioCtrl.cardSize">
+                        </sd-story>
+                    </ul>
+                </li>
+                <li ng-if="portfolioCtrl.storiesFlags[parentStory.id] 
+                    && (portfolioCtrl.levelWriteAccess(portfolioCtrl.rootLevel) || 
+                    !portfolioCtrl.levelWriteAccess(portfolioCtrl.rootLevel) 
+                    && portfolioCtrl.storyManager.storiesByRelease[parentStory.id].length ==0)" class="add-card">
+                    <ul class="kanban-story-list portfolio-cards" 
+                        ng-class="{'avoid no-drag':portfolioCtrl.activePortfolio.levels[portfolioCtrl.rootLevel+1]!=null}"
+                        data-release-id="{{parentStory.id}}"
+                        data-container-type="release-story-list">
+                        <li ng-if="portfolioCtrl.levelWriteAccess(portfolioCtrl.rootLevel)">
+                            <span>
+                                <a class="scrumdo-btn primary epic-box placeholder" href 
+                                ng-click="portfolioCtrl.addExistingProject(parentStory, portfolioCtrl.rootLevel)">
+                                    + New Card</a></span>
+                        </li>
+                        <li ng-if="!portfolioCtrl.levelWriteAccess(portfolioCtrl.rootLevel) 
+                            && portfolioCtrl.storyManager.storiesByRelease[parentStory.id].length ==0" class="add-child-epic">
+                            <span>&nbsp;</span>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-if="!portfolioCtrl.storiesFlags[parentStory.id]" class="epic-box placeholder cards-stats">
+                    <p><i class="fa fa-clone" aria-hidden="true"></i></p>
+                    <p class="show-cards" ng-click="portfolioCtrl.toggleRelease(parentStory)">
+                        <span ng-if="portfolioCtrl.releaseStats[parentStory.id] != null">{{portfolioCtrl.releaseStats[parentStory.id]}}</span> 
+                        <span ng-if="portfolioCtrl.releaseStats[parentStory.id] == null">Show</span> Cards
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div class="epic-sep">&nbsp;</div>
+    </li>
+    <li sd-staff-only ng-if="portfolioCtrl.activePortfolio" class="epic-list regular-cell">
+        <div class="epic-box-first-level">
+            <span>
+                <a class="scrumdo-btn primary epic-box placeholder" href 
+                    ng-click="portfolioCtrl.addToRootProject()">+ Add Release</a>
+            </span>
+        </div>
+        <div class="epic-sep">&nbsp;</div>
+    </li>
+</ul>

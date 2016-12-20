@@ -1,0 +1,11 @@
+<div id="story-column-2" class="planning-column-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <sd-planning-safe project="project"
+                            parent="parent"
+                            iterations="iterations"
+                            card-size="cardSize"
+                            ng-repeat="parent in project.parents|orderBy:['slug']"></sd-planning-safe>
+        </div>
+    </div>
+</div>

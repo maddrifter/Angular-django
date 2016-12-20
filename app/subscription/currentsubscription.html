@@ -1,0 +1,101 @@
+<div class="current-subscription">
+    <h3>Current Subscription for {{user.organization.name}}</h3>
+    <hr/>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
+            <div ng-if="ctrl.subscription.is_trial">
+                <h4>
+                    Free Trial -
+                    <span ng-if="ctrl.subscription.days_left > 1">
+                        {{ctrl.subscription.days_left}} days left
+                    </span>
+                    <span ng-if="ctrl.subscription.days_left <= 1">
+                        Expired
+                    </span>
+                </h4>
+                <h5>Choose a subscription below.</h5>
+            </div>
+
+            <div ng-if="!ctrl.subscription.is_trial" class="scrumdo-box-modal scrumdo-boxes">
+                <div class="scrumdo-box-modal-header">
+                    <h4 class="modal-title"> {{ctrl.subscription.plan.name}}</h4>
+                </div>
+                <div class="scrumdo-box-content">
+
+
+                    <div ng-if="ctrl.paid">
+                        <div class="price">
+                            {{ctrl.subscription.plan.price}}
+                        </div>
+                    </div>
+
+                    <br/>
+                    <uib-progressbar ng-if="ctrl.percent <= 100" value="ctrl.percent"><span ng-if="ctrl.percent > 25">{{ctrl.subscription.users_used}} / {{ctrl.subscription.plan.users}} users</span></uib-progressbar>
+                    <div class="alert alert-danger" ng-if="ctrl.percent > 100">
+                        You are over your user limit.
+                        Please select a plan below that allows at least {{ctrl.subscription.users_used}} users.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 col-lg-4" ng-if="!ctrl.paid">
+
+
+
+            <div ng-if="ctrl.subscription.is_trial" class="sub-code">
+                <form>
+                    <div class="form-group">
+
+                        <div ng-if="ctrl.subscriptionCodeStatus">{{ctrl.subscriptionCodeStatus}}</div>
+
+
+                        <div class="input-group">
+                            <input ng-model="ctrl.subscriptionCode"
+                                   placeholder="Subscription Code"
+                                   sd-enter="ctrl.enterSubCode()"
+                                   type="text" class="form-control" id="subcode">
+                            <span class="input-group-btn">
+                               <button ng-click="ctrl.enterSubCode()"
+                                       class="btn btn-default" type="button">Go</button>
+                            </span>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 col-lg-4" ng-if="ctrl.creditCard">
+            <h4>Options</h4>
+            <ul>
+                <li>
+                    <a ng-href="{{ctrl.subscription.account_url}}">Change Billing Information</a>
+                </li>
+                <li>
+                    <a href="/subscription/{{user.organization.slug}}/invoices">View Invoices</a>
+                </li>
+                <li ng-if="ctrl.subscription.billing.recurring">
+                    <a ng-click="ctrl.cancel()">Cancel Subscription</a>
+                </li>
+                <li ng-if="!ctrl.subscription.billing.recurring">
+                    Recurring billing is disabled, select a plan below to enable.
+                </li>
+            </ul>
+            <div ng-if="!ctrl.subscription.plan.active">
+                <i>Note: This plan is no longer offered, but you are grandfathered in.</i>
+            </div>
+        </div>
+    </div>
+
+    <!--yearly: false,-->
+    <!--name: "Diamond",-->
+    <!--price: "399.99",-->
+    <!--storage: 50,-->
+    <!--active: true,-->
+    <!--id: 3008,-->
+    <!--projects: 999,-->
+    <!--users: 150-->
+
+    <!--Current Subscription.-->
+</div>

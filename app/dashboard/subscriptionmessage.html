@@ -1,0 +1,86 @@
+<div class="subscription-message welcome" ng-if="ctrl.options.welcome">
+    <a ng-click="ctrl.options.welcome=false" class="close-link"><i class="fa fa-times"></i> Close Help</a>
+
+    <a class="welcome-help-1" target="_blank" ng-href="/projects/{{ organization.slug }}/tips">
+        <i class="fa fa-book"></i><br/>
+        Getting Started
+    </a>
+    <a class="welcome-help-2" target="_blank" ng-href="http://help.scrumdo.com/help/navigating.html">
+        <i class="fa fa-link"></i><br/>
+        Navigate The Site
+    </a>
+    <a class="welcome-help-3" target="_blank" ng-href="http://help.scrumdo.com/help/invite.html">
+        <i class="fa fa-envelope-o"></i><br/>
+        Invite Other People
+    </a>
+    <a class="welcome-help-4" target="_blank" ng-href="http://help.scrumdo.com/help/planningtool.html">
+        <i class="fa fa-columns"></i><br/>
+        The Planning Tool
+    </a>
+</div>
+
+
+<div sd-subscription-class class="subscription-message subscribe-now" ng-if="ctrl.options.subscribeNow && ctrl.hideMessage!==1">
+    <a ng-click="ctrl.onHide('subscribeNow')" class="close-link project-app-link"><i class="fa fa-times"></i> Close</a>
+    <span class="sub-message" ng-if="organization.subscription.expires>=0">
+        Your trial expires in {{organization.subscription.expires}}
+        <ng-pluralize count="organization.subscription.expires"
+                      when="{'one': 'day',
+                             'other': 'days'}"></ng-pluralize>.
+    </span>
+    <span class="sub-message" ng-if="organization.subscription.expires<0">
+        Your trial has <b>expired</b> and you are currently in a grace period for
+        {{organization.subscription.grace}}
+        more
+                <ng-pluralize count="organization.subscription.grace"
+                              when="{'one': 'day',
+                             'other': 'days'}"></ng-pluralize>.
+
+    </span>
+    <a href="/subscription/{{organization.slug}}"
+       ng-if="user.staff"
+       class="scrumdo-btn secondary small">Subscribe Now</a>
+</div>
+
+
+<div sd-subscription-class class="subscription-message expired" ng-if="ctrl.options.expiring">
+    <a ng-click="ctrl.onHide('expiring')" class="close-link project-app-link"><i class="fa fa-times"></i> Close</a>
+    <span class="sub-message">
+        Your subscription has <b>expired</b> and you are currently in a grace period for
+        {{organization.subscription.grace}}
+        more
+                <ng-pluralize count="organization.subscription.grace"
+                              when="{'one': 'day',
+                             'other': 'days'}"></ng-pluralize>.
+
+    </span>
+    <a href="/subscription/{{organization.slug}}"
+       ng-if="user.staff"
+       class="scrumdo-btn secondary small">Subscribe Now</a>
+</div>
+
+<div sd-subscription-class class="subscription-message over-limit" ng-if="ctrl.options.overLimit">
+    <a ng-click="ctrl.onHide('overLimit')" class="close-link project-app-link"><i class="fa fa-times"></i> Close</a>
+    You are over your subscription limits.  Please upgrade your subscription
+    within the next
+    {{organization.subscription.grace}}
+    <ng-pluralize count="organization.subscription.grace"
+                  when="{'one': 'day',
+                             'other': 'days'}"></ng-pluralize>.
+</div>
+
+
+<div sd-subscription-class class="subscription-message billing-soon" ng-if="ctrl.options.billingSoon" ng-if="user.staff">
+    <a ng-click="ctrl.onHide('billingSoon')" class="close-link project-app-link"><i class="fa fa-times"></i> Close</a>
+    <span ng-if="organization.subscription.expires>0">
+        Your current subscription expires in {{organization.subscription.expires}}
+        <ng-pluralize count="organization.subscription.expires"
+                      when="{'one': 'day',
+                             'other': 'days'}"></ng-pluralize>.
+    </span>
+    <span ng-if="organization.subscription.expires<=0">
+        Your current subscription has expired.
+    </span>
+    Contact us to extend the billing on your account.
+</div>
+

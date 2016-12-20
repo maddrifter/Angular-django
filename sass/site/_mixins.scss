@@ -1,0 +1,19 @@
+@mixin app-wrapper($top:114px) {
+  @include clearfix();
+  position: fixed;
+  top: $top;
+  bottom: 0px;
+  left: 0px;
+  right: 40px;
+  background: #eee;
+  overflow: auto;
+
+  -webkit-transition: left 0.3s ease-out, right 0.3s ease-out;
+  -moz-transition: left 0.3s ease-out, right 0.3s ease-out;
+  -o-transition: left 0.3s ease-out, right 0.3s ease-out;
+  transition: left 0.3s ease-out, right 0.3s ease-out;
+
+  &.navbar-open {
+    right: 325px;
+  }
+}

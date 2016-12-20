@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <div class="btn-group pull-right">
+        <button type="button" class="scrumdo-btn primary" uib-tooltip="Close Window"
+                ng-click="ctrl.close()">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+    </div>
+    <h4>Summary</h4>
+</div>
+
+<div class="modal-body">
+    
+    <div class="cell-stats col-sm-12">
+        <div class="time-type-box col-sm-3" ng-class="ctrl.cellClass(cell['cell'])" ng-repeat="cell in ctrl.stats.cell_data">
+            <div class="content">
+                <span class="icon fa" ng-class="ctrl.cellIcon(cell['cell'])"></span>
+                <span ng-if="isroot" class="title">{{::cell.cell}}</span>
+                <ul class="data">
+                    <li><label>{{::cell.total_cards}}</label><span>CARDS</span></li>
+                    <li><label>{{::cell.total_time | hoursToDay}}</label></li>
+                </ul>
+                <div ng-if="ispremiumuser" class="search-cards" uib-tooltip="Search Cards in this block">
+                    <span class="fa fa-search" adjust-box-position ng-click="ctrl.loadCards(cell['cell_type'])"></span>
+                </div>
+                <div ng-include="ctrl.templateName" ng-class="{'active': ctrl.searchingCell==cell['cell_type']}" 
+                    class="cards-list"></div>
+            </div>
+            <div ng-if="isroot" class="box-bar"></div>
+        </div>
+    </div>
+</div>

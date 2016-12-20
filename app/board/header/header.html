@@ -1,0 +1,26 @@
+<h2 ng-controller="HeaderController"
+    class="scrumdo-boards-header"
+    ng-style="{width: (ctrl.width() + 'px')}">
+
+    {{header.label}}
+
+
+    <span uib-tooltip="{{header.policy_text}}"
+          tooltip-append-to-body="true"
+          ng-if="header.policy_text" class="policy-icon scrumdo-info-icon text-top glyphicon glyphicon-info-sign"></span>
+
+          
+    <div class="wip-limit-holder" ng-class="{'over-wip':ctrl.overWip()}" ng-if="policy != null">
+        <div class="wip-limit"
+            uib-tooltip-html="ctrl.toolTip()"
+            tooltip-placement="bottom">
+            
+            <span class="wip-min" ng-if="policy.min_related_value>0 && policy.min_related_value != 999"><small>{{policy.min_related_value}}</small> | </span>
+            <span class="wip-value">{{ctrl.wipValue()}}</span>
+            <span class="wip-max" ng-if="policy.related_value != 999 && policy.related_value > 0"> | <small>{{policy.related_value}}</small></span>
+        </div>
+    </div>
+
+    <i ng-if="header.policy_text" uib-tooltip="{{ header.policy_text }}" tooltip-placement="right" class="policy-tip icon-info-sign"></i>
+</h2>
+

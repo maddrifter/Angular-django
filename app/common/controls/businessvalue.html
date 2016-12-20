@@ -1,0 +1,21 @@
+<div ng-if="ctrl.renderMode==0" class="input-group">
+    <span class="scrumdo-addon primary" uib-tooltip="Business Value or Cost of Delay">$</span>
+    <input ng-model="ctrl.currentValue"
+           type="text"
+           min="0"
+           max="1000000000"
+           class="scrumdo-form primary"
+           ng-blur="ctrl.onBlur()"
+           ng-change="ctrl.onChange()"
+           placeholder="Business Value">
+
+</div>
+<div ng-if="ctrl.renderMode==1" class="input-group business-point-scale">
+    <span class="scrumdo-addon primary scrumdo-btn" uib-tooltip="Business Value or Cost of Delay">$</span>
+    <sd-select
+        ng-model="ctrl.pointValue"
+        suffix="point"
+        label-property="2"
+        ng-change="ctrl.onChangePoint()"
+        options="ctrl.pointScale"></sd-select>
+</div>

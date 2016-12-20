@@ -1,0 +1,9 @@
+<button ng-if="ctrl.showFilter" class="scrumdo-btn primary dropdown-toggle"
+        ng-class="{secondary:ctrl.query.length>0}"
+        type="button"
+        ng-click="ctrl.openFilterBuilder()">
+    <span class="glyphicon" ng-class="icon"></span>
+</button>
+<button ng-if="!ctrl.showFilter" class="scrumdo-btn primary dropdown-toggle" type="button" ng-class="{secondary:ctrl.query.length>0}" ng-click="ctrl.clearFilters()">
+    <span class="glyphicon glyphicon-remove-circle"></span>
+</button>

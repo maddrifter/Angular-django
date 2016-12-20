@@ -1,0 +1,34 @@
+<main sd-access class="scrumdo-notes" ng-class="{'navbar-open':$storage.sidebarOpen}">
+    <div class="scrumdo-notes-wrapper pull-left">
+        <div class="scrumdo-notes-content">
+            <div class="scrumdo-notes-left col-xs-3">
+                <div class="notes-list">
+                    <div class="note-iteration">
+                        <sd-iteration-select default-label="'All Iterations'"
+                            ng-model="ctrl.service.filterIteration" 
+                            iterations="ctrl.service.iterationsOrNone"></sd-iteration-select>
+                    </div>
+                    <ul class="scrumdo-account-menu">
+                        <li ng-repeat="note in ctrl.notes | orderBy:'-id' | filter:ctrl.filterNotes"
+                            ng-class="{selected:ctrl.service.currentNote.id==note.id}">
+                            <a ui-sref="note({noteId:note.id})">
+                                {{note.title | characters:80:y}}<br/>
+                                <span>{{::note.created_date | ymddate}}</span> <i ng-if="note.iteration_name">{{note.iteration_name}}</i> 
+                            </a>
+                        </li>
+                        <li ng-if="ctrl.notes.length ==0" class="text-center alert alert-info">
+                            <a href="" >Nothing here!<br/>Create your first Note!</a>
+                        </li>
+                    </ul>
+                </div>
+                <div ng-if="canWrite" class="new-note text-center">
+                    <a class="scrumdo-btn primary" ui-sref="note({noteId:-1})">+ New Note</a>
+                </div>
+            </div>
+
+            <div class="scrumdo-notes-right col-xs-9">
+                <ui-view name="noteDetail"></ui-view>
+            </div>
+        </div>
+    </div>
+</main>

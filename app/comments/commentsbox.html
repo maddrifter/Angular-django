@@ -1,0 +1,42 @@
+<div class="form-group cards-comments">
+
+    <button ng-if="ctrl.currentValue && story.id!=-1 && story"
+            ng-click="ctrl.addComment()"
+            class="pull-right scrumdo-btn btn-success add-comment-button">Add Comment</button>
+
+    <button ng-if="ctrl.currentValue && note.id!=-1 && note"
+            ng-click="ctrl.addComment()"
+            class="pull-right scrumdo-btn btn-success add-comment-button">Add Comment</button>
+
+    <label for="ticketMessage" class="scrumdo-control-label card-popup">Comments:</label>
+
+    <div class="cards-message" ng-if="!readonly">
+        <div class="cards-col-1">
+            <sd-user-portrait user="user" size="32"/>
+        </div>
+        <div class="cards-col-11">
+
+            <textarea name="#"
+                      mentio
+                      mentio-id="'newComment'"
+                      mentio-require-leading-space='true'
+                      ng-model="ctrl.currentValue"
+                      id="ticketMessage"
+                      class="comments-textarea"
+                      rows="2"
+                      placeholder="Write a comment..."></textarea>
+
+            <sd-mentio editor="'newComment'" trigger="'@'" project="project"></sd-mentio>
+
+        </div>
+    </div>
+
+    <ul class="cards-log">
+        <sd-editable-comment project="project"
+                             comment="comment"
+                             comments="comments"
+                             story="story"
+                             note="note"
+                             ng-repeat="comment in comments|orderBy:'-date_submitted'"></sd-editable-comment>
+    </ul>
+</div>

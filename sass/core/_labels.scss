@@ -1,0 +1,370 @@
+//------------------------------
+// *****************************
+// Labels
+// *****************************
+//------------------------------
+
+.labels-list {
+  padding: 0px;
+  min-height: 50px;
+  li {
+    display: inline-block;
+    padding: 4px;
+  }
+}
+
+
+.scrumdo-labels-box .dropdown-menu li {
+  max-width: 180px;
+  overflow-x: hidden;
+}
+
+
+.labels {
+  display: inline-block;
+  border-radius: 2px;
+  padding: 3px 7px;
+  line-height: initial;
+  color: #ffffff;
+
+
+  &.label-tag-gray {
+    background-color: #cccccc;
+    color: #ffffff;
+  }
+  &.label-tag-darkgray {
+    background-color: #aaaaaa;
+    color: #ffffff;
+  }
+  &.label-tag-dullblue {
+    background-color: #747e89;
+    color: #ffffff;
+  }
+
+  &.label-tag-orange-small {
+    background-color: #f6764e;
+    color: #ffffff;
+    padding: 1px 5px;
+  }
+  &.label-tag-orange {
+    background-color: #f6764e;
+    color: #ffffff;
+  }
+  &.label-tag-yellow {
+    background: #f1c40f;
+    color: #ffffff;
+  }
+  &.label-tag-purple {
+    background-color: #9b59b6;
+    color: #ffffff;
+  }
+  &.label-tag-dullpurple {
+    background: #b47acc;
+    color: #ffffff;
+  }
+  &.label-tag-dullpurple-small {
+    background: #b47acc;
+    color: #ffffff;
+    padding: 1px 5px;
+  }
+  &.label-tag-darkgreen {
+    background: #1a9950;
+    color: #ffffff;
+  }
+  &.label-tag-flatgreen {
+    background: #1abc9c;
+    color: #ffffff;
+  }
+  &.label-tag-flatblue {
+    background: #3498dd;
+    color: #ffffff;
+  }
+  &.label-tag-flatred {
+    background: #c0392b;
+    color: #ffffff;
+  }
+  &.label-tag-dullred {
+    background: #e74c3c;
+    color: #ffffff;
+  }
+  &.label-tag-dullblack {
+    background: #444444;
+    color: #ffffff;
+  }
+
+  &.smaller {
+    padding: 1px 5px;
+  }
+
+  &.bigger {
+    padding: 7px 10px;
+  }
+
+  &.squar-bordered {
+    border-radius: 0;
+    border: 1px solid #d8d8d8;
+    text-align: center;
+  }
+
+  &.vertical-middle {
+    vertical-align: middle;
+  }
+
+  &.vertical-sub {
+    vertical-align: sub;
+  }
+
+  &.extended {
+    width: 100%;
+  }
+  
+  &.tag{
+    background-color: #fafafa;
+    color:#888888;
+    border: 1px solid #eee;
+  }
+}
+
+.scrumdo-form-label {
+  font-family: $font-family-roboto-bold;
+  color: #666666;
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+.scrumdo-control-label {
+  @extend .control-label;
+  font-weight: normal;
+
+  &.primary {
+    font-family: $font-family-roboto-bold;
+    color: #666666;
+    font-size: 12px;
+    margin-bottom: 0;
+
+  }
+
+  &.secondary {
+    font-family: $font-family-roboto;
+    color: #666666;
+    font-size: 12px;
+    margin-bottom: 0;
+  }
+
+  &.tertiary {
+    color: #aaaaaa;
+    font-family: $font-family-roboto;
+    font-size: 12px;
+    margin-bottom: 0;
+
+    > strong {
+      font-family: $font-family-roboto-bold;
+      color: #666666;
+      font-size: 13px;
+      margin-left: 5px;
+    }
+  }
+
+  &.querybuilder {
+    font-family: $font-family-roboto-medium;
+    color: #666666;
+    font-size: 13px;
+    margin: 7px 0;
+  }
+
+  &.card-popup {
+    font-family: $font-family-roboto-bold;
+    color: #3b3b3b;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  &.margin-5 {
+    margin: 5px 0;
+  }
+}
+
+
+.backlog-container-tickets {
+
+
+  .scrumdo-tags-box {
+    .scrumdo-select-button {
+      height: 34px;
+    }
+  }
+}
+
+.scrumdo-fixed-size{
+    position:absolute;
+    overflow:hidden;
+}
+
+
+.scrumdo-box-labels {
+  display: inline-block;
+  margin: 10px 3px;
+  padding: 10px 15px;
+  font-family: $font-family-roboto-bold;
+  font-size: 14px;
+  background: #aaaaaa;
+  border-radius: 2px;
+  color: #ffffff;
+  cursor: pointer;
+  overflow: hidden;
+
+  &.box-blue {
+    background: #3498db;
+
+    .scrumdo-box-labels-title {
+      background: #2a7aaf;
+    }
+  }
+  &.box-green {
+    background: #2ecc71;
+
+    .scrumdo-box-labels-title {
+      background: #25a35a;
+    }
+  }
+  &.box-orange {
+    background: #e67e22;
+
+    .scrumdo-box-labels-title {
+      background: #b8651b;
+    }
+  }
+
+  &.poker {
+    min-width: 89px;
+    min-height: 91px;
+  }
+
+  &.big {
+    position: relative;
+    font-size: 50px;
+    padding: 5px 30px 15px 30px;
+    margin: 15px 10px;
+    vertical-align: top;
+  }
+
+  .scrumdo-box-labels-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 3px 5px;
+    font-size: 12px;
+    display: block;
+    font-style: normal;
+    font-family: $font-family-roboto-bold;
+    overflow: hidden;
+  }
+}
+
+.scrumdo-wizard-label {
+  display: inline-block;
+  padding: 7px 10px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 13px;
+  font-family: $font-family-roboto-bold;
+  background: #f0f0f0;
+
+
+  &.wizard-dark-gray {
+    background: #434343;
+  }
+  &.wizard-blue {
+    background: #3498db;
+  }
+  &.wizard-orange {
+    background: #e67e22;
+  }
+  &.wizard-green {
+    background: #2ecc71;
+  }
+
+  &.extended {
+    display: block;
+    width: 100%;
+  }
+}
+
+
+
+.status-bg-1 {
+  color: #ffffff;
+  background-color: $status-color-1;
+}
+.status-bg-2 {
+  color: #ffffff;
+  background-color: $status-color-2;
+}
+.status-bg-3 {
+  color: #ffffff;
+  background-color: $status-color-3;
+}
+.status-bg-4 {
+  color: #ffffff;
+  background-color: $status-color-4;
+}
+.status-bg-5 {
+  color: #ffffff;
+  background-color: $status-color-5;
+}
+.status-bg-6 {
+  background-color: $status-color-6;
+  color: #444;
+}
+.status-bg-7 {
+  background-color: $status-color-7;
+  color: #333;
+}
+.status-bg-8 {
+  color: #ffffff;
+  background-color: $status-color-8;
+}
+.status-bg-9 {
+  color: #ffffff;
+  background-color: $status-color-9;
+}
+.status-bg-10 {
+  color: #ffffff;
+  background-color: $status-color-10;
+}
+
+
+
+
+
+.milestone-status-0 {
+  color: #ffffff;
+  background-color: $status-color-1;  // Assigned
+}
+
+.milestone-status-1 {
+  color: #ffffff;
+  background-color: $status-color-2;  // Scoped
+}
+
+.milestone-status-2 {
+  color: #ffffff;
+  background-color: $status-color-5;  // Sized
+}
+
+.milestone-status-3 {
+  color: #ffffff;
+  background-color: $status-color-4;  // Developing
+}
+
+.milestone-status-4 {
+  color: #ffffff;
+  background-color: $status-color-7;  // Verification
+}
+
+.milestone-status-5 {
+  color: #ffffff;
+  background-color: $status-color-10;  // Completed
+}

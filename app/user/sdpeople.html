@@ -1,0 +1,27 @@
+<div class="scrumdo-input-group-extended dropdown" dropdown>
+    {{modelValue}}
+    <div class="input-group dropdown-toggle" dropdown-toggle>
+        <button type="button"
+                class="scrumdo-btn primary extended scrumdo-select-button">
+            {{currentValue|shortuser}}
+            <span ng-if="currentValue==null">Nobody</span>
+        </button>
+        <div class="input-group-btn">
+            <button type="button" class="scrumdo-btn primary" aria-expanded="false">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+        </div>
+    </div>
+    <ul class="dropdown-menu dropdown-menu-right scrumdo-dropdown" role="menu">
+        <li ng-repeat="person in people">
+
+            <a ng-click='ctrl.select($event, person)'
+               ng-class="{'selected-option':(person==currentValue)}"
+               href='#'>
+                <sd-user-portrait user="person" size="32"></sd-user-portrait>
+                {{person|mediumuser}}
+            </a>
+        </li>
+    </ul>
+</div>

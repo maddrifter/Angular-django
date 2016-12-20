@@ -1,0 +1,23 @@
+<div class="col-md-12 mapping-navbar">
+    <div class="tree-header scrumdo-text col-md-3">
+        <h4>Collections:</h4>
+    </div>
+    <div class="filters scrumdo-text col-md-9">
+        <div class="selected-epic">
+            <h4><span ng-if="mappingCtrl.selectedEpic.number">#{{mappingCtrl.selectedEpic.number}}</span> 
+                {{mappingCtrl.selectedEpic.summary | decodeHtmlEntities | shorttext:false:20}}</h4>
+        </div>
+        <sd-filter name="storyMappingFilter" cells="null" project="mappingCtrl.project"></sd-filter>
+        <sd-iteration-multi-select
+            ng-model="mappingCtrl.selectedIteration"
+            time-period-name="$root['safeTerms'].current.time_period_name"
+            show-all-option="true"
+            iterations="iterations"></sd-iteration-multi-select>
+        <div class="pull-right zoom-controls">
+            <i ng-class="{'inactive':mappingCtrl.zoomLevel==0}" uib-tooltip="Zoom in Board" 
+                ng-click="mappingCtrl.zoom('DECS')" class="fa fa-2 fa-search-plus" aria-hidden="true"></i>
+            <i ng-class="{'inactive':mappingCtrl.zoomLevel==mappingCtrl.maxZoomLevel}" uib-tooltip="Zoom out Board" 
+                ng-click="mappingCtrl.zoom('ACE')" class="fa fa-2 fa-search-minus" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>

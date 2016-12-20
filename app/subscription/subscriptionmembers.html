@@ -1,0 +1,33 @@
+<div class="row current-subscription" ng-if="ctrl.allMembers!=[]">
+    <div class="col-md-12 text-center">
+        <h4>Manage organization members</h4>
+        <button ng-if="!ctrl.showMembers" type="button" ng-click="ctrl.allMembersMode(true)" class="scrumdo-btn primary">
+            All Team Members
+            <span class="glyphicon glyphicon-arrow-right"></span>
+        </button>
+        <button ng-if="ctrl.showMembers" type="button" ng-click="ctrl.allMembersMode(false)" class="scrumdo-btn primary">
+            <span class="glyphicon glyphicon-arrow-left"></span> Back To Plans
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <a ng-if="ctrl.allsettogo" type="button" ng-href="/organization/{{ctrl.organizationSlug}}/dashboard" class="scrumdo-btn go-green">
+            You're all set now <br/> Go To Dashboard
+        </a>
+    </div>
+</div>
+
+<div class="row current-subscription" ng-if="ctrl.showMembers">
+    <ul class="scrumdo-lists a-to-z">
+        <li class="list-filter">
+            <input class="col-xs-12" type="text" name="userquery" ng-model="ctrl.userquery" placeholder="Search Users" />
+        </li>
+    </ul>
+    <ul class="scrumdo-lists a-to-z sub-users-list">
+        <li ng-repeat="member in ctrl.allMembers | filter:ctrl.userquery">
+            <span class="scrumdo-list-range"></span>
+            <a class="pull-left" ng-bind-html="member|longuser"></a>
+            <div class="scrumdo-list-btn-wrapper pull-right" ng-if="user.username != member.username">
+                <a ng-click="ctrl.removeUser(member)"><span class="scrumdo-icons bin"></span></a>
+            </div>
+        </li>
+    </ul>
+</div>

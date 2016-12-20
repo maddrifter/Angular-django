@@ -1,0 +1,12 @@
+<div class="row safe-restricted-feature">
+    <div class="col-sm-12">
+        <div class="alert alert-info margin10 col-md-6 col-md-offset-3 feature-details">
+            {{::featureName}} tool is only available for Premium users, <a target="_blank" ng-href="/subscription/{{::organizationSlug}}"> 
+            Subscribe to a Premium plan</a> to start using this.
+        </div>
+        <div ng-if="::featureImage!=''" class="feature-image col-sdm-12">
+            <img ng-src="{{::STATIC_URL}}images/sampleimages/{{featureImage}}" />
+            <div class="overlay-block"><p class="col-md-6 col-md-offset-3">Sample only</p></div>
+        </div>
+    </div>
+</div>

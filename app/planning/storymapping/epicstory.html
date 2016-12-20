@@ -1,0 +1,34 @@
+<div ng-init="$SC = $parent.$parent.mappingCtrl">
+    <ul class="kanban-story-list"
+        data-epic-id="{{epic.id}}"
+        data-iteration-id="{{iteration.id}}"
+        data-container-type="iteration-story-list" >
+        <sd-story story-context-menu ng-if="(((epic.listChild && !parent) || (epic.listCards && parent)) && $SC.searchQuery=='')"
+                story="story"
+                project="$SC.project"
+                iterations="$SC.iterations"
+                epics="$SC.epics"
+                layout="$SC.cardSize"
+                ng-repeat="story in $SC.storyManager.storiesByEpic[epic.id]|filter:$SC.filterStory(epic, iteration)|orderBy:$SC.epicSortOrder">
+        </sd-story>
+        <sd-story story-context-menu ng-if="(((epic.listChild && !parent) || (epic.listCards && parent)) && $SC.searchQuery!='')"
+                story="story"
+                project="$SC.project"
+                iterations="$SC.iterations"
+                epics="$SC.epics"
+                layout="$SC.cardSize"
+                ng-repeat="story in $SC.stories|filter:$SC.filterStoryByQuery(epic, iteration)|orderBy:$SC.epicSortOrder">
+        </sd-story>
+        <li ng-if="((epic.listChild && !parent) || (epic.listCards && parent)) && $SC.projectData.canWrite()" class="add-card">
+            <span><a class="scrumdo-btn primary epic-box placeholder" href ng-click="$SC.addCard(epic, iteration)">
+                + New Card</a></span>
+        </li>
+    </ul>
+    <div ng-if="!((epic.listChild && !parent) || (epic.listCards && parent))" class="epic-box placeholder">
+        <p><i class="fa fa-clone" aria-hidden="true"></i></p>
+        <p class="show-cards" ng-click="$SC.toggleEpic(epic, true, parent)">
+            <span ng-if="$SC.searchQuery == ''">{{$SC.epicCards(epic, iteration)}}</span>
+            <span ng-if="$SC.searchQuery != ''">{{$SC.filterStoryCount(epic, iteration)}}</span> Cards
+        </p>
+    </div>
+</div>

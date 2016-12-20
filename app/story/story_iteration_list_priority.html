@@ -1,0 +1,61 @@
+<ul class="cards-tag">
+    <li ng-repeat="label in story.labels"
+        ng-style="{'background-color': (label.color|decimalToHexColor) }"
+        uib-tooltip="{{label.name}}"
+        tooltip-placement="bottom"
+        tooltip-trigger="mouseenter"></li>
+</ul>
+
+<div class="cards-content">
+    <span class="cards-number">{{::project.prefix}}-{{::story.number}}&nbsp;</span>
+            <span ng-click="ctrl.onEdit()"
+                  class="glyphicon glyphicon-pencil cards-edit pull-right" ng-class="{'glyphicon-eye-open': !ctrl.canWrite}"></span>
+    <span class="cards-text" ng-bind-html="story.summary|to_trusted"></span>
+</div>
+
+<div class="cards-users pull-right"
+     tooltip-placement="bottom"
+     tooltip-html-unsafe="{{ ctrl.assigneeTooltip }}"
+     tooltip-trigger="mouseenter">
+    <span ng-if="story.assignee.length > 1" class="cards-users-number">{{story.assignee.length}}</span>
+    <ul class="cards-users-images">
+        <li ng-repeat="user in story.assignee">
+            <sd-user-portrait avatar-tooltip size="20" user="user"></sd-user-portrait>
+        </li>
+    </ul>
+</div>
+
+<div class="cards-badges-wrapper">
+    <ul class="cards-information pull-left">
+
+        <li ng-click="ctrl.openTasks()" class="pointer-cursor">
+            <span class="scrumdo-icons tasks cards-checked"></span>
+                    <span ng-repeat="taskCount in story.task_counts track by $index"
+                          ng-if="taskCount > 0"
+                          ng-class="'status-bg-' + ($index+1)"
+                          class="labels smaller vertical-sub">{{taskCount}}</span>
+        </li>
+        <li>
+            <span class="cards-comments-info"><span ng-if="story.comment_count > 0">{{story.comment_count}}</span> </span>
+        </li>
+    </ul>
+
+
+    <span class="cards-cell" ng-if="story.cell">
+        {{story.cell.full_label}}
+    </span>
+
+
+    <span ng-class="ctrl.tagClass(tag)" ng-repeat="tag in story.tags_list track by $index" class="badges primary">#{{tag}}</span>
+
+    <span class="epic-label" ng-if="story.epic && epics">
+        Collection: {{story.epic|epicToName:epics}} {{story.epic|parentEpicToName:epics}}
+    </span>
+
+</div>
+
+
+
+<div class="f5background">
+    <sd-priority-display story="::story"></sd-priority-display>
+</div>

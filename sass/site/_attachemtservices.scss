@@ -1,0 +1,88 @@
+//------------------------------
+// *****************************
+// Attachment Services
+// *****************************
+//------------------------------
+
+.attachment-services-modal.modal-header{
+    h4{
+        font-weight: 700;
+        margin: 0;
+    }
+}
+.attachment-service-area {
+    .nav-tabs {
+        background: #F5F5F5 none repeat scroll 0 0;
+        border: 1px solid #ddd;
+        min-height: 150px;
+        float: left;
+        padding: 10px 0;
+        width: 20%;
+    }
+
+    .nav-tabs > li {
+        float: none;
+        margin: 0;
+    }
+
+    .nav-tabs > li > a {
+        min-width: 74px;
+        margin-right: 0;
+        margin-bottom: 3px;
+        color: #999999;
+        font-weight: 600;
+        outline: 0;
+    }
+
+    .nav-tabs > li.active a{
+        color: #f6764e;
+        background: transparent;
+    }
+
+    .nav-tabs > li > a {
+        margin-right: -1px;
+        border: 0px solid;
+        border-radius: 4px 0 0 4px;
+    }
+
+    .nav-tabs > li > a:hover,
+    .nav-tabs > li > a:focus {
+        border: none;
+    }
+
+    .nav-tabs .active > a,
+    .nav-tabs .active > a:hover,
+    .nav-tabs .active > a:focus {
+        border: none;
+    }
+
+    .tab-content{
+        float: left;
+        padding-left: 20px;
+        width: 75%;
+    }
+
+    .scrumdo-input-form.primary{
+        padding: 30px 20px;
+    }
+    
+    .dropboxChooserButton{
+        a{
+            padding: 10px 15px;
+            font-size: 13px;
+        }
+    }
+}
+
+.attachment-service-footer{
+    .file-success-message{
+        color: #f6764e;
+        font-size: 15px;
+        text-transform: capitalize;
+        display: none;
+    }
+}
+
+.image-preview{
+    cursor: pointer;
+}

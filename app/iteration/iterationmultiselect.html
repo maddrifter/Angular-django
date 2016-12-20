@@ -1,0 +1,54 @@
+<div id="safe-iteration-select" class="scrumdo-select scrumdo-input-group-extended dropdown" uib-dropdown is-open="ctrl.menuOpen">
+    <div class="dropdown-toggle safe-iteration-dropdown-toggle" ng-click="ctrl.toggleMenu($event)">
+        <button type="button"
+                class="scrumdo-btn dropdown-main-button primary extended scrumdo-select-button">
+            <span class="scrumdo-icons iteration"></span>
+            <span class="multi-selected-iterations-lable" ng-if="currentValue">
+                <span ng-repeat="value in currentValue">
+                    {{value.name}} {{$last ? '' : ', '}}
+                </span>
+            </span>
+            <span ng-if="null == currentValue">{{ctrl.defaultLabel}}</span>
+        </button>
+        <div class="input-group-btn dropdown-button-container">
+            <button type="button" class="scrumdo-btn primary dropdown-button" aria-expanded="false">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+        </div>
+    </div>
+    <ul ng-if="ctrl.menuOpen" class="dropdown-menu scrumdo-dropdown dropdown-menu-right iteration-dropdown" uib-dropdown-menu role="menu">
+        <li ng-repeat="(key, child_iterations) in ctrl.iterationTree">
+            <ul>
+                <li ng-if="child_iterations[0].increment" class="increment-name">
+                    {{::child_iterations[0].increment.name}}
+                </li>
+                <li ng-if="!child_iterations[0].increment && ctrl.haveParents" class="increment-name">
+                    Others
+                </li>
+            
+                <li ng-repeat="iteration in child_iterations|filter:ctrl.filterIteration|orderBy:iterationSortOrder" >
+                    <a ng-class="{'selected-option':(iteration==currentValue)}"
+                    ng-click='ctrl.select($event, iteration)' href='#'>
+                        <i uib-tooltip="Archived" ng-if="iteration.hidden" class="glyphicon glyphicon-folder-close"></i>
+                        <span ng-if="ctrl.isSelected(iteration)" class="glyphicon glyphicon-ok"></span>
+                        {{iteration.name}}
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-if="showAllOption">
+            <a ng-style="{fontWeight:'bold'}" ng-class="{'selected-option':(currentValue.id == -1)}"
+            ng-click='ctrl.select($event, ctrl.allIteration)' href='#'>
+                <span ng-if="ctrl.isSelected(ctrl.allIteration)" class="glyphicon glyphicon-ok"></span>
+                {{ctrl.allIteration.name}}
+            </a>
+        </li>
+        <li role="separator" class="divider"></li>
+        <li>
+            <a href="#" ng-click="ctrl.displayArchived($event)">
+                <span ng-if="ctrl.showArchived" class="glyphicon glyphicon-ok"></span> Show Archived {{::ctrl.timePeriodName|pluralize}}
+            </a>
+        </li>
+    </ul>
+</div>

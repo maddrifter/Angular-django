@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 ng-if="ctrl.step==1" class="modal-title">Select a Parent Workspace</h3>
+    <h3 ng-if="ctrl.step==2" class="modal-title">Select a Release/Milestone</h3>
+</div>
+<div class="modal-body release-project-selector">
+    <div class="project-picker" ng-if="ctrl.step==1">
+        <ul ng-if="ctrl.projects.length != 0">
+            <li ng-repeat="project in ctrl.projects"
+                ng-click="ctrl.selectProject(project)">
+                <span class="project-icon">
+                    <i class="fa" ng-class="project.icon" style="color: {{project.color|decimalToHexColor}}"></i> 
+                    {{::project.name | shorttext:true:80}}</span>
+            </li>
+        </ul>
+        <p ng-if="ctrl.projects.length == 0" class="alert alert-info">Nothing to show!</p>
+    </div>
+    <div class="project-picker releases" ng-if="ctrl.step==2">
+        <ul ng-if="ctrl.releases.length != 0" ng-class="{'empty':ctrl.filtered.length == 0}">
+            <li class="search-box">
+                <div class="input-group dropdown-filter-box" ng-click="ctrl.select($event)">
+                    <span class="scrumdo-addon primary"><span class="glyphicon glyphicon-search"></span></span>
+                    <input type="text" name="dropdownfilter" 
+                        class="dropdownfilter parent-release-filter scrumdo-form primary" ng-model="ctrl.query" />
+                </div>
+            </li>
+            <li ng-repeat="release in ctrl.filtered = (ctrl.releases|filter:ctrl.projectFilter|filter:ctrl.filter)"
+                ng-click="ctrl.selectRelease(release)">
+                <div class="release-number">
+                    <span class="project-icon" style="color: {{ctrl.selectedParent.color|decimalToHexColor}}">
+                        <i class="fa" ng-class="ctrl.selectedParent.icon"></i> 
+                        {{::ctrl.selectedParent.name | shorttext:true:80}}</span>
+                </div>
+                <div class="release-text" ng-bind-html="release.summary"></div>
+            </li>
+        </ul>
+        <p ng-if="ctrl.filtered.length == 0" class="alert alert-info">
+            Nothing to show in <strong>{{ctrl.selectedParent.name}}</strong> workspace!</p>
+    </div>
+</div>
+<div ng-if="ctrl.step==1 && ctrl.allowEmpty" class="modal-footer">
+    <button ng-click="ctrl.selectNone()" class="scrumdo-btn primary">
+        None</button>
+</div>
+<div ng-if="ctrl.step==2 && ctrl.showBackButton" class="modal-footer">
+    <button ng-click="ctrl.goBack()" class="scrumdo-btn primary">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        Back to Workspaces</button>
+</div>

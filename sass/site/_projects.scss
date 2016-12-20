@@ -1,0 +1,157 @@
+//------------------------------
+// *****************************
+// Planning
+// *****************************
+//------------------------------
+
+.scrumdo-wrapper {
+  background: #f6f6f6;
+  width: 100%;
+  height: 100%;
+  padding: 0 30px 20px 30px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scrumdo-wrapper-navigation {
+  padding: 15px 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e7e7e7;
+
+  &.no-border {
+    border: none;
+  }
+}
+
+.scrumdo-wrapper-container {
+  width: 100%;
+  border: 1px solid #e2e2e2;
+  @include clearfix();
+  @include box-shadow(0 0 5px #e2e2e2);
+}
+
+.scrumdo-wrapper-content {
+  padding: 0 15px;
+}
+
+.scrumdo-project-view-archive {
+  display: inline-block;
+  font-size: 13px;
+  color: #888888;
+  font-family: $font-family-roboto;
+  margin: 12px 0;
+
+  &:hover, &:focus {
+    color: #888888;
+    text-decoration: underline;
+  }
+}
+
+.project-picker-window-body {
+  min-height: 250px;
+  max-height: 700px;
+}
+
+.release-project-selector{
+  .project-picker{
+    ul{
+      max-height: 600px;
+    }
+    &.releases{
+      .dropdown-filter-box{
+        padding-right: 5px;
+      }
+      > ul{
+        border: none;
+        &.empty{
+          min-height: 0;
+        }
+        ul{
+          min-height: 0;
+          max-height: none;
+          padding: 0px 0 0 20px;
+          border: none;
+          li{
+            list-style: circle;
+            border: none;
+            padding: 0;
+            margin: 0;
+            width: auto;
+          }
+        }
+        > li{
+          font-size: 14px;
+          border: 1px solid #eeeeee;
+          background: #ffffff;
+          box-shadow: 0 0 5px 1px #eeeeee;
+          margin-bottom: 10px;
+          border: 1px solid transparent;
+          &:hover{
+            border: 1px solid #f6764e;
+            background: #f7f7f7;
+          }
+          &.search-box{
+            &:hover{
+              border: 1px solid transparent;
+              background: transparent;
+            }
+          }
+          .release-number{
+            font-family: "robotobold", sans-serif;
+            color: #f6764e;
+            margin-bottom: 5px;
+          }
+          .release-text{
+            font-family: "robotoregular", sans-serif;
+            color: #555555;
+            padding: 0 5px;
+          }
+        }
+      }
+    }
+  }
+}
+.project-picker {
+  .project-picker-list{
+    max-height: 600px;
+    overflow: auto;
+    min-height: 400px;
+    background: #fff;
+    > ul{
+      max-height: 580px;
+      overflow: auto;
+      li{
+        .project-category{
+          cursor: default;
+          text-decoration: none;
+        }
+        ul{
+          padding-left: 10px;
+          li{
+            &.portfolio-project{
+              margin-left: -10px;
+              a{
+                cursor: default;
+                text-decoration: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  ul {
+    width: 100%;
+    padding: 0px;
+
+    li {
+      position: relative;
+      min-height: 12px;
+      width: 100%;
+      list-style: none;
+      padding: 5px 0px 5px 5px;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+  }
+}

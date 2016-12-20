@@ -1,0 +1,194 @@
+<div class="scrumdo-wrapper" ng-if="ctrl.canAdminTeam()">
+    <div class="scrumdo-wrapper-navigation no-border">
+        <div class="row">
+            <div class="col-sm-2">
+                <a ui-sref="teams" class="scrumdo-btn primary text-left">
+                    <span class="glyphicon glyphicon-arrow-left"></span>
+                    Back
+                </a>
+            </div>
+        </div>
+
+        <input type="text" name="prevent_autofill" id="prevent_autofill" value="" style="display:none;" />
+        <input type="password" name="password_fake" id="password_fake" value="" style="display:none;" />
+
+
+    </div>
+    <div class="scrumdo-wrapper-container">
+        <div class="scrumdo-teamlist-edit pull-left" >
+            <div class="scrumdo-teamlist-edit-heading" >
+                <h4 sd-staff-only class="scrumdo-heading h4 no-margin pull-left" editable-text="team.name">{{team.name}}</h4>
+                <h4 sd-not-staff-only class="scrumdo-heading h4 no-margin pull-left">{{team.name}}</h4>
+
+                <div class="scrumdo-select secondary medium pull-right" sd-staff-only>
+                    <select ng-change="ctrl.updateAccess()" ng-model="ctrl.access_type">
+                        <option value="read">Read Only Access</option>
+                        <option value="write">Read/Write Access</option>
+                        <option value="admin"> Workspace Manager Access</option>
+                        <option value="staff">Account Owner Access</option>
+                    </select>
+                </div>
+            </div>
+            <div class="scrumdo-boxes white" ng-if="ctrl.isTeamAdmin">
+                <img ng-src="{{STATIC_URL}}img/invite-message.png">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" ng-repeat="invitee in invitees">
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <img ng-src="{{STATIC_URL}}img/dummy-profile-pic.png" alt="" class="img-responsive center-block"/>
+                                </div>
+                                <div class="col-sm-11 form-group" ng-class="{'has-error':invitee.result}">
+
+                                    <input ng-change="ctrl.inviteeChanged()"
+                                           autocomplete="off"
+                                           name="invitee"
+                                           ng-model="invitee.name"
+                                           typeahead-editable="true"
+                                           typeahead-focus-first="false"
+                                           uib-typeahead="member.username as member|longuser for member in ctrl.allMembers | filter:$viewValue | limitTo:8"
+                                           type="text"
+                                           class="scrumdo-form primary scrumdo-teamlist-input-center"
+                                           />
+
+                                    <p ng-if="invitee.result">{{invitee.result.reason}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <button ng-click='ctrl.sendInvitations()' type="button" class="scrumdo-btn secondary">
+                            <span class="glyphicon glyphicon-envelope"></span>
+                            Send Invitation
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ul class="scrumdo-lists teamlist-userlist">
+                <li ng-repeat="member in team.members">
+                    <sd-user-portrait user="member" size="50"></sd-user-portrait>
+                    {{member|mediumuser}}
+                    <a ng-if="ctrl.isTeamAdmin" ng-click="ctrl.removeUser(member)">Remove</a>
+                </li>
+            </ul>
+            <div ng-if="team.members.length == 0" class="warn scrumdo-alerts">
+                This team has no users.  Send invitations above to add people.
+            </div>
+        </div>
+        <div ng-if="team.access_type != 'staff'" class="scrumdo-teamlist-edit-sidebar pull-left">
+            <h4 class="scrumdo-heading h4 no-margin">Workspaces Assigned:</h4>
+            <ul class="scrumdo-lists default">
+                <li ng-repeat="project in team.projects">
+                        <span class="scrumdo-tags">
+                            <span ng-click="ctrl.removeProject(project)" sd-staff-only class="scrumdo-tags-close glyphicon glyphicon-remove"></span>
+                            {{project.name}}
+                        </span>
+                </li>
+            </ul>
+            <div ng-if="team.projects.length == 0" class="warn scrumdo-alerts">
+                No Workspace Assigned
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div id="safe-project-select" class="scrumdo-select medium project-assigned-select" uib-dropdown sd-staff-only>
+                        <div class="dropdown-toggle safe-project-dropdown-toggle" uib-dropdown-toggle>
+                            <button type="button" class="scrumdo-btn dropdown-main-button primary extended scrumdo-select-button">
+                                <span ng-if="ctrl.projectToAdd.name">{{ ctrl.projectToAdd.name }}</span>
+                                <span ng-if="!ctrl.projectToAdd.name">Select Workspace</span>
+                            </button>
+                            <div class="input-group-btn dropdown-button-container">
+                                <button type="button" class="scrumdo-btn primary dropdown-button" aria-expanded="false">
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <ul class="dropdown-menu team-project-list safe-project-dropdown" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li>
+                                <a href class="project-category"><span>Projects</span></a>
+                            </li>
+                            <li ng-repeat="(cat, projects) in ctrl.safeProjectList.nonportfolio.projects | orderProjectByCat:false">
+                                <a href ng-if="projects[0].category.length > 0" class="project-category"><span>
+                                    {{:: projects[0].category | shorttext:true:20}}</span></a>
+                                <ul>
+                                    <li class="check_{{project.slug}}"  ng-repeat="project in projects | orderBy:'name' | filter: {personal:false}">
+                                        <a ng-click="ctrl.selectProject(project)">
+                                            <span class="project-icon" style="color: {{project.color|decimalToHexColor}}">
+                                                <i uib-tooltip="Archived" ng-if="!project.active" class="glyphicon glyphicon-folder-close"></i>
+                                                <i class="fa" ng-class="project.icon"></i></span>
+                                            <span>{{:: project.name | shorttext:true:30}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li ng-repeat="(key, projects) in ctrl.safeProjectList.portfolio">
+                                <ul>
+                                    <li class="check_{{project.slug}}" ng-repeat="project in projects"
+                                        ng-if="project.project_type==2" ng-class="{'portfolio-project': project.project_type==2}">
+                                        <a href>
+                                            <span class="project-icon" style="color: {{project.color|decimalToHexColor}}">
+                                                <i uib-tooltip="Archived" ng-if="!project.active" class="glyphicon glyphicon-folder-close"></i>
+                                                <i class="fa" ng-class="project.icon"></i></span>
+                                            <span>{{:: project.name | shorttext:true:30}}</span>
+                                        </a>
+                                    </li>
+                                    <li class="check_{{project.slug}}" ng-repeat="project in projects | filter: {personal:false}"
+                                        ng-if="project.project_type!=2">
+                                        <a ng-click="ctrl.selectProject(project)">
+                                            <span class="project-icon" style="color: {{project.color|decimalToHexColor}}">
+                                                <i uib-tooltip="Archived" ng-if="!project.active" class="glyphicon glyphicon-folder-close"></i>
+                                                <i class="fa" ng-class="project.icon"></i></span>
+                                            <span>{{:: project.name | shorttext:true:30}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <button sd-staff-only ng-click='ctrl.addProject()' type="button" class="scrumdo-btn primary medium extended-nopadding">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add
+                    </button>
+                </div>
+            </div>
+
+            <div sd-staff-only style="margin-top: 20px;">
+                <b>Team Options:</b>
+                <div class="checkbox">
+                    <label>
+                        <input ng-change="ctrl.updateAssignees()" ng-model="team.assignable" type="checkbox"> Members show up as assignees.
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        <div ng-if="team.access_type == 'staff'" class="scrumdo-teamlist-edit-sidebar pull-left">
+            <h4 class="scrumdo-heading h4 no-margin">Account Owner Team:</h4>
+            <br/><br/>
+            <p class="">Account Owner teams have full access to every workspace and organization settings.</p>
+
+            <div sd-staff-only style="margin-top: 20px;">
+                <b>Team Options:</b>
+                <div class="checkbox">
+                    <label>
+                        <input ng-change="ctrl.updateAssignees()" ng-model="team.assignable" type="checkbox"> Members show up as assignees.
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="pull-right">
+        <br/>
+        <a sd-staff-only ng-click="ctrl.deleteTeam()">Delete Team List</a>
+    </div>
+</div>
+
+

@@ -1,0 +1,87 @@
+<!--Large Screen:-->
+        <!--Project Menu | bulk actions, filter, archive | search project   3|6|3 -->
+<!--Small Screen-->
+        <!--bulk action dropdown, filter, archive (small), search project    -->
+<!--XS Screen-->
+    <!--bulk action dropdown, filter  -->
+
+
+<nav class="board-sub-nav"
+     ng-class="::(project ? (project.project_type == 2 ? 'portfolio-project' : '' ) : undefined)"
+     sd-access ng-init="priorityMode=false">
+
+    <div class="full-actions" ng-if="state.current.name.indexOf('board') != -1 || state.current.name.indexOf('viewStory') != -1">
+
+        <div class="action-5 hidden-xs">
+            <div class="btn-group" ng-if="canWrite && selectedCount > 0">
+                <button tooltip-append-to-body='true'
+                        uib-tooltip="Delete selected cards"
+                        ng-click="$root.$broadcast('bulkDelete')" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons bin"></span></button>
+                <button tooltip-append-to-body='true' uib-tooltip="Move selected cards to cell" ng-click="$root.$broadcast('bulkMoveCell')" type="button" class="scrumdo-btn primary"><span class="glyphicon glyphicon-th"></span></button>
+
+                <button tooltip-append-to-body='true' uib-tooltip="Assign selected cards" ng-click="$root.$broadcast('bulkAssign')" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons users"></span></button>
+                <button tooltip-append-to-body='true' uib-tooltip="Move selected cards to another workspace or iteration" ng-click="$root.$broadcast('bulkMove')" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons jump-right"></span></button>
+            </div>
+
+
+            <button tooltip-append-to-body='true'
+                    uib-tooltip="Toggle Priority/WSJF Card View"
+                    ng-change="$root.$broadcast('priorityMode', priorityMode)"
+                    uib-btn-checkbox
+                    ng-model="priorityMode" type="button" class="scrumdo-btn primary"><i class="fa fa-unsorted"></i></button>
+
+
+            <span class="dropdown" uib-dropdown>
+                <button tooltip-append-to-body='true'
+                        uib-dropdown-toggle
+                        uib-tooltip="Sort Cards" ng-class="{highlight:highlightbtn}"
+                        class="dropdown-toggle scrumdo-btn primary"
+                        type="button"><i class="fa fa-sort-alpha-asc"></i></button>
+
+              <ul class="dropdown-menu">
+                  <li class="dropdown-header">Sort Order:</li>
+                  <li ng-class="{active:currentSort=='rank'}"><a ng-click="$root.$broadcast('sortOrderChanged', 'rank'); currentSort='rank';" href>Card Rank</a></li>
+                  <li ng-class="{active:currentSort=='number'}"><a ng-click="$root.$broadcast('sortOrderChanged', 'number'); currentSort='number';" href>Number</a></li>
+                  <li ng-class="{active:currentSort=='points_value'}"><a ng-click="$root.$broadcast('sortOrderChanged', 'points_value'); currentSort='points_value';" href>Point Value</a></li>
+                  <li ng-class="{active:currentSort=='-business_value'}"><a ng-click="$root.$broadcast('sortOrderChanged', '-business_value'); currentSort='-business_value';" href>Business Value</a></li>
+                  <li ng-class="{active:currentSort=='estimated_minutes'}"><a ng-click="$root.$broadcast('sortOrderChanged', 'estimated_minutes'); currentSort='estimated_minutes';" href>Time Estimate</a></li>
+
+                  <li ng-class="{active:currentSort=='value_time'}"><a ng-click="$root.$broadcast('sortOrderChanged', 'value_time'); currentSort='value_time';" href>Value / Time Estimate</a></li>
+                  <li ng-class="{active:currentSort=='value_point'}"><a ng-click="$root.$broadcast('sortOrderChanged', 'value_point'); currentSort='value_point';" href>Value / Points</a></li>
+                  <li ng-class="{active:currentSort=='due_date'}"><a ng-click="$root.$broadcast('sortOrderChanged', 'due_date'); currentSort='due_date';" href>Due Date</a></li>
+                  <li ng-class="{active:currentSort=='wsjf_value'}"><a ng-click="$root.$broadcast('sortOrderChanged', 'wsjf_value'); currentSort='wsjf_value';" href>WSJF Value</a></li>
+              </ul>
+            </span>
+
+
+            <sd-report-dropdown iterations="boardProject.iterations"
+                                ng-if="selectedCount==0"
+                                selected-iteration="boardProject.iteration"
+                                project="boardProject.project"></sd-report-dropdown>
+        </div>
+
+
+        <div class="action-2">
+            <sd-filter name="boardFilter" cells="boardProject.boardCells" project="boardProject.project"></sd-filter>
+        </div>
+
+        <label class="action-3 scrumdo-checkbox default hidden-xs">
+            <button tooltip-append-to-body='true'
+                    uib-tooltip="Show Archive"
+                    uib-btn-checkbox
+                    ng-change="$root.$broadcast('boardProject.uiState.archiveOpen', boardProject.uiState.archiveOpen)"
+                    ng-model="boardProject.uiState.archiveOpen" type="button" class="scrumdo-btn primary"><i class="glyphicon glyphicon-compressed"></i></button>
+        </label>
+
+        <div class="action-4 hidden-sm hidden-xs hidden-sm">
+            <sd-filter name="projectFilter" placeholder="Search entire workspace"
+                   icon="glyphicon-search"
+                   project-search="true"
+                   cells="::boardProject.boardCells"
+                   project="::boardProject.project"></sd-filter>
+        </div>
+
+    </div>
+
+</nav>
+

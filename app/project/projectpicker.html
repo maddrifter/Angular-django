@@ -1,0 +1,48 @@
+<div class="project-picker">
+    <div class="project-picker-list">
+        <ul>
+            <li ng-repeat="(cat, projects) in ctrl.safeProjectList.nonportfolio.projects | orderProjectByCat:false">
+                <a href="" ng-if="projects[0].category.length > 0" 
+                    ng-click="ctrl.doNothing($event)" class="project-category"><span>
+                    {{:: projects[0].category | shorttext:true:20}}</span></a>
+                <ul>
+                    <li class="check_{{project.slug}}" ng-if="(project.active || ctrl.showInactive)"
+                        ng-repeat="project in projects | orderBy:'name' | filter: {personal:false}">
+                        <a ng-click="ctrl.selectProject(project)" ng-class="{'selected-option': ctrl.isCurrentProject(project)}">
+                            <span class="project-icon" style="color: {{project.color|decimalToHexColor}}">
+                                <i uib-tooltip="Archived" tooltip-append-to-body="true" ng-if="!project.active" class="glyphicon glyphicon-folder-close"></i>
+                                <i class="fa" ng-class="project.icon"></i></span>
+                            <span>{{:: project.name | shorttext:true:30}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li ng-if="ctrl.showPortfolio" ng-repeat="(key, projects) in ctrl.safeProjectList.portfolio">
+                <ul>
+                    <li class="check_{{project.slug}}" ng-repeat="project in projects"
+                        ng-if="project.project_type == 2 && (project.active || ctrl.showInactive)"
+                        ng-class="{'portfolio-project': project.project_type == 2}">
+                        <a href="" ng-class="{'selected-option': ctrl.isCurrentProject(project)}">
+                            <span class="project-icon" style="color: {{project.color|decimalToHexColor}}">
+                                <i uib-tooltip="Archived" tooltip-append-to-body="true" ng-if="!project.active" class="glyphicon glyphicon-folder-close"></i>
+                                <i class="fa" ng-class="project.icon"></i></span>
+                            <span>{{:: project.name | shorttext:true:30}}</span>
+                        </a>
+                    </li>
+                    <li class="check_{{project.slug}}" ng-repeat="project in projects | filter: {personal:false}"
+                        ng-if="project.project_type != 2 && (project.active || ctrl.showInactive)">
+                        <a ng-click="ctrl.selectProject(project)" ng-class="{'selected-option': ctrl.isCurrentProject(project)}">
+                            <span class="project-icon" style="color: {{project.color|decimalToHexColor}}">
+                                <i uib-tooltip="Archived" tooltip-append-to-body="true" ng-if="!project.active" class="glyphicon glyphicon-folder-close"></i>
+                                <i class="fa" ng-class="project.icon"></i></span>
+                            <span>{{:: project.name | shorttext:true:30}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+    <a class="scrumdo-btn btn-small primary" ng-class="{active:ctrl.showInactive}" ng-click="ctrl.toggleInactive()">Show Inactive</a>
+    <a class="scrumdo-btn btn-small primary" ng-class="{active:ctrl.showPortfolio}" ng-click="ctrl.togglePortfolio()">Show Portfolio Workspaces</a>
+</div>

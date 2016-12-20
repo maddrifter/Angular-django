@@ -1,0 +1,11 @@
+<li class="container-fluid comment">
+    <div class="col-xs-1">
+        <sd-user-portrait size="48" user="comment.user"></sd-user-portrait>
+    </div>
+
+    <div class="col-xs-11">
+        <b>{{comment.user|shortuser}} - {{comment.date_submitted|localtime}}</b> <br/>
+        <div ng-bind-html="to_trusted(comment.html)"></div>
+    </div>
+
+</li>

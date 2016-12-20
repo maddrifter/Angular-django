@@ -1,0 +1,166 @@
+.card-grid-container {
+
+  //position: relative;
+  //min-height: 800px;
+
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 45px;
+  bottom: 0px;
+
+  overflow-x: auto;
+  overflow-y: auto;
+
+
+
+
+
+
+  .card-grid-sidebar {
+    position: absolute;
+    left: 0px;
+    top: 54px;
+    bottom: 0px;
+    width: 205px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 15px;
+    font-size: 14px;
+    color: #33363d;
+    overflow-x: hidden;
+    overflow-y: auto;
+    .close-sidebar-link {
+      color: #777;
+      font-weight: bold;;
+    }
+    .show-all-link {
+      color: $orangeHighlight;
+    }
+    h1 {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #bdbdbd;
+    }
+
+    ul {
+      padding: 0px;
+      li {
+        list-style: none;
+        padding: 7px 0px;
+        margin: 0px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: #ffffff;
+
+        .fa {
+          font-size: 16px;
+          color: #8e8e8e;
+          margin-right: 5px;
+        }
+
+        &.grid-hidden {
+          color: #bdbdbd;
+          .fa {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+  }
+
+  .dependency-graph {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #fafafa;
+    min-width: 1500px;
+    min-height: 1500px;
+
+    .backwards-connector-line, .connector-line {
+      fill: none;
+      stroke-width: 1px;
+      stroke-linecap: round;
+
+    }
+    .backwards-connector-line {
+      stroke: $status-color-8;
+      stroke-width: 2px;
+    }
+    .connector-line {
+      stroke: $orangeHighlight;
+    }
+  }
+
+  .card-grid {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    table-layout: fixed;
+
+
+    th, td {
+      border: 1px solid #e5e5e5;
+      width: 295px;
+      min-height: 115px;
+      padding: 10px;
+      vertical-align: top;
+      .card-grid-list {
+        min-height: 95px;
+        margin-bottom: 20px;
+        .cards.selected {
+          border-color: #eeeeee;
+        }
+      }
+    }
+
+    .top-left-corner {
+      background-color: #ffffff;
+      width: 120px;
+      img {
+        cursor: pointer;
+      }
+    }
+
+
+    .top-row {
+      font-weight: bold;
+      vertical-align: middle;
+      .column-title {
+        height: 48px;
+        display: inline;
+      }
+    }
+
+    .left-column {
+      font-weight: bold;
+      vertical-align: top;
+      td {
+        width: 120px;
+      }
+    }
+
+    td {
+
+      position: relative;
+
+      .new-story-button {
+        opacity: 0.1;
+        background: none;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        width: 285px;
+      }
+
+
+      &:hover {
+        .new-story-button {
+          opacity: 1;
+        }
+      }
+    }
+
+
+  }
+}

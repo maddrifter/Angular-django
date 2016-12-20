@@ -1,0 +1,125 @@
+<div class="increment-summary">
+    <div ng-class="{'navbar-open':$storage.timelineSidebarOpen, 'navbar-hidden':!ctrl.isSidebarEnabled}"
+        class="increment-summary-wrapper">
+
+        <div class="row section" ng-if="ctrl.projectData.currentProject.children_count > 0">
+            <div class="col-md-12 feature-plans">
+                <h4 class="section-title">Feature Plans</h4>
+                <increment-feature-plans
+                    increment="ctrl.projectData.currentIncrement"
+                    project="ctrl.projectData.currentProject"
+                ></increment-feature-plans>
+            </div>
+        </div>
+
+        <div class="row section">
+            <div class="col-md-6 vision-section">
+                <h4 class="section-title">A Vision Statement</h4>
+                <increment-vision
+                    increment=ctrl.projectData.currentIteration
+                    project=ctrl.projectData.currentProject
+                ></increment-vision>
+            </div>
+            <div class="col-md-6 notes-section">
+                <h4 class="section-title">Notes</h4>
+                <div class="notes">
+                    <increment-notes 
+                        project=ctrl.projectData.currentProject
+                        increment=ctrl.projectData.currentIteration
+                    ></increment-notes>
+                </div>
+            </div>
+        </div>
+
+        <div class="row section">
+            <div class="col-md-12 sentiments-section">
+                <h4 class="section-title">Working on Increment</h4>
+                
+                <div class="col-md-6 team-sentiment-wrapper" ng-repeat="team in ctrl.teams">
+                    <team-sentiments
+                        iteration=ctrl.projectData.currentIteration
+                        members=ctrl.projectData.currentProject.members
+                        team=team
+                        parent=ctrl.projectData.currentProject
+                    ></team-sentiments>
+                </div>
+            </div>
+        </div>
+
+        <div class="row section" ng-if="ctrl.isPortfolioProject && ctrl.userStoriesData != null && ctrl.projectData.currentProject.children_count>0">
+            <div class="col-md-12 user-stories">
+                <h4 class="section-title">Execution Progress: {{::$root.safeTerms.children.work_item_name}}</h4>
+                <div class="report-stats">
+                    <p class="total">{{ctrl.incrementStoriesCounts.cards_total}} <span>Total<br/>Cards</span></p>
+                    <p class="done">{{ctrl.incrementStoriesCounts.cards_completed}} <span>Cards<br/>Completed</span></p>
+                    <p class="doing">{{ctrl.incrementStoriesCounts.cards_in_progress}} <span>Cards<br/>IN PROGRESS</span></p>
+                </div>
+                <div class="graph">
+                    <div sd-report-increment-progress
+                        style="width: 100%; height: 99%;"
+                        project="ctrl.projectData.currentProject"
+                        report-data="ctrl.userStoriesData.data"
+                        legends="ctrl.userStoriesData.legends">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row section">
+            <div class="col-md-12 user-features">
+                <h4 class="section-title">Execution Progress: 
+                    <span>{{::$root.safeTerms.current.work_item_name}}</span>
+                </h4>
+                <div class="report-stats">
+                    <p class="total">{{ctrl.projectData.currentIteration.story_count}} <span>Total<br/>Cards</span></p>
+                    <p class="done">{{ctrl.projectData.currentIteration.done_count}} <span>Cards<br/>Completed</span></p>
+                    <p class="doing">{{ctrl.projectData.currentIteration.doing_count}} <span>Cards<br/>IN PROGRESS</span></p>
+                </div>
+                <div class="graph">
+                    <div sd-report-increment-progress
+                        style="width: 100%; height: 99%;"
+                        project="ctrl.projectData.currentProject"
+                        report-data="ctrl.featuresData.data"
+                        legends="ctrl.featuresData.legends">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row section">
+            <div class="col-md-6 lth-section">
+                <h4 class="section-title"><span>{{ctrl.featureTerm}}</span> LTH</h4>
+                <div class="graph">
+                    <div ng-if="ctrl.leadData.data.length>0" sd-report-lead
+                        style="width: 100%; height: 99%;"
+                        project="project"
+                        report-data="ctrl.leadData">
+                    </div>
+                    <div ng-if="ctrl.leadData.data.length == 0" class="alert alert-info">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> No Data to show!</div>
+                </div>
+                
+            </div>
+            <div class="col-md-6 blockers-section">
+                <h4 class="section-title">Open Blockers</h4>
+                <div class="blockers">
+                    <increment-blockers 
+                        project=ctrl.projectData.currentProject
+                        increment=ctrl.projectData.currentIteration
+                    ></increment-blockers>
+                </div>
+            </div>
+        </div>
+
+        <div class="row section" ng-if="ctrl.projectData.risks().length>0 || ctrl.projectData.systemRisks().length">
+            <div class="col-md-12 user-features">
+                <h4 class="section-title"><span></span> Top Risks</h4>
+                <sd-top-risks></sd-top-risks>
+            </div>
+        </div>
+
+    </div>
+
+    <summary-sidebar ng-if="ctrl.isSidebarEnabled"></summary-sidebar>
+
+</div>

@@ -1,0 +1,147 @@
+<div sd-access
+     sd-autoscroll-vertical
+     class="scrumdo-backlog-wrapper pull-left scrumdo-iteration-cards">
+
+    <div id="multiDragPlaceholder">
+        <span ng-if="selectedCount<=1">1 Card</span>
+        <span ng-if="selectedCount>1">{{ selectedCount }} Cards</span>
+    </div>
+
+
+    <div class="scrumdo-backlog-container">
+
+        <div class="backlog-container-header">
+            <div class="row">
+                <div class="col-md-2">
+                    
+                </div>
+                <div class="col-md-8 text-center">
+                    <div class="limit-container hidden-sm hidden-xs">
+                        <sd-limit-bar set-limit="ctrl.setLimit()" stats="ctrl.getStats()" can-write="ctrl.projectData.canWrite()"></sd-limit-bar>
+                    </div>
+                </div>
+
+                <div class="col-md-2 backlog-container-info-nav">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="backlog-container-tickets" ng-if="canWrite && !ctrl.isTrash()">
+
+            <sd-add-story project="ctrl.projectData.currentProject"
+                          iteration="iterationListProject.iteration"
+                          epics="ctrl.projectData.epics"
+                          iterations="ctrl.projectData.iterations"></sd-add-story>
+
+        </div>
+        <div class="backlog-container-content">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 col-md-12">
+                    <div class="backlog-container-tools">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8 col-md-8">
+                                <div class="btn-group" ng-if="canWrite && selectedCount>0">
+                                    <button ng-click="ctrl.bulkDelete()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons bin"></span></button>
+                                    <button ng-click="ctrl.bulkTag()" type="button" class="scrumdo-btn primary"><span class="glyphicon glyphicon-th"></span></button>
+                                    <button ng-if="!ctrl.isTrash()" ng-click="ctrl.bulkAssign()" type="button" class="scrumdo-btn primary">
+                                        <span class="scrumdo-icons users"></span></button>
+                                    <button ng-click="ctrl.bulkMove()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons jump-right"></span></button>
+                                </div>
+
+                                <div class="btn-group">
+                                    <button uib-tooltip="Import" ng-if="canWrite && !ctrl.isTrash()" ng-click="ctrl.import($event)" type="button" 
+                                        class="scrumdo-btn primary"><span class="glyphicon glyphicon-arrow-up"></span><span class="hidden-sm hidden-xs"> Import</span></button>
+                                    <button uib-tooltip="Export" ng-if="!ctrl.isTrash()" ng-click="ctrl.export($event)" type="button" 
+                                        class="scrumdo-btn primary"><span class="glyphicon glyphicon-arrow-down"></span><span class="hidden-sm hidden-xs"> Export</span></button>
+                               </div>
+
+
+
+                                <div class="btn-group" role="group">
+                                    <button uib-btn-radio="'list'"
+                                            ng-model="ctrl.cardLayout"
+                                            type="button size-button"
+                                            tooltip-append-to-body='true'
+                                            uib-tooltip="Small List"
+                                            class="scrumdo-btn primary">&mdash;</button>
+
+                                    <button uib-btn-radio="'iteration_list'"
+                                            ng-model="ctrl.cardLayout"
+                                            type="button"
+                                            tooltip-append-to-body='true'
+                                            uib-tooltip="Full List"
+                                            class="scrumdo-btn primary size-button">=</button>
+                                </div>
+
+                                <button tooltip-append-to-body='true'
+                                        uib-tooltip="Toggle Priority/WSJF View"
+                                        ng-change="$root.$broadcast('priorityMode', priorityMode)"
+                                        uib-btn-checkbox
+                                        ng-model="priorityMode" type="button" class="scrumdo-btn primary"><i class="fa fa-unsorted"></i></button>
+
+
+                                <span class="dropdown" uib-dropdown>
+                                    <button tooltip-append-to-body='true'
+                                            uib-dropdown-toggle
+                                            uib-tooltip="Sort" ng-class="{highlight:ctrl.highlightbtn}" 
+                                            class="dropdown-toggle scrumdo-btn primary"
+                                            type="button"><i class="fa fa-sort-alpha-asc"></i></button>
+
+                                  <ul class="dropdown-menu" >
+                                      <li class="dropdown-header">Sort Order:</li>
+                                       <li ng-class="{active:currentSort=='rank'}"><a ng-click="ctrl.setSort('rank'); currentSort='rank';" href>Card Rank</a></li>
+                                      <li ng-class="{active:currentSort=='number'}"><a ng-click="ctrl.setSort('number');currentSort='number';" href>Number</a></li>
+                                      <li ng-class="{active:currentSort=='points_value'}"><a ng-click="ctrl.setSort('points_value');currentSort='points_value';" href>Point Value</a></li>
+                                      <li ng-class="{active:currentSort=='-business_value'}"><a ng-click="ctrl.setSort('-business_value');currentSort='-business_value';" href>Business Value</a></li>
+                                      <li ng-class="{active:currentSort=='estimated_minutes'}"><a ng-click="ctrl.setSort('estimated_minutes');currentSort='estimated_minutes';" href>Time Estimate</a></li>
+
+                                      <li ng-class="{active:currentSort=='value_time'}"><a ng-click="ctrl.setSort('value_time');currentSort='value_time';" href>Value / Time Estimate</a></li>
+                                      <li ng-class="{active:currentSort=='value_point'}"><a ng-click="ctrl.setSort('value_point');currentSort='value_point';" href>Value / Points</a></li>
+                                      <li ng-class="{active:currentSort=='due_date'}"><a ng-click="ctrl.setSort('due_date');currentSort='due_date';" href>Due Date</a></li>
+                                      <li ng-class="{active:currentSort=='wsjf_value'}"><a ng-click="ctrl.setSort('wsjf_value');currentSort='wsjf_value';" href>WSJF Value</a></li>
+                                      <li class="divider"></li>
+                                      <li ng-class="{disabled:ctrl.sortOrder=='rank'}"><a ng-click="ctrl.setRanksBySort()" href>Set Ranks by current sort...</a></li>
+                                  </ul>
+                                </span>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-4 col-md-4">
+                                <sd-filter name="cardList"
+                                           project="ctrl.projectData.currentProject"
+                                           cells="ctrl.projectData.cells">
+                                </sd-filter>
+                            </div>
+                        </div>
+                    </div>
+                    <span ng-click="ctrl.selectAll($event)" class="pull-right backlog-container-card-count">
+                        <ng-pluralize count="iterationListProject.stories.length"
+                                      when="{'0': '',
+                                             'one': '1 {{::ctrl.workItemName}}',
+                                             'other': '{} {{::ctrl.workItemName|pluralize}}'}">
+                        </ng-pluralize>
+                    </span>
+                    <a ng-click="ctrl.selectAll($event)" class="backlog-container-selectall">
+                        <span ng-if="!ctrl.allSelectMode">Select All</span>
+                        <span ng-if="ctrl.allSelectMode">Deselect All</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+
+                <ul class="col-lg-10 col-lg-offset-1 col-md-12 story-list" ng-class="{'sortable-story-list':ctrl.projectData.canWrite()}" 
+                    data-iteration-id="{{ iterationListProject.iteration.id }}">
+                        <sd-selectable-story
+                                story-context-menu
+                                story="story"
+                                project="ctrl.projectData.currentProject"
+                                epics="epics"
+                                layout="ctrl.cardLayout"
+                                ng-repeat="story in iterationListProject.stories|filter:ctrl.filterStory|orderBy:ctrl.sortOrder"></sd-selectable-story>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>

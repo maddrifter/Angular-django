@@ -1,0 +1,157 @@
+<main class="scrumdo-time">
+
+
+    <div class="scrumdo-time-wrapper pull-left">
+        <div class="scrumdo-time-container">
+            <div class="scrumdo-time-header text-center">
+                <button ng-if="time.timeTrackingMode != 'harvest'" ng-click="time.enterTime()" class="scrumdo-btn pull-right primary">Enter Time Spent</button>
+                <h2 class="scrumdo-time-h2">Time Sheets</h2>
+            </div>
+
+            <div class="scrumdo-time-content">
+
+                <!-- <div class="scrumdo-time-projects col-xs-2">
+                    <ul class="scrumdo-account-menu">
+                        <li ng-class="{active:(time.currentProjectSlug==null)}">
+                            <a ng-click="time.setProject(null)">
+                                All Projects
+                            </a>
+                        </li>
+
+                        <li ng-repeat="(slug, project) in user.project_access"
+                            ng-class="{active:(time.currentProjectSlug==slug)}">
+                            <a ng-click="time.setProject(slug)">
+                                {{project.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div> -->
+
+                <div class="scrumdo-time-messages-wrapper col-xs-12" ng-if="time.timeTrackingMode != 'harvest'">
+                    <div class="row">
+                        <div class="col-sm-2 col-sm-offset-1" sd-staff-only>
+                            <label>Workspace</label>
+                            <div class="scrumdo-select">
+                                <sd-safe-project-select ng-model="time.workspace" 
+                                    placeholder="Select a Workspace" 
+                                    show-filter="true"></sd-safe-project-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2" sd-staff-only>
+                            <label>Iteration</label>
+                            <div class="scrumdo-select primary">
+                                <select ng-model="time.iteration"
+                                        ng-class="{disabled: !time.workspace}"
+                                        ng-options="iteration.name group by iteration.increment.name for iteration in time.iterations"
+                                        ng-change="time.iterationChanged()"
+                                        class="form-control">
+                                    <option value="" ng-value="null">None</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2" sd-staff-only>
+                            <label>Person:</label>
+                            <div class="scrumdo-select primary">
+                                <select ng-model="time.userId"
+                                        ng-options="user.id as user|mediumuser for user in time.users|orderBy:'username'">
+                                    <option value="" selected>Everybody</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Start Date:</label>
+                            <sd-date-picker ng-model="time.startDate"></sd-date-picker>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>End Date:</label>
+                            <sd-date-picker ng-model="time.endDate"></sd-date-picker>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 col-sm-offset-1" sd-staff-only>
+                            <label>Tags</label>
+                            <input class="form-control" ng-model="time.tag"/>
+                        </div>
+                        <div class="col-sm-2" sd-staff-only>
+                            <label>Labels</label>
+                            <input class="form-control" ng-model="time.label"/>
+                        </div>
+                        <div class="col-sm-2" sd-staff-only>
+                            <label>Points</label>
+                            <input class="form-control" ng-model="time.point"/>
+                        </div>
+                        <div class="col-sm-2 filter-button">
+                            <button ng-click="time.viewTime()" class="scrumdo-btn secondary extended">View Time</button>
+                        </div>
+                        <div class="col-sm-2 filter-button">
+                            <a ng-href="/projects/export_time/{{time.organizationSlug}}?eow={{time.eow()}}&bow={{time.bow()}}" class="scrumdo-btn primary extended">Export</a>
+                        </div>
+                    </div>
+                    <div class="row time-results text-center" style="padding-top: 100px;" ng-if="time.isTableEmpty">
+                        <p class="col-xs-12">No time entries found.</p>
+                    </div>
+                    <div class="row time-results" ng-if="!time.isTableEmpty">
+                        <div class="col-md-12">
+                            <h1>Detail</h1>
+                            <table ng-table="time.timeTable" class="table table-condensed table-bordered table-striped">
+                                <tr class="ng-table-group" ng-repeat-start="group in $groups">
+                                  <td colspan="12">
+                                    <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                                      <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                                      <strong>{{ group.value }}</strong>
+                                    </a>
+                                  </td>
+                                </tr>
+                                <tr ng-hide="group.$hideRows" ng-repeat="row in group.data">
+                                  <td data-title="'Date'" sortable="'date'">{{row.date}}</td>
+                                  <td data-title="'Person'" sortable="'user'" groupable="'user.username'">{{row.user.username}}</td>
+                                  <td data-title="'Time Spent'" sortable="'minutes_spent'">
+                                    <a href="#" editable-text="row.display_time" e-placeholder="hh:mm" e-required onbeforesave="time.updateTimeSpent($data)">
+                                      {{row.display_time || 'No logged time'}}
+                                    </a>
+                                  </td>
+                                  <td data-title="'Workspace Name'" sortable="'project_name'" groupable="'project_name'">{{row.project_name}}</td>
+                                  <td data-title="'Iteration Name'" sortable="'iteration_name'" groupable="'iteration_name'">{{row.iteration_name}}</td>
+                                  <td data-title="'Story Name'" sortable="'story_name'">{{row.story_name}}</td>
+                                  <td data-title="'Task Name'" sortable="'task_name'">{{row.task_name}}</td>
+                                  <td data-title="'Labels'" sortable="'story_labels'" groupable="'story_labels'">{{row.story_labels}}</td>
+                                  <td data-title="'Name'" sortable="'story_name'">{{row.story_name}}</td>
+                                  <td data-title="'Points'" sortable="'story_points'" groupable="'story_points'">{{row.story_points}}</td>
+                                  <td data-title="'Tags'" sortable="'story_tags'" groupable="'story_tags'">{{row.story_tags}}</td>
+                                  <td data-title="'Notes'" sortable="'notes'">
+                                    <a href="#" editable-textarea="row.notes" onbeforesave="time.updateNote($data)">
+                                      {{ row.notes || 'No data' }}
+                                    </a>
+                                  </td>
+                                  <td data-title="'Action'">
+                                    <button ng-if="user.id == row.user.id"
+                                            ng-click="time.deleteEntry(row)"
+                                            class="scrumdo-btn small primary">Delete</button>
+                                  </td>
+                                </tr>
+                                <tr ng-repeat-end>
+                                    <td class="text-success text-right" colspan="2"><strong>Summary:</strong></td>
+                                    <td><em>{{time.sum(group.data, "minutes_spent")}}</em></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="scrumdo-time-messages-wrapper col-xs-10" ng-if="time.timeTrackingMode == 'harvest'">
+                    <div class="row ">
+                        <div class="col-md-10 col-md-offset-1 text-center">
+                            <div class="alert alert-info">
+                                <h4>
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    You have enabled Harvest for this project.<br/><br/>
+                                    View logged time entries directly from your Harvest account.
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>

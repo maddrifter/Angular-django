@@ -1,0 +1,10 @@
+<div ng-click="ctrl.edit($event)" class="scrumdo-editor text-editor-padding">
+    <div id="{{ctrl.toolbarId}}"></div>
+    <div ui-tinymce="ctrl.editorConfig"
+         class="scrumdo-mce-editor"
+         mentio
+         mentio-id="ctrl.sdMentioId"
+         mentio-require-leading-space='true'
+         ng-model="html" ng-blur="ctrl.blurEditor($event)">
+    </div>
+</div>

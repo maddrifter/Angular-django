@@ -1,0 +1,20 @@
+<div class="epic-box" ng-if="!ctrl.parent">
+    <div class="epic-header">
+        <span class="cards-number">#{{epic.number}}</span>
+        <span ng-click="ctrl.onEdit(epic)" class="glyphicon glyphicon-pencil cards-edit pull-right"></span>
+        <span ng-click="ctrl.toggleChild(epic)" class="fa cards-edit toggle-child pull-right"
+            ng-class="{'fa-folder':!epic.listChild,'fa-folder-open':epic.listChild}"></span>
+    </div>
+    <div class="epic-summary cards-text">
+        <p>{{epic.summary | decodeHtmlEntities | shorttext:false:60}}</p>
+    </div>
+</div>
+<div class="epic-box placeholder" ng-if="ctrl.parent">
+    <div class="epic-header">
+        <span ng-click="ctrl.toggleCards(epic)" class="fa cards-edit toggle-child pull-right"
+            ng-class="{'fa-folder':!epic.listCards,'fa-folder-open':epic.listCards}"></span>
+    </div>
+    <div class="epic-summary cards-text">
+        <p>Uncategorized</p>
+    </div>
+</div>

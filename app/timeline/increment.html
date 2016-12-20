@@ -1,0 +1,62 @@
+<div class="increment-detail">
+    <div class="row">
+        <div class="col-md-12 header">
+            <span ui-sref="app.iteration.summary({iterationId:increment.id})" class="iteration-name pull-left"> {{increment.name}}</span>
+            <label ng-if="canWrite" uib-tooltip="Edit {{::$root.safeTerms.current.time_period_name}}" class="labels smaller edit-itertion">
+                <span ng-click="ctrl.editIncrement()" class="glyphicon glyphicon-pencil cards-edit pull-right"></span>
+            </label>
+            <span ng-if="ctrl.features.length>0 || ctrl.stats[0]>0" class="cards-info pull-right">
+                <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+                <label ng-if="ctrl.features.length>0" uib-tooltip="Current Features" tooltip-placement="top" class="total-cards">{{ctrl.features.length}}</label>
+                <label ng-if="ctrl.stats[0]>0" class="total-cards sep">/</label>
+                <label ng-if="ctrl.stats[0]>0" uib-tooltip="Current Points" tooltip-placement="top" class="total-points">{{ctrl.stats[0] | setDecimal:2}}</label>
+            </span>
+            <a class="go-to" ui-sref="app.iteration.summary({iterationId:increment.id})">{{::$root.safeTerms.current.time_period_name}} Details 
+                <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        </div>
+
+        <increment-sentiments 
+            iteration=increment
+            team=project
+        ></increment-sentiments>
+
+        <div class="col-md-12 features-list">
+            <div class="alert alert-info" ng-if="ctrl.loading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+
+            <ul class="kanban-story-list">
+                <sd-feature 
+                        ng-repeat="story in ctrl.features | filter:ctrl.incrementCards"
+                        story="story"
+                        project="project"
+                        layout="ctrl.cardSize">
+                </sd-feature>
+
+                <li ng-if="canWrite" class="add-card">
+                    <a href="" class="scrumdo-btn extended" ng-click="ctrl.addCard()" >
+                        <i class="fa fa-plus" aria-hidden="true"></i> New {{::$root.safeTerms.current.work_item_name}}</a>
+                </li>
+            </ul>
+
+            <ul class="kanban-story-list" ng-if="(ctrl.features | filter:ctrl.committedCards).length > 0">
+                <li class="sectionheader"><h5>Committed {{::$root.safeTerms.current.work_item_name}}</h5></li>
+                <sd-feature 
+                        ng-repeat="story in ctrl.features | filter:ctrl.committedCards"
+                        story="story"
+                        project="project"
+                        layout="ctrl.cardSize">
+                </sd-feature>
+            </ul>
+
+            <ul class="kanban-story-list" ng-if="(ctrl.features | filter:ctrl.completedCards).length > 0">
+                <li class="sectionheader"><h5>Completed {{::$root.safeTerms.current.work_item_name}}</h5></li>
+                <sd-feature 
+                        ng-repeat="story in ctrl.features | filter:ctrl.completedCards"
+                        story="story"
+                        project="project"
+                        layout="ctrl.cardSize">
+                </sd-feature>
+            </ul>
+
+        </div>
+    </div>
+</div>

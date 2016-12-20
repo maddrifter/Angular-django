@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="ctrl.cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Work In Progress Limits</h3>
+</div>
+
+
+<div class="modal-body wip-limit-setting-window-modal">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="wip1" class="col-sm-7 control-label">{{::ctrl.workItemName.current|pluralize}}</label>
+            <div class="col-sm-4">
+                <input numbers-only type="number" min="0" max="10000" class="form-control" id="wip1" ng-model="settings.featureLimit">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="wip2" class="col-sm-7 control-label">{{::ctrl.workItemName.current}} Points</label>
+            <div class="col-sm-4">
+                <input numbers-only type="number" min="0" max="10000" class="form-control" id="wip2" ng-model="settings.featurePointLimit">
+            </div>
+        </div>
+        <div ng-if="ctrl.isParent" class="form-group">
+            <label for="wip3" class="col-sm-7 control-label">{{::ctrl.workItemName.children|pluralize}}</label>
+            <div class="col-sm-4">
+                <input numbers-only type="number" min="0" max="10000" class="form-control" id="wip3" ng-model="settings.cardLimit">
+            </div>
+        </div>
+        <div ng-if="ctrl.isParent" class="form-group">
+            <label for="wip4" class="col-sm-7 control-label">{{::ctrl.workItemName.children}} Points</label>
+            <div class="col-sm-4">
+                <input numbers-only type="number" min="0" max="10000" class="form-control" id="wip4" ng-model="settings.cardPointLimit">
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer">
+    <p ng-if="!ctrl.validated()" class="alert alert-warning">Value must be less then 10000!</p>
+    <button class="scrumdo-btn secondary" ng-disabled="!ctrl.validated()" ng-click="ctrl.ok()">Set</button>
+    <button class="scrumdo-btn primary" ng-click="ctrl.cancel()">Cancel</button>
+</div>

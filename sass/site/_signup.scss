@@ -1,0 +1,35 @@
+//------------------------------
+// *****************************
+// Sign Up
+// *****************************
+//------------------------------
+
+.scrumdo-signup {
+  background: #f6f6f6;
+  padding: 10px 0;
+}
+
+.scrumdo-signup-logo {
+  margin: 30px auto;
+}
+
+.scrumdo-signup-title {
+  font-family: $font-family-roboto-bold;
+  color: #3b3b3b;
+  margin: 15px 0;
+  font-size: 30px;
+}
+
+.scrumdo-signup-description {
+  font-size: 18px;
+  font-family: $font-family-roboto;
+  color: #888888;
+}
+
+#project_form{
+  #id_Teams{
+    max-height: 205px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}

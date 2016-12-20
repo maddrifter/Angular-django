@@ -1,0 +1,55 @@
+<a class="scrumdo-btn primary medium pull-right" ui-sref="app.settings.extras"><i class="fa fa-arrow-left"></i> Back To Extras</a>
+<h2><i class="fa fa-envelope-o"></i> Email a Card</h2>
+<hr/>
+
+<div ng-if="! settingsCtrl.organization.subscription.plan.premium_plan">
+    <h3>Upgrade Now!</h3>
+    <p>The Email a Card extra is available on any ScrumDo premium plan.
+        You can <a ng-href="/subscription/{{settingsCtrl.organization.slug}}">upgrade your plan here</a>.</p>
+
+    <p>
+        For information on the Email a Card extra, please see
+        <a href="http://help.scrumdo.com/help/emailcard.html">http://help.scrumdo.com/help/emailcard.html</a>
+    </p>
+</div>
+
+
+
+<div ng-if="settingsCtrl.organization.subscription.plan.premium_plan">
+
+    <p>
+        Using <b>Email a Card</b>, you can send an email to create a new card in your workspace, without ever opening a web browser.
+    </p>
+
+    <p>
+        To get started, send an email to this special address created just for this workspace:
+    <a target="_blank" ng-href="mailto:{{emailctrl.extraConfig.address}}">{{emailctrl.extraConfig.address}}</a>
+    </p>
+
+    <p>Some guidelines to make sure the resulting card is exactly what you want:</p>
+    
+    <ul>
+        <li>The subject of the email will become the summary</li>
+        <li>The body of the email will become the detail field (optional)</li>
+    </ul>
+
+    In the body of the email, after the detail, you can optionally supply any of the following:
+    <ul>
+        <li>assignee: username, username2</li>
+        <li>due: 2015-01-01</li>
+        <li>tags: tag1, tag2</li>
+        <li>labels: label1, label2</li>
+        <li>points: 5</li>
+        <li>epic: 3</li>
+        <li>estimate: 3:00</li>
+    </ul>
+
+    <p>
+        You must send this email from an address associated with an account that has write access to the workspace.
+    </p>
+
+    <p>Every card created in this manner will also get a tag of <i>email-generated</i> automatically applied.</p>
+
+
+
+</div>

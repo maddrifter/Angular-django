@@ -1,0 +1,119 @@
+<div class="portfolio-projects-page">
+
+
+    <div class="scrumdo-wrapper-navigation">
+        <div class="row">
+            <div class="col-md-4">
+                <a sd-staff-only href="/projects/project/{{organizationSlug}}/create" class="scrumdo-btn secondary text-left">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    New Workspace
+                </a>
+
+                <a sd-staff-only ng-click="ctrl.createPortfolio()" class="scrumdo-btn secondary text-left">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    New Portfolio
+                </a>
+
+            </div>
+
+            <div class="col-md-3 col-md-offset-5">
+                <a href="/projects/project/{{organizationSlug}}/create/personal" class="pull-right scrumdo-btn primary text-left">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    New Personal Workspace
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="scrumdo-wrapper-content portfolio-filter-nav">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="filters">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input type="text" placeholder="Quick search" name="search-portfolio" 
+                        ng-model="ctrl.portfolioFilters.quickSearch" class="scrumdo-form" />
+                </div>
+                <div class="filters">
+                    <label class="action-3 scrumdo-checkbox default">
+                        <input type="checkbox" id="WatchedProjects" ng-change="ctrl.setPortfolioFilters()" 
+                            ng-model="ctrl.portfolioFilters.showOnlyWatched">
+                        <label for="WatchedProjects">Watched Workspace Only</label>
+                    </label>
+                </div>
+                <div class="filters">
+                    <label class="action-3 scrumdo-checkbox default">
+                        <input type="checkbox" id="ArchivedProjects" ng-change="ctrl.setPortfolioFilters()" 
+                            ng-model="ctrl.portfolioFilters.showInactive">
+                        <label for="ArchivedProjects">Show Archived Workspaces</label>
+                    </label>
+                </div>
+                <div class="clear-filters pull-right">
+                    <a href="" ng-click="ctrl.clearPortfolioFilters()" class="">Clear Filters</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <span ng-if="ctrl.portfolios" class="portfolio-subtitle">WORKSPACES</span> 
+    <div class="scrumdo-wrapper-content">
+        <div class="row" ng-repeat="group in projectByCategory">
+            <h5 ng-if="ctrl.filterdCatProjectsHalper[group[0].category].length > 0" class="project-category">{{group[0].category}}</h5>
+            <ul ng-class="{'projects-list':ctrl.filterdCatProjectsHalper[group[0].category].length}">
+                <li ng-repeat="project in ctrl.filterdCatProjectsHalper[group[0].category] = (group|filter:ctrl.filterPortfolioProject)"
+                    ng-controller="DashboardPortfolioProjectController as dpctrl"
+                    ng-click="dpctrl.onClick($event)"
+                    ng-if="(project.active || ctrl.portfolioFilters.showInactive) &&
+                           (!project.personal || project.creator_id==user.id) &&
+                           (!ctrl.portfolioFilters.showOnlyWatched || project.watched)">
+
+
+                    <sd-porfolio-single-project></sd-porfolio-single-project>
+
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+    <span ng-if="ctrl.portfolios" class="portfolio-subtitle">PORTFOLIOS</span>
+    <div class="scrumdo-wrapper-content">
+        <div ng-repeat="portfolio in ctrl.portfolios | filter:ctrl.filterPortfolioRoot"
+             ng-if="(!ctrl.portfolioFilters.showOnlyWatched || portfolio.root.watched || ctrl.isHaveChildWatched(portfolio)) 
+                && (ctrl.portfolioFilters.showInactive || portfolio.root.active)"
+             ng-controller="DashboardPortfolioController as pctrl"
+             class="portfolio portfolio-wrapper">
+            <ul class="projects-list">
+                <li ng-scope ng-init="project=portfolio.root; isRoot=true"
+                    ng-controller="DashboardPortfolioProjectController as dpctrl"
+                    ng-click="dpctrl.onClick($event)">
+                    <span ng-click="pctrl.toggle()"
+                          class="expando">
+                        <i class="fa" ng-class="{'fa-chevron-down':pctrl.expanded, 'fa-chevron-right':!pctrl.expanded}"></i>
+                    </span>
+                    <span class="project-icon" style="color: {{project.color|decimalToHexColor}}"><i class="fa" ng-class="project.icon"></i></span>
+                    <sd-porfolio-single-project></sd-porfolio-single-project>
+                </li>
+            </ul>
+
+
+            <div ng-if="pctrl.expanded"
+                 ng-repeat="level in portfolio.levels">
+                <ul class="projects-list">
+                    <li ng-repeat="project in level.projectsCache|filter:ctrl.filterPortfolioProject"
+                        ng-controller="DashboardPortfolioProjectController as dpctrl"
+                        ng-click="dpctrl.onClick($event)"
+                        ng-if="(!ctrl.portfolioFilters.showOnlyWatched || project.watched) && (ctrl.portfolioFilters.showInactive || project.active)">
+                        <span class="project-icon indented" style="color: {{project.color|decimalToHexColor}}"><i class="fa" ng-class="project.icon"></i></span>
+                        <sd-porfolio-single-project></sd-porfolio-single-project>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

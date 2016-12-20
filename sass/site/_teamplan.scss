@@ -1,0 +1,68 @@
+.team-planning {
+
+  .column-hide-button {
+    display: none;
+  }
+
+  .export-group{
+    margin-right: 20px;
+    padding: 6px 0;
+  }
+  .pull-feature-menu{
+    max-height: 400px;
+    overflow: auto;
+  }
+  
+  .export-group{
+    margin-right: 20px;
+    padding: 6px 0;
+  }
+  
+  .infobox {
+    position: absolute;
+    width: 300px;
+    left: 50%;
+    margin-left: -150px;
+    top: 150px;
+  }
+
+  .limit-container {
+    display: inline-block;
+    margin-left: 250px;
+  }
+
+  .card-grid-container {
+    border-top: 1px solid #e5e5e5;
+    margin-left: -1px;
+    left: 40px;
+
+    -webkit-transition: left 0.3s ease-out;
+    -moz-transition: left 0.3s ease-out;
+    -o-transition: left 0.3s ease-out;
+    transition: left 0.3s ease-out;
+
+    th {
+      border-top: none;
+    }
+  }
+
+  .backlog-open {
+    .card-grid-container {
+      left: $backlogWidth;
+    }
+  }
+
+
+  .card-grid-container .card-grid .top-left-corner {
+    width: 220px;
+    background: none;
+
+    .btn-group {
+      width: 100%;
+      >button {
+        width: 100%;
+      }
+    }
+  }
+
+}

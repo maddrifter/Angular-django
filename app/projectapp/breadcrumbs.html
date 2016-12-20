@@ -1,0 +1,28 @@
+<div class="app-breadcrumbs">
+    <ul class="project-breadcrumbs">
+        <li class="project-breadcrumb dashboard">
+
+            <a ng-href="/organization/{{projectData.organizationSlug}}/dashboard">
+                <i class="fa fa-chevron-left"></i>
+                Back to Dashboard
+            </a>
+        </li>
+        <!--<li>Predecessor</li>-->
+        <li class="project-breadcrumb">
+            <safe-project-dropdown
+                    alignment="dropdown-menu"
+                    project-selected="ctrl.projectSelected(project)"
+                    project="currentProject"></safe-project-dropdown>
+        </li>
+        <li class="project-breadcrumb" ng-if="ctrl.projectData.currentIteration">
+            <img ng-src="{{STATIC_URL}}images/breadcrumb-divider.png" />
+        </li>
+        <li class="project-breadcrumb" ng-if="ctrl.projectData.currentIteration">
+
+            <sd-iteration-select ng-model="ctrl.currentIteration"
+                                 ng-change="ctrl.onIterationSelected()"
+                                 alignment="dropdown-menu"
+                                 iterations="ctrl.projectData.iterations"></sd-iteration-select>
+        </li>
+    </ul>
+</div>

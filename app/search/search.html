@@ -1,0 +1,70 @@
+<div class="scrumdo-search-wrapper"
+     ng-class="{'navbar-open':$storage.sidebarOpen, 'org-search':ctrl.projectSlug==''}">
+    <div class="search-content">
+
+        <div class="row">
+            <div class="col-sm-3">
+                <h4>Searching {{ctrl.project.name}}</h4>
+            </div>
+            <div class="col-sm-3" ng-init="searchText=''">
+                <div>
+                    <sd-filter filter="ctrl.search(filter)"
+                               ng-if="ctrl.projectSlug != ''"
+                               project="project"
+                               placeholder="Search"
+                    </sd-filter>
+                </div>
+
+                <input type="text"
+                       class="scrumdo-form search"
+                       ng-if="ctrl.projectSlug == ''"
+                       ng-model="searchText"
+                       sd-enter="ctrl.search(searchText)"
+                       placeholder="Search Organization" />
+
+            </div>
+            <div class="col-sm-3 search-status-text" ng-if="ctrl.loading">
+                Loading...
+            </div>
+
+            <div class="col-sm-3 search-status-text" ng-if="!ctrl.loading">
+                <ng-pluralize count="ctrl.storyCount"
+                              when="{'0': 'No cards found',
+                                                 'one': '1 card found',
+                                                 'other': '{} cards found'}">
+                </ng-pluralize>
+            </div>
+        </div>
+
+
+
+        <div class="row card-modal" ng-if="!ctrl.loading">
+            <div class="col-sm-8 col-sm-offset-2">
+                <ul class="kanban-story-list">
+                    <sd-story story="story"
+                              ng-repeat="story in ctrl.stories"
+                              project="ctrl.project"
+                              epics="boardProject.epics"
+                              layout="'list'"></sd-story>
+                </ul>
+                <div ng-if="ctrl.busyMode" class="busy-mode">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row text-center" ng-if="!ctrl.loading">
+            <div class="col-sm-8 col-sm-offset-2">
+                <uib-pagination ng-if="ctrl.maxPage>1"
+                        items-per-page="100"
+                        boundary-link-numbers="true"
+                        max-size="6"
+                        total-items="ctrl.storyCount"
+                        ng-model="ctrl.currentPage" ng-change="ctrl.pageChanged()"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

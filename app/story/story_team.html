@@ -1,0 +1,39 @@
+<ul class="cards-tag">
+    <li ng-repeat="label in story.labels"
+        ng-style="{'background-color': (label.color|decimalToHexColor) }"
+        uib-tooltip="{{label.name}}"
+        tooltip-placement="bottom"
+        tooltip-trigger="mouseenter"></li>
+</ul>
+<div class="cards-header">
+    <span class="cards-number">{{::project.prefix}}-{{::story.number}}&nbsp;</span>
+
+
+    <span ng-click="ctrl.onEdit()" class="glyphicon glyphicon-pencil cards-edit pull-right" ng-class="{'glyphicon-eye-open': !ctrl.canWrite}"></span>
+    <span uib-tooltip="Workspace Assignments" ng-click="ctrl.onAssign()" class="pad-right-2 glyphicon glyphicon-tasks cards-edit pull-right"></span>
+    <a class="cards-edit pad-right-2 pull-right glyphicon glyphicon-search"
+       uib-tooltip="Find Cards"
+       ng-href="/projects/org/{{ctrl.organizationSlug}}/search?q=release%3A%20{{story.number}}"
+       target="_blank">
+    </a>
+    <span uib-tooltip="Progress" ng-click="ctrl.onMilestoneProgress()" class="pad-right-2 glyphicon glyphicon-signal cards-edit pull-right"></span>
+
+
+
+    <ul class="cards-hashtags pull-right" ng-if="story.epic_label != ''">
+        <li>{{story.epic_label}}</li>
+    </ul>
+</div>
+
+<div class="cards-team-content">
+    <div class="cards-text" ng-bind-html="story.summary|to_trusted"></div>
+
+
+    <sd-miletone-team-display project="project" story="story"></sd-miletone-team-display>
+
+</div>
+
+<div class="cards-badges-wrapper-team" >
+    <span ng-class="ctrl.tagClass(tag)" ng-repeat="tag in story.tags_list track by $index" class="badges primary">#{{::tag}}</span>
+</div>
+

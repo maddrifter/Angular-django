@@ -1,0 +1,25 @@
+<div class="big-picture-card-lists" ng-click="ctrl.doNothng($event)">
+    <div class="quick-search">
+        <span class="fa fa-search"></span>
+        <input type="text" ng-model="ctrl.filterQuery" name="quick-search" value="" placeholder="Search cards..." />
+        <span ng-if="ctrl.cellCards" class="close-btn" ng-click="ctrl.closeSearch(cell)">Close</span>
+        <span ng-if="ctrl.incrementId" class="close-btn" ng-click="ctrl.clearSearch(cell)">Clear</span>
+    </div>
+
+    <div class="searching" ng-if="!ctrl.cardsLoaded">
+        <div class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+    </div>
+
+    <div class="list" ng-if="ctrl.cardsLoaded">
+        <ul>
+            <li ng-if="ctrl.cellCards" ng-click="ctrl.selectStory(card)" ng-repeat="card in ctrl.cellCards[cell['cell_type']] | filter: ctrl.filterCard as results">
+                <i>{{::card.prefix}}-{{::card.number}}</i> <span ng-bind-html="card.summary | htmlToPlaintext"></span>
+            </li>
+
+            <li ng-if="ctrl.incrementId" ng-click="ctrl.selectStory(card)" ng-repeat="card in ctrl.projectData.currentStories | filter: ctrl.filterCard as results">
+                <i>{{::card.prefix}}-{{::card.number}}</i> <span ng-bind-html="card.summary | htmlToPlaintext"></span>
+            </li>
+            <li ng-if="results.length === 0">No cards found...</li>
+        </ul>
+    </div>
+</div>

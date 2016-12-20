@@ -1,0 +1,25 @@
+<ul class="cards-tag">
+    <li ng-repeat="label in story.labels"
+        ng-style="{'background-color': (label.color|decimalToHexColor) }"
+        uib-tooltip="{{label.name}}"
+        tooltip-placement="bottom"
+        tooltip-trigger="mouseenter"></li>
+</ul>
+<div class="cards-header">
+    <span class="cards-number">{{::project.prefix}}-{{::story.number}}&nbsp;</span>
+
+    <span ng-click="ctrl.onEdit()" class="glyphicon glyphicon-pencil cards-edit pull-right" ng-class="{'glyphicon-eye-open': !ctrl.canWrite}"></span>
+
+
+
+    <ul class="cards-hashtags pull-right" ng-if="story.epic_label != ''">
+        <li epic-tooltip>{{story.epic_label}}</li>
+    </ul>
+</div>
+
+<div class="cards-content">
+    <div class="cards-text" ng-bind-html="story.summary|to_trusted"></div>
+</div>
+
+<sd-priority-display story="::story"></sd-priority-display>
+

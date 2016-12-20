@@ -1,0 +1,319 @@
+//------------------------------
+// *****************************
+// Forms
+// *****************************
+//------------------------------
+
+.scrumdo-form {
+  @extend .form-control;
+  height: 33px;
+  outline: none;
+
+  &.primary {
+    border: 1px solid #d8d8d8;
+    background: #ffffff;
+    border-radius: 3px;
+    font-family: $font-family-roboto;
+    font-size: 13px;
+    @include box-shadow(none);
+  }
+
+  &.has-error {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  }
+
+  &.search {
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    font-family: $font-family-roboto;
+    font-size: 13px;
+    background: #ffffff image-url("icons/search-icon.png") no-repeat 95% 50%;
+    @include box-shadow(none);
+  }
+
+  &.textarea {
+    border: 1px solid #d8d8d8;
+    background: #ffffff;
+    border-radius: 3px;
+    font-family: $font-family-roboto;
+    font-size: 13px;
+    padding: 10px;
+    @include box-shadow(none);
+  }
+
+  &.smaller {
+    height: 24px;
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+  &.medium {
+    height: 26px;
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+  &.compact{
+    width:60px;
+  }
+}
+
+.errorlist {
+  list-style: none;
+  color: #aaaaaa;
+  padding-left: 5px;
+  font-family: $font-family-roboto;
+}
+
+
+
+.scrumdo-checkbox {
+
+  &.default {
+    margin: 5px 0;
+
+    label {
+      font-family: $font-family-roboto-medium;
+      color: #888888;
+      font-size: 13px;
+      margin-bottom: 0;
+      vertical-align: middle;
+    }
+
+    input[type=checkbox], input[type=radio] {
+      appearance: none;
+      -webkit-appearance: none;
+      box-shadow: inset 0px 0px 0px 1px #d8d8d8;
+      border-radius: 15px;
+      background-color: #fff;
+      padding: 1px;
+      display: inline-block;
+      width: 45px;
+      height: 21px;
+      position: relative;
+      cursor: pointer;
+      transition: all .3s ease-out;
+      margin: 0px;
+      transform: scale(1);
+      -webkit-transform: scale(1); /* Adjust size here */
+      outline: none;
+      vertical-align: middle;
+    }
+    input[type=checkbox]:checked, input[type=radio]:checked {
+      box-shadow: inset 0px 0px 0px 1px #f6764e;
+    }
+    input[type=checkbox]:after, input[type=radio]:after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      width: 15px;
+      height: 15px;
+      border-radius: 15px;
+      background: #aaaaaa;
+      cursor: pointer;
+      transition: all 0.1s ease-in .1s;
+
+    }
+    input[type="checkbox"]:checked:after,input[type="radio"]:checked:after {
+      left: 27px;
+      background: #f6764e;
+    }
+  }
+
+  &.star {
+    display: inline-block;
+    margin: 0 5px;
+    @include clearfix();
+
+    input[type="radio"], input[type="checkbox"] {
+      display:none;
+    }
+
+    input[type="radio"] + label, input[type="checkbox"] + label {
+      display: inline-block;
+      background: image-url("icons/stars-sprite.png") no-repeat -20px 0;
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+
+    input[type="radio"]:checked + label, input[type="checkbox"]:checked + label {
+      background-position: 0 0;
+    }
+
+    &.smaller {
+      input[type="radio"] + label, input[type="checkbox"] + label {
+        background: image-url("icons/stars-sprite-small.png") no-repeat -15px 0;
+        width: 15px;
+        height: 15px;
+      }
+
+      input[type="radio"]:checked + label, input[type="checkbox"]:checked + label {
+        background-position: 0 0;
+      }
+    }
+  }
+}
+
+.scrumdo-backlog-form {
+
+  &.navigation {
+    display: inline-block;
+    margin: 0 5px;
+    @include clearfix();
+
+    input[type="radio"], input[type="checkbox"] {
+      display:none;
+    }
+
+    .iteration-name {
+      max-width: 140px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-family: $font-family-roboto;
+      color: #666666;
+      font-size: 14px;
+      margin-bottom: 0;
+      vertical-align: middle;
+      cursor: pointer;
+      float: left;
+    }
+
+    input[type="radio"] + label span, input[type="checkbox"] + label span {
+      display: inline-block;
+      background: image-url("icons/navigation-radio-icon.png") no-repeat 0 0;
+      width: 16px;
+      height: 16px;
+      margin: -2px 5px 0 0;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+
+    input[type="radio"]:checked + label span, input[type="checkbox"]:checked + label span {
+      background-position: -16px 0;
+    }
+  }
+}
+
+.scrumdo-select {
+  height: 32px;
+
+  select {
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    height: 30px;
+    padding: 5px 35px 5px 10px;
+    width: 100%;
+    outline: none;
+    color: #888888;
+    @include box-shadow(none);
+    -moz-appearance: window;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  select::-ms-expand {
+    display: none;
+  }
+
+  &.primary {
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    font-family: $font-family-roboto;
+    color: #cccccc;
+    background: #ffffff image-url("icons/select-icon.png") no-repeat center right;
+    background-size: contain;
+  }
+
+  &.secondary {
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    font-family: $font-family-roboto-medium;
+    color: #666666;
+    background-color: #f7f7f7;
+    background-image: image-url("icons/select-icon.png"), -webkit-linear-gradient(top, #fafafa 0%, #f5f5f5 100%);
+    background-image: image-url("icons/select-icon.png"), linear-gradient(to bottom, #fafafa 0%, #f5f5f5 100%);
+    background-repeat: no-repeat, repeat-x;
+    background-position: center right, center center;
+    background-size: contain;
+  }
+
+  &.smaller {
+    height: 24px;
+
+    select {
+      height: 22px;
+      padding-top: 2px;
+      padding-bottom: 3px;
+      font-size: 11px;
+    }
+  }
+  &.medium {
+    height: 26px;
+
+    select {
+      height: 24px;
+      padding-top: 3px;
+      padding-bottom: 4px;
+      font-size: 11px;
+    }
+  }
+
+}
+
+.scrumdo-input-form {
+
+  &.primary {
+    padding: 20px;
+    border: 2px dotted #cecece;
+    border-radius: 3px;
+
+    span {
+      display: block;
+      font-size: 12px;
+      font-family: $font-family-roboto-medium;
+      color: #aaaaaa;
+      margin-bottom: 5px;
+    }
+
+    label {
+      display: inline-block;
+    }
+
+    label + input[type=file] {
+      display: none;
+    }
+  }
+
+  &.secondary {
+    span {
+      display: inline-block;
+      font-size: 13px;
+      font-family: $font-family-roboto;
+      color: #888888;
+      margin-bottom: 5px;
+    }
+
+    label {
+      display: inline-block;
+    }
+
+    label + input[type=file] {
+      display: none;
+    }
+  }
+
+  &.nv-file-over {
+    border-color: $orangeHighlight;
+  }
+}
+
+
+
+

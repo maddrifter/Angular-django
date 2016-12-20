@@ -1,0 +1,52 @@
+<div class="scrumdo-select scrumdo-input-group-extended dropdown" is-open="ctrl.menuOpen" uib-dropdown>
+    <div class="dropdown-toggle" ng-click="ctrl.toggleMenu($event)">
+        <button type="button" class="scrumdo-btn dropdown-main-button primary extended scrumdo-select-button">
+            <span uib-tooltip="{{ctrl.tooltip}}" class="scrumdo-icons" ng-if="buttonIcon != ''" ng-class="buttonIcon"></span> 
+            <i uib-tooltip="{{ctrl.tooltip}}" ng-if="ctrl.faIcon" class="fa fa-{{ctrl.faIcon}} scrumdo-icons" aria-hidden="true"></i>
+            {{getLabel(currentValue)|htmlToPlaintext|decodeHtmlEntities|words:10}}
+        </button>
+        <div class="input-group-btn dropdown-button-container">
+            <button type="button" class="scrumdo-btn primary dropdown-button" aria-expanded="false">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+        </div>
+    </div>
+    
+    <div ng-if="ctrl.menuOpen" class="dropdown-menu dropdown-menu-right scrumdo-dropdown" uib-dropdown-menu role="menu" >
+        <dropdown-filter ng-if="ctrl.showFilter && options.length>0" ng-model="ctrl.filterQuery[ctrl.getFilterKey()]"></dropdown-filter>
+        <ul ng-if="ctrl.menuOpen">
+            <li ng-if="allowEmpty">
+                <a ng-click='select($event, null)'
+                  ng-class="{'selected-option':(currentValue==null)}"
+                  href='#'>None</a>
+            </li>
+
+
+            <li ng-if="archiveProperty!=null" ng-repeat="option in options|filter:ctrl.filterOption|filter:ctrl.filterQuery:strict|orderBy:archiveProperty">
+                <a ng-click='select($event, option)'               
+                  ng-class="{'selected-option':angular_equals(option, currentValue)}"
+                  href='#'>
+                    <span ng-class="{labels: option.color}" ng-style="{'background-color': (option.color|decimalToHexColor) }">
+                        {{getLabel(option)|htmlToPlaintext|decodeHtmlEntities|words:10}}</span>
+                </a>
+            </li>
+
+            <li ng-if="archiveProperty==null" ng-repeat="option in options|filter:ctrl.filterOption|filter:ctrl.filterQuery:strict">
+                <a ng-click='select($event, option)'              
+                  ng-class="{'selected-option':angular_equals(option, currentValue)}"
+                  href='#'>
+                    <span ng-class="{labels: option.color}" ng-style="{'background-color': (option.color|decimalToHexColor) }">
+                        {{getLabel(option)|htmlToPlaintext|decodeHtmlEntities|words:10}}</span>
+                </a>
+            </li>
+
+            <li ng-if="ctrl.hasFiltered()" role="presentation" class="divider"></li>
+            <li ng-if="ctrl.hasFiltered()">
+                <a href='#' ng-click="ctrl.showAll($event)">
+                    Show Archived
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

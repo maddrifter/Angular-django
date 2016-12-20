@@ -1,0 +1,33 @@
+<ul class="cards-tag">
+    <li ng-if="story.labels.length == 0">&nbsp;</li>
+    <li ng-repeat="label in story.labels"
+        ng-style="::{'background-color': (label.color|decimalToHexColor) }"
+        uib-tooltip="{{::label.name}}"
+        tooltip-placement="bottom"
+        tooltip-trigger="mouseenter"></li>
+</ul>
+<div class="cards-header">
+    <span class="project-icon" style="color: {{::project.color|decimalToHexColor}}">
+        <i class="fa" ng-class="project.icon"></i>&nbsp;{{::project.name | shorttext:false:15}}</span>
+    
+    <span ng-click="ctrl.onEdit()" class="glyphicon glyphicon-pencil cards-edit pull-right" ng-class="{'glyphicon-eye-open': !ctrl.canWrite}"></span>
+    <span ng-if="listchild != -1" ng-click="ctrl.onPortfolioToggle($event)" ng-dblclick="ctrl.doNothing($event)" 
+        ng-class="{'fa-folder':!listchild,'fa-folder-open':listchild}"
+        class="pull-right fa folder-icon"></span>
+</div>
+
+<div class="cards-content">
+    <span class="cards-number">{{::story.prefix}}-{{::story.number}}&nbsp;</span>
+    <div class="cards-text" sd-link-catcher ng-bind-html="story.summary|to_trusted|htmlToPlaintext|decodeHtmlEntities | shorttext:false:40"></div>
+</div>
+
+<div>
+    <div class="story-mini-display" ng-if="::planningMode == 'epic'">
+            <span class="mini-cell-label" ng-if="story.cell"
+                  ng-style="{ 'color': (story.cell.color|decimalToHexColor) }">
+                {{story.cell.full_label}}
+            </span>
+            <span class="mini-cell-label" ng-if="!story.cell">&nbsp;</span>
+    </div>
+</div>
+

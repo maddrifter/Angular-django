@@ -1,0 +1,47 @@
+<div class="value-displays" >
+    <div class="value-block" ng-if="story.points!='?'">
+        <div class="value points-value">
+            <span class="labels label-tag-orange">{{story.points}}</span> points
+
+        </div>
+    </div>
+
+
+    <div class="value-block" ng-if="story.estimated_minutes>0">
+        <div class="value estimate-value">
+            <span class="labels label-tag-dullpurple">{{story.estimated_minutes|formatMinutes}}</span>
+            estimate
+        </div>
+    </div>
+
+    <div class="value-block" ng-if="story.business_value > 0">
+        <div class="value">
+            <span class="labels label-success">{{story.business_value_label}}</span>
+            business value
+        </div>
+    </div>
+
+    <div class="value-block" ng-if="story.points!='?' && story.business_value>0">
+        <div class="value points-value">
+            <span class="labels label-success">{{(story.business_value / story.points_value)|number:0}}</span>
+            value/point
+
+        </div>
+    </div>
+
+    <div class="value-block" ng-if="story.estimated_minutes>0 && story.business_value>0">
+        <div class="value estimate-value">
+            <span class="labels label-success">{{(story.business_value/(story.estimated_minutes/60))|number:0}}</span>
+            value/hr
+        </div>
+    </div>
+
+
+    <div class="value-block" ng-if="story.wsjf_value != 'Inf'">
+        <div class="value">
+            <span class="labels label-default">{{story.wsjf_value}}</span>
+            WSJF
+        </div>
+    </div>
+
+</div>

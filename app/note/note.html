@@ -1,0 +1,72 @@
+<div class="note-details">
+    <div ng-if="ctrl.service.currentNote">
+        <div class="col-md-12 note-action" ng-if="canWrite">
+            <div class="note-iteration pull-left col-md-4"></div>
+            <div class="pull-left col-md-8">
+                <button ng-if="!ctrl.service.currentNote.editing" ng-click="ctrl.delete()" type="button" 
+                        class="scrumdo-btn primary  pull-right"><span class="scrumdo-icons bin">
+                        </span> Delete</button>
+                <button ng-if="ctrl.service.currentNote.editing" type="button" ng-click="ctrl.cancel($event)"
+                        class="scrumdo-btn primary  pull-right"> Cancel</button>
+                <button ng-if="ctrl.service.currentNote.editing" type="button"
+                        class="scrumdo-btn btn-success pull-right card-save-button" 
+                        ng-class="{'disabled':!ctrl.isValidNote()}" ng-click="ctrl.save($event)">Save</button>
+                <button ng-if="!ctrl.service.currentNote.editing" type="button"
+                        class="scrumdo-btn primary  pull-right" ng-click="ctrl.edit($event)">
+                        <span class="glyphicon glyphicon-pencil"></span> Edit</button>
+            </div>
+        </div>
+        <div class="note-content">
+            <p ng-if="ctrl.service.noteIteration.id==-1 && ctrl.service.currentNote.editing" 
+                class="alert alert-info">First select note iteration from left!</p>
+            <div ng-if="ctrl.service.currentNote.editing" class="note-iteration form-group pull-right">
+                <sd-iteration-select default-label="'All Iterations'"
+                    ng-model="ctrl.service.noteIteration" 
+                    iterations="ctrl.service.noteIterations"></sd-iteration-select>
+            </div>
+            <div class="note-title form-group">
+                <h2 ng-if="!ctrl.service.currentNote.editing" ng-bind-html="ctrl.service.currentNote.title"></h2>
+                <input autocomplete="off" ng-if="ctrl.service.currentNote.editing" type="text" name="title" 
+                    class="scrumdo-form primary" ng-required="true" initial-focus
+                    ng-model="ctrl.service.currentNote.title" placeholder="Note title here..." />
+            </div>
+            <div class="note-body form-group">
+                <div ng-if="!ctrl.service.currentNote.editing" ng-bind-html="ctrl.service.currentNote.body"></div>
+                <div ng-if="ctrl.service.currentNote.editing" clickable-editor="2001" html="ctrl.service.currentNote.body"></div>
+                <div ng-if="ctrl.service.currentNote.body == '' && ctrl.service.currentNote.editing" class="add-placeholder">
+                    Note detail here...
+                </div>
+            </div>
+            <div class="row">
+                <div class="note-extras col-md-12">
+                    <div class="note-attachments col-md-4">
+                        <sd-attachments ng-if="ctrl.service.project && canWrite" project="ctrl.service.project" 
+                            note="ctrl.service.currentNote"></sd-attachments>
+                        <sd-attachments readonly="true" ng-if="ctrl.service.project && !canWrite" project="ctrl.service.project" 
+                            note="ctrl.service.currentNote"></sd-attachments>
+                    </div>
+                    <div class="note-comments col-md-8">
+                        <sd-comments-box ng-if="ctrl.service.project && canWrite" user="ctrl.userService.me"
+                             project="ctrl.service.project"
+                             ng-model="ctrl.newComment"
+                             note="ctrl.service.currentNote"></sd-comments-box>
+                        <sd-comments-box readonly="true" ng-if="ctrl.service.project && !canWrite" user="ctrl.userService.me"
+                             project="ctrl.service.project"
+                             ng-model="ctrl.newComment"
+                             note="ctrl.service.currentNote"></sd-comments-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="!ctrl.service.currentNote">
+        <div class="col-md-8 col-md-offset-2" style="margin-top: 50px;">
+            <div class="scrumdo-box-modal">
+                <div class="scrumdo-box-modal-header text-center">
+                    <h2 class="scrumdo-signup-title">Pick a Note</h2>
+                    <p class="scrumdo-signup-description">Choose a note on the left to view/edit the note or create a new note.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

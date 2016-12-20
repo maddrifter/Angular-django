@@ -1,0 +1,73 @@
+<div class="container planning-setup">
+    <h2>Organization Planning Setup</h2>
+    <hr />
+
+    <h3>Release Planning</h3>
+    <p>
+        Create releases, assign cards to releases across workspaces, and track progress of those releases.
+    </p>
+    <p>
+        This is the simpler option that requires minimal overhead and is most useful for organizations
+        who want to do bottom-up release planning.
+    </p>
+
+    <div ng-if="ctrl.organization.planning_mode == 'portfolio'" class="scrumdo-alerts notify">
+        <p>
+            <b>Changing from Value Stream to Release planning mode</b>
+        </p>
+
+        <p>
+        When you go from Value Stream to Release planning mode, the organization wide board will go away, and any cards on
+        that board will be moved into the value stream backlog.  They will then start appearing as Releases in release mode.
+        </p>
+
+
+        <p>
+            <b>
+        NOTE: This means the position of those milestones on your organization wide board, and what release they were part of will be lost if
+        you later decide to switch back to value stream mode.
+            </b>
+        </p>
+    </div>
+
+    <p>
+        Read more here:
+        <a href="http://help.scrumdo.com/help/releases.html" target="_blank">http://help.scrumdo.com/help/releases.html</a>
+    </p>
+
+    <button ng-class="{disabled:!user.staff}" ng-click="ctrl.enableReleases()" class="scrumdo-btn primary">Enable Releases</button>
+    <span ng-if="!user.staff">Only staff users can enable releases.</span>
+
+    <hr />
+
+    <h3>Value Stream Planning <span class="badge">beta</span></h3>
+    <p>
+        Create high level milestones, and track those milestones across an organization level board.
+        Assign milestones to workspace teams to work on.  Group milestones into releases and track progress
+        of those milestones and releases.
+    </p>
+    <p>
+        This is most useful for an organization who wants to do top-down planning.  It can give more control
+        and visibility than the Release Planning option.
+    </p>
+
+    <div ng-if="ctrl.organization.planning_mode == 'release'"  class="scrumdo-alerts notify">
+        <p><b>Switching from Release to Value Stream planning mode</b></p>
+        <p>
+        This is completely safe.  Your current releases will appear in the backlog of your organization wide board as milestones,
+        and any cards assigned to them will continue to be assigned to them.  You can then move those milestones to your
+            organization board and use all the value stream planning tools with them.
+        </p>
+
+    </div>
+
+    <p>
+        Read more here:
+        <a href="http://help.scrumdo.com/help/valuestream.html" target="_blank">http://help.scrumdo.com/help/valuestream.html</a>
+    </p>
+
+    <button ng-class="{disabled:!user.staff}" ng-click="ctrl.enablePortfolio()" class="scrumdo-btn primary">Enable Value Stream Planning</button>
+    <span ng-if="!user.staff">Only staff users can enable value stream planning.</span>
+
+    
+</div>

@@ -1,0 +1,54 @@
+<div class="risk-artifact-editor">
+    <sd-risk-artifacts-label click-artifact="ctrl.removeArtifact(artifact)"
+                             artifacts="artifacts"></sd-risk-artifacts-label>
+
+    <input type="text"
+           class="form-control"
+           placeholder="Search for a card, iteration or workspace..."
+           ng-keyup="ctrl.keypress()"
+           sd-enter="ctrl._search()"
+           ng-model="ctrl.userInput">
+
+
+    <div ng-if="ctrl.dropdownOpen" class="artifact-dropdown-list">
+        <label ng-if="ctrl.allEntries.length==0">Nothing Found</label>
+        <uib-tabset active="active" ng-if="ctrl.allEntries.length>0">
+
+            <uib-tab index="0" heading="All">
+                <ul class="result-list">
+                    <li ng-repeat="item in ctrl.allEntries" ng-click="ctrl.addArtifact(item)">
+                        <sd-risk-artifact-picker item="item"></sd-risk-artifact-picker>
+                    </li>
+                </ul>
+            </uib-tab>
+
+            <uib-tab index="1" heading="Workspaces">
+                <ul class="result-list">
+                    <li ng-repeat="project in ctrl.results.projects" ng-click="ctrl.addArtifact({type:'project', project:project})">
+                        <sd-risk-artifact-project project="project"></sd-risk-artifact-project>
+                    </li>
+                </ul>
+            </uib-tab>
+
+            <uib-tab index="2" heading="Iterations"> <!-- no good name here because it's mixed between increments/iterations -->
+                <ul class="result-list">
+                    <li ng-repeat="iteration in ctrl.results.iterations" ng-click="ctrl.addArtifact({type:'iteration', iteration:iteration})">
+                        <sd-risk-artifact-iteration iteration="iteration"></sd-risk-artifact-iteration>
+                    </li>
+                </ul>
+
+            </uib-tab>
+
+            <uib-tab index="3" heading="Cards">
+                <ul class="result-list">
+                    <li ng-repeat="card in ctrl.results.cards" ng-click="ctrl.addArtifact({type:'card', card:card})">
+                        <sd-risk-artifact-card card="card"></sd-risk-artifact-card>
+                    </li>
+                </ul>
+            </uib-tab>
+
+        </uib-tabset>
+    </div>
+
+
+</div>

@@ -1,0 +1,16 @@
+<div class="milestones-display">
+    <div class="milestone-display" ng-repeat="milestone in ctrl.assignments|filter:{active:true}">
+
+        <uib-progress max="100" animate="false">
+            <uib-bar value="ctrl.percentage(milestone.cards_completed, milestone.cards_total)" type="success"></uib-bar>
+            <uib-bar value="ctrl.percentage(milestone.cards_in_progress, milestone.cards_total)"></uib-bar>
+        </uib-progress>
+
+
+        <div uib-tooltip="{{ctrl.tooltip(milestone)}}" class="milestone-status-indicator milestone-status-{{milestone.status}}">
+
+        </div>
+        {{milestone.assigned_project.name}}
+
+    </div>
+</div>

@@ -1,0 +1,65 @@
+
+            <div class="scrumdo-account-content col-md-10">
+                <div class="scrumdo-account-details">
+                    <h2 class="scrumdo-account-details-title">OpenID Associations</h2>
+
+
+                    <div class="scrumdo-account-details-content">
+                        <h3 class="scrumdo-account-details-title">Manage OpenID Associations</h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div ng-show="openIDs==[]">
+                                    <p class="scrumdo-account-details-p">
+                                        No OpenID's associated with this account. Associate an OpenID with this account below
+                                    </p>
+                                </div>
+                                <div ng-hide="openIDs==[]">
+                                    <p class="scrumdo-account-details-p">
+                                        Your account is currently associated with the following OpenID
+                                    </p>
+                                    <table class="table scrumdo-table primary">
+                                        <thead>
+                                            <tr>
+                                                <th>Association ID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <div>
+                                                <tr ng-repeat="openID in openIDs">
+                                                    <td>{{openID.openid}}</td>
+                                                    <td>
+                                                        <button ng-click="ctrl.removeOpenIDAssociation(openID.openid)" type="button" class="scrumdo-btn primary extended">Remove Association</button>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scrumdo-account-details-content">
+                        <h3 class="scrumdo-account-details-title">OpenID Subscriptions</h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="scrumdo-account-details-p">
+                                    To associate a new OpenID with this account, sign in with it here:
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form action="/openid/" method="POST">
+                                <sd-csrf></sd-csrf>
+
+                                <div class="col-md-5">
+                                    <input type="text" name='openid_url' class="scrumdo-form primary"/>
+                                </div>
+                                <div class="col-md-5">
+                                    <button type="submit" class="scrumdo-btn secondary">Authenticate and associate with this account</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>

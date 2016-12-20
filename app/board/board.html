@@ -1,0 +1,28 @@
+<div sd-access="project" class="kanbanboard-wrapper">
+    <sd-board-subnav></sd-board-subnav>
+
+    <sd-backlog project="project" board-project="boardProject"></sd-backlog>
+
+    <div ng-class="{'backlog-open':boardProject.uiState.loadBacklog,'navbar-open':boardProject.uiState.archiveOpen}"
+         sd-autoscroll-horizontal
+         sd-autoscroll-vertical
+         draggable="true"
+         class="scrumdo-boards-wrapper">
+
+        <table ng-if="boardProject.project.render_mode==0" class="kanbantable" border="1" sd-board-table>
+        </table>
+        <div class='kanbantable fixed-board' ng-if="boardProject.project.render_mode==1" sd-board-fixed></div>
+    </div>
+
+    <div id="multiDragPlaceholder">
+        <span ng-if="selectedCount<=1">1 {{::ctrl.scrumdoTerms.card}}</span>
+        <span ng-if="selectedCount>1">{{ selectedCount }} {{::ctrl.scrumdoTerms.card}}s</span>
+    </div>
+
+    <sd-archive board-project="boardProject"></sd-archive>
+</div>
+
+
+<div class="kiosk-toggle" ng-click="kiosk.toggle()">
+    <i class="fa fa-list-alt"></i>
+</div>

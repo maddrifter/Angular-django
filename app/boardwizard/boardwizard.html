@@ -1,0 +1,287 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">
+        Setup Board
+        <span class="modal-minititle">Choose an initial configuration for your workspace.</span>
+    </h4>
+</div>
+
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6"> <!-- Left hand side -->
+            <div class="scrumdo-box-modal">
+                <div class="scrumdo-box-modal-content padding-15" ng-if="ctrl.currentStep==0">
+                    <p>
+                        Your workspace board is a visual representation of how work flows
+                        through your company.
+                    </p>
+                    <p>
+                        We need to set up an initial structure of that board before we can start
+                        using it.  Later, you can change this structure in the board editor.
+                    </p>
+
+                    <p>
+                        You can either use the default board (pictured on right) or go through a quick
+                        3 step wizard to create a custom board.
+                    </p>
+
+                    <button ng-click="ctrl.buildBoard()" class="scrumdo-btn primary">Use Default Board</button>
+                    <button ng-click="ctrl.stepOne()" class="scrumdo-btn primary">Customize Board</button>
+
+                </div>
+
+                <div class="scrumdo-box-modal-content padding-15" ng-if="ctrl.currentStep==1">
+                    <h3 class="board-wizard-title">
+                        Board Wizard
+                        <span class="board-wizard-minititle">Step {{ctrl.currentStep}} of 3</span>
+                    </h3>
+                    <p class="board-wizard-description">
+                        Define the columns of your board, from left to right. These usually represent steps
+                        the work goes through.
+                    </p>
+                    <div class="step-container">
+                        <div class="row" ng-repeat="step in ctrl.steps">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="text" class="scrumdo-form primary" ng-change="ctrl.addRemoveInputs()" ng-model="step.name" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <spectrum-colorpicker ng-model="step.color"
+                                                          options="{
+                                            showPalette: true,
+                                            preferredFormat: 'hex',
+                                            palette: colorPalette,
+                                            clickoutFiresChange: true,
+                                            hideAfterPaletteSelect: true,
+                                            showButtons: false
+                                          }"></spectrum-colorpicker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scrumdo-box-modal-footer text-center">
+                        <button type="button"
+                                class="scrumdo-btn secondary min-width"
+                                ng-click="ctrl.stepTwo()">Next</button>
+                    </div>
+                </div> <!-- End Step #1 (.scrumdo-box-modal-content) -->
+
+
+
+
+                <div class="scrumdo-box-modal-content padding-15" ng-if="ctrl.currentStep==2">
+                    <h3 class="board-wizard-title">
+                        Board Wizard
+                        <span class="board-wizard-minititle">Step {{ctrl.currentStep}} of 3</span>
+                    </h3>
+                    <p class="board-wizard-description">
+                        How should the columns look?
+                    </p>
+
+
+                    <div class="step-container">
+                        <div class="row" ng-repeat="step in ctrl.steps">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <span class="scrumdo-wizard-label wizard-dark-gray extended"
+                                          ng-style="{'background-color':step.color}">
+                                        {{step.name}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="scrumdo-select primary">
+                                        <select ng-model="step.style" convert-to-number>
+                                            <option value="0">Standard</option>
+                                            <option value="1">Split</option>
+                                            <option value="2">Sub Tasks</option>
+                                            <option ng-if="::ctrl.project ? ctrl.project.project_type==2 : undefined"
+                                                    value="9">Team Assignmnent</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2" ng-if="step.style==1">
+                                <div class="form-group">
+                                    <input type="text" class="scrumdo-form primary" ng-model="step.sub[0]"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2" ng-if="step.style==1">
+                                <div class="form-group">
+                                    <input type="text" class="scrumdo-form primary" ng-model="step.sub[1]"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scrumdo-box-modal-footer text-center">
+                        <button type="button"
+                                class="scrumdo-btn primary min-width"
+                                ng-click="ctrl.stepOne()">Back</button>
+                        <button type="button"
+                                class="scrumdo-btn secondary min-width"
+                                ng-click="ctrl.stepThree()">Next</button>
+                    </div>
+                </div> <!-- end step 2 -->
+
+
+                <div class="scrumdo-box-modal-content padding-15" ng-if="ctrl.currentStep==3">
+                    <h3 class="board-wizard-title">
+                        Board Wizard
+                        <span class="board-wizard-minititle">Step 3 of 3</span>
+                    </h3>
+                    <p class="board-wizard-description">
+                        What rows should your board have? You can have just one, or multiple rows are often
+                        used to differentiate between classes or services, teams, or types of work.
+                    </p>
+                    <div class="step-container">
+                        <div class="row" ng-repeat="row in ctrl.rows">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input type="text"
+                                           ng-change="ctrl.addRemoveRowInputs()"
+                                           class="scrumdo-form primary"
+                                           ng-model="row.name" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scrumdo-box-modal-footer text-center">
+                        <button type="button"
+                                class="scrumdo-btn primary min-width"
+                                ng-click="ctrl.stepTwo()">Back</button>
+                        <button type="button"
+                                class="scrumdo-btn secondary min-width"
+                                ng-click="ctrl.buildBoard()">Done</button>
+                    </div>
+                </div> <!-- End step 3 -->
+
+
+            </div>
+
+
+            <div class="scrumdo-container-box" ng-if="ctrl.currentStep > 0">
+                <div class="row" ng-if="ctrl.currentStep == 1">
+                    <label for="#" class="scrumdo-control-label tertiary margin-5 col-md-5 text-right">
+                        Need inspiration? Try a preset:
+                    </label>
+                    <div class="col-md-4">
+                        <div class="scrumdo-select primary">
+                            <select ng-model="ctrl.preset" ng-change="ctrl.stepPresetChanged()" convert-to-number>
+                                <option value="0">Presets...</option>
+                                <option value="2">Value Streams</option>
+                                <option value="3">Value Streams (alt)</option>
+                                <option value="1">Simple Scrum</option>
+                            </select>
+                        </div>
+                    </div>
+                </div> <!-- End step 1 preset box -->
+
+                <div class="row" ng-if="ctrl.currentStep == 2">
+                    <label for="#" class="scrumdo-control-label secondary margin-5 col-md-6 text-left">
+                        Not sure which one? <a ng-click="ctrl.showExamples()" class="board-wizard-link">See some examples.</a>
+                    </label>
+                </div> <!-- End step 2 preset box -->
+
+                <div class="row" ng-if="ctrl.currentStep == 3">
+                    <label for="#" class="scrumdo-control-label tertiary margin-5 col-md-5 text-right">
+                        Need inspiration? Try a preset:
+                    </label>
+                    <div class="col-md-4">
+                        <div class="scrumdo-select primary">
+                            <select ng-model="ctrl.rowPreset" ng-change="ctrl.rowPresetChanged()" convert-to-number>
+                                <option value="0">Presets...</option>
+                                <option value="2">Classes of Service</option>
+                                <option value="3">Blocked Row</option>
+                                <option value="4">By Team</option>
+                                <option value="1">Single Row</option>
+                            </select>
+                        </div>
+                    </div>
+                </div><!-- End step 3 preset box -->
+            </div>
+        </div>
+
+        <div class="col-md-6"> <!-- Right hand side -->
+            <h3 class="board-wizard-title">Board Preview</h3>
+
+            <table class="board-wizard-preview">
+                <tbody ng-repeat="row in ctrl.rows">
+                <tr ng-if="row.name != ''">
+                    <th colspan="{{ctrl.steps.length}}">
+                        {{row.name}}
+                    </th>
+                </tr>
+                <tr ng-if="$index == 0 || row.name != ''">
+                    <td style="color: #ffffff"
+                        ng-style="{ 'background-color': column.color }"
+                        ng-repeat="column in ctrl.steps"
+                        ng-if="column.name != ''"
+                        ng-class="{standard:(column.style==0 || column.style==9), split:(column.style==1), tasks:(column.style==2)}">
+                        {{column.name}}
+                    </td>
+                </tr>
+
+                <tr ng-if="$index == 0 || row.name != ''">
+                    <td ng-repeat="column in ctrl.steps"
+                        ng-if="column.name != ''">
+                        <div style="min-height: 60px">
+                            <div ng-if="column.style == 9" class="team-display">
+                                <i uib-tooltip="Team Assignment Column" class="fa fa-users"></i>
+                            </div>
+
+                            <table ng-if="column.style == 1" class="split-column-preview">
+                                <tr><th>{{column.sub[0]}}</th><th>{{column.sub[1]}}</th></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                            </table>
+
+
+                            <table ng-if="column.style == 2" class="tasks-column-preview">
+
+                                <tr><th>Todo</th><th>Doing</th><th>Done</th></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                <tr><th>Todo</th><th>Doing</th><th>Done</th></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+
+                            </table>
+
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="row-examples" ng-if="ctrl.colTypesVisible" ng-click="ctrl.colTypesVisible=false">
+        <a class="pull-right btn btn-default">Close Examples</a>
+        <h4>Cell Types</h4>
+        <ul>
+            <li><b>Standard</b> cells list all of your cards.</li>
+            <li><b>Split</b> cells have two sub-columns for your cards.</li>
+            <li><b>Sub Tasks</b> cells show you the sub-tasks for each card in a mini-board.  You can
+                cutomize the sub-task steps in your workspace options.
+            </li>
+        </ul>
+
+
+        <img ng-src="{{STATIC_URL}}images/cell_types_preview.png">
+        <br/><br/>
+        <a class="btn btn-default">Close Examples</a>
+    </div>
+</div>
+
+<div class="modal-footer" ng-if="ctrl.currentStep > 0">
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="button" ng-click="ctrl.reset()" class="scrumdo-btn primary min-width">Reset</button>
+        </div>
+    </div>
+</div>

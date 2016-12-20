@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{attachment.filename}}</h3>
+</div>
+<div class="modal-body">
+   <img ng-src="{{attachment.url}}" class="img-responsive" />
+
+
+</div>
+<div class="modal-footer">
+    <a href="{{attachment.url}}">Download File </a>
+    <button class="btn btn-primary" ng-click="$dismiss()">Close</button>
+</div>

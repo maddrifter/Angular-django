@@ -1,0 +1,18 @@
+<div class="assignee-box">
+
+    <sd-multi-select button-icon="glyphicon glyphicon-user"
+                     compare-function="ctrl.compareUsers(value1, value2)"
+                     ng-model="selectedPeople"
+                     label-function="ctrl.userLabel(obj)"
+                     template-name="user/usermultibody.html"
+                     options="ctrl.sortedPeople"
+                     show-filter="true"
+                     control-type= "assignee"
+                     default-label="{{ctrl.getLabel()}}"></sd-multi-select>
+
+    <ul class="cards-modal-members">
+        <li ng-repeat="user in selectedPeople">
+            <sd-user-portrait avatar-tooltip size="38" user="user"></sd-user-portrait>
+        </li>
+    </ul>
+</div>

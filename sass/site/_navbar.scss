@@ -1,0 +1,455 @@
+//------------------------------
+// *****************************
+// Navbar
+// *****************************
+//------------------------------
+
+.project-page{
+  #boardHeader{
+    &.subscribe-alert{
+      margin-top: 55px;
+    }
+  }
+}
+
+.scrumdo-navbar {
+  background: $greyBackground;
+  border-radius: 0;
+  margin-bottom: 0;
+  min-height: 60px;
+  border: none;
+
+  a,
+  a:hover,
+  a:focus {
+    background: none !important;
+    outline: none;
+  }
+
+
+
+  .navbar-header {
+    width: 20%;
+
+    .navbar-brand {
+      height: 60px;
+      padding: 15px 10px;
+
+    }
+    .navbar-brand-img {
+      width: 140px;
+      height: auto;
+      margin: 5px 15px;
+    }
+  }
+
+  .nav {
+    > li {
+      margin-left: 25px;
+      margin-right: 25px;
+
+      &:hover, &.active {
+        background: none;
+        border-bottom: 3px solid #f6764e;
+
+        a {
+          background: none;
+          color: #f6764e;
+        }
+      }
+
+      > a {
+        padding-top: 20px;
+        padding-bottom: 17px;
+        padding-left: 0;
+        padding-right: 0;
+        color: #dddddd;
+        font-family: $font-family-roboto-bold;
+        font-size: 16px;
+      }
+    }
+
+    .getting-started {
+      a {
+        @extend .scrumdo-btn;
+        @extend .secondary;
+        background-color: $orangeHighlight !important;
+        border-bottom-color: $orangeHighlight;
+        font-weight: normal;
+        font-family: Helvetica Neue, Helvetica, Arial;
+        position: relative;
+        top: 13px;
+        padding-top: 7px;
+        &:hover, &:focus {
+          color: #ffffff;
+        }
+      }
+      &:hover, &:focus {
+        background: none;
+        border-bottom: none;
+      }
+    }
+
+    .dropdown {
+      color: #bbbbbb;
+
+      &:hover, &:focus {
+        color: #bbbbbb;
+        background: none;
+        border-bottom: none;
+      }
+
+      .dropdown-toggle {
+        font-size: 14px;
+        color: #bbbbbb;
+
+        &:hover, &:focus {
+          color: #bbbbbb;
+          background: none;
+          border-bottom: none;
+        }
+      }
+
+      .dropdown-menu {
+        background: $greyBackground;
+        border: none;
+        margin-top: 0;
+        border-top: 1px solid #2d3238;
+        right: 0;
+
+        li {
+          a {
+            color: #cccccc;
+            &:hover {
+              color: #f6764e;
+            }
+          }
+        }
+      }
+    }
+
+    .nav-settings {
+      margin-left: 0;
+      margin-right: 0;
+
+      .nav-settings-link {
+        border-left: 1px solid #474c52;
+        margin-top: 10px;
+        margin-bottom: 7px;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        box-shadow: -1px 0 0 0 #2d3238;
+
+        &:hover {
+          border-bottom: none;
+        }
+
+        a {
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+
+        i {
+          color: #bbbbbb;
+          font-size: 18px;
+        }
+      }
+    }
+
+    .nav-view {
+      .nav-view-changer {
+        margin-left: 0;
+        margin-right: 0;
+        &:hover, &:focus {
+          border-bottom: none;
+          color: inherit;
+        }
+      }
+
+      .dropdown-menu {
+        right: -20px;
+        margin-top: 3px;
+      }
+    }
+
+    .scrumdo-nav-notifications {
+      margin: 0;
+
+      &.notification {
+        .dropdown-toggle.active > i {
+          color: #f3754f;
+        }
+      }
+
+      .dropdown-toggle > i {
+        font-size: 18px;
+      }
+
+      .dropdown-menu {
+        background: #ffffff;
+        border: 1px solid #e2e2e2;
+        border-radius: 2px;
+        width: 290px;
+        right: -135px;
+        margin-top: 15px;
+        padding: 0;
+
+        &:after, &:before {
+          bottom: 100%;
+          left: 50%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+        }
+
+        &:after {
+          border-color: rgba(255, 255, 255, 0);
+          border-bottom-color: #ffffff;
+          border-width: 10px;
+          margin-left: -10px;
+        }
+        &:before {
+          border-color: rgba(226, 226, 226, 0);
+          border-bottom-color: #e2e2e2;
+          border-width: 11px;
+          margin-left: -11px;
+        }
+      }
+
+      .dropdown-menu-content {
+        padding: 15px;
+
+        > p {
+          font-size: 12px;
+          font-family: $font-family-roboto;
+          margin-bottom: 10px;
+
+          > a {
+            color: #f6764e;
+
+            &:hover {
+              text-decoration: underline;
+              color: #f6764e;
+            }
+          }
+        }
+      }
+
+      .dropdown-menu-footer {
+        padding: 15px;
+        background: #f1f1f1;
+        a:hover.secondary,
+        a:focus.secondary,
+        a.secondary {
+          background: #f6764e !important;
+          color: #ffffff !important;
+        }
+      }
+
+    }
+  }
+
+}
+
+.sub-nav {
+  @include clearfix();
+
+  padding: 10px 0;
+  border-bottom: 1px solid #dbdbdb;
+  background: #fafafa;
+
+  &.planning{
+    border-top: 1px solid #dbdbdb;
+    background: #f5f5f5;
+  }
+
+  .sub-nav-drop {
+    min-height: 1px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 20%;
+    float: left;
+    
+    .dropdown-menu {
+      left: 0;
+      width: 100%;
+      margin-top: 14px;
+      padding: 0 20px;
+      border-radius: 0;
+      background-color: #fafafa;
+      border-color: #dbdbdb;
+      @include box-shadow(none);
+
+      > li {
+        border-top: 1px solid #e7e7e7;
+        &:first-child {
+          border-top: none;
+        }
+        > a {
+          padding: 5px 0;
+          color: #3b3b3b;
+          font-size: 12px;
+          font-family: $font-family-roboto-bold;
+          text-align: left;
+          &:hover {
+            background: none;
+            color: #f6764e;
+          }
+        }
+
+      }
+    }
+  }
+
+  .sub-nav-settings {
+    @include clearfix();
+    float: left;
+    width: 40%;
+    padding-left: 35px;
+    padding-right: 20px;
+    min-height: 1px;
+  }
+
+  .sub-nav-planning {
+    @include clearfix();
+    float: left;
+    width: 45%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    min-height: 1px;
+    color: #888888;
+    font-family: $font-family-roboto;
+  }
+
+
+  .sub-nav-project {
+    @include clearfix();
+    float: left;
+    width: 35%;
+    padding-left: 20px;
+    padding-right: 20px;
+    min-height: 1px;
+  }
+
+  .sub-nav-dropdown {
+    color: #3b3b3b;
+    font-family: $font-family-roboto-bold;
+    font-size: 20px;
+
+    &:hover, &:focus {
+      text-decoration: none;
+      outline: none;
+    }
+
+    .sub-nav-dropdown-arrow {
+      color: #cccccc;
+      font-size: 16px;
+      vertical-align: middle;
+    }
+  }
+
+  .sub-nav-sublist {
+    width: 60%;
+    float: left;
+    text-align: right;
+
+    > ul {
+      padding: 0;
+      margin: 8px 0 0 0;
+
+      > li {
+        display: inline-block;
+        list-style: none;
+        margin-left: 50px;
+        > a {
+          color: #aaaaaa;
+          font-family: $font-family-roboto-bold;
+          font-size: 14px;
+
+          &:hover, &:focus, &.active {
+            color: #3b3b3b;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+
+    &.sub-nav-no-offset {
+      width: 40%;
+    }
+  }
+  .safe-project-dropdown{
+    padding: 0 5px !important;
+    margin-top: 11px !important;
+    display: inline-table;
+    .toselect{
+      background-color:transparent !important;
+    }
+    ul{
+      ul{
+        max-height: none;
+      }
+    }
+    .dropdown-filter-box{
+      width: 100%;
+      margin: 2px 0;
+    }
+    .portfolio-project{
+      a{
+        padding: 3px 0 3px 10px;
+      }
+    }
+    .project-category{
+      padding: 3px 0 3px 10px;
+      cursor: default;
+      &:hover{
+        background: transparent;
+      }
+    }
+    .selected-option{
+      background: #f5f5f5;
+    }
+  }
+}
+
+.scrumdo-nav-tabs {
+  @extend .nav-tabs;
+
+  &.primary {
+    border-bottom-color: #dbdbdb;
+
+    li {
+
+      &.active {
+
+        a {
+          background: #f9f9fb;
+          color: #3b3b3b;
+          border: 1px solid #dbdbdb;
+          border-bottom-color: transparent;
+        }
+      }
+
+      a {
+        font-size: 14px;
+        font-family: $font-family-roboto-medium;
+        color: #f6764e;
+      }
+    }
+  }
+}
+
+
+.kiosk {
+  #boardHeader {
+    display: none;
+  }
+}

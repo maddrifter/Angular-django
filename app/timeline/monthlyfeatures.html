@@ -1,0 +1,38 @@
+<div class="feature-cards" ng-init="$ctrl = $parent.ctrl">
+    <div ng-if="!$ctrl.showByMonth" class="sectionheader"><h5 class="month-name">{{month.displayName}} - {{month.year}}</h5></div>
+    <div class="alert alert-info" ng-if="$ctrl.loading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+    <ul class="kanban-story-list" ng-if="($ctrl.features |  filter:$ctrl.cardsByMonth(month)).length > 0">
+        <sd-feature 
+                ng-repeat="story in $ctrl.features | filter:$ctrl.cardsByMonth(month)"
+                story="story"
+                project="project"
+                layout="$ctrl.cardSize">
+        </sd-feature>
+    </ul>
+    <ul class="kanban-story-list" ng-if="$ctrl.isCurrentMonth(month)">
+        <li ng-if="canWrite" class="add-card">
+            <a href="" class="scrumdo-btn extended" ng-click="$ctrl.addCard()" >
+                <i class="fa fa-plus" aria-hidden="true"></i> New {{::$root.safeTerms.current.work_item_name}}</a>
+        </li>
+    </ul>
+
+    <ul class="kanban-story-list" ng-if="($ctrl.features |  filter:$ctrl.committedCardsByMonth(month)).length > 0">
+        <li class="sectionheader"><h5>Committed Features</h5></li>
+        <sd-feature 
+                ng-repeat="story in $ctrl.features |  filter:$ctrl.committedCardsByMonth(month)"
+                story="story"
+                project="project"
+                layout="$ctrl.cardSize">
+        </sd-feature>
+    </ul>
+
+    <ul class="kanban-story-list" ng-if="($ctrl.features |  filter:$ctrl.completedCardsByMonth(month)).length > 0">
+        <li class="sectionheader"><h5>Completed Features</h5></li>
+        <sd-feature 
+                ng-repeat="story in $ctrl.features |  filter:$ctrl.completedCardsByMonth(month)"
+                story="story"
+                project="project"
+                layout="$ctrl.cardSize">
+        </sd-feature>
+    </ul>
+</div>

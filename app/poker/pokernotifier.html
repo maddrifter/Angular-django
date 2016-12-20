@@ -1,0 +1,52 @@
+<ul class="nav navbar-nav navbar-right">
+    <li class="scrumdo-nav-notifications notification dropdown"
+        is-open="ctrl.pokerOpened"
+        uib-dropdown>
+        <a class="dropdown-toggle active"
+           ng-show="ctrl.pokerService.pokerRequest!=null"
+           data-toggle="dropdown"
+           uib-dropdown-toggle>
+            <i class="glyphicon glyphicon-bell"></i>
+        </a>
+
+        <div class="dropdown-menu" uib-dropdown-menu role="menu" ng-if="ctrl.pokerService.pokerRequest">
+            <div class="dropdown-menu-content">
+                <p>{{ctrl.pokerService.pokerRequest.sender}} has started planning poker on Story #{{ctrl.pokerService.pokerRequest.number}}</p>
+                <span ng-bind-html="ctrl.pokerService.pokerRequest.summary|to_trusted"></span>
+                <p>Would you like to join?</p>
+            </div>
+            <div class="dropdown-menu-footer text-center">
+                <button type="button" class="scrumdo-btn primary min-width">No</button>
+                <button ng-click="ctrl.joinPoker()" type="button" class="scrumdo-btn secondary min-width">Yes</button>
+            </div>
+        </div>
+
+    </li>
+
+
+    <li class="scrumdo-nav-notifications notification dropdown"
+        is-open="ctrl.chatOpened"
+        uib-dropdown>
+        <a class="dropdown-toggle"
+           ng-class="{active:ctrl.newChat}"
+           ng-show="ctrl.chatMessage != null"
+           data-toggle="dropdown"
+           uib-dropdown-toggle>
+            <i class="glyphicon glyphicon-bullhorn"></i>
+        </a>
+
+        <div class="dropdown-menu" uib-dropdown-menu role="menu" ng-if="ctrl.chatMessage != null">
+            <div class="dropdown-menu-content">
+                <p>{{ctrl.chatMessage.from.name}} </p>
+                <p ng-bind-html="ctrl.chatMessage.message|to_trusted"></p>
+                <p>Would you like to join the chat?</p>
+            </div>
+            <div class="dropdown-menu-footer text-center">
+                <button ng-click="ctrl.closeChat()" type="button" class="scrumdo-btn primary min-width">No</button>
+                <a ng-href="/projects/{{ctrl.chatMessage.project_slug}}/#/chat"
+                   class="scrumdo-btn secondary min-width">Yes</a>
+            </div>
+        </div>
+
+    </li>
+</ul>

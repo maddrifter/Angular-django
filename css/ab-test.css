@@ -1,0 +1,42 @@
+.limited-features {
+    display: none;
+}
+
+.ab-plans-page-feature-table-limited .limited-features {
+    display: block;
+}
+
+.ab-plans-page-feature-table-limited .full-features {
+    display: none;
+}
+
+.limited-features small {
+    color: #444444;
+    font-weight: normal;
+}
+
+.limited-features th, .limited-features td {
+    padding: 15px !important;
+}
+
+.limited-features .subscription-feature-table th.header {
+    width: 100px;
+}
+
+
+.plans-page-header {
+    color: #FFFFFF;
+    padding: 10px 25px 25px 50px;
+    box-shadow: 0px 0px 5px #444444;
+}
+
+.plans-page-header h1, .plans-page-header p {
+    text-shadow: 0px 1px #999999;
+}
+
+/* ----- */
+
+.plans-page-header {
+    background-color: #F6764E;
+    text-align: center;
+}

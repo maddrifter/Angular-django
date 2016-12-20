@@ -1,0 +1,12 @@
+<div id="story-column-2" class="planning-column-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <sd-planning-release project="project"
+                                 release="release"
+                                 iterations="iterations"
+                                 card-size="cardSize"
+                                 stats="releaseStats[release.id]"
+                                 ng-repeat="release in project.releases|orderBy:['number']"></sd-planning-release>
+        </div>
+    </div>
+</div>

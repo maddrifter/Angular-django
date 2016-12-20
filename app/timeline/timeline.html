@@ -1,0 +1,39 @@
+<div class="scrumdo-timeline">
+    <div ng-class="{'navbar-open':$storage.timelineSidebarOpen}"
+         sd-autoscroll-horizontal
+         draggable="true"
+         id="scrumdo-timeline-wrapper"
+         drag-to-scroll
+         class="scrumdo-timeline-wrapper">
+        <div timescale class="timeline-scale" ng-show="!ctrl.datelessMode && ctrl.visibleIncrements"></div>
+        <ul class="increment-wrapper" ng-class="{'dateless': ctrl.datelessMode}">
+            <li ng-repeat="iteration in ctrl.projectData.iterations|filter:{iteration_type:1}|orderBy: 'start_date'"
+                ng-if="iteration['showInTimeline']!==false"
+                ng-mouseenter="ctrl.hightlightConnector(iteration.id, true)"
+                ng-mouseleave="ctrl.hightlightConnector(iteration.id, false)">
+                
+                <timeline-increment 
+                    ng-if="!ctrl.datelessMode"
+                    increment=iteration
+                    can-write=ctrl.projectData.canWrite() 
+                    project="ctrl.projectData.currentProject">
+                </timeline-increment>
+
+                <dateless-increment 
+                    ng-if="ctrl.datelessMode"
+                    increment=iteration 
+                    can-write=ctrl.projectData.canWrite()
+                    project="ctrl.projectData.currentProject">
+                </dateless-increment>
+                
+            </li>
+        </ul>
+
+        <div class="no-data">
+            <div class="alert alert-info" ng-if="!ctrl.visibleIncrements"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> No Data to Display!</div>
+        </div>
+
+    </div>
+
+    <timeline-sidebar></timeline-sidebar>
+</div>

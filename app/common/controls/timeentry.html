@@ -1,0 +1,9 @@
+<div class="input-group time-entry-group">
+    <span class="scrumdo-addon primary"><span class="scrumdo-icons clock"></span></span>
+    <input ng-model="ctrl.currentValue"
+           type="text"
+           class="scrumdo-form primary time-entry-input"
+           ng-blur="ctrl.onBlur()"
+           ng-change="ctrl.onChange()"
+           placeholder="{{placeholder}}">
+</div>

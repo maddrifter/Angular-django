@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 ng-if="!ctrl.blocker" class="modal-title">Block Card</h3>
+    <h3 ng-if="ctrl.blocker" class="modal-title">Resolve Blocker</h3>
+</div>
+
+<div class="modal-body card-modal">
+    
+    <label ng-if="!ctrl.blocker" class="action-3 scrumdo-checkbox default">
+        <label for="is_external_cause">External Cause:</label>
+        <input type="checkbox" id="is_external_cause" ng-model="ctrl.isExternal">
+    </label>
+    
+    <h4 class="scrumdo-text primary block bold" ng-if="!ctrl.blocker">Reason:</h4>
+    <h4 class="scrumdo-text primary block bold" ng-if="ctrl.blocker">Resolution:</h4>
+    
+    <input ng-if="!ctrl.blocker" type="text"
+            ng-model="ctrl.blockedReason"
+            sd-enter="ctrl.blockStory()"
+            typeahead-editable="true"
+            typeahead-append-to-body="true"
+            uib-typeahead="reason.reason for reason in ctrl.blockedReasons | filter:$viewValue | limitTo:8"
+            class="scrumdo-form primary tags-input"
+            placeholder="Add a reason..."/>
+    
+    <input ng-if="ctrl.blocker" type="text"
+            ng-model="ctrl.blocker.resolution"
+            sd-enter="ctrl.resolveBlocker()"
+            class="scrumdo-form primary tags-input"
+            placeholder="Add a resolution..."/>
+            
+    <div ng-if="ctrl.busyMode" class="busy-mode">
+        <div class="progress progress-striped active">
+            <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button ng-if="!ctrl.blocker" 
+        ng-class="{'disabled':ctrl.blockedReason=='' || ctrl.busyMode}" 
+        class="scrumdo-btn secondary" 
+        ng-click="ctrl.blockStory()">
+        Block</button>
+    <button ng-if="ctrl.blocker" 
+        ng-class="{'disabled':ctrl.blocker.resolution=='' || ctrl.busyMode}" 
+        class="scrumdo-btn secondary" 
+        ng-click="ctrl.resolveBlocker()">
+    Resolve</button>
+    <button class="scrumdo-btn primary" ng-click="$dismiss('canceled')">Cancel</button>
+</div>

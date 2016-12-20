@@ -1,0 +1,8 @@
+
+<li><a ui-sref="overview" ng-class="{active:navType=='overview'}">Overview</a></li>
+
+<li><a ui-sref="projects" ng-class="{active:navType=='projects'}">Workspaces</a></li>
+
+<li><a ui-sref="teams" ng-class="{active:navType=='teams'}">Teams</a></li>
+<!-- <li><a href="planning" ng-class="{active:navType=='planning'}">Planning</a></li> -->
+<li><a ng-if="user.staff" href="extras" ng-class="{active:navType=='extras'}">Extras</a></li>

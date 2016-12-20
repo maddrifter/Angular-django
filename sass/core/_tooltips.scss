@@ -1,0 +1,26 @@
+//------------------------------
+// *****************************
+// Modals
+// *****************************
+//------------------------------
+
+.scrumdo-tooltip {
+
+  &.top, &.left, &.right, &.bottom {
+    .tooltip-inner {
+      background: #2c3e50;
+      padding: 7px 15px;
+      font-family: $font-family-roboto;
+      font-size: 12px;
+    }
+
+    .tooltip-arrow {
+      border-top-color: #2c3e50;
+    }
+  }
+}
+.tooltip{
+  .wip-tooltip{
+    text-align: left !important;
+  }
+}

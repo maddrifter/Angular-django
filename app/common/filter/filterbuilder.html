@@ -1,0 +1,122 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">{{ctrl.winTitle}}</h3>
+</div>
+
+<div class="modal-body search-builder">
+
+
+    <uib-tabset>
+        <uib-tab heading="Build Query">
+            <form novalidate action="" name="queryForm">
+                <span class="search-criteria-label">Search Terms:</span>
+                <input class="search-criteria form-control" type="text" ng-model="ctrl.options.contains"> <br/>
+
+
+
+
+                <div class="row">
+
+                    <div class="col-xs-6">
+                        <span class="search-criteria-label">Assigned To:</span>
+                        <sd-assignee-box ng-model="ctrl.assignees" people="ctrl.project.members"></sd-assignee-box>
+
+                        <span class="search-criteria-label">Label:</span>
+                        <sd-select class="search-label-box" 
+                                   options="project.labels"
+                                   button-icon="glyphicon glyphicon-tags"
+                                   ng-model="ctrl.filterLabel"
+                                   show-filter="true"
+                                   control-type="labels"
+                                   label-property="name"></sd-select>
+                        
+                        <span class="search-criteria-label">Story Number:</span>
+                        <input class="search-criteria form-control" type="number" ng-model="ctrl.options.number">
+
+                        <span class="search-criteria-label">Last Modified Before:</span>
+                        <sd-date-picker ng-model="ctrl.options.before"></sd-date-picker>
+
+                        <span class="search-criteria-label">Last Modified After:</span>
+                        <sd-date-picker ng-model="ctrl.options.after"></sd-date-picker>
+
+                        <span class="search-criteria-label">Tag:</span>
+                        <input class="search-criteria form-control" type="text" ng-model="ctrl.options.tag">
+                    </div>
+
+
+
+
+                    <div class="col-xs-6">
+                        <span class="search-criteria-label">Created By:</span>
+                        <sd-assignee-box label="Users" ng-model="ctrl.creators" people="ctrl.project.members"></sd-assignee-box>
+                        
+                        <span class="search-criteria-label">Collection:</span>
+                        <sd-epic-select ng-model="ctrl.currentEpic" noepictitle="Any Collection" epics="ctrl.epics"></sd-epic-select>
+
+                        <span ng-if="project.parents.length" class="search-criteria-label">{{::ctrl.workItemName}}:</span>
+                        <sd-release-picker
+                            ng-if="project.parents.length"
+                            release="ctrl.release"
+                            project="ctrl.project"></sd-release-picker>
+
+                        <span class="search-criteria-label">Created Before:</span>
+                        <sd-date-picker ng-model="ctrl.options.createdbefore"></sd-date-picker>
+
+                        <span class="search-criteria-label">Created After:</span>
+                        <sd-date-picker ng-model="ctrl.options.createdafter"></sd-date-picker>
+
+                        <span class="search-criteria-label">Cell:</span>
+                        <select ng-options="cell.full_label as cell.full_label for cell in cells" ng-model="ctrl.options.cell" class="selectpicker span4 form-control">
+                            <option></option>
+                        </select>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-6">-->
+                        <!--<span  class="search-criteria-label">Order By:</span>-->
+                        <!--<select  ng-model="ctrl.options.order" class="selectpicker span4 form-control">-->
+                            <!--<option>Rank</option>-->
+                            <!--<option>Number</option>-->
+                            <!--<option>Status</option>-->
+                            <!--<option>Points</option>-->
+                            <!--<option>Created</option>-->
+                            <!--<option>Last Modified</option>-->
+                            <!--<option>Assigned To</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            </form>
+        </uib-tab>
+
+        <uib-tab heading="Saved Queries">
+            <ul class="saved-query-list">
+                <li ng-repeat="query in ctrl.savedQueries">
+                    <a ng-click="ctrl.openQuery(query.query)">{{query.name}}</a><br/>
+                    <small>{{query.query}}</small>
+                    <span ng-click="ctrl.deleteFilter(query)" class="scrumdo-tags-close glyphicon glyphicon-remove"></span>
+                </li>
+            </ul>
+        </uib-tab>
+    </uib-tabset>
+
+
+
+</div>
+
+
+<div class="modal-footer">
+    <button class="scrumdo-btn primary" ng-click="ctrl.saveQuery()">Save Filter</button>
+    <button class="scrumdo-btn secondary" ng-click="ctrl.filter()">Filter</button>
+</div>

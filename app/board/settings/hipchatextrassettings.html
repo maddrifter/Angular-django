@@ -1,0 +1,93 @@
+<a class="scrumdo-btn primary medium pull-right" ui-sref="app.settings.extras"><i class="fa fa-arrow-left"></i> Back To Extras</a>
+<h2>HipChat</h2>
+<hr/>
+
+<div ng-if="! settingsCtrl.organization.subscription.plan.premium_plan">
+    <h3>Upgrade Now!</h3>
+    <p>The HipChat integration is available on any ScrumDo premium plan.
+        You can <a ng-href="/subscription/{{settingsCtrl.organization.slug}}">upgrade your plan here</a>.</p>
+
+    <p>
+        For information on the HipChat integration, please see
+        <a href="http://help.scrumdo.com/hipchat/">http://help.scrumdo.com/hipchat/</a>
+    </p>
+</div>
+
+
+<div ng-if="settingsCtrl.organization.subscription.plan.premium_plan">
+    <h4>Configure</h4>
+    <div class="row">
+        <form name="importForm">
+
+
+            <div class="col-xs-4">
+                <label>Room Name:</label>
+                <input class="form-control" name="token" ng-model="hipchatctrl.addChannelOptions.name" />
+            </div>
+            <div class="col-xs-4">
+                <label>Room Notification Token:</label>
+                <input class="form-control" name="name" ng-model="hipchatctrl.addChannelOptions.token" />
+            </div>
+            <div class="col-xs-8">
+                <br/><br/>
+                <label>HipChat Base URL (ex. https://mycompany.hipchat.com):</label>
+                <input class="form-control" name="name" ng-model="hipchatctrl.addChannelOptions.url" />
+            </div>
+            <div class="checkbox col-xs-12">
+                <label>
+                    <input name="upload_issues" ng-model="hipchatctrl.addChannelOptions.new_card" type="checkbox"> New card created
+                </label>
+            </div>
+            <div class="checkbox col-xs-12">
+                <label>
+                    <input name="download_issues" ng-model="hipchatctrl.addChannelOptions.card_moved" type="checkbox"> Card moved on the board
+                </label>
+            </div>
+            <div class="checkbox col-xs-12">
+                <label>
+                    <input name="close_on_delete" ng-model="hipchatctrl.addChannelOptions.card_edited" type="checkbox"> Card details edited
+                </label>
+            </div>
+            <div class="checkbox col-xs-12">
+                <label>
+                    <input name="comment_created" ng-model="hipchatctrl.addChannelOptions.comment_created" type="checkbox"> New comment created
+                </label>
+            </div>
+
+
+
+            <div class="col-xs-5">
+                <button ng-class="{'disabled':!hipchatctrl.addChannelOptions.name || !hipchatctrl.addChannelOptions.token || !hipchatctrl.addChannelOptions.url}"
+                        ng-click="hipchatctrl.addChannel(hipchatctrl.addChannelOptions)"
+                        class="scrumdo-btn primary"><i class="fa fa-plus"></i> Add Room</button>
+            </div>
+        </form>
+    </div>
+
+    <div ng-if="hipchatctrl.extraConfig.mappings">
+        <hr/>
+        <h4>Configured Channels:</h4>
+        <hr/>
+    </div>
+    <div ng-repeat="config in hipchatctrl.extraConfig.mappings">
+
+        <button ng-click="hipchatctrl.removeChannel(config.id)" class="pull-right scrumdo-btn primary">
+            <i class="fa fa-trash-o"></i> Remove Channel
+        </button>
+
+        <h5>{{config.name}} <small>{{config.url}}</small></h5>
+
+        <div ng-if="config.errors">
+            We've had <b>{{config.errors}}</b> errors while trying to use this channel.
+        </div>
+        <ul>
+            <li ng-if="config.card_moved">Send message when a card is moved.</li>
+            <li ng-if="config.card_created">Send message when a card is created.</li>
+            <li ng-if="config.card_modified">Send message when a card is modified.</li>
+            <li ng-if="config.comment_created">Send message on a new comment.</li>
+        </ul>
+        <hr>
+    </div>
+
+
+</div>

@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <h3 class="modal-title" ng-if="ctrl.risk.id==-1">New Risk</h3>
+    <h3 class="modal-title" ng-if="ctrl.risk.id!=-1">Edit Risk</h3>
+</div>
+
+<div class="modal-body risk-edit-window">
+    <form>
+        <div class="form-group">
+            <label for="riskName">Risk Name</label>
+            <input type="text" class="form-control" id="riskName" ng-model="ctrl.risk.description" />
+        </div>
+
+        <div class="form-group">
+            <label>Artifacts</label>
+            <sd-risk-artifact-editor artifacts="ctrl.artifacts" portfolio-id="ctrl.portfolio.id"></sd-risk-artifact-editor>
+        </div>
+
+
+        <div class="form-group">
+            <label for="riskProbability">Probability</label>
+            <input type="range" min="0" max="100"
+                   uib-tooltip="{{ctrl.risk.probability}}%"
+                   class="form-control"
+                   id="riskProbability" ng-model="ctrl.risk.probability"/>
+        </div>
+
+
+        <div class="form-group">
+            <label>Severity</label>
+
+            <div class="severity-holder">
+                <div ng-repeat="riskType in ctrl.portfolio.risk_types" class="risk-severity row">
+                    <div class="col-xs-6" class="severity-type">
+                        {{riskType}}
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="btn-group">
+                            <label class="scrumdo-btn primary" ng-model="ctrl.risk['severity_' + ($index+1)]" uib-btn-radio="1">Low</label>
+                            <label class="scrumdo-btn primary" ng-model="ctrl.risk['severity_' + ($index+1)]" uib-btn-radio="2">Medium</label>
+                            <label class="scrumdo-btn primary" ng-model="ctrl.risk['severity_' + ($index+1)]" uib-btn-radio="3">High</label>
+                            <label class="scrumdo-btn primary" ng-model="ctrl.risk['severity_' + ($index+1)]" uib-btn-radio="5">Urgent</label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+
+</div>
+<div class="modal-footer">
+    <button class="scrumdo-btn primary pull-left" ng-click="ctrl.deleteRisk()" ng-if="ctrl.risk.id > 0">Delete</button>
+    <button ng-class="{disabled:(ctrl.risk.description.length==0)}" class="scrumdo-btn secondary" ng-click="ctrl.ok()">Save</button>
+    <button class="scrumdo-btn primary" ng-click="$dismiss('canceled')">Cancel</button>
+</div>

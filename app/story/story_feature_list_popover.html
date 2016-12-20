@@ -1,0 +1,29 @@
+<div class="feature-popover-html">
+    <span class="feature-name">{{::project.prefix}}-{{::story.number}}&nbsp;</span>
+    <p class="feature-summary" ng-bind-html="story.summary"></p>
+
+    <div class="feature-progress" ng-if="ctrl.releaseStats[story.id].cards_total>0">
+        <uib-progress max="100" animate="false">
+            <uib-bar value="ctrl.percentage(ctrl.releaseStats[story.id].cards_completed, ctrl.releaseStats[story.id].cards_total)" type="success"></uib-bar>
+            <uib-bar value="ctrl.percentage(ctrl.releaseStats[story.id].cards_in_progress, ctrl.releaseStats[story.id].cards_total)"></uib-bar>
+            <uib-bar value="ctrl.todoPercentage(ctrl.releaseStats[story.id])" type="warning"></uib-bar>
+        </uib-progress>
+    </div>
+
+    <ul class="stories-list">
+        <li ng-if="ctrl.loadingFeatureStories">
+            <div class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+        </li>
+        <li ng-repeat="story in ctrl.featureStories">
+            <span class="prefix">{{::story.prefix}}-{{::story.number}}&nbsp;</span>
+            <span class="summary" ng-bind-html="story.summary"></span>
+        </li>
+    </ul>
+
+    <div class="fetaure-tags">
+        <span ng-class="ctrl.tagClass(tag)" 
+        ng-repeat="tag in story.tags_list" 
+        class="badges feature normal-view">#{{::tag}}</span>
+    </div>
+
+</div>

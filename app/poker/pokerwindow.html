@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <button type="button"
+            class="close"
+            ng-click="poker.close()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">Planning Poker</h4>
+</div>
+
+
+<div class="modal-body">
+    <ul class="kanban-story-list" ng-if="poker.story != null">
+        <sd-story story="poker.story"
+                  project="poker.project"
+                  epics="poker.epics"
+                  layout="normal"></sd-story>
+    </ul>
+    <h2 class="scrumdo-planning-poker-points-header">Select Your Points</h2>
+    <div class="scrumdo-planning-poker-points text-center">
+        <span ng-click="poker.setVote(points[0])" ng-repeat="points in poker.project.point_scale" class="scrumdo-box-labels">{{points[1]}}</span>
+    </div>
+    <div class="scrumdo-planning-poker-points text-center">
+        <span ng-class="{'box-orange':poker.myVote==null, 'box-blue':poker.myVote!=null, 'box-green':vote.mine}" class="scrumdo-box-labels big  poker" ng-repeat="(uuid, vote) in poker.votes">
+            <span ng-if="poker.myVote != null">{{poker.getPointLabel(vote.value)}}</span>
+
+            <i class="scrumdo-box-labels-title">{{vote.sender}}</i>
+        </span>
+    </div>
+</div>
+
+<div class="modal-footer">
+
+    <div class="modal-buttons text-center" ng-if="poker.scrumMaster">
+        <button ng-click="poker.reset()" type="button" class="scrumdo-btn primary min-width">Reset</button>
+        <button ng-class="{disabled:poker.myVote==null}" ng-click="poker.save()" type="button" class="scrumdo-btn secondary min-width">Save</button>
+    </div>
+
+    <div class="form-group">
+        <label for="#" class="scrumdo-control-label card-popup">Members</label>
+        <ul class="scrumdo-planning-poker-memeber-list">
+            <li ng-repeat="(hash, user) in poker.realtimeService.allUsers" uib-tooltip="{{user|shortuser}}">
+                <sd-user-portrait user="user" size="30"></sd-user-portrait>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="scrumdo-planning-poker-other-cards col-md-2" ng-if="poker.myVote && poker.otherStories.length > 0">
+    <label for="#" class="scrumdo-control-label card-popup margin-5">Other {{poker.myVote}} point cards:</label>
+    <ul class="kanban-story-list">
+        <sd-story story="story"
+                  ng-repeat="story in poker.otherStories"
+                  project="poker.project"
+                  epics="poker.epics"
+                  layout="'list'"></sd-story>
+
+    </ul>
+</div>

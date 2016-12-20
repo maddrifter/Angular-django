@@ -1,0 +1,29 @@
+<div class="col-sm-3 scrumdo-team">
+    <div class="scrumdo-project-boxes">
+        <div class="scrumdo-project-boxes-header">
+            <a ui-sref="team({ teamid: team.id })" class="scrumdo-project-boxes-title pull-left">{{team.name}}</a>
+            <span class="scrumdo-project-boxes-minititle pull-right">(<ng-pluralize count="team.members.length"
+                              when="{'0': 'No Members',
+                     'one': '1 Member',
+                     'other': '{} Members'}">
+                </ng-pluralize>)</span>
+        </div>
+        <div class="scrumdo-project-boxes-content teams">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="scrumdo-project-boxes-minitext">Team Members:</span>
+                    <ul class="scrumdo-lists teamlist">
+                        <li ng-repeat="member in team.members|limitTo:4">{{member|shortuser}}</li>
+                    </ul>
+                    <a ui-sref="team({ teamid: team.id })" ng-if="team.members.length > 4" class="scrumdo-teamlist-boxes-viewall">View All</a>
+                </div>
+            </div>
+        </div>
+        <div class="scrumdo-project-boxes-footer text-right">
+            <a sd-staff-only ui-sref="team({ teamid: team.id })" type="button" class="scrumdo-btn primary smaller">
+                Edit
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+</div>

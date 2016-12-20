@@ -1,0 +1,18 @@
+<div>
+    <!--<label class="scrumdo-control-label card-popup">Attachments</label>-->
+
+    <div ng-if="!readonly" class="scrumdo-input-form primary text-center" nv-file-over nv-file-drop uploader="uploader">
+        <span ng-if="uploader.isHTML5">Drag Files Here</span>
+        <span ng-if="uploader.isHTML5">OR</span>
+        <label for="fileUpload" class="scrumdo-btn primary">Browse File</label>
+        <input type="file" value="file" id="fileUpload" nv-file-select uploader="uploader">
+    </div>
+
+
+    <div ng-if="ctrl.uploading" class="progress">
+        Uploading...
+        <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+    </div>
+
+
+</div>

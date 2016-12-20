@@ -1,0 +1,168 @@
+//------------------------------
+// *****************************
+// Icons
+// *****************************
+//------------------------------
+
+.scrumdo-icons {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  vertical-align: sub;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  &.poker {
+    background-image: image-url("icons/poker-icon.png");
+  }
+  &.time {
+    background-image: image-url("icons/time-icon.png");
+  }
+  &.duplicate {
+    background-image: image-url("icons/duplicate-icon.png");
+  }
+  &.bin {
+    background-image: image-url("icons/bin-icon.png");
+  }
+  &.iteration {
+    background-image: image-url("icons/iteration-icon.png");
+  }
+  &.star {
+    background-image: image-url("icons/star-icon.png");
+  }
+  &.check {
+    background-image: image-url("icons/check-icon.png");
+  }
+  &.clock {
+    background-image: image-url("icons/clock-icon.png");
+  }
+  &.link {
+    background-image: image-url("icons/link-icon.png");
+  }
+  &.tag {
+    background-image: image-url("icons/tag-icon.png");
+  }
+  &.tasks {
+    background-image: image-url("icons/tasks-icon.png");
+  }
+  &.epics {
+    background-image: image-url("icons/epics-icon.png");
+  }
+  &.users {
+    background-image: image-url("icons/users-icon.png");
+  }
+  &.jump-right {
+    background-image: image-url("icons/jump-right-icon.png");
+  }
+  &.refresh {
+    background-image: image-url("icons/refresh-icon.png");
+  }
+  &.window {
+    background-image: image-url("icons/window-icon.png");
+  }
+  &.attach {
+    background-image: image-url("icons/attach-icon.png");
+  }
+}
+
+.secondary {
+  .scrumdo-icons.refresh {
+    background-image: image-url("icons/refresh-icon-white.png");
+  }
+}
+
+.scrumdo-reports-fa-icon {
+  font-size: 25px !important;
+  color: #858585;
+  margin-right: 10px;
+}
+
+.scrumdo-reports-icon {
+  display: inline-block;
+  background: image-url("icons/reports-sprite.png") no-repeat top left;
+  vertical-align: middle;
+  margin-right: 10px;
+
+
+  &.currency-icon {
+    background-position: -33px 0;
+    width: 23px;
+    height: 23px;
+  }
+  &.forecasting-icon {
+    background-position: -96px 0;
+    width: 20px;
+    height: 21px;
+  }
+  &.gears-icon {
+    background-position: -163px 0;
+    width: 27px;
+    height: 23px;
+  }
+  &.thumb-icon {
+    background-position: -231px 0;
+    width: 21px;
+    height: 19px;
+  }
+  &.time-icon {
+    background-position: -295px 0;
+    width: 23px;
+    height: 23px;
+  }
+
+  @at-root .active .scrumdo-reports-icon.currency-icon {
+    background-position: 0 0;
+  }
+  @at-root .active .scrumdo-reports-icon.forecasting-icon {
+    background-position: -66px 0;
+  }
+  @at-root .active .scrumdo-reports-icon.gears-icon {
+    background-position: -126px 0;
+  }
+  @at-root .active .scrumdo-reports-icon.thumb-icon {
+    background-position: -200px 0;
+  }
+  @at-root .active .scrumdo-reports-icon.time-icon {
+    background-position: -262px 0;
+  }
+}
+
+.scrumdo-star-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+
+  cursor: pointer;
+
+  &.yellowstar {
+    background-image: image-url("icons/yellowstar-icon.png");
+  }
+
+  &.inactive-yellowstar {
+    background-image: image-url("icons/inactive-yellowstar-icon.png");
+  }
+
+  &.vertical-middle {
+    vertical-align: middle;
+  }
+
+  &.smaller {
+    width: 15px;
+    height: 15px;
+  }
+}
+.fa{
+  &.fa-2{
+    font-size: 1.5em;
+  }
+}
+.glyphicon{
+  &.x-2{
+    font-size: 1.2em;
+  }
+}

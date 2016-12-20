@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Assign</h3>
+</div>
+
+<div class="modal-body">
+    <h4>Select users to assign.</h4>
+    <ui-select multiple
+               ng-model="ctrl.assignees"
+               theme="bootstrap"
+               search-enabled="false"
+               append-to-body="true"
+               close-on-select="false"
+               title="Select Assignees">
+        <ui-select-match placeholder="Select Assignees..."><span ng-bind-html="$item|shortuser"></span></ui-select-match>
+        <ui-select-choices repeat="user in members | filter: {username: $select.search}">
+            <sd-user-portrait user="user" size="24"></sd-user-portrait>
+            <span ng-bind-html="user|longuser"></span>
+        </ui-select-choices>
+    </ui-select>
+
+    <br/>
+    <br/>
+    <input type="radio" id="assignModeAdd" ng-model="assignMode" value="add"> <label for="assignModeAdd"> Add assignees </label> <br/>
+    <input type="radio" id="assignModeReplace" ng-model="assignMode" value="set"> <label for="assignModeReplace"> Replace current assignees</label><br/>
+
+
+</div>
+<div class="modal-footer">
+    <button ng-class="{'disabled':ctrl.assignees.length==0}" class="scrumdo-btn secondary" ng-click="ctrl.ok()">Assign</button>
+    <button class="scrumdo-btn primary" ng-click="$dismiss('canceled')">Cancel</button>
+</div>

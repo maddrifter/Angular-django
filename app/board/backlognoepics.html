@@ -1,0 +1,52 @@
+<div frang-tree>
+    <div class="scrumdo-panel primary"
+         data-container-type="epic-container"
+         data-epic-id="null"
+         data-iteration-id="{{backlogId}}"
+         ng-controller="BacklogEpic">
+        <div class="scrumdo-panel-heading scrumdo-epic-heading"
+             data-epic-id="null"
+             data-iteration-id="{{backlogId}}"
+             data-skip-rank="true"
+             data-container-type="epic-story-header"
+             role="tab" id="headingOne">
+
+            <i class="pull-right fa"
+               ng-class="{'fa-toggle-on':epicCtrl.showStories, 'fa-toggle-off':!epicCtrl.showStories}"
+               ng-if="!epicCtrl.collapsed"
+               ng-model="epicCtrl.showStories"
+               ng-change="epicCtrl.toggleShowStories()"
+               uib-tooltip="Display Cards"
+               tooltip-append-to-body="true"
+               uib-btn-checkbox></i>
+
+            <h4 class="scrumdo-panel-title pull-left">
+                <a ng-click="epicCtrl.toggleCollapsed()"
+                   ng-class="{collapsed:epicCtrl.collapsed}"
+                   aria-expanded="true" aria-controls="collapseOne">
+                    No Collections
+                </a>
+            </h4>
+        </div>
+        <div uib-collapse="epicCtrl.collapsed"
+             class="scrumdo-panel-collapse collapse"
+             role="tabpanel"
+             aria-labelledby="headingOne">
+            <div class="scrumdo-panel-body">
+                <ul class="kanban-story-list"
+                    ng-if="!epicCtrl.collapsed && epicCtrl.showStories"
+                    data-epic-id="null"
+                    data-iteration-id="{{backlogId}}"
+                    data-container-type="epic-story-list" >
+                    <sd-story planning-mode="epic"
+                              story="story"
+                              project="boardProject.project"
+                              epics="epics"
+                              layout="'list'"
+                              ng-repeat="story in boardProject.backlogStories|filter:ctrl.filterStoryByNoEpic()|orderBy:ctrl.sortOrder">
+                    </sd-story>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

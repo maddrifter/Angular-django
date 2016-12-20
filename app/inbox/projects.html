@@ -1,0 +1,23 @@
+<sd-subscription-message organization="::user.organization" user="::user"></sd-subscription-message>
+
+<div class="row" ng-repeat="group in ctrl.watchedProjectByCategory">
+    <h5>{{group[0].category}}</h5>
+    <ul class="inbox-list">
+        <sd-inbox-project ng-repeat="project in group|filter:project.active">
+        </sd-inbox-project>
+    </ul>
+</div>
+
+<h4 ng-if="ctrl.otherProjectByCategory.length>0">Other Workspaces <small>(not watched)</small>:</h4>
+
+<div class="row" ng-repeat="group in ctrl.otherProjectByCategory">
+    <h5>{{group[0].category}}</h5>
+    <ul class="inbox-list">
+        <sd-inbox-project ng-repeat="project in group|filter:project.active">
+        </sd-inbox-project>
+    </ul>
+</div>
+
+<div ui-view="modal"></div>
+
+</div>

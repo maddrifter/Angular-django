@@ -1,0 +1,121 @@
+<div ng-if="story.cover_image" back-img="{{story.cover_image.url}}" class="cards-cover">
+</div>
+<ul class="cards-tag">
+    <li ng-repeat="label in story.labels"
+        ng-style="::{'background-color': (label.color|decimalToHexColor) }"
+        uib-tooltip="{{::label.name}}"
+        tooltip-placement="bottom"
+        tooltip-trigger="mouseenter"></li>
+</ul>
+<div class="cards-header">
+    <span class="cards-number">{{::project.prefix}}-{{::story.number}}&nbsp;</span>
+
+    <span ng-click="ctrl.onEdit()" class="glyphicon glyphicon-pencil cards-edit pull-right" ng-class="{'glyphicon-eye-open': !ctrl.canWrite}"></span>
+
+
+
+    <ul class="cards-hashtags pull-right" ng-if="story.epic_label != ''">
+        <li epic-tooltip>{{story.epic_label}}</li>
+    </ul>
+</div>
+
+<div class="cards-content">
+    <div class="cards-text" sd-link-catcher ng-bind-html="story.summary|to_trusted"></div>
+
+    <div ng-if="ctrl.detailVisible" class="cards-text detail-text" sd-link-catcher ng-bind-html="story.detail|to_trusted"></div>
+
+
+</div>
+
+<div>
+    <div class="cards-details">
+        <ul class="cards-information pull-left">
+
+            <li ng-if="story.points != '?'">
+                <span class="labels label-tag-orange">{{story.points}}</span>
+            </li>
+
+            <li ng-if="story.points_value == 0 && story.estimated_minutes>0">
+                <span class="labels label-tag-dullpurple">{{story.estimated_minutes|formatMinutes}}</span>
+            </li>
+
+            <li ng-click="ctrl.openTasks()" class="pointer-cursor">
+                <span class="scrumdo-icons tasks cards-checked"></span>
+                    <span ng-repeat="taskCount in story.task_counts track by $index"
+                          ng-if="taskCount > 0"
+                          ng-class="'status-bg-' + ($index+1)"
+                          class="labels smaller vertical-sub">{{taskCount}}</span>
+            </li>
+            <li>
+                <span class="cards-comments-info"><span ng-if="story.comment_count > 0">{{story.comment_count}}</span> </span>
+            </li>
+
+            <li class="cards-external" ng-if="::story.has_external_links">
+                <a ng-click="ctrl.openExternalLink()"><i class="fa fa-github"></i> </a>
+            </li>
+
+            <li class="cards-external">
+                
+                <a href="{{::story.commits[0].link}}"
+                   ng-if="story.commits.length>0"
+                   uib-tooltip="Commit {{::story.commits[0].name}} {{::story.commits[0].link}}"><i class="fa fa-github"></i> </a>
+
+                <a ng-class="{'pr-open':pr.state==0, 'pr-closed':pr.state==1}"
+                   href="{{::pr.link}}" ng-repeat="pr in story.pull_requests"
+                   target="_blank"
+                   uib-tooltip="PR {{::pr.name}} {{::pr.link}}"><i class="fa fa-github"></i> </a>
+            </li>
+
+            <li sd-due-date ng-if="story.due_date" class="due-date" story="story"></li>
+
+        </ul>
+
+
+
+
+        <div class="cards-users pull-right"
+             tooltip-placement="bottom"
+             tooltip-html-unsafe="{{ ctrl.assigneeTooltip }}"
+             tooltip-trigger="mouseenter">
+            <span ng-if="story.assignee.length > 1" class="cards-users-number">{{story.assignee.length}}</span>
+            <ul class="cards-users-images">
+                <li ng-repeat="user in story.assignee"><sd-user-portrait avatar-tooltip size="30" user="::user"></sd-user-portrait>
+                </li>
+            </ul>
+        </div>
+
+
+
+    </div>
+
+    <sd-age-display story="::story" display="::project.aging_display" warning="::project.warning_threshold" critical="::project.critical_threshold"></sd-age-display>
+
+    <div class="cards-badges-wrapper" >
+        <span ng-class="ctrl.tagClass(tag)" ng-repeat="tag in story.tags_list track by ctrl.trackByTagIdName($index, tag)" class="badges primary normal-view">#{{::tag}}</span>
+    </div>
+
+    <div class="story-mini-display" ng-if="::planningMode == 'epic'">
+        {{::ctrl.workTypeName}}: {{story.iteration_id|iterationToName:iterations}}
+
+            <span class="mini-cell-label" ng-if="story.cell"
+                  ng-style="{ 'background-color': (story.cell.color|decimalToHexColor) }">
+                {{story.cell.full_label}}
+            </span>
+
+
+        <span ng-if="story.points != '?'" class="pull-right labels label-tag-orange-small">{{story.points}}</span>
+
+    </div>
+
+    <div class="story-mini-display" ng-if="::planningMode == 'iteration'">
+            <span ng-if="story.epic">
+                Collection: {{story.epic|epicToName:epics}} {{story.epic|parentEpicToName:epics}}
+            </span>
+
+            <span class="mini-cell-label" ng-if="story.cell"
+                  ng-style="{'background-color': (story.cell.color|decimalToHexColor) }">
+                {{story.cell.full_label}}
+            </span>
+    </div>
+</div>
+

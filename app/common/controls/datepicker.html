@@ -1,0 +1,25 @@
+<div class="input-group date-picker">
+    <div   class="form-control"
+           uib-datepicker-popup="yyyy-MM-dd"
+           ng-model="ctrl.date"
+           datepicker-options="options.dateOptions"
+           is-open="options.opened"
+           datepicker-append-to-body="true"
+           show-button-bar="true"
+           current-text="Today"
+           clear-text="Clear"
+           close-text="Close"
+           close-on-date-selection="true"
+           ng-click="ctrl.openPicker($event)"
+           ng-change="ctrl.changed()"
+           ng-class="{placeholder:ctrl.date==null}"
+           close-text="Close">
+           {{ctrl.formatDate(ctrl.date)}}
+        </div>
+
+    <span class="input-group-btn">
+        <button type="button"
+                class="btn btn-default scrumdo-btn"
+                ng-click="ctrl.openPicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+    </span>
+</div>

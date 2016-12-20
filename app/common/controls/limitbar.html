@@ -1,0 +1,12 @@
+<div class="limit-bar">
+    <ul ng-repeat="group in stats">
+       <li ng-repeat="stat in group"
+           ng-if="stat.value>0"
+           ng-class="{'over-limit':stat.limit>0 && stat.value>stat.limit}">
+           <span class="stat-numeric">
+               <i ng-if="stat.limit>0 && stat.value>stat.limit" class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{stat.value | setDecimal:2}}</span>
+           <span class="stat-label">{{stat.label}}</span>
+       </li>
+    </ul>
+    <a ng-if="canWrite !== false" href="#" ng-click="ctrl.setLimits($event)" class="black-link">Set Limits</a>
+</div>

@@ -1,0 +1,90 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">{{ctrl.report.name}} <small>Favorited Report</small></h3>
+</div>
+
+<div class="modal-body" style="background-color: #ffffff">
+    <span ng-if="ctrl.loading">Loading...</span>
+    <div class="row" ng-if="!ctrl.loading && !ctrl.reportsLocked">
+        <div class="col-xs-6">
+            <sd-iteration-select ng-if="!ctrl.allIterations"
+                         ng-model="ctrl.selectedIteration"
+                         ng-change="ctrl.iterationChanged()"
+                         iterations="iterations"></sd-iteration-select>
+        </div>
+    </div>
+
+    <div sd-report-cfd
+         ng-if="ctrl.cfdReportData && !ctrl.reportsLocked"
+         style="width: 100%; height: 350px;"
+         project="ctrl.project"
+         report-data="ctrl.cfdReportData">
+    </div>
+
+    <div sd-report-burn
+         ng-if="ctrl.burnReportData"
+         style="width: 100%; height: 350px;"
+         chart-type="ctrl.report.burn_type"
+         show-ideal="true"
+         project="ctrl.project"
+         report-data="ctrl.burnReportData">
+    </div>
+
+    <div sd-report-lead
+         ng-if="ctrl.leadReportData && !ctrl.reportsLocked"
+         style="width: 100%; height: 350px;"
+         project="ctrl.project"
+         report-data="ctrl.leadReportData">
+    </div>
+
+    <div sd-report-aging
+         ng-if="ctrl.agingReportData && !ctrl.reportsLocked"
+         style="width: 100%; height: 350px;"
+         project="ctrl.project"
+         chart-type="ctrl.report.aging_type"
+         report-data="ctrl.agingReportData">
+    </div>
+    
+    <div sd-report-blockers
+        ng-if="ctrl.blockersClusterData"
+        style="width: 100%; height: 100%;"
+        project="project"
+        report-manager="ctrl.getReportManager()"
+        organization-slug="{{ctrl.organizationSlug}}"
+        filters="ctrl.getReportFilters()"
+        iteration="ctrl.selectedIteration"
+        report-data="ctrl.blockersClusterData">
+    </div>
+
+    <div sd-freq-blockers
+        ng-if="ctrl.blockersFreqData"
+        style="width: 100%; height: 100%;"
+        project="project"
+        report-manager="ctrl.getReportManager()"
+        organization-slug="{{ctrl.organizationSlug}}"
+        filters="ctrl.getReportFilters()"
+        iteration="ctrl.selectedIteration"
+        report-data="ctrl.blockersFreqData">
+    </div>
+
+    
+    <div sd-report-blockers-table
+        ng-if="ctrl.blockersReportData"
+        style="width: 100%; height: 100%;"
+        project="project"
+        report-data="ctrl.blockersReportData">
+    </div>
+    
+    <div ng-if="ctrl.reportsLocked" class="reports-locked">
+        <p class="alert alert-info text-center">Your reports are currently unavailable due to a change in your board structure or report profiles.<br/>
+        Please try again later once we've rebuilt your reports</p>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <small ng-if="ctrl.reportData" class="pull-left">
+        Report generated {{ctrl.reportData.updated_at}}
+    </small>
+    <button class="scrumdo-btn primary" ng-class="okClass" ng-click="$dismiss('ok')">Close</button>
+</div>

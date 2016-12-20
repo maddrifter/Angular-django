@@ -1,0 +1,18 @@
+<span uib-dropdown dropdown-append-to-body="true">
+        <button class="scrumdo-btn primary dropdown-toggle"
+                uib-tooltip="Quick view favorited report"
+                tooltip-append-to-body="true"
+                uib-dropdown-toggle
+                ng-click="ctrl.loadSavedReports()"
+                type="button" >
+            <span class="fa fa-bar-chart"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+            <li class="dropdown-header">Favorited Reports:</li>
+            <li ng-repeat="report in ctrl.savedReports">
+                <a ng-click="ctrl.onLoadReport(report)">{{report.name}} <i ng-if="report.generated" class="fa fa-tachometer" uib-tooltip="Report was automatically generated."></i></a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header"><a href="/projects/{{project.slug}}/reports">Go To Reports</a></li>
+        </ul>
+</span>

@@ -1,0 +1,52 @@
+<div class="scrumdo-settings-wrapper"
+     sd-access="project">
+    <div class="container" ng-if="!canAdmin">
+        <h2>Admin Access Required</h2>
+        <p>
+            Only people with admin access to a workspace can modify it's settings.  Ask a staff member
+            of your organization to add you to a team with Admin level access.
+        </p>
+    </div>
+
+    <div class="scrumdo-settings-container" ng-if="::canAdmin">
+        <div class="col-md-2">
+            <ul class="scrumdo-account-menu">
+                <li ng-class="{active:settingsCtrl.state=='app.settings.project'}">
+                    <a ui-sref="app.settings.project">Workspace Settings</a>
+                </li>
+                <li ng-class="{active:settingsCtrl.state=='app.settings.teams'}">
+                    <a ui-sref="app.settings.teams">Teams</a>
+                </li>
+                <li ng-class="{active:settingsCtrl.state=='app.settings.labeltags'}">
+                    <a ui-sref="app.settings.labeltags">Tags & Labels</a>
+                </li>
+
+                <li ng-class="{active:settingsCtrl.state=='app.settings.card'}">
+                    <a ui-sref="app.settings.card">Card Settings</a>
+                </li>
+
+                <li ng-class="{active:settingsCtrl.state=='app.settings.board'}">
+                    <a ui-sref="app.settings.board">Board Editor</a>
+                </li>
+                <li ng-class="{active:settingsCtrl.state=='app.settings.reports'}">
+                    <a ui-sref="app.settings.reports">Report Profiles</a>
+                </li>
+                <li ng-if="canAdmin" ng-class="{active:settingsCtrl.state=='app.settings.admin'}">
+                    <a ui-sref="app.settings.admin">Admin Options</a>
+                </li>
+                <li ng-if="canAdmin" ng-class="{active:settingsCtrl.state=='app.settings.sharing'}">
+                    <a ui-sref="app.settings.sharing">Sharing</a>
+                </li>
+                <li ng-if="canAdmin" ng-class="{active:settingsCtrl.state=='app.settings.extras'}">
+                    <a ui-sref="app.settings.extras">Extras</a>
+                </li>
+            </ul>
+        </div>
+        <div class="scrumdo-settings-content col-md-10">
+            <div class="scrumdo-account-details" ui-view="settingsContent">
+
+            </div>
+
+        </div>
+    </div>
+</div>

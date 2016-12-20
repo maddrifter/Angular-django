@@ -1,0 +1,704 @@
+//------------------------------
+// *****************************
+// Planning
+// *****************************
+//------------------------------
+
+
+.scrumdo-planning-wrapper {
+//  width: calc(100% - 40px);
+//  height: 100%;
+  position: absolute;
+  bottom: 0px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 0px 0px 5px 0px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  -webkit-transition: right 0.3s ease-out;
+  -moz-transition: right 0.3s ease-out;
+  -o-transition: right 0.3s ease-out;
+  transition: right 0.3s ease-out;
+
+  .kanban-story-list {
+    background-color: #F9F9F9;
+  }
+}
+
+
+
+.scrumdo-planning-wrapper.navbar-open {
+  right: 325px;
+
+}
+
+.scrumdo-planning-container {
+  @include clearfix();
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
+.scrumdo-planning-column {
+  background: #f9f9f9;
+  float: left;
+  width: 100%;
+  min-height: 93%;
+  border: 1px solid #eeeeee;
+  position: relative;
+
+  &:first-child {
+    margin-right: -1px;
+  }
+
+  .planning-column-header {
+    background: #f5f5f5;
+    padding: 10px 15px;
+    display:table;
+    width:100%;
+    .scrumdo-select {
+      height: 24px;
+    }
+    button {
+      height: 25px;
+      padding-top: 2px;
+      padding-bottom: 3px;
+      font-size: 11px;
+      &.active{
+        color:#F6764E;
+      }
+    }
+    .table-cell {
+      display:table-cell;
+      vertical-align: middle;
+    }
+    .filter-cell {
+      width: 42px;
+      text-align: right;
+    }
+    .medium-left {
+      overflow: hidden;
+      width: 145px;
+    }
+    .small-left {
+      overflow: hidden;
+      width: 80px;
+    }
+    .right-side {
+      padding-left: 2px;
+      width: 42px;
+    }
+    .dropdown-button-container {
+      right: 29px;
+    }
+
+  }
+
+  .column-summary {
+    font-family: $font-family-roboto;
+    border-bottom: 1px solid #eeeeee;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding: 0px 15px 15px 15px;
+
+    .column-summary-stat {
+      margin-right: 15px;
+      display: inline-block;
+      font-size: 11px;
+      color: #777777;
+      .stat-num {
+        color: #000000;
+        font-size: 16px;
+        font-family: $font-family-roboto-bold;
+      }
+    }
+  }
+
+  .planning-column-content {
+    padding: 10px 15px;
+    overflow-y: auto;
+
+    position: absolute;
+    top: 45px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+
+    &.cells {
+      overflow: hidden;
+      .cell-picker {
+        overflow: auto;
+        position: absolute;
+        top: 30px;
+        bottom: 0px;
+        left: 5px;
+        right: 0px;
+      }
+    }
+
+    &.active {
+      display: block;
+      visibility: visible;
+    }
+  }
+
+}
+
+.planning-tool-selector{
+    display: inline-block;
+}
+
+.story-mapping-container{
+  position: relative;
+  border-left: 1px solid #ebebeb;
+  .mapping-navbar{
+    padding: 0;
+    background: #f9f9f9;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+    .tree-header{
+      padding: 2px 10px;
+      background: #f9f9f9;
+      border-bottom: 1px solid transparent;
+      border-right: 1px solid #ebebeb;
+    }
+    .filters{
+      padding: 0;
+      .selected-epic{
+        float: left;
+        padding: 3px 20px;
+        border-right: 1px solid #ebebeb;
+        background: #F6764E;
+        color: #fff;
+      }
+      .search-box{
+        color: #c6c6c6;
+        width: 200px;
+        height: 44px;
+        border-right: 1px solid #ebebeb;
+        float: left;
+        input{
+          border: none;
+          background: transparent;
+          height: 100%;
+          padding: 5px 5px;
+          &:focus{
+            outline: none;
+          }
+        }
+      }
+      .scrumdo-btn{
+        height: 44px;
+        padding: 14px 10px;
+        background: transparent;
+        border: none;
+        font-size: 14px;
+        line-height: 16px;
+        border-right: 1px solid #ebebeb;
+        border-radius: 0;
+        float: left;
+        overflow: hidden;
+      }
+      .scrumdo-select{
+        width:250px;
+        float: left;
+        height: 44px;
+      }
+      .input-group{
+        float: left;
+        width: 305px;
+        input{
+          background: transparent;
+          height: 44px;
+          border: none;
+          width: 200px;
+          border-right: 1px solid #ebebeb;
+        }
+        .input-group-btn{
+          width:70px;
+          vertical-align: top;
+          &:last-child{
+            width: 35px;
+            float: left;
+          }
+        } 
+      }
+    }
+    .zoom-controls{
+      padding: 11px 11px;
+      border-left: 1px solid #ebebeb;
+      .fa{
+        &.inactive{
+          color: #dedede;
+        }
+        &:first-child{
+          margin-right: 20px;
+        }
+        cursor: pointer; 
+        color: #F6764E;
+      }
+    }
+  }
+  .mapping-epics{
+    padding-right: 0;
+    padding-left: 0;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    .story-map-epics-tree{
+      > .scrumdo-panel{
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+      }
+      .no-epic{
+        margin-top:10px;
+        a{
+          width: 90%;
+        }
+      }
+    }
+    .scrumdo-panel-heading{
+      background: #fff;
+      padding: 10px 8px;
+      h4{
+        margin:0;
+        max-width: 85%;
+        a{
+          &.nochildren{
+            padding-left: 0;
+            cursor: auto;
+            &:before{
+              border:none;
+            }
+          }
+        }
+      }
+    }
+    > .scrumdo-panel-body{
+      padding: 15px 0;
+    }
+    .scrumdo-panel-body{
+      padding: 15px 3px;
+    }
+  }
+  .mapping-board{
+    padding-right: 0;
+    padding-left: 0;
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    right: 0;
+    border-left: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+    border-top: 1px solid #ebebeb;
+    overflow: auto;
+    background: #f6f6f6;
+
+    &.zoom6{
+      .epic-box{
+        width: 120px !important;
+        height: 50px !important;
+        font-size: 9px;
+        .epic-summary p{
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+      .epic-box-second-level{
+        min-height: 60px !important;
+        .add-child-epic{
+          height: 60px !important;
+          span{
+            width: 120px !important;
+          }
+        }
+      }
+      .cards-text{
+        font-size: 10px !important;
+      }
+      .cards-header{
+        width: 120px !important;
+      }
+    }
+
+    &.zoom5{
+      .epic-box{
+        width: 135px !important;
+        height: 55px !important;
+        font-size: 9px;
+        .epic-summary p{
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+      .epic-box-second-level{
+        min-height: 65px !important;
+        .add-child-epic{
+          height: 65px !important;
+          span{
+            width: 135px !important;
+          }
+        }
+      }
+      .cards-text{
+        font-size: 10px !important;
+      }
+      .cards-header{
+        width: 135px !important;
+      }
+    }
+    &.zoom4{
+      .epic-box{
+        width: 140px !important;
+        height: 60px !important;
+        font-size: 10px;
+        .epic-summary p{
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+      .epic-box-second-level{
+        min-height: 70px !important;
+        .add-child-epic{
+          height: 70px !important;
+          span{
+            width: 140px !important;
+          }
+        }
+      }
+      .cards-text{
+        font-size: 11px !important;
+      }
+      .cards-header{
+        width: 140px !important;
+      }
+    }
+    &.zoom3{
+      .epic-box{
+        width: 155px !important;
+        height: 65px !important;
+        font-size: 11px;
+        .epic-summary p{
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+      .epic-box-second-level{
+        min-height: 75px !important;
+        .add-child-epic{
+          height: 75px !important;
+          span{
+            width: 155px !important;
+          }
+        }
+      }
+      .cards-text{
+        font-size: 11px !important;
+      }
+      .cards-header{
+        width: 155px !important;
+      }
+    }
+    &.zoom2{
+      .epic-box{
+        width: 170px !important;
+        height: 70px !important;
+        font-size: 12px;
+        .epic-summary p{
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+      .epic-box-second-level{
+        min-height: 80px !important;
+        .add-child-epic{
+          height: 80px !important;
+          span{
+            width: 170px !important;
+          }
+        }
+      }
+      .cards-text{
+        font-size: 12px !important;
+      }
+      .cards-header{
+        width: 170px !important;
+      }
+    }
+    &.zoom1{
+      .epic-box{
+        width: 185px !important;
+        height: 75px !important;
+        font-size: 13px;
+        .epic-summary p{
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+      .epic-box-second-level{
+        min-height: 85px !important;
+        .add-child-epic{
+          height: 85px !important;
+          span{
+            width: 185px !important;
+          }
+        }
+      }
+      .cards-text{
+        font-size: 12px !important;
+      }
+      .cards-header{
+        width: 185px !important;
+      }
+    }
+    
+    > ul{
+      padding: 0 10px 0 10px;
+      margin: 0;
+      > li{
+        padding: 10px 5px 0px 5px;
+        list-style: none;
+        display: table-cell;
+        position: relative;
+        vertical-align: top;
+        .epic-sep{
+          height: 0px;
+          border-left: 1px solid #bbb;
+          width: 0px;
+          margin-right: 2px;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+    .epic-list{
+      .epic-box{
+        margin: 0px;
+        float: left;
+        width: 200px;
+        border: 1px solid #eeeeee;
+        height: 80px;
+        background: #fff;
+        padding: 5px;
+        list-style: none;
+        -webkit-box-shadow: 0 0 5px 1px #eeeeee;
+        box-shadow: 0 0 5px 1px #eeeeee;
+        .epic-header{
+        width:100%;
+        }
+        .epic-summary{
+        width:100%;
+        p{
+          line-height: 16px;
+        }
+        }
+        .toggle-child{
+          background: transparent;
+          margin-right: 8px;
+        }
+        &.null{
+          height: 0px !important;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+          padding: 0;
+        }
+        &.empty{
+          background: transparent;
+          border: none;
+          -webkit-box-shadow: none;
+          box-shadow: none;
+        }
+        &.space{
+          height: 80px;
+        }
+        &.placeholder{
+          p{
+            margin: 0;
+          }
+          .show-cards{
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+          }
+          background: #e1e2e4;
+          text-align: center;
+          border: 1px solid #d5d6d8;
+          padding-top: 10px;
+        }
+      }
+      .epic-box-first-level{
+        float: left;
+        clear: both;
+        padding-bottom: 10px;
+        padding-right: 10px;
+        a{
+          padding-top: 25px !important;
+        }
+      }
+      .epic-box-second-level{
+        padding: 0 0 10px 0;
+        margin: 0;
+        float: none;
+        clear: both;
+        min-height: 96px;
+        width: 100%;
+        border-bottom: 1px solid #ebebeb;
+        border-top: 1px solid #ebebeb;
+        .cards-tag{
+          li{
+            padding: 0;
+          }
+        }
+
+        .cards-stats{
+          margin-top:8px;
+        }
+        .cards-information{
+        li{
+            padding: 0 5px;
+            &:first-child{
+              padding-left: 0;
+            }
+          }
+        }
+        .cards-users-images{
+          li{
+            display: inline-block;
+            padding: 0;
+          }
+        }
+        .cards-hashtags{
+          li{
+            display: inline-block;
+            padding: 0;
+          }
+        }
+        li{
+          list-style: none;
+          display: table-cell;
+          vertical-align: top;
+          padding: 10px 10px 0px 0px;
+          &.add-card{
+            padding-top: 0px;
+        }
+        }
+        .add-child-epic{
+          margin: 0;
+          height: 90px;
+          vertical-align: top;
+          a{
+            padding-top: 25px !important;
+          }
+          span{
+            width: 200px;
+            display: inline-block;
+          }
+        }
+        .child-epic-placeholder{
+          p{
+            margin: 0;
+          }
+          .epic-box{
+            background: #e1e2e4;
+            text-align: center;
+            border: 1px solid #d5d6d8;
+            padding-top: 10px;
+          }
+        }
+      }
+    }
+    .board-body{
+      .iteration-title{
+        font-weight: bold;
+        margin: 0px -2px 10px -8px;
+        padding: 0px 0 0 5px;
+        border-bottom: 1px solid #ebebeb;
+      }
+      .epic-box-second-level{
+        border:none;
+        > li{
+          &:first-child{
+            padding-left: 0;
+            border-left:none;
+            &.closed{
+              padding: 10px 10px 0px 0px;
+            }
+          }
+          padding-top: 0;
+          padding-left: 5px;
+          padding-right: 5px;
+          border-left: 1px dotted #ddd;
+        }
+      }
+    }
+    .kanban-story-list{
+      padding: 0;
+      width: 100%;
+      max-width: 200px;
+      li.cards{
+        margin: 10px 0 0 0;
+        display: block;
+        padding: 0;
+        &:first-child{
+          margin-top: 0;
+        }
+        &:nth-last-child(2){
+          margin-bottom: 20px;
+        }
+      }
+      .add-card{
+        height: 90px;
+        text-align: center;
+        display: inline-block !important;
+        width: 100%;
+        background: transparent;
+        padding-right: 0 !important;
+        a{
+          width:100%;
+          padding-top: 25px !important;
+        }
+      }
+    }
+  }
+  .sortable-drag-placeholder{
+    display: inline-block !important;
+  }
+}
+.scrumdo-panel-safe{
+  .col{
+    padding: 0;
+  }
+}
+
+@media screen and (min-width: $screen-xs-max)  {
+  .scrumdo-planning-column {
+    width: 50%;
+  }
+}
+
+
+.planning-boards {
+  position: relative;
+  width: 100%;
+}
+
+
+.cell-picker-header {
+  font: $font-family-roboto;
+  height: 18px;
+
+}

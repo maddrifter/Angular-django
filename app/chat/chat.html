@@ -1,0 +1,98 @@
+<div class="scrumdo-chat">
+
+    <div class="scrumdo-chat-wrapper pull-left">
+        <div class="scrumdo-chat-container">
+            <div class="scrumdo-chat-header text-center">
+                <h2 ng-if="ctrl.chat.currentProject" class="scrumdo-chat-h2">Welcome to {{ctrl.chat.currentProject.name}}. 
+                    <span ng-if="ctrl.chat.canWrite()">Type a message below to chat.</span></h2>
+            </div>
+            <div class="scrumdo-chat-content">
+
+
+
+                <div class="scrumdo-chat-messages-wrapper col-xs-10">
+
+
+
+                    <div class="scrumdo-chat-messages" scroll-glue nv-file-over nv-file-drop uploader="ctrl.chat.uploader">
+                        <div class="col-sx-12 text-center">
+                            <button ng-if="ctrl.chat.hasMore"
+                                    ng-click="ctrl.chat.loadMoreHistory()" class="scrumdo-btn primary">Load More</button>
+                        </div>
+                        <div ng-repeat="day in ctrl.chat.chatHistory track by $index">
+                            <div class="scrumdo-chat-message-divider">
+                                <span>{{day.day}}</span>
+                            </div>
+
+                            <div class="scrumdo-chat-msg-container" ng-repeat="message in day.lines track by $index">
+                                <div class="row">
+                                    <div class="col-md-1 text-center">
+                                        <img ng-src="/avatar/avatar/40/{{message.from.username}}" class="scrumdo-chat-msg-user" alt="#"/>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <div class="scrumdo-chat-msg">
+                                            <div class="scrumdo-chat-msg-header">
+                                                <span class="pull-left">{{message.from.name}}</span>
+                                                <time class="pull-right">{{message.time}}</time>
+                                            </div>
+                                            <p class="scrumdo-chat-msg-content" ng-bind-html="message.message|to_trusted"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scrumdo-chat-input" ng-if="ctrl.chat.canWrite()">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+
+
+                                        <label for="fileUpload"
+                                               style="height: 33px;"
+                                               class="scrumdo-btn primary"><span class="scrumdo-icons attach"></span> Add File</label>
+                                        <input type="file"
+                                               value="file"
+                                               class="hide"
+                                               id="fileUpload"
+                                               nv-file-select uploader="ctrl.chat.uploader">
+
+                                    </span>
+                                    <input mentio
+                                           mentio-id="'chatMentio'"
+                                           mentio-require-leading-space='true'
+                                           ng-model="ctrl.message"
+                                           sd-enter="ctrl.send()" type="text" class="scrumdo-form primary">
+                                    <sd-mentio editor="'chatMentio'" trigger="'@'" project="ctrl.chat.currentProject"></sd-mentio>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" ng-click="ctrl.send()" class="scrumdo-btn secondary extended">Send</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+                <div class="scrumdo-chat-users col-xs-2">
+                    <h3 class="scrumdo-chat-user-h3">User List</h3>
+                    <ul class="scrumdo-chat-users-list">
+                        <li class="online"
+                            ng-repeat="(hash, user) in ctrl.chat.realtimeService.allUsers">
+                            <sd-user-portrait user="user" size="45"></sd-user-portrait>
+                            {{user|shortuser}}
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,317 @@
+<div class="modal-header card-modal">
+    <div ng-if="!taskMode" ng-show="!minimised">
+
+        <div class="btn-group pull-right">
+
+            <button type="button"
+                    ng-click="ctrl.minimize()"
+                    uib-tooltip="Minimize Window"
+                    class="scrumdo-btn primary"
+                    ng-class="{'minimized-left': !ctrl.edited, 'minimize-top': newStory }">
+                <span aria-hidden="true">&ndash;</span>
+                <span class="sr-only">Minimize</span>
+            </button>
+
+            <button type="button"
+                    class="scrumdo-btn primary"
+                    uib-tooltip="Close Window"
+                    ng-click="ctrl.cancel()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+
+        </div>
+
+
+        <button ng-if="ctrl.edited && !busyMode" type="button"
+                ng-class="{'disabled':story.summary.length==0}"
+                class="scrumdo-btn secondary pull-right card-save-button"
+                ng-click="ctrl.save($event)"
+                uib-tooltip="(ctrl + s)">
+            Save Card
+        </button>
+
+        <h4 ng-if="newStory && !ctrl.releaseMode">New Card</h4>
+        <h4 ng-if="ctrl.releaseMode">Release/Milestone</h4>
+
+        <span ng-if="!newStory">
+            <div class="btn-group">
+                <button uib-tooltip="Track Time" ng-click="ctrl.trackTime()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons time"></span></button>
+
+                <button ng-click="ctrl.playPoker()"
+                        ng-if="ctrl.pokerService.available"
+                        type="button"
+                        uib-tooltip="Planning Poker"
+                        class="scrumdo-btn primary">
+                    <span class="scrumdo-icons poker"></span>
+                </button>
+
+                <button uib-tooltip="Duplicate" ng-click="ctrl.duplicate()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons duplicate"></span></button>
+                <button uib-tooltip="Convert to Collection" ng-click="ctrl.convertEpic()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons epics"></span></button>
+                <button uib-tooltip="Add Blocker" ng-click="ctrl.promptBlocker()" type="button" class="scrumdo-btn primary"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></button>
+                <button uib-tooltip="Delete" ng-click="ctrl.deleteCard()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons bin"></span></button>
+            </div>
+        </span>
+
+        <div ng-show="newStory" class="clear-both"></div>
+    </div>
+    <div ng-if="!taskMode" ng-show="minimised">
+        <div class="col-sm-1">
+            <span ng-show="!newStory" class="scrumdo-modal-card-nr">#{{story.number}}</span>
+        </div>
+
+
+
+        <div class="btn-group pull-right minimized-controls">
+            <button type="button"
+                    ng-click="ctrl.maximize()"
+                    class="scrumdo-btn primary">
+                <span aria-hidden="true">+</span><span class="sr-only">Maximize</span>
+            </button>
+            <button type="button"
+                    class="scrumdo-btn primary"
+                    ng-click="ctrl.cancel()">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+        </div>
+
+
+
+        <div class="clear-float"></div>
+    </div>
+    <div ng-if="taskMode">
+        <button ng-if="!ctrl.edited" type="button" class="close" ng-click="ctrl.closeWindow()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <button ng-if="ctrl.edited && !busyMode" type="button" class="scrumdo-btn btn-success pull-right" ng-click="ctrl.save($event)">Save</button>
+        <button ng-click="ctrl.cardMode()" type="button" class="scrumdo-btn primary"><span class="scrumdo-icons tasks"></span> Card Details</button>
+
+     <span class="tasks-card-name" ng-bind-html="'Card '+project.prefix+'-'+story.number +' - '"  ></span>  <span class="tasks-card-name" ng-bind-html="story.summary|htmlToPlaintext|words:15"></span>
+      </div>
+</div>
+
+<div class="modal-body card-modal card-tabs-view" ng-show="!minimised">
+    <div class="row" ng-if="taskMode">
+        <sd-task-grid user="user" project="project" story="story"></sd-task-grid>
+    </div>
+    <div class="row" ng-if="!taskMode">
+        <div class="col-sm-9 scrumdo-modal-card-content" ng-class="{'col-sm-12':ctrl.showFields}">
+            <uib-tabset>
+                <!-- Card Details Tab -->
+                <uib-tab index="0" heading="Details">
+                    <div class="scrumdo-modal-card-content-description" ng-if="story.number != -1">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <span class="scrumdo-modal-card-nr">{{::project.prefix}}-{{::story.number}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div name="editStorySummary" clickable-editor="1000" project="project" html="story.summary"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="story.number == -1">
+                        <label for="#" class="scrumdo-control-label card-popup">Summary</label>
+                        <div clickable-editor="1000" html="story.summary" project="project" id="summaryEditor"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="#" class="scrumdo-control-label card-popup">Details</label>
+                        <div clickable-editor="1001" project="project" html="story.detail"></div>
+                    </div>
+
+                    <div class="form-group" ng-if="project.use_extra_1">
+                        <label for="#" class="scrumdo-control-label card-popup">{{project.extra_1_label}}</label>
+                        <div clickable-editor="1002" project="project" html="story.extra_1"></div>
+                    </div>
+
+                    <div class="form-group" ng-if="project.use_extra_2">
+                        <label for="#" class="scrumdo-control-label card-popup">{{project.extra_2_label}}</label>
+                        <div clickable-editor="1003" project="project" html="story.extra_2"></div>
+                    </div>
+
+                    <div class="form-group" ng-if="project.use_extra_3">
+                        <label for="#" class="scrumdo-control-label card-popup">{{project.extra_3_label}}</label>
+                        <div clickable-editor="1004" project="project" html="story.extra_3"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <sd-labels-box ng-model="story.labels" labels="project.labels"></sd-labels-box>
+                        </div>
+                        <div class="col-sm-6">
+                            <sd-tags-box ng-model="story.tags_list" tags="project.tags"></sd-tags-box>
+                        </div>
+                    </div>
+
+                    <div ng-if="ctrl.timeEntries.length > 0" class="commits-box">
+                        <span class="pull-right">
+                            <a ng-click="ctrl.trackTime()">Track Time</a> |
+                            <a target="_blank" href="/organization/{{ctrl.organizationSlug}}/tracktime">Timesheets</a>
+                        </span>
+                        <label class="scrumdo-control-label card-popup">Time Logged:</label>
+
+                        <table class="table time-table">
+                            <tr ng-repeat="entry in ctrl.timeEntries|orderBy:'date'">
+                                <td>
+                                    {{entry.date}}
+                                </td>
+                                <td>
+                                    {{entry.user|shortuser}}
+                                </td>
+
+                                <td>
+                                    {{ctrl.timeLabel(entry.minutes_spent)}}
+                                </td>
+                                <td>
+                                    <span ng-if="entry.task_name">{{entry.task_name}}<br /></span>
+                                    <span ng-if="entry.notes">{{entry.notes}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <sd-aging-details></sd-aging-details>
+
+                </uib-tab>
+                <!-- / Card Details Tab -->
+
+                <!-- Card Hostory Tab -->
+                <uib-tab ng-if="!newStory" index="1" heading="History">
+                    <div class="scrumdo-modal-card-content-description" ng-if="story.number != -1">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <span class="scrumdo-modal-card-nr">{{::project.prefix}}-{{::story.number}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div name="editStorySummary" clickable-editor="1000" project="project" html="story.summary"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label class="scrumdo-control-label card-popup">History:</label>
+                    <div class="scrumdo-overview-logs" ng-repeat="newsItem in ctrl.news|orderBy:'-created'">
+                        <div class="scrumdo-overview-col-1">
+                            <sd-user-portrait img-class="'img-rounded img-responsive center-block'" user="::newsItem.user" size="24" />
+                        </div>
+                        <div class="scrumdo-overview-col-11">
+                            <time class="pull-right scrumdo-overview-time">{{::newsItem.local_time}}</time>
+                            <h4 class="scrumdo-overview-log-h4">
+                                <strong>{{::newsItem.user|shortuser}}</strong>
+                                <span ng-bind-html="::to_trusted(newsItem.text)"></span>
+                            </h4>
+                        </div>
+                    </div>
+                </uib-tab>
+                <!-- / Card Hostory Tab -->
+
+                <!-- Card Comments Tab -->
+                <uib-tab index="2" heading="Comments">
+                    <div class="scrumdo-modal-card-content-description" ng-if="story.number != -1">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <span class="scrumdo-modal-card-nr">{{::project.prefix}}-{{::story.number}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div name="editStorySummary" clickable-editor="1000" project="project" html="story.summary"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <sd-comments-box user="user"
+                                    project="project"
+                                    ng-model="ctrl.newComment"
+                                    story="story"></sd-comments-box>
+                </uib-tab>
+                <!-- / Card Comments Tab -->
+
+                <!-- Card LInks Tab -->
+                <uib-tab select=ctrl.tabChanged(3) ng-if="!newStory" index="3" heading="Links">
+                    <div class="scrumdo-modal-card-content-description" ng-if="story.number != -1">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <span class="scrumdo-modal-card-nr">{{::project.prefix}}-{{::story.number}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div name="editStorySummary" clickable-editor="1000" project="project" html="story.summary"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <sd-card-blockers-display></sd-card-blockers-display>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 dependencies-list">
+                            <sd-dependency-box
+                                    story="story"
+                                    project="project"
+                                    iteration="ctrl.currentIteration">
+                            </sd-dependency-box>
+                        </div>
+                    </div>
+
+                    <div ng-if="story.commits.length > 0" class="commits-box">
+                        <label class="scrumdo-control-label card-popup">Commits:</label>
+                        <div ng-repeat="commit in story.commits">
+                            <i class="fa fa-github"></i>
+                            <a ng-href="{{commit.link}}" target="_blank"> {{commit.name}}</a>
+                            {{commit.full_text|words:10}}
+                        </div>
+                    </div>
+
+                    <div ng-if="story.pull_requests.length > 0" class="commits-box">
+                        <label class="scrumdo-control-label card-popup">Pull Requests:</label>
+                        <div ng-repeat="pr in story.pull_requests">
+                            <i class="fa fa-github"></i>
+                            <a ng-href="{{pr.link}}" target="_blank"> {{pr.name}}</a>
+                            <span class='labels label-tag-flatblue' ng-if="pr.state==0">Open</span>
+                            <span class='labels label-tag-darkgreen' ng-if="pr.state==1">Closed</span>
+                        </div>
+                    </div>
+
+                </uib-tab>
+                <!-- / Card Links Tab -->
+                
+                <!-- Card Tasks Tab -->
+                <uib-tab deselect=ctrl.showFields=false select=ctrl.showFields=true ng-if="!newStory" index="4" heading="Tasks">
+                    <sd-task-grid user="user" project="project" story="story"></sd-task-grid>
+                </uib-tab>
+                <!-- / Card Tasks Tab -->
+
+                <!-- Card Risks Tab -->
+                <uib-tab deselect=ctrl.showFields=false select=ctrl.showFields=true ng-if="!newStory && project.portfolio_id" index="5" heading="Risks">
+                    <sd-story-risks project="project" story="story"></sd-story-risks>
+                </uib-tab>
+                <!-- / Card Risks Tab -->
+            </uib-tabset>
+
+        </div>
+        <div class="col-sm-3 scrumdo-modal-card-sidebar " ng-hide="ctrl.showFields">
+            <div class="empty-space"></div>
+            <div class="scrumdo-modal-card-buttons">
+                <sd-story-fields></sd-story-fields>
+            </div>
+        </div>
+    </div>
+    <div ng-if="busyMode" class="busy-mode">
+        <div class="progress progress-striped active">
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div ng-if="story.id" class="card-modal-footer">
+    <a target="_blank" ng-href="/projects/story_permalink/{{story.id}}"><i class="fa fa-link"></i> Permalink</a>
+</div>

@@ -1,0 +1,22 @@
+#tree-root {
+  .tree-node {
+    background: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    color: #3B3B3B;
+    padding: 10px 10px;
+
+  }
+
+  .epic-details {
+    display: inline-block;
+    min-width: 600px;
+  }
+
+  .angular-ui-tree-placeholder {
+    background: $orangeHighlight;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+}

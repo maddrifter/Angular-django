@@ -1,0 +1,176 @@
+//------------------------------
+// *****************************
+// Tables
+// *****************************
+//------------------------------
+
+.scrumdo-table {
+
+  &.primary {
+    color: #888888;
+    margin: 15px 0;
+    font-family: $font-family-roboto;
+
+    thead {
+
+      th {
+        font-size: 13px;
+        color: #aaaaaa;
+        font-family: $font-family-roboto-bold;
+        border: none;
+      }
+    }
+
+    tbody {
+
+      td {
+        padding: 15px 10px;
+        vertical-align: middle;
+        border-color: #e7e7e7;
+        strong {
+          font-family: $font-family-roboto-bold;
+          color: #3b3b3b;
+        }
+      }
+
+      tr:last-child {
+        border-bottom: 1px solid #e7e7e7;
+      }
+    }
+  }
+
+  &.secondary {
+    color: #888888;
+    margin: 15px 0;
+    font-family: $font-family-roboto;
+
+    thead {
+
+      th {
+        text-align: center;
+        font-size: 13px;
+        color: #aaaaaa;
+        font-family: $font-family-roboto;
+        border: none;
+        background: #fafafa;
+        padding: 15px 10px;
+        strong {
+          font-family: $font-family-roboto-bold;
+          color: #3b3b3b;
+        }
+
+        &:first-child {
+          text-align: left;
+        }
+      }
+    }
+
+    tbody {
+
+      td {
+        padding: 5px;
+        vertical-align: middle;
+        border-color: #e7e7e7;
+        text-align: center;
+        font-family: $font-family-roboto-bold;
+        color: #666666;
+        font-size: 13px;
+
+        strong {
+          font-family: $font-family-roboto-bold;
+          color: #3b3b3b;
+        }
+
+        &:first-child {
+          text-align: left;
+        }
+      }
+
+      tr:last-child {
+        border-bottom: 1px solid #e7e7e7;
+      }
+      
+      .as-header{
+        th{
+          background: #fafafa;
+        }
+      }
+    }
+  }
+}
+
+
+.blockers-table{
+  margin: 0; 
+  .external-icon{
+    padding-left: 8px;
+    color: #F6764E;
+  }
+  .status{
+    width:90px;
+    .scrumdo-select{
+      select{
+        padding-right: 25px;
+      }
+    }
+  }
+  .blocker-reason{
+    max-width: 300px;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  .blocker-pager{
+    td{
+      text-align: center;
+      background: #fff !important;
+    }
+  }
+  .pagination {
+    > li {
+      &.disabled{
+        > a,
+        > span{
+          color: #999999 !important;
+          &:hover{
+            color:#999999 !important;
+            border-color: #ddd;
+          }
+        }
+      }
+      &.active{
+        > a,
+        > span{
+          color: #fff !important;
+          background-color: #f6764e;
+          border-color: #f6764e;
+          &:hover{
+            color:#fff !important;
+          }
+        }
+      }
+      > a,
+      > span{
+        color: #f6764e !important;
+        &:hover{
+          color:#f6764e !important;
+          border-color: #f6764e;
+        }
+      } 
+    }   
+  }
+}
+.modal{
+  .blockers-table{
+    .status{
+      width:90px;
+      .scrumdo-select{
+        select{
+          padding-right: 25px;
+        }
+      }
+    }
+    .pagination{
+      margin: 0;
+    }   
+  }
+}

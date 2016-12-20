@@ -1,0 +1,22 @@
+<div class="task-grid">
+
+    <table class="task-table embedded-task-window" sd-access >
+      <tr>
+          <th class="status-bg-{{::taskStatus.id}}" ng-repeat="taskStatus in ctrl.taskStatuses()">
+            {{ taskStatus.name }}
+          </th>
+      </tr>
+      <tr>
+          <td ng-repeat="taskStatus in ctrl.taskStatuses()" class="task-list-cell">
+            <ul class="task-list" data-status-id="{{::taskStatus.id}}">
+                <sd-task ng-repeat="task in tasks|filter:ctrl.filterTask(taskStatus.id)|orderBy:'order'"></sd-task>
+            </ul>
+          </td>
+      </tr>
+
+
+    </table>
+    <br/>
+    <button ng-if="canWrite" class="scrumdo-btn primary new-task-button" ng-click="ctrl.newTask()">New Task</button>
+
+</div>

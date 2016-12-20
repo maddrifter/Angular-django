@@ -1,0 +1,47 @@
+<div class="modal-header card-modal epic-modal-header">
+    <button type="button" class="close"  ng-click="$dismiss('canceled')"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+    <h4>Team/Project Assignment</h4>
+
+</div>
+
+<div class="modal-body card-modal">
+    <p>
+        Select the projects to assign this milestone to.  Those projects will receive a notification about the assignment
+        and be able to assign this milestone to work within their project.  You will be able to track their progress on
+        this milestone from here.
+    </p>
+    <ul class="assignment-checkbox-list">
+        <li ng-repeat="project in ctrl.projectList" ng-if="!project.isPortfolio">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"
+                           ng-click="ctrl.toggleSelection(project.slug)"
+                           ng-checked="ctrl.selectedProjects.indexOf(project.slug) > -1"
+                           value="{{project.slug}}" /> {{project.name}}
+                </label>
+            </div>
+        </li>
+    </ul>
+
+
+    <div ng-if="ctrl.busyMode" class="busy-mode">
+        <div class="progress progress-striped active">
+            <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                Working...
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+
+    <button type="button"
+            class="scrumdo-btn secondary pull-right"
+            ng-click="ctrl.save()" >Save</button>
+
+    <button type="button"
+            class="pad-right-5 scrumdo-btn primary pull-right"
+            ng-click="$dismiss('canceled')" >Close</button>
+
+</div>

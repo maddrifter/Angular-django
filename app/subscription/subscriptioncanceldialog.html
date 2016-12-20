@@ -1,0 +1,28 @@
+<div class="modal-header card-modal epic-modal-header">
+    <button type="button" class="close"  ng-click="$dismiss('')"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+    <h4>Cancel Subscription</h4>
+
+
+</div>
+
+<div class="modal-body card-modal" ng-init="reason=''">
+
+    <label>
+        Please let us know why you are cancelling
+    </label>
+
+    <div style="margin: 10px">
+    <textarea class="form-control" ng-model="reason"></textarea>
+    </div>
+
+    <hr />
+
+
+
+
+    <button ng-click="$dismiss('')" type="button" class="scrumdo-btn primary">Keep Subscription</button>
+    <button ng-class="{disabled:reason.length == 0}"
+            ng-click="$close(reason)" type="button" class="delete-button scrumdo-btn btn-danger pull-right">Cancel Subscription</button>
+</div>
+

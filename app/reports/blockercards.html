@@ -1,0 +1,13 @@
+<div class="blocker-report" style="width: 100%; height: 80%;"></div>
+<div class="blocker-report-cards">
+    <div ng-if="loading" class="progress progress-striped active">
+        <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">loading...</div>
+    </div>
+    <ul ng-if="!loading" class="kanban-story-list">
+        <sd-story layout="'list'"
+            story="::blocker.card"
+            project="::project"
+            epics="::epics"
+            ng-repeat="blocker in cards track by blocker.card.id"></sd-story>
+    </ul>
+</div>

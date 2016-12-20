@@ -1,0 +1,90 @@
+<div class="scrumdo-backlog-sidebar scrumdo-sidebar pull-left"
+     sd-access
+     ng-class="{'closed-backlog':!ctrl.boardProject.uiState.loadBacklog, 'opened-backlog':ctrl.boardProject.uiState.loadBacklog}">
+    <div class="scrumdo-backlog pull-left">
+        <sd-backlog-add-story project="boardProject.project"
+                              ng-if="canWrite || canDrag===true"
+                              iteration="boardProject.backlog"
+                              epics="boardProject.epics"
+                              iterations="boardProject.iterations"></sd-backlog-add-story>
+
+
+
+        <div class="scrumdo-backlog-cards" >
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group small-input-group">
+                            <sd-filter filter="ctrl.filter()"
+                                       name="backlogFilter"
+                                       project="boardProject.project"
+                                       cells="boardProject.boardCells">
+                            </sd-filter>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <div class="scrumdo-select primary smaller">
+                                <select ng-change="ctrl.viewChange()" ng-model="ctrl.viewType" convert-to-number>
+                                    <option value="0">By List</option>
+                                    <option value="1">By Collection</option>
+                                    <option value="2">By Label</option>
+                                </select>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-1 no-padding">
+                            <div ng-if="::canWrite" uib-dropdown>
+                                  <button class="scrumdo-btn primary smaller" 
+                                        type="button" aria-expanded="false"
+                                        uib-dropdown-toggle>
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </button>
+
+                                <ul class="dropdown-menu pull-right"
+                                    uib-dropdown-menu role="menu"
+                                    aria-labelledby="dLabel">
+                                    <li><a ng-click="ctrl.selectAll($event)">Select All Cards</a></li>
+                                    <li><a ng-click="ctrl.selectNone($event)">Select None</a></li>
+                                </ul>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="(ctrl.boardProject.uiState.backlogOpen || ctrl.filterOn)" class="scrumdo-backlog-scroll" 
+                ng-class="{readonly:!canWrite && canDrag!==true}">
+                <div class="scrumdo-backlog-scroll-reset">
+                    <ul ng-if="ctrl.viewType==0" class="kanban-story-list" ng-class="{'no-drag':canDrag===false, 'card-sortable-cell':canDrag!==false}" 
+                        data-iteration-id="{{boardProject.backlogIterationId()}}">
+                        <sd-story story-context-menu story="::story"
+                                  project="::boardProject.project"
+                                  epics="::epics"
+                                  layout="'list'"
+                                  ng-repeat="story in boardProject.backlogStories|orderBy:ctrl.sortOrder"></sd-story>
+                    </ul>
+
+                    <sd-backlog-epics ng-if="ctrl.viewType==1"></sd-backlog-epics>
+                    <sd-backlog-no-epics ng-if="ctrl.viewType==1"></sd-backlog-no-epics>
+
+                    <sd-backlog-labels ng-if="ctrl.viewType==2"></sd-backlog-labels>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="scrumdo-backlog-statics" ng-if="(!ctrl.filterOn && ctrl.boardProject.uiState.loadBacklog)" 
+            ng-show="(ctrl.storyCount > ctrl.storyLoadLimit && !ctrl.boardProject.uiState.backlogOpen)">
+            <p>There are {{ctrl.storyCount}} cards in this iteration. We suggest using a filter above. If you'd like to load them all 
+                <a href="#load" ng-click="ctrl.toggleBacklog($event)">click here</a>.</p>
+        </div>
+    </div>
+    <div ng-click="ctrl.loadBacklog($event)" class="scrumdo-pull-sidebar backlog-pull pull-right">
+        <a class="scrumdo-sidebar-text">Backlog <span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+    </div>
+</div>

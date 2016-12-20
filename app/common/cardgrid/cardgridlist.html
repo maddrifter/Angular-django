@@ -1,0 +1,11 @@
+<div class="alert alert-info" ng-if="cellData.loading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+<div class="alert alert-danger" ng-if="cellData.error">Error loading cards.</div>
+
+
+<ul class="kanban-story-list" ng-class="{'no-drag':canWrite===false, 'card-grid-list':canWrite!==false}">
+    <sd-story story-context-menu layout="storyLayout"
+              story="::story"
+              project="::cellData.project"
+              epics="::cellData.epics"
+              ng-repeat="story in cellData.cards|orderBy:sortOrder track by story.id"></sd-story>
+</ul>

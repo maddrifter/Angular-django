@@ -1,0 +1,82 @@
+<div class="risks-tab" ng-class="{'sample-data':!ctrl.projectData.isPremiumUser()}">
+
+    <sd-restricted-feature ng-if="::!ctrl.projectData.isPremiumUser()" 
+        feature-name="'Risks'" organization-slug="ctrl.projectData.organizationSlug" 
+        feature-image="'RisksSample.png'"></sd-restricted-feature>
+
+    <div class="row" ng-if="::ctrl.projectData.isPremiumUser()">
+        <div class="col-sm-8 risks-list">
+
+            <button ng-if="ctrl.projectData.canWrite()" class="scrumdo-btn secondary pull-right" ng-click="ctrl.addRisk()">
+                <i class="fa fa-plus"></i> Add Risk</button>
+
+            <div class="pull-left risk-stat-box">
+                <span class="risk-stat">{{ctrl.userRisks.length+ctrl.systemRisks.length}}</span>
+                <span class="risk-label">Total<br/>Risks</span>
+            </div>
+            <div class="pull-left risk-stat-box">
+                <span class="risk-stat high-risk">{{ctrl.highSeverityCount()}}</span>
+                <span class="risk-label">High<br/>Severity</span>
+            </div>
+
+            <div class="width220px display-inline-block" ng-if="!ctrl.topFive">
+                <input type="text" ng-model="ctrl.userFilter" placeholder="Quick Filter" class="form-control"/>
+            </div>
+
+            <table class="table risks-table">
+                <tr>
+                    <th>Risk</th>
+                    <th colspan="{{ctrl.portfolio().risk_types.length}}">Severity</th>
+                    <th>Probability</th>
+                    <th>Artifacts</th>
+                </tr>
+                <tr ng-repeat="risk in ctrl.risks() | filter:ctrl.filterRisk | orderBy:ctrl.score"
+                    ng-click="ctrl.editRisk(risk)"
+                    ng-mouseout="ctrl.hover(null)"
+                    ng-mouseover="ctrl.hover(risk)">
+                    <td class="risk-name-column">
+                        <span class="risk-color-blob" ng-style="{'background-color': ctrl.riskColor(risk)}"></span>
+                        <b>{{risk.description}}</b>
+                    </td>
+
+
+                    <td ng-repeat="risk_type in ctrl.portfolio().risk_types"
+                        class="risk-box {{'severity-' + risk['severity_' + (1+$index)]}}">
+                        {{risk_type}}
+                        <span class="risk-value">{{ctrl.riskNames[risk['severity_' + ($index+1)]]}}</span>
+                    </td>
+
+
+
+                    <td class="probability-column">
+                        <uib-progressbar value="risk.probability" max="100"></uib-progressbar>
+                        {{risk.probability}}%
+                    </td>
+                    <td>
+                        <sd-risk-artifacts-label artifacts="ctrl.riskArtifacts(risk)"></sd-risk-artifacts-label>
+
+                    </td>
+
+                </tr>
+
+                <tr class="system-risk" ng-repeat="risk in ctrl.getsystemrisks() | filter:ctrl.filterRisk">
+                    <td class="risk-name-column">
+                        <span class="risk-color-blob"></span>
+                        <b ng-bind-html="risk.description"></b>
+                    </td>
+                    <td colspan="{{ctrl.portfolio().risk_types.length}}" class="risk-box">N/A</td>
+                    <td class="probability-column">N/A</td>
+                    <td>N/A</td>
+                </tr>
+            </table>
+            <a ng-if="ctrl.topFive"
+               class="pull-right"
+               ui-sref="app.iteration.risks({iterationId:ctrl.projectData.currentIteration.id})">See all risks</a>
+        </div>
+        <div class="col-sm-4 chart-area" >
+            <sd-spider-chart highlight="ctrl.hoverRisk" portfolio="ctrl.portfolio()" risks="ctrl.userRisks"></sd-spider-chart>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,443 @@
+<div class="kanbanboardEditor" ng-controller="BoardEditController">
+    <div id="kanbanboardeditorpalette">
+
+
+
+        <div ng-if="selectingCells">
+            Click on cells to select them.<br/>
+
+            <p>
+                There <ng-pluralize count="ctrl.selectedCells.length"
+                                    when="{'0': 'are',
+                    'one': 'is',
+                    'other': 'are'}"></ng-pluralize>
+                currenly
+                <ng-pluralize count="ctrl.selectedCells.length"
+                when="{'0': 'no cells',
+                    'one': 'one cell',
+                    'other': '{} cells'}">
+                </ng-pluralize>
+                selected.
+            </p>
+            <hr/>
+            <a ng-click="ctrl.doneSelecting()" class="scrumdo-btn primary">Done Selecting</a>
+        </div>
+
+
+
+        <div ng-if="!selectingCells && ctrl.editorMode" >
+            <div ng-if="!ctrl.editingSomething()" class="board-editor-help">
+                <h3>Board Editor</h3>
+                <p>The area on the right represents a scaled down version of your board.  This interface makes it easy to
+                   quickly define the structure of your board.
+                </p>
+                <p><b>Cells - </b> You place <i class="underlined" tooltip-placement="bottom" uib-tooltip="A card can represent a user story, feature, bug, or other unit of work">cards</i> into cells.
+                   Click and Drag on an empty square in the grid to draw a cell.</p>
+
+                <p><b>Headers - </b> Each cell gets it's own header.  You can also draw a rectangle 1 unit high, and it will only be a header.  Useful for going over multiple cells.</p>
+
+                <p><b>Sizing - </b> Since the grid is zoomed out, a good average cell size is about 10 wide and 15 or more high.
+                </p>
+                <p><b>Colors, styling, labels - </b> This area will be replaced with options for the cell when you start drawing.  You can also click on an existing cell to edit it's options.</p>
+                <p><b>Can't see the grid?</b> Make sure your browser is at 100% zoom.</p>
+
+
+                <a class="scrumdo-btn primary " ui-sref="app.timeline">Done Editing</a>
+                <button class="scrumdo-btn primary " ng-click="ctrl.wizard()">Run Board Wizard</button>
+
+            </div>
+
+            <div ng-if="ctrl.selectedCells.length>1">
+                <a class="pull-right pad-right-5" ng-click="ctrl.selectNone()">Select None</a>
+                {{ctrl.selectedCells.length}} items selected.
+
+                <hr/>
+
+                <button class="scrumdo-btn primary" ng-click="ctrl.onMultiDelete()">Delete</button>
+                <button class="scrumdo-btn pull-right primary" ng-click="ctrl.duplicate()">Duplicate</button>
+
+                <div ng-if="ctrl.isDuplicating" class="scrumdo-alert notify">
+                    Click grid to target location of duplicated items.
+                </div>
+
+
+            </div>
+
+            <div ng-if="editingHeader" class="settings-cell-options">
+                <form>
+                    <fieldset>
+
+                        <div class="form-group">
+                            <label for="#" class="scrumdo-control-label primary">Title</label>
+                            <input class="form-control" type="text" ng-model="editingHeader.label" />
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="scrumdo-control-label primary">Background Color</label>
+                            <br/>
+
+                              <spectrum-colorpicker
+                                  ng-model="editingHeader.input_header_color"
+                                  options="{
+                                    showPalette: true,
+                                    preferredFormat: 'hex',
+                                    palette: colorPalette,
+                                    clickoutFiresChange: true,
+                                    hideAfterPaletteSelect: true,
+                                    showButtons: false
+                                  }">
+                              </spectrum-colorpicker>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="scrumdo-control-label primary">Related Cells</label>
+                                <span class="help-block">
+                                    There are currenly
+                                    <ng-pluralize count="editingPolicy.cells.length"
+                                    when="{'0': 'no cells',
+                                        'one': 'one cell',
+                                        'other': '{} cells'}">
+                                    </ng-pluralize>
+                                    related to this header.
+                                </span>
+                                <a ng-click="ctrl.selectHeaderCells()" class="btn btn-default wip-limit-button">Select Cells</a>
+                        </div>
+
+                        <div class="form-group" ng-if="editingPolicy.cells.length > 0">
+                            <label class="scrumdo-control-label primary">Minimum WIP Limit</label>
+                            <input ng-change="ctrl.validateWipLimit()" type="number" min="0" class="span1 form-control" ng-model="editingPolicy.min_related_value" />
+                        </div>
+                        
+                        <div class="form-group" ng-if="editingPolicy.cells.length > 0">
+                            <label class="scrumdo-control-label primary">Maximum WIP Limit</label>
+                            <input ng-change="ctrl.validateWipLimit()" type="number" min="-1" class="span1 form-control" ng-model="editingPolicy.related_value" />
+                        </div>
+                        <div ng-if="!ctrl.validHeaderWipLimits" class="form-group">
+                            <span class="alert-warning">maximum value should be greater then minimum.</span>
+                        </div>
+
+                        <div ng-if="editingPolicy.cells.length > 0 && (editingPolicy.related_value > 0 || editingPolicy.min_related_value > 0)" class="form-group">
+                            <label class="scrumdo-control-label primary">WIP Type</label>
+                                <label class="radio">
+                                    <input ng-model="editingPolicy.policy_type" value="0" name="wipType" type="radio" />
+                                    # of cards
+                                </label>
+                                <label class="radio">
+                                    <input ng-model="editingPolicy.policy_type" value="1" name="wipType" type="radio" />
+                                    # of points
+                                </label>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="scrumdo-control-label primary">Policy Text <i uib-tooltip="Text to display on the board to remind people of entry or exit criteria.  Use markdown for formatting." tooltip-placement="right" class="fa fa-info-circle"></i> </label>
+                            <textarea name="policy_text" class="form-control" ng-model="editingHeader.policy_text"></textarea>
+                        </div>
+
+
+
+                    </fieldset>
+                </form>
+
+
+                <a ng-click="ctrl.onSave()" ng-class="{disabled:!ctrl.validHeaderWipLimits}" class="pull-right scrumdo-btn secondary">Save Header</a>
+                <a ng-click="ctrl.deleteHeader()" class="scrumdo-btn primary">Delete Header</a>
+
+            </div>
+
+
+            <div ng-if="editingCell" class="settings-cell-options">
+                <form name="cellForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label primary">Title</label>
+                                <input ng-model="editingCell.label" type="text" class="scrumdo-form primary">
+                            </div>
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label primary">Card Style</label>
+                                <div class="scrumdo-select primary">
+                                    <select ng-model="editingCell.layout" class="form-control" convert-to-number>
+                                        <option value="0">Standard</option>
+                                        <!--<option value="1">Compact</option>-->
+                                        <option value="2">List</option>
+                                        <!--<option value="3">Grid</option>-->
+                                        <!--<option value="4">Compact Grid</option>-->
+                                        <option ng-if="::boardProject.project.project_type==1" value="8">Tasks (Be sure to make your cell wide enough)</option>
+                                        <option ng-if="::boardProject.project.project_type==2" value="9">Team Assignment</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label primary">Time Type</label>
+                                <div class="scrumdo-select primary">
+                                    <select name='policyType' ng-model="editingCell.time_type" class='form-control' convert-to-number>
+                                        <option value="0">Wait time</option>
+                                        <option value="1">Setup time</option>
+                                        <option value="2">Work time</option>
+                                        <option value="3">Done</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label primary">Header Color</label><br/>
+                                <spectrum-colorpicker
+                                        trigger-id="theTrigger"
+                                        ng-model="editingCell.input_header_color"
+                                        options="{
+                                showPalette: true,
+                                preferredFormat: 'hex',
+                                palette: colorPalette,
+                                clickoutFiresChange: true,
+                                hideAfterPaletteSelect: true,
+                                showButtons: false
+                              }">
+                                </spectrum-colorpicker>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label primary">Background</label><br/>
+                                <spectrum-colorpicker
+                                        trigger-id="theTrigger"
+                                        ng-model="editingCell.input_background_color"
+                                        options="{
+                                showPalette: true,
+                                preferredFormat: 'hex',
+                                palette: colorPalette,
+                                clickoutFiresChange: true,
+                                hideAfterPaletteSelect: true,
+                                showButtons: false
+                              }">
+                                </spectrum-colorpicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><label>Minimum WIP Limit</label></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label primary"># of Card</label>
+                                <input ng-change="ctrl.validateWipLimit()" class="scrumdo-form primary" type="number" min="0" ng-model="editingCell.minWipLimit">
+                            </div> 
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label primary"># of Point</label>
+                                <input ng-change="ctrl.validateWipLimit()" class="scrumdo-form primary" type="number" min="0" ng-model="editingCell.minPointLimit">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><label>Maximum WIP Limit</label></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label primary"># of Card</label>
+                                <input ng-change="ctrl.validateWipLimit()" class="scrumdo-form primary" type="number" min="-1" ng-model="editingCell.wipLimit">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="#" class="scrumdo-control-label primary"># of Point</label>
+                                <input ng-change="ctrl.validateWipLimit()" class="scrumdo-form primary" type="number" min="-1" ng-model="editingCell.pointLimit">
+                            </div>
+                        </div>
+                        <div ng-if="!ctrl.validCellWipLimits" class="col-md-12">
+                            <span class="alert-warning">maximum values should be greater then minimum.</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="scrumdo-account-board-settings-tip">
+                                <!--<i class="scrumdo-icons check"></i>-->
+                                <!--Include in Lead Time calculation-->
+                                <input class="lead-time"
+                                       id="leadTimeCheckbox"
+                                       ng-model="editingCell.leadTime"
+                                       type="checkbox" />
+                                <label for="leadTimeCheckbox">Include in Lead Time calculations</label>
+
+                                <span class="scrumdo-info-icon text-top glyphicon glyphicon-info-sign"
+                                      data-toggle="tooltip"
+                                      data-placement="top" title=""
+                                      uib-tooltip="Should time spent in this cell count towards lead time?  Recommended only for cells with a WIP limit."></span>
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="from-group">
+                                <label for="#" class="scrumdo-control-label primary">
+                                    Policy Text
+                                    <span class="scrumdo-info-icon text-top glyphicon glyphicon-info-sign" data-toggle="tooltip"
+                                          data-placement="top" title="" uib-tooltip="Text to display on the board to remind people of entry or exit criteria."></span>
+                                </label>
+                                <textarea ng-model="editingCell.policy_text" name="#" id="#" cols="30" rows="2" class="scrumdo-form primary"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button ng-click="ctrl.onDelete()" class="scrumdo-btn primary extended-nopadding"><i class="fa fa-trash"></i> Delete Cell</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button ng-click="ctrl.onSave()"
+                                            ng-class="{disabled:(!cellForm.$valid || !ctrl.validCellWipLimits)}"
+                                            class="scrumdo-btn secondary extended-nopadding"><i class="fa fa-save"></i> Save Cell</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div ng-if="!selectingCells && ctrl.reportMode" heading="Report Profiles" select="ctrl.setWorkflowMode()">
+            <div class="workflow-help" ng-show="! helpClosed">
+                <h3>Report Profile Editor</h3>
+                <p>
+                    <b>What's a Report Profile?</b> A report profile defines a series of steps a piece of work goes through.
+                </p>
+
+                <p>
+                    <b>Aren't my visual cells enough?</b>
+                    We separate report profiles from the visual board.  This gives you the ability to get exactly the reports you need and doesn't force your board to look a certain way to get them.
+                </p>
+
+                <p>
+                    <b>Creating Report Profiles</b>
+                    To create a profile, click the Add Profile button.  Then add several steps to your profile.  Lastly, associate cells to the steps.
+                </p>
+
+                <p>
+                    <b>More Help.</b>
+                    Report Profiles can be a complex topic.  Read this <a target="_blank" href="http://content.scrumdo.com/help/kanban/core.html">help page</a> for more info. (It will open in a new tab)
+                </p>
+
+                <a ng-click="ctrl.closeWorkflowHelp()" class="scrumdo-btn primary">Close This Help</a>
+            </div>
+
+
+
+            <div ng-show="helpClosed">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="#" class="scrumdo-control-label primary">Profile Name</label>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="scrumdo-select primary">
+                                        <select class="form-control"
+                                                ng-model="ctrl.currentWorkflow" ng-disabled="!ctrl.isProfileExist"
+                                                ng-options="w as w.name for w in boardProject.workflows|filter:{flow_type:0}"></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <button ng-click="ctrl.changeWorkflowName()"  ng-disabled="!ctrl.isProfileExist" class="scrumdo-btn secondary extended-nopadding">Change Name</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr/>
+                        <a class="scrumdo-btn primary pull-right" ng-disabled="!ctrl.isProfileExist" ng-click="ctrl.addWorkflowStep()">Add Step</a>
+                        <p class="scrumdo-account-steps-info">Reorder steps by dragging up or down.</p>
+                    </div>
+                </div>
+
+                <ul class="workflow-steps"  as-sortable="ctrl.dragListeners" ng-model="ctrl.currentWorkflow.steps">
+                    <li class="row" container-positioning="relative" as-sortable-item ng-repeat="step in ctrl.currentWorkflow.steps" ng-controller="WorkflowStepEditController">
+                        <div class="col-xs-12" as-sortable-item-handle>
+                            <div class="scrumdo-account-steps">
+                                <div class="empty-colorselector pull-left">
+                                    <spectrum-colorpicker
+                                            no-drag
+                                            ng-model="wctrl.inputColor"
+                                            options="{
+                                              showPalette: true,
+                                              preferredFormat: 'hex',
+                                              palette: colorPalette,
+                                                    clickoutFiresChange: true,
+                                                    hideAfterPaletteSelect: true,
+                                                    showButtons: false
+                                            }"></spectrum-colorpicker>
+                                </div>
+                                <div class="scrumdo-account-steps-form pull-left">
+                                    <form id="nameForm">
+                                        <input type="text"
+                                               no-drag
+                                               ng-change="wctrl.queueSaveStep(step, nameForm)"
+                                               ng-model="step.name" class="scrumdo-form primary"/>
+                                    </form>
+                                </div>
+                                <div class="scrumdo-account-steps-btn pull-left">
+                                    <button no-drag ng-click="ctrl.pickCellsForStep(step)" class="scrumdo-btn primary extended-nopadding">Select Cells</button>
+                                </div>
+                                <div class="scrumdo-account-close-cell margin-center pull-right">
+                                    <span no-drag ng-click="wctrl.deleteStep(step)" class="glyphicon glyphicon-remove "></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a class="scrumdo-btn extended primary" ng-disabled="!ctrl.isProfileExist" ng-click="ctrl.deleteWorkflow(ctrl.currentWorkflow)">Delete Profile</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a class="scrumdo-btn extended secondary" ng-click="ctrl.newWorkflow()">New Profile</a>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+    </div> <!-- end #kanbanboardeditorpalette -->
+
+    <div id="kanbanboardeditor">
+        <sd-board-preview cells="boardProject.boardCells"
+                          headers="boardProject.boardHeaders"
+                          multiselect="true"
+                          selection-changed="ctrl.onSelectionChanged(added, removed, current)"
+                          selected-cells="ctrl.selectedCells"
+                          selection-mode="selectingCells"
+                          draw-mode="drawingMode"
+                          workflow-steps="ctrl.currentSteps()"
+                          grid="drawingMode"
+                          gridsize="10"
+                          width="3000"
+                          height="5000"></sd-board-preview>
+
+
+    </div>
+
+
+</div>

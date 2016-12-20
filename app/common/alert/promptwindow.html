@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">{{ title }}</h3>
+</div>
+
+<div class="modal-body">
+   <h5>{{ prompt }}</h5>
+   <input ng-model="promptText" type="text" class="form-control" />
+</div>
+<div class="modal-footer">
+    <button class="btn" ng-class="okClass" ng-click="ctrl.ok()">{{ okText }}</button>
+    <button ng-if="cancelText" class="btn" ng-click="$dismiss('canceled')">{{ cancelText }}</button>
+</div>

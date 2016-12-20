@@ -1,0 +1,83 @@
+<div class="iteration-summary">
+    <div class="backlog-container-header">
+        <a class="pull-right" ng-href="/projects/{{project.slug}}/iteration/{{ictrl.iteration.id}}"><i class="fa fa-external-link"></i> Open Iteration</a>
+        <h2>
+            {{ictrl.iteration.name}}
+        </h2>
+
+        <div ng-if="! ictrl.stats">
+            <i class="fa fa-spin fa-spinner"></i>
+            Loading Iteration Stats...
+        </div>
+
+        <div class="scrumdo-project-boxes-content upper text-center" ng-if="ictrl.stats">
+            <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                    <h3 class="scrumdo-project-boxes-heading h3 upper">{{ictrl.stats.total_cards}}</h3>
+                    <span class="scrumdo-project-boxes-minitext">TOTAL CARDS</span>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <h3 class="scrumdo-project-boxes-heading h3 upper">{{ictrl.stats.in_progress_cards}}</h3>
+                    <span class="scrumdo-project-boxes-minitext">CARDS IN PROGRESS</span>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <h3 class="scrumdo-project-boxes-heading h3 upper">{{ictrl.stats.completed_cards}}</h3>
+                    <span class="scrumdo-project-boxes-minitext">COMPLETED CARDS</span>
+                </div>
+                <div class="col-sm-3 col-xs-6" ng-if="ictrl.stats.daysLeft">
+                    <h3 class="scrumdo-project-boxes-heading h3 upper">{{ictrl.stats.daysLeft}}</h3>
+                    <span class="scrumdo-project-boxes-minitext">DAYS LEFT</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scrumdo-project-boxes-content lower text-center" ng-if="ictrl.stats.total_points">
+            <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                    <h4 class="scrumdo-project-boxes-heading h4 lower">{{ictrl.stats.total_points}}</h4>
+                    <span class="scrumdo-project-boxes-minitext">TOTAL POINTS</span>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <h4 class="scrumdo-project-boxes-heading h4 lower">{{ictrl.stats.in_progress_points}}</h4>
+                    <span class="scrumdo-project-boxes-minitext">POINTS IN PROGRESS</span>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <h4 class="scrumdo-project-boxes-heading h4 lower">{{ictrl.stats.completed_points}}</h4>
+                    <span class="scrumdo-project-boxes-minitext">COMPLETED POINTS</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div sd-report-cfd
+             style="width: 100%; height: 320px; background-color: #ffffff"
+             project="project"
+             report-data="ictrl.cfdData">
+        </div>
+
+        <div ng-if="ictrl.cellCounts.length>0" class="board-preview">
+
+            <sd-board-preview ng-if="!ictrl.loading && ictrl.gridHeight>0"
+                              cells="ictrl.boardCells"
+                              headers="ictrl.boardHeaders"
+                              multiselect="false"
+                              selected-cells="[]"
+                              selection-mode="true"
+                              workflow-steps="[]"
+                              cell-counts="ictrl.cellCounts"
+                              hover="ictrl.hover"
+                              grid="false"
+                              gridsize="7"
+                              width="800"
+                              height="ictrl.gridHeight"></sd-board-preview>
+
+            <div style="min-height:30px; margin-top: 10px;">
+                <span ng-if="ictrl.hover.cell">{{ictrl.hover.cell.full_label}}</span>
+                <span ng-if="ictrl.hover.header">{{ictrl.hover.header.label}}</span>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

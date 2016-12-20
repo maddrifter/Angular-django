@@ -1,0 +1,19 @@
+<div class="scrumdo-archive-sidebar scrumdo-sidebar"
+     ng-class="{'closed-archive':!ctrl.boardProject.uiState.archiveOpen, 'opened-archive':ctrl.boardProject.uiState.archiveOpen}">
+    <div class="scrumdo-sidebar-archive-heading">
+    ARCHIVE
+    </div>
+    <div class="scrumdo-archive pull-left">
+
+
+                <ul ng-if="ctrl.viewType==0" class="kanban-story-list" data-iteration-id="{{boardProject.archiveIterationId()}}">
+                    <sd-story story="story"
+                              project="boardProject.project"
+                              epics="boardProject.epics"
+                              layout="'list'"
+                              ng-repeat="story in boardProject.archiveStories|orderBy:'rank'"></sd-story>
+                </ul>
+
+
+    </div>
+</div>

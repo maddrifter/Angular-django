@@ -1,0 +1,69 @@
+<div class="project-box" ng-class="{'root': isroot}" id="project-box-{{::project.id}}">
+    <!-- // disable for now, will add in future 
+    <div ng-click="ctrl.projectSummary(project)" ng-if="ispremiumuser" 
+        class="project-summary-btn" uib-tooltip="Workspace Summary">
+        <span class="fa fa-plus-circle"></span>
+    </div> -->
+    <p ng-if="!isroot" class="project-name">{{::project.name}}</p>
+    
+    <div ng-if="ctrl.loaded" class="time-type-box" ng-class="ctrl.cellClass(cell['cell'])" ng-repeat="cell in ctrl.stats.cell_data">
+        <div class="content">
+            <span class="icon fa" ng-class="ctrl.cellIcon(cell['cell'])"></span>
+            <span ng-if="isroot" class="title">{{::cell.cell}}</span>
+            <ul class="data">
+                <li><label>{{::cell.total_cards}}</label><span>TOTAL<br/>CARDS</span></li>
+                <li><label>{{::cell.avg_time | hoursToDay}}</label><span>AVG<br/>TIME</span></li>
+                <li><label>{{::cell.total_time | hoursToDay}}</label><span>AGGREGATE<br/>TIME</span></li>
+            </ul>
+
+            <div ng-if="ispremiumuser" class="search-cards" uib-tooltip="Search Cards in this block">
+                <span class="fa fa-search" adjust-box-position ng-click="ctrl.loadCards(cell['cell_type'])"></span>
+            </div>
+
+            <div ng-include="ctrl.templateName" ng-class="{'active': ctrl.searchingCell==cell['cell_type']}" 
+                class="cards-list"></div>
+
+        </div>
+
+        <div ng-if="isroot" class="box-bar"></div>
+
+    </div>
+
+    <div class="empty" ng-if="!ctrl.loaded">
+        <div class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+    </div>
+
+    <div id="project-box-end-{{::project.id}}"></div>
+
+    <div ng-if="ctrl.loaded" class="alert-icons">
+        <div uib-dropdown>
+            <div ng-if="!isroot && ctrl.systemRisks['wip'].length > 0" uib-tooltip="Exceeded WIP" 
+                uib-dropdown-toggle class="alert-icon legends-icons legend-icon-wip"></div>
+            <ul ng-if="ispremiumuser" class="dropdown-menu risks-list-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                <li ng-repeat="risk in ctrl.systemRisks['wip']" role="menuitem" 
+                    ng-bind-html="risk.description"></li>
+            </ul>
+        </div>
+        <div uib-dropdown>
+            <div ng-if="!isroot && ctrl.systemRisks['duedate'].length > 0" uib-tooltip="Not finished on time" 
+                uib-dropdown-toggle class="alert-icon legends-icons legend-icon-overtime"></div>
+            <ul ng-if="ispremiumuser" class="dropdown-menu risks-list-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                <li ng-repeat="risk in ctrl.systemRisks['duedate']" role="menuitem" 
+                    ng-bind-html="risk.description"></li>
+            </ul>
+        </div>
+        <div uib-dropdown>
+            <div ng-if="!isroot && ctrl.systemRisks['aging'].length > 0" uib-tooltip="Sitting around too long" 
+                uib-dropdown-toggle class="alert-icon legends-icons legend-icon-inactive"></div>
+            <ul ng-if="ispremiumuser" class="dropdown-menu risks-list-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                <li ng-repeat="risk in ctrl.systemRisks['aging']" role="menuitem" 
+                    ng-bind-html="risk.description"></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div ng-if="!isroot && ctrl.systemRisks['wip'].length > 0" class="alert-bar overwip"></div>
+    <div ng-if="!isroot && ctrl.systemRisks['duedate'].length > 0" class="alert-bar overtime"></div>
+    <div ng-if="!isroot && ctrl.systemRisks['aging'].length > 0" class="alert-bar inactive"></div>
+
+</div>

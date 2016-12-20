@@ -1,0 +1,135 @@
+.cards-comments {
+
+  background-color: #F9F9F9;
+
+  .cards-message {
+    @include clearfix();
+    padding-top: 20px;
+  }
+
+  .cards-modal-logtime {
+    color: #aaaaaa;
+    font-size: 10px;
+    font-family: $font-family-roboto;
+  }
+
+      
+  .comment-edit{
+    background: #eeeeee;
+    color: #989898;
+    cursor: pointer;
+    vertical-align: text-top;
+    padding: 3px;
+    border-radius: 2px;
+  }
+  
+  .comment-delete{
+    margin-left: 5px;
+  }
+
+    
+  .comment-edit{
+    background: #eeeeee;
+    color: #989898;
+    cursor: pointer;
+    vertical-align: text-top;
+    padding: 3px;
+    border-radius: 2px;
+  }
+  
+  .comment-delete{
+    margin-left: 5px;
+  }
+
+  .cards-log {
+    margin: 10px 0;
+    padding: 0;
+
+    li {
+      list-style: none;
+      border-bottom: 1px solid #eeeeee;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      @include clearfix();
+
+      &:first-child {
+        border-top: 1px solid #eeeeee;
+      }
+    }
+  }
+
+  .cards-log-message {
+    font-family: $font-family-roboto;
+    font-size: 12px;
+    color: #888888;
+
+    strong {
+      font-family: $font-family-roboto-bold;
+      color: #3b3b3b;
+    }
+  }
+
+
+  .cards-col-1,
+  .cards-col-11 {
+    float: left;
+  }
+
+  .cards-col-1 {
+    width: 5%;
+  }
+
+  .cards-col-11 {
+    width: 95%;
+    padding-left: 15px;
+  }
+
+
+  .comments-textarea {
+    @extend .form-control;
+    resize: vertical;
+    border: 1px solid #d8d8d8;
+    background: #ffffff;
+    border-radius: 3px;
+    font-family: $font-family-roboto;
+    font-size: 13px;
+    padding: 10px;
+    min-height: 42px;
+    outline: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    @include box-shadow(none);
+      
+    &.edit-comment{
+        min-height: 120px;
+    }
+  }
+
+  .comments-textarea:focus {
+    min-height: 120px;
+  }
+
+  .add-comment-button {
+    margin-bottom: 10px;
+  }
+
+}
+
+
+
+
+// We are using this one in the inbox as well as the comments page:
+.cards-message-response {
+  background: #ffffff;
+  border-radius: 3px;
+  padding: 10px;
+  font-family: $font-family-roboto;
+  font-size: 12px;
+  color: #888888;
+  margin-bottom: 5px;
+  white-space: pre-wrap; /* CSS 3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
+}

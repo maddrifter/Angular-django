@@ -1,0 +1,16 @@
+<li class="backlog-container-card"
+    data-story-id="{{story.id}}"
+    ng-click="ctrl.onClicked($event)"
+    ng-class="{'collapsed-container':ctrl.listLayout}">
+
+    <input class="hidden-xs story-checkbox" ng-if="! ctrl.listLayout && ! ctrl.dependencyLayout" ng-change="ctrl.onChecked()" type="checkbox" ng-model="story.selected" />
+
+    <div class="cards"
+         ng-class="ctrl.getCardClass()"
+         ng-include="ctrl.templateName">
+
+    </div>
+    <div class="pull-right scrumdo-dependency-box" ng-if="ctrl.dependencyLayout && ctrl.removeDependancy">
+         <span ng-click="ctrl.removeDependency(story)" class="scrumdo-tags-close glyphicon glyphicon-remove remove-dependency"></span>
+    </div>
+</li>

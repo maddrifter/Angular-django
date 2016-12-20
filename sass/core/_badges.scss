@@ -1,0 +1,41 @@
+//------------------------------
+// *****************************
+// Badges
+// *****************************
+//------------------------------
+
+.badges {
+  font-family: $font-family-roboto;
+  font-size: 10px;
+  color: #cccccc;
+  padding: 1px 7px;
+
+  &.primary {
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    &.normal-view{
+      display: inline-block;
+    }
+  }
+
+  &.label {
+    color: #ffffff;
+  }
+
+  &.story-tag-blocked {
+    border-color: #FF0000;
+  }
+
+  &.story-tag-urgent {
+    border-color: #FFFF00;
+  }
+
+  &.story-tag-spike {
+    border-color: #23BC9C;
+  }
+
+  &.story-tag-public {
+    border-color: #9A59B5;
+  }
+
+}

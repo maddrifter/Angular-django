@@ -1,0 +1,45 @@
+<div class="modal-header">
+    Import Stories
+    <button type="button"
+            class="close"
+            ng-click="$dismiss('canceled')">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+    </button>
+</div>
+
+<div class="modal-body card-modal">
+    <h2>{{ctrl.project.name}}</h2>
+
+    <div ng-if="ctrl.state == 0">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="scrumdo-input-form primary text-center" nv-file-over nv-file-drop uploader="uploader">
+                        <span ng-if="uploader.isHTML5">Drag Files Here</span>
+                        <span ng-if="uploader.isHTML5">OR</span>
+                        <label for="fileUpload" class="scrumdo-btn primary extended">Browse File</label>
+                        <input type="file" value="file" id="fileUpload" nv-file-select uploader="uploader">
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-danger">
+                <b>Warning:</b>  Importing stories with a story number that already exists updates &amp; overwrites.  Leave this column blank to create new stories.
+            </div>
+        </form>
+
+    </div>
+
+    <div ng-if="ctrl.state == 1">
+        Uploading File...
+        <div class="progress progress-striped active">
+            <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+        </div>
+    </div>
+
+
+    <div ng-if="ctrl.state == 3" class="alert alert-danger">
+        <b>Error</b> Could not import file. <a ng-click="ctrl.state=0">Start Over</a>
+    </div>
+
+</div>

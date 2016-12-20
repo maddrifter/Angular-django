@@ -1,0 +1,32 @@
+<div class="increment-feature-plans">
+    <table ng-if="increment.schedule.length > 0">
+        <thead>
+            <tr>
+                <th ng-class="{'current':ctrl.isCurrentSchedule(schedule)}" class="column" 
+                    ng-hide="ctrl.scheduleVisibility[schedule.id]===false" 
+                    ng-repeat="schedule in increment.schedule">
+                    <div class="header">
+                        <p class="schedule-name">{{schedule.default_name}}</p>
+                        <span class="schedule-dates">{{schedule.start_date}} - {{schedule.end_date}}</span>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td ng-class="{'current':ctrl.isCurrentSchedule(schedule)}" class="column"
+                    ng-hide="ctrl.scheduleVisibility[schedule.id]===false" 
+                    ng-repeat="schedule in increment.schedule">
+                    <div class="content">
+                        <schedule-features
+                            schedule=schedule
+                            project=project
+                        ></schedule-features>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div ng-if="increment.schedule.length == 0 || increment.schedule==null" class="alert alert-info">
+        <i class="fa fa-info-circle" aria-hidden="true"></i> No Plans to show!</div>
+</div>

@@ -1,0 +1,76 @@
+<main class="scrumdo-portfolio">
+    <div ng-cloak class="ng-cloak">
+        <nav class="sub-nav">
+            <div class="sub-nav-project pull-right">
+                <div class="col-sm-6 col-sm-offset-6 pull-right">
+                    <input type="text"
+                        ng-model="searchText"
+                        sd-enter="portfolioCtrl.search(searchText)"
+                        class="scrumdo-form search"
+                        placeholder="Search Organization">
+                </div>
+            </div>
+        </nav>
+        <div ui-view="bodyContent">
+            <div class="scrumdo-planning-wrapper org-planning">
+                <div class="scrumdo-planning-container story-mapping-container">
+                    <div class="col-md-12 mapping-navbar">
+                        <div class="tree-header scrumdo-text col-md-2">
+                            <h4>Portfolios:</h4>
+                        </div>
+                        <div class="filters scrumdo-text col-md-10">
+                            <div class="input-group" ng-if="portfolioCtrl.activePortfolio">
+                                <input type="text" ng-model="portfolioCtrl.quicksearch" 
+                                ng-change="portfolioCtrl.setSeperatorHeight()"
+                                class="scrumdo-form primary quick-search" placeholder="Quick Search">
+                            </div>
+                            <sd-iteration-select
+                                ng-if="portfolioCtrl.iterations"
+                                default-label="'All Iterations'"
+                                ng-model="portfolioCtrl.filterIteration"
+                                iterations="portfolioCtrl.iterationsOrNone"></sd-iteration-select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 mapping-epics portfolio-list">
+                        <ul class="scrumdo-account-menu">
+                            <li ng-repeat="portfolio in portfolioCtrl.portfolios"
+                                ng-if="portfolio.root.active"
+                                ng-class="{'active':portfolioCtrl.activePortfolio.id == portfolio.id}"
+                                ng-click="portfolioCtrl.selectPortfolio(portfolio)">
+                                <a href="">
+                                    <span class="project-icon" style="color: {{::portfolio.root.color|decimalToHexColor}}">
+                                        <i class="fa fa-2" ng-class="portfolio.root.icon"></i></span>
+                                    <span>{{:: portfolio.root.name | shorttext:true:30}}</span>
+                                </a>
+                            </li>
+                            <li ng-if="portfolioCtrl.portfolios.length == 0 && !portfolioCtrl.loading">
+                                <a class="text-center" href=""><span>Nothing to show</span><br/>
+                                    <span sd-staff-only>Create your first portfolio here!</span></a></li>
+                            <li ng-if="portfolioCtrl.loading"><a href=""><span>Loading...</span></a></li>
+                        </ul>
+                        <div sd-staff-only class="no-epic text-center">
+                            <a class="scrumdo-btn secondary text-left" href="" ng-click="portfolioCtrl.createPortfolio()">+ New Portfolio</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-10 mapping-board" id="mapping-board">
+                        <org-story-mapping-header></org-story-mapping-header>
+                        <org-story-mapping-body ng-if="portfolioCtrl.activePortfolio.levels[1]"></org-story-mapping-body>
+                        <div class="col-md-8 col-md-offset-2" style="margin-top: 50px;" ng-if="!portfolioCtrl.activePortfolio">
+                            <div class="scrumdo-box-modal">
+                                <div class="scrumdo-box-modal-header text-center">
+                                    <h2 class="scrumdo-signup-title">Pick a Portfolio</h2>
+                                    <p class="scrumdo-signup-description">Choose a portfolio on the left to start planning with.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="multiDragPlaceholder">
+                    <span ng-if="selectedCount<=1">1 Card</span>
+                    <span ng-if="selectedCount>1">{{ selectedCount }} Cards</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

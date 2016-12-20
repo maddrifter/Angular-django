@@ -1,0 +1,276 @@
+// When risks are in the normal tab, we abs-position it
+.project-app-content>.risks-tab {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+
+  .spider-chart {
+    position: fixed;
+    top: 140px;
+  }
+}
+
+
+
+// But when it's on the summary page, we don't
+.increment-summary .risks-tab {
+  width: 100%;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+
+
+// Common styles, no matter where it is:
+.risks-tab {
+  padding: 15px 0px 0px 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: "robotoregular", sans-serif;
+  height: 100%;
+  
+  .risks-list{
+    border-right: 1px solid #e4e4e4;
+    margin-right: -1px;
+  }
+
+  &.sample-data{
+  height: 100%;
+    .feature-image{
+      img{
+        max-width: 100%;
+      }
+    }
+  }
+
+  .risk-stat-box + .risk-stat-box {
+    margin-right: 10px;
+  }
+
+  .system-risk{
+    .risk-color-blob {
+      background-color: #f6764e;
+    }
+    .risk-name-column{
+      i{
+        font-style: normal;
+        color: #F6764E;
+      }
+    }
+  }
+
+  .risk-color-blob {
+    display: inline-block;
+    width: 8px;
+    height: 10px;
+  }
+
+  .risk-stat-box {
+    width: 80px;
+    height: 64px;
+
+
+    .risk-stat {
+      font-size: 24px;
+      &.high-risk {
+        color: $orangeHighlight;
+      }
+    }
+
+    .risk-label {
+      display: inline-block;
+      color: #BBB;
+      font-size:10px;
+      line-height: 10px;
+    }
+
+  }
+
+  .risks-list{
+    border-right: 1px solid #e4e4e4;
+    margin-right: -1px;
+  }
+  .chart-area {
+    border-left: 1px solid #e4e4e4;
+    min-height: 300px;
+  }
+
+  .risks-table {
+    font-size: 12px;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-right: none;
+    border-left: none;
+
+    tr:hover td {
+      background-color: #ffffff;
+    }
+
+    th {
+      color: #BBB;
+      padding: 4px 8px;
+    }
+
+    td{
+      b{
+        font-family: "robotobold", sans-serif
+      }
+    }
+
+    .risk-box + .risk-box {
+      border-left: 1px solid #e4e4e4;
+    }
+
+    .risk-name-column {
+      min-width: 100px;
+    }
+
+    .probability-column {
+      width: 120px;
+      font-size: 10px;
+      color: $orangeHighlight;
+      padding-top: 20px;
+      .progress {
+        width: 75px;
+        height: 10px;
+        border-radius: 0px;
+        background-color: #d9dadc;
+        display: inline-block;
+        margin-bottom: 0px;
+
+        .progress-bar {
+          background-color: $orangeHighlight;
+          box-shadow: none;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .risk-box {
+    width: 70px;
+    height: 50px;
+
+    text-align: center;
+
+
+    li:last-child { border-bottom: none; }
+
+    .risk-value {
+      text-align: center;
+      display: block;
+      padding-top: 2px;
+    }
+
+    &.severity-1 { // low
+      color: #BBB;
+
+    }
+
+    &.severity-2 { // med
+
+    }
+
+    &.severity-3 { // high
+      background-color: #f6ecea;
+      .risk-value {
+        color: $orangeHighlight;
+      }
+
+    }
+
+    &.severity-5 { // urgent
+      background-color: #f6ecea;
+      .risk-value {
+        color: $orangeHighlight;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+
+.risk-edit-window {
+
+
+  .severity-holder {
+    border-top: 1px solid #e1e1e1;
+  }
+
+  .risk-severity {
+    vertical-align: middle;
+    padding: 7px 7px 12px 7px;
+    margin: 5px;
+    border-bottom: 1px solid #e1e1e1;
+  }
+
+  .severity-type {
+    height: 33px;
+    padding-top: 6px;
+  }
+
+
+  input[type=range] {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+  input[type=range]:focus {
+    outline: none;
+    border: none;
+  }
+
+
+}
+
+
+.artifact-label {
+  display: inline-block;
+  margin-left: 5px;
+  .card-number {
+    color: $orangeHighlight;
+  }
+
+}
+
+
+.risk-artifact-editor {
+  position: relative;
+  input {
+    margin-top: 8px;
+  }
+  .artifact-dropdown-list {
+    position: absolute;
+    width: 542px;
+    height: 270px;
+    z-index: 100;
+    background-color: #ffffff;
+    padding: 5px;
+    border: 1px solid #e1e1e1;
+
+
+    .artifact-identifier {
+      width: 50px;
+      display: inline-block;
+    }
+
+    ul.result-list {
+      height: 212px;
+      margin-top: 10px;
+      overflow-y: auto;
+      padding-left: 5px;
+      li {
+        list-style: none;
+        padding: 7px 2px;
+        border-bottom: 1px solid #e1e1e1;
+        color: #333;
+        cursor: pointer;
+        &:hover {
+          background-color: #f9f9f9;
+        }
+      }
+    }
+  }
+}

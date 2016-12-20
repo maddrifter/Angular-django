@@ -1,0 +1,584 @@
+//------------------------------
+// *****************************
+// Boards
+// *****************************
+//------------------------------
+
+
+
+
+
+.scrumdo-navigation-sidebar {
+  -webkit-transition: margin-left 0.3s ease-out, margin-right 0.3s ease-out;
+  -moz-transition: margin-left 0.3s ease-out, margin-right 0.3s ease-out;
+  -o-transition: margin-left 0.3s ease-out, margin-right 0.3s ease-out;
+  transition: margin-left 0.3s ease-out, margin-right 0.3s ease-out;
+}
+
+.scrumdo-sidebar {
+  @include clearfix();
+  position: relative;
+  height: 100%;
+  width: 325px;
+  background: #f9f9f9;
+  z-index: 500;
+
+
+  margin-left: 0px;
+  margin-right: 0px;
+
+  .iteration-dates {
+    font-family: $font-family-roboto;
+    font-size: 10px;
+    color: #666666;
+    position: relative;
+    left: 20px;
+    bottom: 15px;
+  }
+
+  .hidden-iteration {
+    opacity: 0.6;
+  }
+
+  &.closed-navigation {
+    margin-right: -285px;
+  }
+
+  &.opened-navigation {
+    margin-left: -285px;
+  }
+
+  .trash-bin-li {
+    text-align: right;
+    padding: 5px;
+    border-bottom: none;
+    a {
+      color: #999;
+    }
+    label.smaller {
+      font-size: 10px;
+      padding: 1px 3px;
+      margin: 2px 4px;
+    }
+  }
+
+}
+
+.scrumdo-pull-sidebar {
+  position: relative;
+  border-left: 1px solid #e2e2e2;
+  border-right: 1px solid #e2e2e2;
+  background: #f2f2f2;
+  padding: 70px 0;
+  height: 100%;
+//  min-height: 2500px;  // Chrome bug is causing it not to be full height.
+  width: 40px;
+  cursor: pointer;
+}
+
+.scrumdo-sidebar-text {
+  display: block;
+  position: absolute;
+  width: 95px;
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  top: 70px;
+  left: -30px;
+  font-family: $font-family-roboto-bold;
+  font-size: 12px;
+  color: #888888;
+  text-transform: uppercase;
+
+  span {
+    margin-left: 5px;
+    font-size: 14px;
+    vertical-align: top;
+  }
+
+  &:hover, &:focus {
+    text-decoration: none;
+    color: #888888;
+    outline: none;
+  }
+}
+
+.scrumdo-navigation {
+  width: 285px;
+  height: 100%;
+  background: #e3e3e3;
+  padding: 0 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scrumdo-navigation-menu {
+
+  &.margin-bottom-20 {
+    margin-bottom: 20px;
+  }
+
+  &.margin-bottom-40 {
+    margin-bottom: 40px;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0 -15px;
+
+    li {
+      @include user-select(none);
+      list-style: none;
+      border-bottom: 1px solid #dadada;
+
+      &:first-child {
+        border-top: 1px solid #dadada;
+      }
+
+      .scrumdo-navigation-menu-link {
+        display: block;
+        text-decoration: none;
+        padding: 15px;
+        font-family: $font-family-roboto-medium;
+        font-size: 14px;
+        color: #666666;
+
+        &:hover, &.active {
+          text-decoration: none;
+          background: #eeeeee;
+        }
+      }
+
+      .scrumdo-navigation-menu-form {
+        position: relative;
+        display: block;
+        padding: 15px 55px 15px 15px;
+      }
+    }
+  }
+}
+
+.scrumdo-navigation-menu-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+  background-color: transparent;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  &.scrumboard {
+    background-image: image-url("icons/scrumboard-icon.png");
+  }
+  &.reports {
+    background-image: image-url("icons/report-icon.png");
+  }
+  &.planing {
+    background-image: image-url("icons/planing-icon.png");
+  }
+  &.files {
+    background-image: image-url("icons/files-icon.png");
+  }
+  &.notes{
+    background-image: image-url("icons/notes-icon.png");
+  }
+}
+
+.scrumdo-nav-fa-icon {
+  font-size: 20px !important;
+  padding-right: 8px;
+  position: relative;
+  top: 2px;
+  color: #AAAAAA;
+}
+
+.scrumdo-navigation-menu-options {
+  position: absolute;
+  top: 12px;
+  right: 5px;
+
+  .scrumdo-th,
+  .scrumdo-justify {
+    font-size: 18px;
+    color: #cccccc;
+
+    &:hover {
+      text-decoration: none;
+      color: #f6764e;
+    }
+
+    &.active {
+      color: #666666;
+    }
+
+  }
+
+}
+
+.scrumdo-navigation-link {
+  color: #888888;
+  font-size: 12px;
+  font-family: $font-family-roboto;
+  text-decoration: underline;
+
+  &:hover {
+    color: #A0A0A0;
+  }
+}
+
+.scrumdo-backlog {
+  width: $backlogWidth - 40px;
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  
+  .no-padding {
+    padding: 0px;
+  }
+}
+
+.scrumdo-backlog-statics {
+  position: absolute;
+  left: 0px;
+  right: 45px;
+  bottom: 0px;
+  overflow-y: auto;
+  top: 150px;  
+  padding: 0 20px;
+}
+
+.scrumdo-backlog-scroll {
+  direction: rtl;
+
+  position: absolute;
+  left: 0px;
+  right: 45px;
+  bottom: 0px;
+  overflow-y: auto;
+  top: 150px;
+
+  &.readonly {
+    top: 50px;
+  }
+
+}
+
+.scrumdo-backlog-scroll-reset {
+  direction: ltr;
+}
+
+
+.scrumdo-backlog-add-header {
+  font-family: $font-family-roboto-bold;
+  font-size: 14px;
+  color: #3b3b3b;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 20px;
+
+
+  .scrumdo-backlog-justify {
+    display: inline-block;
+    color: #666666;
+    font-size: 16px;
+    margin-left: 15px;
+
+    &:hover {
+      color: #f6764e;
+    }
+
+    span {
+      vertical-align: bottom;
+    }
+  }
+
+
+}
+
+.scrumdo-backlog-cards {
+  padding: 20px 5px 0px 5px;
+}
+
+
+
+
+#create-card-extra {
+  .time-entry-group {
+    width: 190px;
+  }
+  .backlog-estimated-group{
+    .time-entry-group {
+      width: 177px;
+    } 
+  }
+}
+
+
+.scrumdo-backlog-add {
+  position: relative;
+  background: #e3e3e3;
+  padding: 20px;
+  width: $backlogWidth - 40px;
+  height: 75px;
+
+  .backlog-add-placeholder {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: #DFDFDF;
+    pointer-events:none;
+  }
+
+
+  .create-card-extra {
+    display: none;
+  }
+
+  .ta-root {
+    .ta-scroll-window > .ta-bind, .ta-editor.ta-html, .ta-scroll-window.form-control {
+      min-height: 40px;
+    }
+
+    .ta-toolbar {
+      display: none;
+    }
+
+    &.focussed {
+      .ta-toolbar {
+        display: block;
+      }
+    }
+  }
+
+
+}
+
+
+.scrumdo-backlog-add {
+  .summary-editor {
+    .ta-toolbar {
+      display: none !important;
+    }
+    .ta-scroll-window > .ta-bind, .ta-editor.ta-html, .ta-scroll-window.form-control {
+      overflow: hidden;
+      height: 33px;
+      min-height: 33px;
+    }
+  }
+}
+
+.subscribe-alert{
+  .create-card-open {
+    top: 240px !important; 
+  }
+}
+.create-card-open {
+  position: fixed;
+  left: 0px;
+  width: 850px;
+  top: 184px;
+  bottom: 0px;
+  overflow-y: auto;
+  z-index: 5000;
+
+  .scrumdo-backlog-add {
+    width: 840px;
+    height: auto;
+    overflow: visible;
+
+    .backlog-add-placeholder {
+      display: none;
+    }
+
+    z-index: 500;
+    .create-card-extra {
+      margin-top: 10px;
+      display: block;
+
+      .tags-input {
+        height: 34px;
+      }
+    }
+
+    .summary-editor {
+      .ta-scroll-window > .ta-bind, .ta-editor.ta-html, .ta-scroll-window.form-control {
+        overflow: auto;
+        height: auto;
+        min-height: 40px;
+      }
+
+
+      .ta-toolbar {
+        display: block !important;
+      }
+
+    }
+  }
+}
+
+
+.scrumdo-sidebar-backlog-members {
+  padding: 0;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  margin-left: 0;
+  margin-right: 0;
+
+  li {
+    position: relative;
+    display: inline-block;
+    list-style: none;
+    background: #d83547;
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 2px;
+    overflow: hidden;
+
+
+    a {
+      display: inline-block;
+      width: 100%;
+
+      img {
+        width: 100%;
+      }
+
+      &:hover {
+        opacity: 0.3;
+      }
+    }
+
+    &:hover:before {
+      display: inline-block;
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-family: 'Glyphicons Halflings';
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1;
+      color: #ffffff;
+      content: "\e082";
+    }
+
+  }
+}
+
+
+
+.scrumdo-backlog-sidebar {
+  -webkit-transition: left 0.3s ease-out;
+  -moz-transition: left 0.3s ease-out;
+  -o-transition: left 0.3s ease-out;
+  transition: left 0.3s ease-out;
+  left: -($backlogWidth - 40px);
+  width: $backlogWidth;
+  margin-left: 0px;
+  margin-right: 0px;
+  position: absolute;
+  top: 45px;
+  bottom: 0px;
+
+  .scrumdo-panel-body {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+  }
+
+  .scrumdo-panel-title {
+    font-size: 12px !important;
+    font-family: $font-family-roboto !important;
+  }
+
+
+  &.closed-backlog {
+    left: -($backlogWidth - 40px);
+  }
+
+  &.opened-backlog {
+    left: 0px;
+  }
+
+}
+
+
+
+
+
+
+
+.subscribe-alert{
+  .scrumdo-archive-sidebar{
+    top: 238px !important;
+  } 
+}
+
+.scrumdo-archive-sidebar {
+  position: fixed;
+  right: 0px;
+  top: 185px;
+  bottom: 0px;
+  width: 325px;
+  z-index: 1000;
+  border-top: 1px solid #e2e2e2;
+  border-left: 1px solid #e2e2e2;
+
+  .scrumdo-archive {
+    overflow-y: auto;
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    left: 5px;
+    right: 5px;
+  }
+
+  &.closed-archive {
+    display: none;
+  }
+
+  &.open-archive {
+    display: block;
+  }
+
+  .scrumdo-sidebar-archive-heading {
+    font-family: $font-family-roboto-bold;
+    font-size: 14px;
+    color: #3b3b3b;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+
+  .scrumdo-sidebar-archive-commands {
+    padding: 0;
+    margin: 0 0 20px 0;
+
+    li {
+      display: inline-block;
+      margin-right: 10px;
+
+      a {
+        display: inline-block;
+        font-family: $font-family-roboto;
+        font-size: 11px;
+        color: #aaaaaa;
+        border-bottom: 1px solid #aaaaaa;
+        padding: 0;
+
+        &:hover {
+          text-decoration: none;
+          color: #696969;
+        }
+      }
+    }
+  }
+
+  .scrumdo-archive-options {
+    margin-bottom: 20px;
+  }
+}

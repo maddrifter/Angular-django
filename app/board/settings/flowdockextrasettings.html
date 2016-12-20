@@ -1,0 +1,104 @@
+<a class="scrumdo-btn primary medium pull-right" ui-sref="app.settings.extras"><i class="fa fa-arrow-left"></i> Back To Extras</a>
+<h2>Flowdock</h2>
+<hr/>
+
+<div ng-if="! settingsCtrl.organization.subscription.plan.premium_plan">
+    <h3>Upgrade Now!</h3>
+    <p>The Flowdock integration is available on any ScrumDo premium plan.
+        You can <a ng-href="/subscription/{{settingsCtrl.organization.slug}}">upgrade your plan here</a>.</p>
+
+    <p>
+        For information on the Flowdock integration, please see
+        <a href="http://help.scrumdo.com/flowdock/">http://help.scrumdo.com/flowdock/</a>
+    </p>
+</div>
+
+
+
+<div ng-if="settingsCtrl.organization.subscription.plan.premium_plan">
+
+    <span class="pull-right" ng-if="flowdockctrl.extraConfig.configured">
+        <span ng-if="flowdockctrl.extraConfig.error!='bad_credentials'">
+            @{{flowdockctrl.extraConfig.auth_user}} -
+        </span>
+        <span class="label label-danger" ng-if="flowdockctrl.extraConfig.error=='bad_credentials'">Authentication Failure</span>
+        <a ng-if="flowdockctrl.extraConfig.configured"  ng-href="{{flowdockctrl.extraConfig.auth_url}}">
+            Reauthenticate
+        </a>
+    </span>
+    <h4>Step 1: Authentication</h4>
+    <div ng-if="!flowdockctrl.extraConfig.configured">
+        <a class="scrumdo-btn primary" ng-href="{{flowdockctrl.extraConfig.auth_url}}"><i class="fa fa-user"></i> Authenticate</a>
+    </div>
+
+
+    <div ng-if="flowdockctrl.extraConfig.configured">
+        <hr/>
+        <h4>Step 2: Configure</h4>
+        <div class="row">
+            <form name="importForm">
+
+
+                <div class="col-xs-5">
+                    <div class="scrumdo-select primary">
+                        <select ng-model="flowdockctrl.addChannelOptions.channel"
+                                name="import_repo"
+                                ng-options="channel as channel.name for channel in flowdockctrl.extraConfig.channels|orderBy:'name'"></select>
+                    </div>
+                </div>
+                <div class="checkbox col-xs-12">
+                    <label>
+                        <input name="upload_issues" ng-model="flowdockctrl.addChannelOptions.new_card" type="checkbox"> New card created
+                    </label>
+                </div>
+                <div class="checkbox col-xs-12">
+                    <label>
+                        <input name="download_issues" ng-model="flowdockctrl.addChannelOptions.card_moved" type="checkbox"> Card moved on the board
+                    </label>
+                </div>
+                <div class="checkbox col-xs-12">
+                    <label>
+                        <input name="close_on_delete" ng-model="flowdockctrl.addChannelOptions.card_edited" type="checkbox"> Card details edited
+                    </label>
+                </div>
+                <div class="checkbox col-xs-12">
+                    <label>
+                        <input name="comment_created" ng-model="flowdockctrl.addChannelOptions.comment_created" type="checkbox"> New comment created
+                    </label>
+                </div>
+
+
+
+                <div class="col-xs-5">
+                    <button ng-class="{'disabled':!flowdockctrl.addChannelOptions.channel}"
+                            ng-click="flowdockctrl.addChannel(flowdockctrl.addChannelOptions)"
+                            class="scrumdo-btn primary"><i class="fa fa-plus"></i> Add Flow</button>
+                </div>
+            </form>
+        </div>
+
+        <div ng-if="flowdockctrl.extraConfig.mappings">
+            <hr/>
+            <h4>Configured Flows:</h4>
+            <hr/>
+        </div>
+        <div ng-repeat="config in flowdockctrl.extraConfig.mappings">
+
+            <button ng-click="flowdockctrl.removeChannel(config.id)" class="pull-right scrumdo-btn primary">
+                <i class="fa fa-trash-o"></i> Remove Channel
+            </button>
+
+            <h5>{{config.channel_name}}</h5>
+            <div ng-if="config.errors">
+                We've had <b>{{config.errors}}</b> errors while trying to use this channel.
+            </div>
+            <ul>
+                <li ng-if="config.card_moved">Send message when a card is moved.</li>
+                <li ng-if="config.card_created">Send message when a card is created.</li>
+                <li ng-if="config.card_modified">Send message when a card is modified.</li>
+                <li ng-if="config.comment_created">Send message on a new comment.</li>
+            </ul>
+            <hr>
+        </div>
+    </div>
+</div>

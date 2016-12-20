@@ -1,0 +1,189 @@
+.scrumdo-settings-wrapper {
+  background: #f6f6f6;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  font-family: "robotoregular", sans-serif;
+
+  -webkit-transition: right 0.3s ease-out;
+  -moz-transition: right 0.3s ease-out;
+  -o-transition: right 0.3s ease-out;
+  transition: right 0.3s ease-out;
+
+  &.navbar-open {
+    right: 278px;
+  }
+
+
+  .scrumdo-settings-container {
+    border: 1px solid #e2e2e2;
+    border-radius: 2px;
+    background: #fafafa;
+
+    position: absolute;
+    top: 0px;
+    bottom: 20px;
+    left: 0px;
+    right: 0px;
+
+    .header {
+      display: inline-block;
+      font-family: $font-family-roboto-medium;
+      font-size: 14px;
+      color: $greyBackground;
+      padding: 10px 10px;
+    }
+
+    .active-share-title{
+      border-bottom: none;
+      padding: 0;
+    }
+
+    .scrumdo-settings-content {
+      height: 100%;
+      background: #ffffff;
+      border-left: 1px solid #eeeeee;
+      padding: 0 30px;
+      overflow-y: auto;
+      .settings-cell-options {
+        padding: 10px 20px 10px 10px;
+      }
+
+      .scrumdo-sharing-details{
+        .row{
+          border: 1px solid #ddd;
+          padding: 7px 0;
+          margin-bottom: 10px;
+          .col-md-12{
+            margin-bottom: 15px;
+            .col-sm-4.col-lg-3{
+              padding:0;
+              .scrumdo-backlog-form{
+                margin: 0 -7px 0 0;
+              }
+              label{
+                font-weight: normal;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .scrumdo-team{
+    .scrumdo-project-boxes-content{
+      max-height: 165px;
+      overflow: auto;
+      .invitee-message{
+        margin: 0 0 5px 0;
+        font-size: 12px;
+        display: block;
+      }
+      .invitee-form{
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        .col-sm-2{
+          padding: 0 0 0 15px;
+        }
+        .col-sm-10{
+          padding: 0 15px 0 5px;
+        }
+      }
+      .scrumdo-tags-close{
+        font-size: 10px;
+        width: 15px;
+        height: 15px;
+        background: #ddd;
+        border-radius: 50%;
+        color: #fff;
+        padding: 2px;
+      }
+    }
+    .team-title{
+      display: inline;
+      font-weight: 700;
+    }
+    .team-access-type{
+      font-weight: 700;
+      color: #f6764e;
+      font-size: 13px;
+    }
+    .scrumdo-project-boxes-footer{
+      background: #eeeeee;
+      padding: 5px 15px 15px 15px;
+      max-height: 49px;
+      min-height: 49px;
+    }
+    .teamlist{
+      padding: 0;
+      margin: 0 0 5px 0;
+    }
+    .team-access-by{
+      i{
+        font-weight: 700;
+        color: #f6764e;
+        font-style: normal;
+        font-size: 13px;
+      }
+      span{
+        font-size: 12px;
+        color: #999999;
+      }
+    }
+  }
+  &.org-extras{
+    top: 113px;
+  }
+}
+
+.scrumdo-account-details-content{
+  .custom-point-scales{
+    
+    .custom-point{
+      width: 50px;
+      border-right: 1px solid #e7e7e7;
+      float: left;
+      margin: 0 5px 10px 0px;
+      padding: 5px 5px 5px 0;
+      input{
+        width: 100%;
+        float: left;
+        color: #555555;
+        padding: 0px 0 0 1px;
+        border: 1px solid #e7e7e7;
+        font-size: 90%;
+        box-shadow: 0px 1px 1px #eee;
+        &:last-child{
+          margin-top: 2px;
+        }
+      }
+      &:last-child{
+        border:none;
+      }
+      &.label{
+        width:85px;
+        border:none;
+        label{
+          display:block;
+          text-align: left;
+          height: 20px;
+          padding-top: 5px;
+        }
+      }
+    }
+    .scale-values{
+      overflow: auto;
+    }
+    label{
+      cursor: pointer;
+      display: inline;
+    }
+    .alert{
+     padding: 5px; 
+    }
+  }
+}

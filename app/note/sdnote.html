@@ -1,0 +1,29 @@
+<div class="note-content">
+    <div class="note-title form-group">
+        <h2 ng-if="ctrl.note.active == true" ng-bind-html="ctrl.note.title"></h2>
+        <h2 ng-if="ctrl.note.active == false">Note Deleted!</h2>
+    </div>
+    <div class="note-body form-group" ng-if="ctrl.note.active == true">
+        <div ng-bind-html="ctrl.note.body"></div>
+    </div>
+    <div class="row" ng-if="ctrl.note.active == true">
+        <div class="note-extras col-md-12">
+            <div class="note-attachments col-md-4">
+                <sd-attachments ng-if="ctrl.note && ctrl.canWrite" project="ctrl.project" 
+                    note="ctrl.note"></sd-attachments>
+                <sd-attachments readonly="true" ng-if="ctrl.note && !ctrl.canWrite" project="ctrl.project" 
+                    note="ctrl.note"></sd-attachments>
+            </div>
+            <div class="note-comments col-md-8">
+                <sd-comments-box ng-if="ctrl.note && ctrl.canWrite" user="ctrl.userService.me"
+                        project="ctrl.project"
+                        ng-model="ctrl.newComment"
+                        note="ctrl.note"></sd-comments-box>
+                <sd-comments-box readonly="true" ng-if="ctrl.note && !ctrl.canWrite" user="ctrl.userService.me"
+                        project="ctrl.project"
+                        ng-model="ctrl.newComment"
+                        note="ctrl.note"></sd-comments-box>
+            </div>
+        </div>
+    </div>
+</div>

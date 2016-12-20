@@ -1,0 +1,152 @@
+//------------------------------
+// *****************************
+// Boxes
+// *****************************
+//------------------------------
+
+.scrumdo-boxes {
+  width: 100%;
+  background: #f5f5f5;
+  margin-bottom: 20px;
+
+  .scrumdo-box-header {
+    @include clearfix();
+
+    background: #eeeeee;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 10px;
+  }
+
+  .scrumdo-box-content {
+    padding: 10px;
+  }
+
+  .scrumdo-box-footer {
+    padding: 10px;
+  }
+
+
+
+  .scrumdo-box-title {
+    font-family: $font-family-roboto;
+    font-size: 14px;
+    color: #3b3b3b;
+    strong {
+      font-family: $font-family-roboto-bold;
+    }
+  }
+
+  &.white {
+    background: #ffffff;
+    padding: 15px;
+    border: 1px solid #eeeeee;
+    @include box-shadow(0 0 3px #e2e2e2);
+  }
+
+}
+
+.scrumdo-project-boxes {
+  width: 100%;
+  background: #ffffff;
+  margin-bottom: 25px;
+  border: 1px solid #e2e2e2;
+
+  .scrumdo-project-boxes-title {
+    font-size: 14px;
+    color: #3b3b3b;
+    font-family: $font-family-roboto-bold;
+  }
+
+  .scrumdo-project-boxes-header {
+    @include clearfix();
+    padding: 15px;
+    background: #f5f5f5;
+  }
+
+  .scrumdo-project-boxes-content {
+    padding: 0 15px;
+
+    &.upper {
+      background: #ffffff;
+      min-height: 68px;
+    }
+    &.lower {
+      background: #f9f9f9;
+      min-height: 99px;
+    }
+    &.teams {
+      background: #ffffff;
+      padding: 15px;
+    }
+  }
+
+  .scrumdo-project-boxes-footer {
+    @include clearfix();
+    background: #eeeeee;
+    padding: 15px;
+  }
+
+  .scrumdo-project-boxes-minitext {
+    display: inline-block;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-family: $font-family-roboto-bold;
+    margin-bottom: 15px;
+    line-height: 1;
+    color: #aaaaaa;
+  }
+
+  .scrumdo-project-boxes-minititle {
+    display: inline-block;
+    font-size: 10px;
+    font-family: $font-family-roboto-bold;
+    color: #888888;
+    margin-top: 3px;
+  }
+}
+
+
+.scrumdo-box-modal {
+  background: #ffffff;
+  border-radius: 2px;
+  border: 1px solid #e2e2e2;
+  margin-bottom: 20px;
+
+  .scrumdo-box-modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .scrumdo-box-modal-content {
+    padding: 25px;
+
+    &.padding-15 {
+      padding: 15px;
+    }
+  }
+
+  .scrumdo-box-modal-footer {
+    padding: 15px;
+    background: #f5f5f5;
+  }
+}
+
+.scrumdo-container-box {
+  background: #f5f5f5;
+  border-radius: 3px;
+  border: 1px solid #e2e2e2;
+  padding: 10px 15px;
+}
+
+
+
+.no-org-box {
+  ul {
+    list-style: none;
+    padding-left: 10px;
+    li {
+      margin-bottom: 5px;
+    }
+  }
+}

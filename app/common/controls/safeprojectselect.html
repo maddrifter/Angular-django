@@ -1,0 +1,63 @@
+<div id="safe-project-select" class="scrumdo-select scrumdo-input-group-extended dropdown sub-nav-drop action-1 hidden-sm hidden-xs" is-open="ctrl.menuOpen" uib-dropdown>
+    <div class="dropdown-toggle safe-project-dropdown-toggle" ng-click="ctrl.toggleMenu($event)">
+        <button type="button"
+                class="scrumdo-btn dropdown-main-button primary extended scrumdo-select-button">
+            <span ng-if="currentValue.icon" style="color: {{currentValue.color|decimalToHexColor}}" class="fa {{currentValue.icon}}"></span>
+            <span>{{ ctrl.getLabel(currentValue)|htmlToPlaintext | shorttext:true:30}}</span>
+            
+        </button>
+        <div class="input-group-btn dropdown-button-container">
+            <button type="button" class="scrumdo-btn primary dropdown-button" aria-expanded="false">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+        </div>
+    </div>
+    
+    <div ng-if="ctrl.menuOpen" class="dropdown-menu dropdown-menu-right scrumdo-dropdown safe-project-dropdown" uib-dropdown-menu role="menu">
+        <dropdown-filter ng-if="showFilter" ng-model="ctrl.filterQuery"></dropdown-filter>
+        <ul ng-if="ctrl.menuOpen" class="dropdown-menu-right scrumdo-dropdown">
+            <li ng-if="ctrl.matchFound()">
+                <a href="" ng-click="ctrl.doNothing($event)" class="project-category"><span>Projects</span></a>
+            </li>
+            <li ng-show="ctrl.filteredItems[cat].length > 0" 
+                ng-repeat="(cat, projects) in ctrl.userService.scope.safeProjectList.nonportfolio.projects | orderProjectByCat:false">
+                <a href="" ng-if="projects[0].category.length > 0 && ctrl.filteredItems[cat].length > 0" 
+                    ng-click="ctrl.doNothing($event)" class="project-category"><span>
+                    {{:: projects[0].category | shorttext:true:20}}</span></a>
+                <ul>
+                    <li class="check_{{project.slug}}" 
+                        ng-repeat="project in ctrl.filteredItems[cat] = (projects | orderBy:'name' | filter:ctrl.doFilterQuery)">
+                        <a ng-click="select($event, project)" ng-class="{'selected-option': ctrl.isCurrentProject(project)}">
+                            <span class="project-icon" style="color: {{project.color|decimalToHexColor}}">
+                                <i class="fa" ng-class="project.icon"></i></span>
+                            <span>{{:: project.name | shorttext:true:30}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li ng-show="ctrl.filteredItems[key].length > 0" ng-repeat="(key, projects) in ctrl.userService.scope.safeProjectList.portfolio">
+                <ul>
+                    <li class="check_{{project.slug}}" ng-repeat="project in ctrl.filteredItems[key] = (projects | filter:ctrl.filterRoot(key))"
+                        ng-if="project.isPortfolio"
+                        ng-class="{'portfolio-project': project.isPortfolio}">
+                        <a ng-click="select($event, project)" ng-class="{'selected-option': ctrl.isCurrentProject(project)}">
+                            <span class="project-icon" style="color: {{project.color|decimalToHexColor}}">
+                                <i class="fa" ng-class="project.icon"></i></span>
+                            <span>{{:: project.name | shorttext:true:30}}</span>
+                        </a>
+                    </li>
+                    <li class="check_{{project.slug}}" ng-repeat="project in ctrl.filteredItems[key] = (projects | filter:ctrl.doFilterQuery)"
+                        ng-if="!project.isPortfolio"
+                        ng-class="{'portfolio-project': project.isPortfolio}">
+                        <a ng-click="select($event, project)" ng-class="{'selected-option': ctrl.isCurrentProject(project)}">
+                            <span class="project-icon" style="color: {{project.color|decimalToHexColor}}">
+                                <i class="fa" ng-class="project.icon"></i></span>
+                            <span>{{:: project.name | shorttext:true:30}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

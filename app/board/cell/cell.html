@@ -1,0 +1,66 @@
+<div data-cell-id="{{:: cell.id }}"
+     ng-controller="CellController"
+     class="kanban-cell"
+     data-skip-rank="true"
+     data-iteration-id="{{ defaultBoardIteration }}"
+     ng-style="{'min-height': cell.height + 'px', width: cell.width + 'px', 'background-color': '#' + cell.backgroundColorHex()}"
+     style="position: relative;">
+    <div class="scrumdo-column-title" ng-style="{'background-color':'#' + cell.headerColorHex()}">
+        <h2 ng-style="{color:labelColor}">{{cell.label}}</h2>
+
+        <div class="scrumdo-column-dropdown" uib-dropdown ng-if="::canWrite">
+            <button type="button" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                <span class=" glyphicon glyphicon glyphicon-chevron-down"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                <li><a ng-click="cellCtrl.addCard($event)">Add {{::$root['safeTerms'].current.work_item_name}}</a></li>
+                <li><a ng-click="cellCtrl.selectAll($event)">Select All {{::$root['safeTerms'].current.work_item_name|pluralize}}</a></li>
+                <li><a ng-click="cellCtrl.selectNone($event)">Select None</a></li>
+                <li><a ng-click="cellCtrl.moveCards($event)">Move Selected {{::$root['safeTerms'].current.work_item_name|pluralize}} Here</a></li>
+                <li><a ng-click="cellCtrl.archiveAll($event)">Archive All {{::$root['safeTerms'].current.work_item_name|pluralize}}</a></li>
+            </ul>
+        </div>
+
+        <span uib-tooltip-html="cellCtrl.policyTooltip()"
+              tooltip-append-to-body="true"
+              ng-if="cell.policy_text" class="policy-icon scrumdo-info-icon text-top glyphicon glyphicon-info-sign"></span>
+
+        <div class="wip-limit-holder"
+             uib-tooltip-html="cellCtrl.pointToolTip()"
+             tooltip-placement="bottom"
+             ng-style="{color:labelColor}"
+             ng-class="{'light':cellCtrl.light, 'over-wip':cellCtrl.overPointWip()}"
+             ng-if="(cellCtrl.cell.pointLimit>0 || cellCtrl.cell.minPointLimit>0)"> 
+            <span class="wip-min" ng-if="cellCtrl.cell.minPointLimit>0 && cellCtrl.cell.minPointLimit!=999"><small>{{cellCtrl.cell.minPointLimit}}</small> | </span>
+            <span class="wip-value">{{cellCtrl.pointsWipValue()}}</span>
+            <span class="wip-max" ng-if="cellCtrl.cell.pointLimit!=999 && cellCtrl.cell.pointLimit>0"> | <small>{{cellCtrl.cell.pointLimit}}</small></span>
+        </div>
+        <div class="wip-limit-holder"
+             uib-tooltip-html="cellCtrl.cardToolTip()"
+             tooltip-placement="bottom"
+             ng-style="{color:labelColor}"
+             ng-class="{'light':cellCtrl.light, 'over-wip':cellCtrl.overWip()}"
+             ng-if="(cellCtrl.cell.wipLimit>0 || cellCtrl.cell.minWipLimit>0)">
+            <span class="wip-min" ng-if="cellCtrl.cell.minWipLimit>0 && cellCtrl.cell.minWipLimit!=999"><small>{{cellCtrl.cell.minWipLimit}}</small> | </span>
+            <span class="wip-value">{{cellCtrl.wipValue()}}</span>
+            <span class="wip-max" ng-if="cellCtrl.cell.wipLimit!=999 && cellCtrl.cell.wipLimit>0"> | <small>{{cellCtrl.cell.wipLimit}}</small></span>
+        </div>
+
+    </div>
+    <div class="fixed-column-scroller">
+        <ul class="scrumdo-boards-column" data-skip-rank="true" data-iteration-id="{{ defaultBoardIteration }}">
+            <li data-iteration-id="{{ ::boardProject.iteration.id }}"
+                class="kanban-iteration-sub-list-item">
+
+                <ul class="kanban-story-list" data-iteration-id="{{::boardProject.iteration.id }}" data-cell-id="{{::cell.id }}">
+                    <sd-story story-context-menu layout="storyLayout"
+                              story="::story"
+                              project="::project"
+                              epics="::epics"
+                              ng-repeat="story in boardStories|filter:cellCtrl.filterStory(boardProject.iteration.id)|orderBy:ctrl.sortOrder track by story.id"></sd-story>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="right-border" ng-class="::{'grey-header':cellCtrl.greyHeader()}"></div>

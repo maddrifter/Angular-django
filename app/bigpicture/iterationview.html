@@ -1,0 +1,54 @@
+<div class="iteration-bigpicture" ng-class="{'no-data': !ctrl.projectData.currentIncrement.id}">
+    <sd-restricted-feature ng-if="::!ctrl.projectData.isPremiumUser() && !ctrl.projectData.currentIncrement.id" 
+        feature-name="'Big Picture'" organization-slug="ctrl.projectData.organizationSlug" 
+        feature-image="'BigPictureSample.jpg'"></sd-restricted-feature>
+
+    <sd-restricted-feature ng-if="::!ctrl.projectData.isPremiumUser() && ctrl.projectData.currentIncrement.id" 
+        feature-name="'Big Picture'" organization-slug="ctrl.projectData.organizationSlug" 
+        feature-image=""></sd-restricted-feature>
+
+    <bigpicture-nav ng-if="::ctrl.projectData.isPremiumUser()" ></bigpicture-nav>
+    
+    <div ng-if="!ctrl.projectData.currentIncrement.id && ctrl.projectData.isPremiumUser()" class="bigpicture-view">
+        <div class="alert alert-info margin10">
+            There is no portfolio increment data associated with this iteration
+            therefore we can not display the BogPicture tool.
+        </div>
+    </div>
+
+    <div ng-if="ctrl.projectData.currentIncrement.id" class="bigpicture-view">
+        <div class="level-band root">
+            <div svg-connect id="svgConnect" 
+                layout="horizontal"
+                strokewidth="1" 
+                strokedasharray="5,5"
+                stroke="#f37950"></div>
+            <div class="project-box-wrapper">
+                <project-stats
+                    isroot="true"
+                    iterationid="ctrl.iterationId"
+                    incrementid="ctrl.incrementId"
+                    ispremiumuser="ctrl.projectData.isPremiumUser()"
+                    project="ctrl.portfolio.root"></project-stats>
+            </div>
+        </div>
+
+        <div class="level-band" ng-if="ctrl.hasAccessToLevel(level)" ng-repeat="level in ctrl.portfolio.levels">
+            <div class="project-box-wrapper">
+                <project-stats
+                    ng-if="ctrl.userHasAccess(project)"
+                    ng-repeat="project in level.projects"
+                    isroot="false"
+                    iterationid="ctrl.iterationId"
+                    incrementid="ctrl.incrementId"
+                    ispremiumuser="ctrl.projectData.isPremiumUser()"
+                    project="project"></project-stats>
+            </div>
+            <level-stats
+                rootproject=ctrl.portfolio.root
+                level=level
+                incrementid=ctrl.incrementId
+            ></level-stats>
+        </div>
+    </div>
+</div> 

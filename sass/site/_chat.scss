@@ -1,0 +1,307 @@
+//------------------------------
+// *****************************
+// Chat
+// *****************************
+//------------------------------
+
+.scrumdo-chat {
+  @include clearfix();
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: #f6f6f6;
+  border-top: 1px solid #e3e3e3;
+
+
+
+  .scrumdo-chat-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #f6f6f6;
+
+  }
+
+  .scrumdo-chat-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #fafafa;
+    padding-top: 57px;
+  }
+
+  .scrumdo-chat-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 15px;
+    border-bottom: 1px solid #dbdbdb;
+  }
+
+  .scrumdo-chat-content {
+    height: 99%;
+  }
+
+  .scrumdo-chat-projects {
+    height: 100%;
+    border-right: 1px solid #eeeeee;
+    padding: 10px 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    direction: rtl;
+    .scrumdo-account-menu {
+      direction: ltr;
+      margin-left: 1px;
+      margin-right: 0px;
+    }
+    .safe-projects-list{
+      margin-top:0px;
+      .project-category{
+        padding: 10px 10px 10px 5px;
+        text-decoration: none;
+      }
+      ul{
+        padding: 0;
+        margin-right: 0px;
+        margin-left: 1px;
+        li{
+          cursor: pointer;
+          list-style: none;
+          position: relative;
+          &:hover{
+            background: #efefef;
+            a{
+              text-decoration: none;
+            }
+          }
+          &.active{
+            background: #efefef;
+            a{
+              color: #f6764e;
+              text-decoration: none;
+            }
+            &:before{
+              border-color: rgba(194, 225, 245, 0);
+              border-right-color: #e2e2e2;
+              border-width: 12px;
+              margin-top: -12px;
+            }
+          }
+          &.portfolio-project{
+            a{
+              padding: 10px 10px 10px 5px;
+            }
+          }
+          a{
+            display: inline-block;
+            font-family: "robotomedium", sans-serif;
+            font-size: 14px;
+            color: #999999;
+            padding: 10px 10px 10px 15px;
+          }
+          &:before{
+            right: -1px;
+            top: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+          }
+        }
+      }
+    }
+  }
+  .scrumdo-chat-users {
+    height: 100%;
+    border-left: 1px solid #eeeeee;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .scrumdo-chat-user-h3 {
+    padding: 0;
+    margin: 0;
+    font-family: $font-family-roboto-bold;
+    color: #3b3b3b;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .scrumdo-chat-users-list {
+    padding: 0;
+    margin: 0;
+
+    > li {
+      position: relative;
+      list-style: none;
+      font-family: $font-family-roboto-medium;
+      color: #999999;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 10px 0;
+      vertical-align: middle;
+
+      &:after {
+        position: absolute;
+        top: 27px;
+        right: 10px;
+        content: " ";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      &.online:after {
+        background: #67ab49;
+      }
+      &.offline:after {
+        background: #cccccc;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      img {
+        border-radius: 50%;
+        height: 45px;
+        width: 45px;
+        margin: 0 5px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .scrumdo-chat-messages-wrapper {
+    height: 100%;
+    background: #ffffff;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 1px;
+    border-bottom-color: rgb(219, 219, 219);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+  }
+
+  .scrumdo-chat-messages {
+    height: calc(100% - 85px);
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .scrumdo-chat-message-divider {
+    position: relative;
+    margin: 20px 0;
+    border-top: 1px solid #eeeeee;
+    text-align: center;
+
+    span {
+      position: absolute;
+      top: -15px;
+      display: inline-block;
+      margin-left: -70px;
+      background: #ffffff;
+      padding: 5px 15px;
+      color: #cccccc;
+      font-family: "robotobold", sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+  }
+
+  .scrumdo-chat-msg-container {
+    padding: 5px 15px 0px 15px;
+    margin-bottom: 0px;
+  }
+
+  .scrumdo-chat-msg-user {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .scrumdo-chat-msg {
+    position: relative;
+    border: 1px solid #e2e2e2;
+    padding: 5px 10px;
+    border-radius: 2px;
+    @include box-shadow(0 0 3px 0 #e2e2e2);
+
+    &:after, &:before {
+      right: 100%;
+      top: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    &:after {
+      border-color: rgba(136, 183, 213, 0);
+      border-right-color: #ffffff;
+      border-width: 11px;
+      margin-top: -26px;
+    }
+    &:before {
+      border-color: rgba(194, 225, 245, 0);
+      border-right-color: #e2e2e2;
+      border-width: 12px;
+      margin-top: -27px;
+    }
+  }
+
+  .scrumdo-chat-msg-header {
+    @include clearfix();
+    margin-bottom: 10px;
+
+    span {
+      color: #3b3b3b;
+      font-family: $font-family-roboto-medium;
+      font-size: 14px;
+    }
+    time {
+      font-family: $font-family-roboto-italic;
+      color: #cccccc;
+      font-size: 12px;
+    }
+  }
+
+  .scrumdo-chat-msg-content {
+    margin: 0;
+    padding: 0;
+    color: #888888;
+    font-size: 13px;
+    font-family: $font-family-roboto;
+  }
+
+  .scrumdo-chat-input {
+    height: 85px;
+    padding: 25px 15px;
+
+    background: #fafafa;
+    border-top: 1px solid #e2e2e2;
+  }
+
+  .scrumdo-chat-h2 {
+    color: #666666;
+    font-family: $font-family-roboto-bold;
+    font-size: 16px;
+    padding: 0;
+    margin: 10px 0;
+  }
+}

@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Select a workspace to add card into</h3>
+</div>
+<div class="modal-body">
+    <div class="project-picker">
+        <ul ng-if="ctrl.projects.length != 0">
+            <li ng-repeat="project in ctrl.projects"
+            ng-if="project.active"
+            ng-click="ctrl.selectProject(project)">
+                {{project.name | shorttext:true:20}}
+            </li>
+        </ul>
+        <p ng-if="ctrl.projects.length == 0" class="alert alert-info">Nothing to show!</p>
+    </div>
+</div>

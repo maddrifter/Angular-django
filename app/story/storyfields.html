@@ -1,0 +1,78 @@
+<div class="form-group iterations-dropdown">
+    <sd-iteration-select ng-model="ctrl.currentIteration" iterations="iterations"></sd-iteration-select>
+</div>
+
+<div class="form-group cells-dropdown" ng-if="ctrl.currentIteration.iteration_type==1 && ctrl.cells">
+    <sd-cell-select cells="ctrl.cells"
+                    headers="ctrl.headers"
+                    dropdown-class="dropdown-menu-right"
+                    cell-id="story.cell_id"></sd-cell-select>
+</div>
+
+<div class="form-group points-dropdown" ng-if="ctrl.project.use_points">
+    <sd-select button-icon="check"
+               icon-tooltip="Points (size)"
+               ng-model="ctrl.currentPoints"
+               suffix="point"
+               label-property="2"
+               options="pointScale"></sd-select>
+</div>
+
+<div class="form-group business-input" ng-if="ctrl.project.business_value_mode != 2">
+    <sd-business-value render-mode="ctrl.project.business_value_mode" point-scale="pointScale" ng-model="story.business_value_label"></sd-business-value>
+</div>
+
+<div class="form-group time-criticality" ng-if="ctrl.project.use_time_crit">
+    <sd-select button-icon=""
+               fa-icon="hourglass"
+               icon-tooltip="Time Criticality"
+               ng-model="ctrl.timeCriticality"
+               suffix="point"
+               label-property="2"
+               options="pointScale"></sd-select>
+</div>
+<div class="form-group risk-reduction" ng-if="ctrl.project.use_risk_reduction">
+    <sd-select button-icon=""
+               fa-icon="exclamation-triangle"
+               icon-tooltip="Risk Reduction / Opportunity Enablement"
+               ng-model="ctrl.riskReduction"
+               suffix="point"
+               label-property="2"
+               options="pointScale"></sd-select>
+</div>
+<div class="form-group">
+    <sd-epic-select ng-model="ctrl.currentEpic" epics="epics"></sd-epic-select>
+
+</div>
+<div class="form-group estimate-input" ng-if="ctrl.project.use_time_estimate">
+    <sd-time-entry ng-model="story.estimated_minutes"></sd-time-entry>
+</div>
+
+<div class="form-group" ng-if="ctrl.project.use_due_date">
+    <sd-date-picker placeholder="Due Date" ng-model="story.due_date"></sd-date-picker>
+</div>
+
+
+<div class="form-group release-dropdown" ng-if="ctrl.project.parents.length > 0">
+    <sd-release-picker
+            release="story.release"
+            project="ctrl.project"
+            story="story"></sd-release-picker>
+
+    <!--<sd-select button-icon="fa fa-ticket"-->
+               <!--placeholder="Release/Milestone"-->
+               <!--allow-empty="true"-->
+               <!--ng-model="story.release"-->
+               <!--label-property="summary"-->
+               <!--show-filter="true"-->
+               <!--control-type="releases"-->
+               <!--options="ctrl.project.releases"></sd-select>-->
+</div>
+
+<div class="form-group">
+    <sd-assignee-box ng-model="story.assignee" people="ctrl.project.members"></sd-assignee-box>
+</div>
+
+<div class="form-group">
+    <sd-attachments project="ctrl.project" story="story"></sd-attachments>
+</div>

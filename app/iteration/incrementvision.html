@@ -1,0 +1,21 @@
+<div sd-access class="vision">
+    <button ng-if="canWrite" ng-click="ctrl.editVision()" class="scrumdo-btn add-btn summary-btn">
+        <span ng-if="increment.vision==''">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add Vision
+        </span>
+        <span ng-if="increment.vision!=''">
+            <span class="glyphicon glyphicon-pencil"></span>
+            Update Vision
+        </span>
+    </button>
+    <div ng-if="!ctrl.isEditing" class="visioncontent" ng-bind-html="increment.vision|to_trusted"></div>
+    <div ng-if="ctrl.isEditing" clickable-editor="2011" html="increment.vision"></div>
+    <div class="actions">
+        <button ng-if="ctrl.isEditing" type="button" ng-click="ctrl.cancel($event)"
+            class="scrumdo-btn primary  pull-right"> Cancel</button>
+        <button ng-if="ctrl.isEditing" type="button"
+            class="scrumdo-btn btn-success pull-right card-save-button" 
+            ng-click="ctrl.save($event)">Save</button>
+    </div>
+</div>

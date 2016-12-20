@@ -1,0 +1,118 @@
+.search-page{
+  #boardTable{
+    top: 60px;
+  }
+}
+.scrumdo-search-wrapper {
+  background: #f9f9f9;
+  position: fixed;
+  top: 115px;
+  bottom: 0px;
+  left: 0px;
+  right: 40px;
+  padding: 25px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-transition: right 0.3s ease-out;
+  -moz-transition: right 0.3s ease-out;
+  -o-transition: right 0.3s ease-out;
+  transition: right 0.3s ease-out;
+
+  .search-content {
+    background-color: #ffffff;
+    padding: 10px;
+  }
+
+  .search-status-text {
+    color: #B4B4B4;
+    font-family: $font-family-roboto;
+    padding-top: 7px;
+  }
+
+  &.project-search {
+    position: relative;
+    top: 0;
+    right: 0;
+    border-top: 1px solid #dbdbdb;
+  }
+}
+
+
+.search-criteria-label {
+  display: block;
+  margin-top: 10px;
+}
+
+
+.scrumdo-search-wrapper.navbar-open {
+  right: 325px;
+}
+
+.scrumdo-search-wrapper.org-search {
+  right: 0px;
+  top: 95px;
+}
+
+.search-builder{
+  .search-label-box{
+    .dropdown-menu{
+      li{
+        max-width: 180px;
+        overflow-x: hidden;
+      }
+    }
+  }
+  .saved-query-list{
+    padding: 0;
+    float: left;
+    width: 100%;
+    padding-top: 10px;
+    li{
+      list-style: none;
+      border: 1px solid #ddd;
+      float: left;
+      padding: 3px 20px 3px 10px;
+      margin-right: 10px;
+      background: #fff;
+      margin-bottom: 10px;
+      position: relative;
+      .scrumdo-tags-close{
+        position: absolute;
+        right: 3px;
+        top: 3px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.app-breadcrumbs {
+  background-color: #e5e5e5;
+  height: 35px;
+
+  .project-breadcrumbs {
+    margin: 0px;
+    padding: 0px;
+
+    li.project-breadcrumb {
+      height: 35px;
+      list-style: none;
+      display: inline-block;
+      vertical-align: top;
+      position: relative;
+      a {
+        color: #535458;
+        &.active {
+          font-weight: bold;
+        }
+      }
+
+      &.dashboard {
+        font-size: 90%;
+        padding: 10px;
+        border-right: 1px solid #cbcbcb;
+        padding-right: 10px;
+      }
+    }
+  }
+}

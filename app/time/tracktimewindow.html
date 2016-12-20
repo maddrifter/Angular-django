@@ -1,0 +1,101 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">&times;</button>
+    <span class="pull-right">
+        <i class="fa fa-spin fa-loading"></i>
+    </span>
+    <h3 class="modal-title">
+        Track Time
+    </h3>
+
+</div>
+<div class="modal-body track-time-window">
+    <form class="form" name="taskForm" ng-if="ctrl.trackingMode=='scrumdo' || ctrl.trackingMode==''">
+        <div class="row">
+            <div class="col-sm-5 col-sm-offset-1">
+                <label>Workspace</label>
+                <div class="scrumdo-select">
+                    <sd-safe-project-select ng-model="ctrl.scope.currentProject" 
+                        placeholder="Select a Workspace" 
+                        show-filter="true"></sd-safe-project-select>
+                    <!-- <select ng-model="ctrl.currentProject"
+                            ng-options="project.slug as project.name for project in ctrl.projects"
+                            ng-change="ctrl.projectChanged()"
+                            class="form-control"></select> -->
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <label>Iteration (optional)</label>
+                <div class="scrumdo-select primary">
+                    <select ng-model="ctrl.currentIteration"
+                            ng-class="{disabled:ctrl.currentProject==null}"
+                            ng-options="iteration.name group by iteration.increment.name for iteration in ctrl.iterations"
+                            ng-change="ctrl.iterationChanged()"
+                            class="form-control">
+                        <option value="" ng-value="null">None</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row margin10">
+            <div class="col-sm-10 col-sm-offset-1">
+                <label>Card (optional)</label>
+                <div class="scrumdo-select primary">
+                    <select ng-model="ctrl.currentStory"
+                            ng-class="{disabled:ctrl.currentIteration==null}"
+                            ng-change="ctrl.storyChanged()"
+                            ng-options="story.id as ctrl.formatStory(story) for story in ctrl.stories|orderBy:'number'"
+                            class="form-control">
+                        <option value="" ng-value="null">None</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row margin10">
+            <div class="col-sm-10 col-sm-offset-1">
+                <label>Task (optional)</label>
+                <div class="scrumdo-select primary">
+                    <select ng-model="ctrl.currentTask"
+                            ng-class="{disabled:ctrl.tasks.length>0}"
+                            ng-options="task.id as ctrl.formatTask(task) for task in ctrl.tasks|orderBy:'order'"
+                            class="form-control">
+                        <option value="" ng-value="null">None</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row date-display">
+            <div class="col-sm-5 col-sm-offset-1">
+                <label>Date</label>
+                <sd-date-picker ng-model="ctrl.date"></sd-date-picker>
+            </div>
+            <div class="col-sm-5 ">
+                <label>Time Spent</label>
+                <sd-time-entry placeholder="Time Spent (hh:mm)" ng-model="ctrl.minutes"></sd-time-entry>
+            </div>
+        </div>
+
+        <div class="row" ng-if="ctrl.noteField">
+            <div class="col-sm-10 col-sm-offset-1">
+                <label>Note:</label>
+                <input class="form-control" placeholder="Note" ng-model="ctrl.notes"/>
+            </div>
+
+        </div>
+
+        <hr/>
+
+        <button ng-click="ctrl.enterTime()"
+                ng-class="{disabled: ctrl.minutes==0}"
+                sd-enter="ctrl.enterTime()"
+                class="scrumdo-btn pull-right secondary">Enter Time
+        </button>
+        <a ng-if="!ctrl.noteField" ng-click="ctrl.noteField=true">Add Note</a>
+
+
+    </form>
+    <div class="harvest-iframe" ng-if="ctrl.trackingMode=='harvest'" >
+        <iframe id="harvest_tracker" ng-src="{{ctrl.harvest_url}}"></iframe>
+    </div>
+</div>

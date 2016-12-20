@@ -1,0 +1,67 @@
+<div class="modal-header">
+    <h4>Upgrade Workspace <small>{{ctrl.project.name}}</small></h4>
+
+</div>
+
+<div class="modal-body">
+    <form>
+        <div class="row" ng-if="!ctrl.busyMode">
+            <div class="col-xs-6">
+                <div class="scrumdo-alerts"
+                     ng-click="ctrl.mode='try'"
+                     ng-class="{notify:ctrl.mode!='try', warn:ctrl.mode=='try'}">
+
+                    <label class="upgrade-option">
+                        Try it Out
+                    </label>
+
+                    <ul>
+                        <li>Classic workspace remains active</li>
+                        <!--<li>Extras are not enabled</li>-->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="scrumdo-alerts"
+                     ng-click="ctrl.mode='perm'"
+                     ng-class="{notify:ctrl.mode=='try', warn:ctrl.mode!='try'}">
+
+                    <label class="upgrade-option">
+                        Upgrade Permanently
+                    </label>
+
+                    <ul>
+                        <li>Classic workspace is archived</li>
+                        <!--<li>Extras are enabled</li>-->
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <b>Either way...</b>
+                <ul>
+                    <li>Try all the new ScrumDo features</li>
+                    <li>New and Classic workspaces are not kept in sync</li>
+                    <li>Use your existing subscription, no new fees</li>
+                </ul>
+                <a href="http://help.scrumdo.com/help/migration.html" target="_blank">Migration Guide</a>
+
+            </div>
+        </div>
+    </form>
+
+    <div ng-if="ctrl.busyMode" class="busy-mode">
+        <div class="progress progress-striped active">
+            <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                Working...
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-footer" ng-if="!ctrl.busyMode">
+    <button ng-click="$dismiss()"class="scrumdo-btn primary">Cancel</button>
+    <button ng-click="ctrl.upgrade()" class="scrumdo-btn primary">Upgrade</button>
+</div>
+

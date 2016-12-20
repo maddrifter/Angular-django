@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss('canceled')" aria-hidden="true">×</button>
+    <h4 class="modal-title ng-binding">Are you ABSOLUTELY sure?</h4>
+</div>
+<div class="modal-body card-modal">
+    <p class="scrumdo-alert warn scrumdo-account-details-p withbg">Unexpected bad things will happen if you don't read this!</p>
+    <p class="scrumdo-account-details-p">This action <strong>CANNOT</strong> be undone. This will delete the 
+        <strong>{{ctrl.project.name}}</strong> workspace permanently.</p>
+
+    <div class="confirm-controls">
+        <p class="scrumdo-account-details-p">Please type in the name of the workspace to confirm.</p>
+
+        <div class="row" ng-if="ctrl.project.project_type==2">
+            <div class="col-md-12">
+                <p class="scrumdo-alert warn scrumdo-account-details-p withbg">
+                    Deleting a portfolio workspace will remove all projects
+                    within it from the portfolio, and all portfolio
+                    relationships between cards will be lost.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input class="scrumdo-form primary" type="text" name="projectname" ng-model="ctrl.projectname" />
+            </div>
+            <p>&nbsp;</p>
+            <div class="col-md-10 col-md-offset-2">
+                <button type="button" ng-click="ctrl.confirmDeleteProject()" ng-class="{disabled:ctrl.projectname!=ctrl.project.name}" class="scrumdo-btn secondary text-center">
+                    I understand the consequences, delete this workspace</button>
+            </div>
+        </div>
+    </div>
+    <div ng-if="ctrl.busyMode" class="busy-mode">
+        <div class="progress progress-striped active">
+            <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+        </div>
+    </div>
+</div>

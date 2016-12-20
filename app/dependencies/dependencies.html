@@ -1,0 +1,20 @@
+<div>
+    <sd-restricted-feature ng-if="::!ctrl.project.isPremiumUser()" 
+        feature-name="'Dependencies'" organization-slug="ctrl.project.organizationSlug" 
+        feature-image="'DependenciesSample.jpg'"></sd-restricted-feature>
+
+    <div ng-if="::ctrl.noData && ctrl.project.isPremiumUser()" class="alert alert-info margin10">
+        There is no increment associated with this iteration therefore we can not display the
+        dependency board.
+    </div>
+
+    <sd-card-grid ng-if="::!ctrl.noData && ctrl.project.isPremiumUser()"
+                  card-provider="ctrl.gridCardProvider"
+                  rows="ctrl.rows"
+                  dependencies="ctrl.dependencies"
+                  columns="ctrl.columns">
+    </sd-card-grid>
+</div>
+<div class="kiosk-toggle" ng-click="kiosk.toggle()">
+    <i class="fa fa-list-alt"></i>
+</div>
